@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>リアルタイム音声翻訳</title>
+<meta name="description" content="話した言葉をその場で日本語・英語に翻訳するブラウザツール。">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#dde1ea;--accent:#2f6fec;--rec:#e5484d}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--rec:#ff6b6f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--sub);font-size:14px;margin:0 0 20px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+button,select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 16px;border-radius:10px;cursor:pointer}
+#mic{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;min-width:150px}
+#mic.on{background:var(--rec);border-color:var(--rec)}
+label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
+#status{font-size:14px;color:var(--sub);margin:0 0 12px;min-height:1.6em}
+.live{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin-bottom:16px;min-height:52px}
+.live .ja{color:var(--sub)}
+#log{display:flex;flex-direction:column-reverse;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.item .ja{color:var(--sub);font-size:14px}
+.item .en{font-size:19px;font-weight:600;margin-top:2px}
+.item .en.wait{color:var(--sub);font-weight:400}
+.warn{background:#fff4d6;color:#5c4400;border-radius:10px;padding:10px 14px;font-size:14px}
+@media (prefers-color-scheme:dark){.warn{background:#3a2f10;color:#ffe08a}}
+</style></head>
+<body><main>
+<h1>🎙️ リアルタイム音声翻訳</h1>
+<p class="sub">マイクに向かって話すと、その場で日本語の文章（または英語）に翻訳します。</p>
+<div id="unsupported" class="warn" hidden>このブラウザは音声認識に対応していません。Chrome / Edge / Safari の最新版でお試しください。</div>
+<div class="bar">
+  <select id="dir"><option value="en-ja">英語で話す → 日本語にする</option><option value="ja-en">日本語で話す → 英語にする</option></select>
+  <button id="mic">● 話しはじめる</button>
+  <button id="clear">クリア</button>
+  <label><input type="checkbox" id="speak"> 翻訳を読み上げる</label>
+</div>
+<p id="status">ボタンを押してマイクの使用を許可してください。</p>
+<div class="live"><div class="ja" id="interimJa">…</div><div id="interimEn"></div></div>
+<div id="log"></div>
+</main>
+<script>
+(() => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const $ = id => document.getElementById(id);
+  const mic = $('mic'), status = $('status'), log = $('log');
+  const interimJa = $('interimJa'), interimEn = $('interimEn');
+  const UNSUPPORTED = 'このブラウザでは音声認識が使えません。LINEやInstagramなどのアプリ内ブラウザやファイルのプレビューではなく、Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。';
+  if (!SR) {
+    $('unsupported').hidden = false; $('unsupported').textContent = UNSUPPORTED;
+    mic.onclick = () => alert(UNSUPPORTED);
+    return;
+  }
+
+  const LANG = {ja: {rec: 'ja-JP', name: '日本語'}, en: {rec: 'en-US', name: '英語'}};
+  let src = 'en', tgt = 'ja';
+  try { const d = localStorage.getItem('dir'); if (d) $('dir').value = d; } catch (e) {}
+
+  // Prefer the browser's built-in on-device translator (Chrome 138+); fall back to the MyMemory API.
+  let translator = null;
+  // Runs in the background: the online fallback is used until the on-device model is ready.
+  async function initTranslator() {
+    translator = null;
+    const pair = {sourceLanguage: src, targetLanguage: tgt};
+    try {
+      if (!('Translator' in self) || (await Translator.availability(pair)) === 'unavailable') return;
+      const t = await Translator.create(pair);
+      if (pair.sourceLanguage === src && pair.targetLanguage === tgt) translator = t;
+    } catch (e) {}
+  }
+  async function translate(text) {
+    if (translator) { try { return await translator.translate(text); } catch (e) {} }
+    const r = await fetch('https://api.mymemory.translated.net/get?langpair=' + src + '|' + tgt + '&q=' + encodeURIComponent(text));
+    const j = await r.json();
+    return j.responseData.translatedText;
+  }
+
+  // Translate in-progress speech too, throttled, so the English updates while you talk.
+  let interimTimer = null, interimSeq = 0;
+  function translateInterim(text) {
+    clearTimeout(interimTimer);
+    interimTimer = setTimeout(async () => {
+      const seq = ++interimSeq;
+      try { const en = await translate(text); if (seq === interimSeq) interimEn.textContent = en; } catch (e) {}
+    }, 600);
+  }
+
+  function addFinal(text) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = '<div class="ja"></div><div class="en wait">翻訳中…</div>';
+    item.querySelector('.ja').textContent = text;
+    log.appendChild(item);
+    const en = item.querySelector('.en');
+    translate(text).then(t => {
+      en.textContent = t; en.classList.remove('wait');
+      if ($('speak').checked) {
+        const u = new SpeechSynthesisUtterance(t); u.lang = LANG[tgt].rec; speechSynthesis.speak(u);
+      }
+    }).catch(() => { en.textContent = '(翻訳に失敗しました。通信状況を確認してください)'; });
+  }
+
+  const rec = new SR();
+  rec.continuous = true;
+  rec.interimResults = true;
+  let running = false;
+
+  rec.onresult = e => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript.trim();
+      if (!t) continue;
+      if (e.results[i].isFinal) addFinal(t); else interim += t;
+    }
+    if (interim) { interimJa.textContent = interim; translateInterim(interim); }
+    else { clearTimeout(interimTimer); interimSeq++; interimJa.textContent = '…'; interimEn.textContent = ''; }
+  };
+  const ERRORS = {
+    'not-allowed': 'マイクの使用が許可されていません。アドレスバーの鍵マーク（またはブラウザの設定）からマイクを「許可」にしてください。',
+    'service-not-allowed': 'このブラウザでは音声認識が使えません。Chrome か Safari で開いてください。',
+    'audio-capture': 'マイクが見つかりません。マイクがつながっているか確認してください。',
+    'network': '音声認識に必要な通信ができませんでした。インターネット接続を確認してください。'
+  };
+  rec.onerror = e => {
+    if (e.error === 'no-speech' || e.error === 'aborted') return;
+    if (ERRORS[e.error] && e.error !== 'network') running = false;
+    setUi();
+    status.textContent = ERRORS[e.error] || 'エラー: ' + e.error;
+  };
+  // Recognition stops on its own after silence; restart while the user wants it on.
+  rec.onend = () => { if (running) { try { rec.start(); } catch (e) {} } };
+
+  function setUi() {
+    mic.classList.toggle('on', running);
+    mic.textContent = running ? '■ 停止' : '● 話しはじめる';
+    if (running) status.textContent = '聞き取り中… ' + LANG[src].name + 'で話してください。';
+    else status.textContent = '停止しました。';
+  }
+  mic.onclick = () => {
+    running = !running;
+    setUi();
+    if (!running) { rec.stop(); return; }
+    [src, tgt] = $('dir').value.split('-');
+    rec.lang = LANG[src].rec;
+    try { rec.start(); }
+    catch (e) { running = false; setUi(); status.textContent = '音声認識を開始できませんでした: ' + e.message; return; }
+    initTranslator();
+  };
+  $('dir').onchange = () => {
+    try { localStorage.setItem('dir', $('dir').value); } catch (e) {}
+    if (running) { running = false; rec.stop(); setUi(); }
+  };
+  $('clear').onclick = () => { log.innerHTML = ''; };
+})();
+</script>
+</body></html>

@@ -24,43 +24,48 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
 .item .ja{color:var(--sub);font-size:14px}
 .item .en{font-size:19px;font-weight:600;margin-top:2px}
 .item .en.wait{color:var(--sub);font-weight:400}
-.warn{background:#fff4d6;color:#5c4400;border-radius:10px;padding:10px 14px;font-size:14px}
-@media (prefers-color-scheme:dark){.warn{background:#3a2f10;color:#ffe08a}}
+.type{display:flex;gap:8px;margin-bottom:16px}
+.type textarea{flex:1;font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;min-height:48px}
+.hint{font-size:13px;color:var(--sub);margin:-8px 0 16px}
+.warn{margin-bottom:12px;background:#fff4d6;color:#5c4400;border-radius:10px;padding:10px 14px;font-size:14px}
+@media (prefers-color-scheme:dark){.type{display:flex;gap:8px;margin-bottom:16px}
+.type textarea{flex:1;font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;min-height:48px}
+.hint{font-size:13px;color:var(--sub);margin:-8px 0 16px}
+.warn{margin-bottom:12px;background:#3a2f10;color:#ffe08a}}
 </style></head>
 <body><main>
 <h1>🎙️ リアルタイム音声翻訳</h1>
 <p class="sub">マイクに向かって話すと、その場で日本語の文章（または英語）に翻訳します。</p>
-<div id="unsupported" class="warn" hidden>このブラウザは音声認識に対応していません。Chrome / Edge / Safari の最新版でお試しください。</div>
+<div id="nojs" class="warn">この画面ではページの機能（スクリプト）が動いていません。ファイルのプレビューではなく、Chrome か Safari でこのページを開いてください。</div>
+<div id="unsupported" class="warn" hidden></div>
 <div class="bar">
   <select id="dir"><option value="en-ja">英語で話す → 日本語にする</option><option value="ja-en">日本語で話す → 英語にする</option></select>
-  <button id="mic">● 話しはじめる</button>
-  <button id="clear">クリア</button>
+  <button id="mic" type="button">● 話しはじめる</button>
+  <button id="clear" type="button">クリア</button>
   <label><input type="checkbox" id="speak"> 翻訳を読み上げる</label>
 </div>
 <p id="status">ボタンを押してマイクの使用を許可してください。</p>
 <div class="live"><div class="ja" id="interimJa">…</div><div id="interimEn"></div></div>
+<div class="type"><textarea id="typed" rows="2" placeholder="ここに入力しても翻訳できます"></textarea><button id="send" type="button">翻訳</button></div>
+<p class="hint">ボタンでの音声認識が使えないときは、この欄をタップしてキーボードの 🎤（音声入力）ボタンで話してください。話した内容がその場で翻訳されます。</p>
 <div id="log"></div>
 </main>
 <script>
 (() => {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const $ = id => document.getElementById(id);
-  const mic = $('mic'), status = $('status'), log = $('log');
+  $('nojs').hidden = true;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const mic = $('mic'), status = $('status'), log = $('log'), typed = $('typed');
   const interimJa = $('interimJa'), interimEn = $('interimEn');
-  const UNSUPPORTED = 'このブラウザでは音声認識が使えません。LINEやInstagramなどのアプリ内ブラウザやファイルのプレビューではなく、Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。';
-  if (!SR) {
-    $('unsupported').hidden = false; $('unsupported').textContent = UNSUPPORTED;
-    mic.onclick = () => alert(UNSUPPORTED);
-    return;
-  }
 
   const LANG = {ja: {rec: 'ja-JP', name: '日本語'}, en: {rec: 'en-US', name: '英語'}};
   let src = 'en', tgt = 'ja';
   try { const d = localStorage.getItem('dir'); if (d) $('dir').value = d; } catch (e) {}
+  function syncDir() { [src, tgt] = $('dir').value.split('-'); initTranslator(); }
 
   // Prefer the browser's built-in on-device translator (Chrome 138+); fall back to the MyMemory API.
-  let translator = null;
   // Runs in the background: the online fallback is used until the on-device model is ready.
+  let translator = null;
   async function initTranslator() {
     translator = null;
     const pair = {sourceLanguage: src, targetLanguage: tgt};
@@ -77,13 +82,16 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
     return j.responseData.translatedText;
   }
 
-  // Translate in-progress speech too, throttled, so the English updates while you talk.
+  // Translate in-progress speech too, throttled, so the translation updates while you talk.
   let interimTimer = null, interimSeq = 0;
-  function translateInterim(text) {
+  function showInterim(text) {
     clearTimeout(interimTimer);
+    if (!text) { interimSeq++; interimJa.textContent = '…'; interimEn.textContent = ''; return; }
+    interimJa.textContent = text;
     interimTimer = setTimeout(async () => {
       const seq = ++interimSeq;
-      try { const en = await translate(text); if (seq === interimSeq) interimEn.textContent = en; } catch (e) {}
+      try { const t = await translate(text); if (seq === interimSeq) interimEn.textContent = t; }
+      catch (e) { if (seq === interimSeq) interimEn.textContent = '(翻訳できませんでした。インターネット接続を確認してください)'; }
     }, 600);
   }
 
@@ -96,10 +104,36 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
     const en = item.querySelector('.en');
     translate(text).then(t => {
       en.textContent = t; en.classList.remove('wait');
-      if ($('speak').checked) {
+      if ($('speak').checked && 'speechSynthesis' in self) {
         const u = new SpeechSynthesisUtterance(t); u.lang = LANG[tgt].rec; speechSynthesis.speak(u);
       }
-    }).catch(() => { en.textContent = '(翻訳に失敗しました。通信状況を確認してください)'; });
+    }).catch(() => { en.textContent = '(翻訳できませんでした。インターネット接続を確認してください)'; });
+  }
+
+  // Typed text, or the keyboard's own voice input, which works even where speech recognition doesn't.
+  typed.addEventListener('input', () => showInterim(typed.value.trim()));
+  function sendTyped() {
+    const t = typed.value.trim();
+    if (!t) return;
+    showInterim(''); addFinal(t); typed.value = '';
+  }
+  $('send').onclick = sendTyped;
+  typed.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); sendTyped(); } });
+
+  $('clear').onclick = () => { log.innerHTML = ''; showInterim(''); };
+  syncDir();
+
+  function noSpeech(msg) {
+    $('unsupported').textContent = msg;
+    $('unsupported').hidden = false;
+    status.textContent = msg;
+    typed.focus();
+  }
+  const UNSUPPORTED = 'この画面ではボタンでの音声認識が使えません。下の入力欄をタップして、キーボードの 🎤 ボタンで話してください。ボタンで使いたいときは、Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。';
+  if (!SR) {
+    mic.onclick = () => noSpeech(UNSUPPORTED);
+    $('dir').onchange = () => { try { localStorage.setItem('dir', $('dir').value); } catch (e) {} syncDir(); };
+    return;
   }
 
   const rec = new SR();
@@ -114,20 +148,20 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
       if (!t) continue;
       if (e.results[i].isFinal) addFinal(t); else interim += t;
     }
-    if (interim) { interimJa.textContent = interim; translateInterim(interim); }
-    else { clearTimeout(interimTimer); interimSeq++; interimJa.textContent = '…'; interimEn.textContent = ''; }
+    showInterim(interim);
   };
   const ERRORS = {
-    'not-allowed': 'マイクの使用が許可されていません。アドレスバーの鍵マーク（またはブラウザの設定）からマイクを「許可」にしてください。',
-    'service-not-allowed': 'このブラウザでは音声認識が使えません。Chrome か Safari で開いてください。',
+    'not-allowed': 'マイクの使用が許可されていません。ブラウザの設定でマイクを「許可」にするか、下の入力欄でキーボードの 🎤 ボタンを使ってください。',
+    'service-not-allowed': UNSUPPORTED,
     'audio-capture': 'マイクが見つかりません。マイクがつながっているか確認してください。',
     'network': '音声認識に必要な通信ができませんでした。インターネット接続を確認してください。'
   };
   rec.onerror = e => {
     if (e.error === 'no-speech' || e.error === 'aborted') return;
-    if (ERRORS[e.error] && e.error !== 'network') running = false;
+    running = false;
     setUi();
-    status.textContent = ERRORS[e.error] || 'エラー: ' + e.error;
+    const msg = ERRORS[e.error] || 'エラー: ' + e.error;
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') noSpeech(msg); else status.textContent = msg;
   };
   // Recognition stops on its own after silence; restart while the user wants it on.
   rec.onend = () => { if (running) { try { rec.start(); } catch (e) {} } };
@@ -135,24 +169,21 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
   function setUi() {
     mic.classList.toggle('on', running);
     mic.textContent = running ? '■ 停止' : '● 話しはじめる';
-    if (running) status.textContent = '聞き取り中… ' + LANG[src].name + 'で話してください。';
-    else status.textContent = '停止しました。';
+    status.textContent = running ? '聞き取り中… ' + LANG[src].name + 'で話してください。' : '停止しました。';
   }
   mic.onclick = () => {
     running = !running;
     setUi();
     if (!running) { rec.stop(); return; }
-    [src, tgt] = $('dir').value.split('-');
     rec.lang = LANG[src].rec;
     try { rec.start(); }
-    catch (e) { running = false; setUi(); status.textContent = '音声認識を開始できませんでした: ' + e.message; return; }
-    initTranslator();
+    catch (e) { running = false; setUi(); noSpeech('音声認識を開始できませんでした。' + UNSUPPORTED); }
   };
   $('dir').onchange = () => {
     try { localStorage.setItem('dir', $('dir').value); } catch (e) {}
     if (running) { running = false; rec.stop(); setUi(); }
+    syncDir();
   };
-  $('clear').onclick = () => { log.innerHTML = ''; };
 })();
 </script>
 </body></html>

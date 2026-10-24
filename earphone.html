@@ -5,7 +5,8 @@
 <meta name="description" content="イヤホンをつけると、まわりの会話をリアルタイムで翻訳して耳に流すブラウザツール。">
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#dde1ea;--accent:#2f6fec;--ok:#1f9d55;--rec:#e5484d;--warnbg:#fff4d6;--warnfg:#5c4400}
-@media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--ok:#3ccf7d;--rec:#ff6b6f;--warnbg:#3a2f10;--warnfg:#ffe08a}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--ok:#3ccf7d;--rec:#ff6b6f;--warnbg:#3a2f10;--warnfg:#ffe08a}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--ok:#3ccf7d;--rec:#ff6b6f;--warnbg:#3a2f10;--warnfg:#ffe08a}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
 main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
@@ -67,6 +68,7 @@ input[type=range]{width:110px}
   <div class="bar" id="keyRow" hidden>
     <input type="password" id="apiKey" placeholder="Anthropic の APIキー（sk-ant-…）" autocomplete="off" spellcheck="false">
   </div>
+  <p class="hint">claude.ai で開いている場合は「お使いのプランで」を選ぶと、APIキーなしで Claude Pro などのプランの利用枠で翻訳します。</p>
   <p class="hint">高精度モードでは、Claude が直前の会話の流れを踏まえて訳し、音声認識の聞き間違いも文脈から補正します。APIキーは <a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic Console</a> で作成でき、使った分だけ料金がかかります。キーはこの端末のブラウザにだけ保存されます。共用の端末では入力しないでください。うまく使えないときは、自動で標準の翻訳に切り替わります。</p>
 </details>
 <div class="state" id="state"><div class="icon">🎧</div><div><b id="stateTitle">オフ</b><span id="stateText">ボタンを押して、マイクの使用を許可してください。</span></div></div>
@@ -93,8 +95,9 @@ input[type=range]{width:110px}
     const d = localStorage.getItem('earDir'); if (d) $('dir').value = d;
     for (const k of ['rate', 'vol']) { const v = localStorage.getItem('ear-' + k); if (v) $(k).value = v; }
   } catch (e) {}
+  let savedEngine = null;
   try {
-    const e = localStorage.getItem('ear-engine'); if (e) $('engine').value = e;
+    savedEngine = localStorage.getItem('ear-engine'); if (savedEngine) $('engine').value = savedEngine;
     $('apiKey').value = localStorage.getItem('ear-apiKey') || '';
   } catch (e) {}
   function syncEngine() {
@@ -102,8 +105,20 @@ input[type=range]{width:110px}
     $('engineName').textContent = $('engine').selectedOptions[0].textContent.replace(/（.*/, '');
     try { localStorage.setItem('ear-engine', $('engine').value); localStorage.setItem('ear-apiKey', $('apiKey').value.trim()); } catch (e) {}
   }
-  $('engine').onchange = $('apiKey').onchange = () => { claude = null; syncEngine(); };
+  $('engine').onchange = $('apiKey').onchange = () => { apiClient = null; syncEngine(); };
   syncEngine();
+
+  // Opened as a Claude artifact on claude.ai: translate on the viewer's own Claude plan (Pro etc.), no API key.
+  let sample = null;
+  if (window.claude && window.claude.use) window.claude.use('sample').then(s => {
+    if (!s) return;
+    sample = s;
+    const o = document.createElement('option');
+    o.value = 'plan'; o.textContent = '高精度（Claude・お使いのプランで）';
+    $('engine').prepend(o);
+    $('engine').value = savedEngine === 'free' || savedEngine === 'claude' ? savedEngine : 'plan';
+    syncEngine();
+  });
   for (const k of ['rate', 'vol']) $(k).onchange = () => { try { localStorage.setItem('ear-' + k, $(k).value); } catch (e) {} };
 
   // Same translation path as translate.html: on-device Translator (Chrome 138+), else the MyMemory API.
@@ -121,33 +136,57 @@ input[type=range]{width:110px}
   // which also lets it repair words the speech recognizer misheard. Called straight from the browser
   // with the user's own API key.
   const SDK_URL = 'https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.133.0/+esm';
-  let claude = null;
+  let apiClient = null;
   const history = [];
+  function interpreterPrompt(text) {
+    const context = history.slice(-8).map(h => '- ' + h.src + ' => ' + h.dst).join('\n');
+    return {
+      system: 'You are a live interpreter. The user wears earphones and hears your translation read aloud while someone nearby speaks ' + LANG[src].name + '. ' +
+        'Each input is one phrase from a speech recognizer, so it may contain misheard words, missing punctuation, or a sentence cut in the middle. ' +
+        'Use the recent conversation to infer what the speaker most likely meant, fix obvious recognition errors, and translate it into natural, spoken ' + LANG[tgt].name + ' that sounds right when read aloud. ' +
+        'Keep names, numbers, and technical terms accurate. Reply with the translation only: no quotes, notes, romanization, or alternatives.',
+      user: (context ? 'Recent conversation (source => translation):\n' + context + '\n\n' : '') + 'Translate this phrase:\n' + text
+    };
+  }
+  const PLAN_ERRORS = {
+    not_granted: 'Claude の使用が許可されませんでした。',
+    sampling_disabled: 'このアカウントでは Claude を使えません。',
+    rate_limited: 'Claude の利用上限に達しました。しばらくしてから選び直してください。',
+    session_expired: 'claude.ai にもう一度ログインしてください。'
+  };
+  async function translateWithPlan(text) {
+    const {system, user} = interpreterPrompt(text);
+    try {
+      const {text: out} = await sample(system + '\n\n' + user, {modelTier: 'quick'});
+      return out.trim();
+    } catch (e) {
+      // Errors that won't go away this view: stop asking and use the standard translator.
+      if (e && e.code !== 'upstream_error' && e.code !== 'refused' && e.code !== 'empty_completion') { $('engine').value = 'free'; syncEngine(); }
+      throw new Error(PLAN_ERRORS[e && e.code] || 'Claude に接続できませんでした。');
+    }
+  }
   async function translateWithClaude(text) {
     const apiKey = $('apiKey').value.trim();
     if (!apiKey) throw new Error('APIキーが入力されていません。');
     const {default: Anthropic} = await import(SDK_URL);
-    if (!claude) claude = new Anthropic({apiKey, dangerouslyAllowBrowser: true, maxRetries: 1});
-    const context = history.slice(-8).map(h => '- ' + h.src + ' => ' + h.dst).join('\n');
+    if (!apiClient) apiClient = new Anthropic({apiKey, dangerouslyAllowBrowser: true, maxRetries: 1});
+    const {system, user} = interpreterPrompt(text);
     try {
-      const res = await claude.beta.messages.create({
+      const res = await apiClient.beta.messages.create({
         model: 'claude-opus-5-5',
         max_tokens: 4000,
         output_config: {effort: 'low'},
         betas: ['server-side-fallback-2026-07-01'],
         fallbacks: 'default',
-        system: 'You are a live interpreter. The user wears earphones and hears your translation read aloud while someone nearby speaks ' + LANG[src].name + '. ' +
-          'Each input is one phrase from a speech recognizer, so it may contain misheard words, missing punctuation, or a sentence cut in the middle. ' +
-          'Use the recent conversation to infer what the speaker most likely meant, fix obvious recognition errors, and translate it into natural, spoken ' + LANG[tgt].name + ' that sounds right when read aloud. ' +
-          'Keep names, numbers, and technical terms accurate. Reply with the translation only: no quotes, notes, romanization, or alternatives.',
-        messages: [{role: 'user', content: (context ? 'Recent conversation (source => translation):\n' + context + '\n\n' : '') + 'Translate this phrase:\n' + text}]
+        system,
+        messages: [{role: 'user', content: user}]
       });
       if (res.stop_reason === 'refusal') throw new Error('refusal');
       const out = res.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
       if (!out) throw new Error('empty');
       return out;
     } catch (e) {
-      if (e instanceof Anthropic.AuthenticationError) { claude = null; throw new Error('APIキーが正しくありません。'); }
+      if (e instanceof Anthropic.AuthenticationError) { apiClient = null; throw new Error('APIキーが正しくありません。'); }
       if (e instanceof Anthropic.PermissionDeniedError) throw new Error('この APIキーでは使えません（権限がありません）。');
       if (e instanceof Anthropic.RateLimitError) throw new Error('利用の上限に達しました。少し待つか、Console で残高を確認してください。');
       throw e;
@@ -156,8 +195,9 @@ input[type=range]{width:110px}
   let claudeWarned = false;
   async function translateFinal(text) {
     let out;
-    if ($('engine').value === 'claude') {
-      try { out = await translateWithClaude(text); claudeWarned = false; }
+    const engine = $('engine').value;
+    if (engine === 'claude' || (engine === 'plan' && sample)) {
+      try { out = await (engine === 'plan' ? translateWithPlan(text) : translateWithClaude(text)); claudeWarned = false; }
       catch (e) {
         if (!claudeWarned) {
           const why = /[ぁ-ん]/.test(e.message || '') ? e.message : 'Claude に接続できませんでした。';

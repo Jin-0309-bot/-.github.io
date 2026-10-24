@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>リアルタイム英語翻訳</title>
-<meta name="description" content="話した日本語をその場で英語に翻訳するブラウザツール。">
+<title>リアルタイム音声翻訳</title>
+<meta name="description" content="話した言葉をその場で日本語・英語に翻訳するブラウザツール。">
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#dde1ea;--accent:#2f6fec;--rec:#e5484d}
 @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--rec:#ff6b6f}}
@@ -12,7 +12,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
 h1{font-size:24px;margin:0 0 4px}
 .sub{color:var(--sub);font-size:14px;margin:0 0 20px}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
-button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 16px;border-radius:10px;cursor:pointer}
+button,select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 16px;border-radius:10px;cursor:pointer}
 #mic{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;min-width:150px}
 #mic.on{background:var(--rec);border-color:var(--rec)}
 label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
@@ -28,13 +28,14 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
 @media (prefers-color-scheme:dark){.warn{background:#3a2f10;color:#ffe08a}}
 </style></head>
 <body><main>
-<h1>🎙️ リアルタイム英語翻訳</h1>
-<p class="sub">マイクに向かって日本語で話すと、その場で英語に翻訳します。</p>
+<h1>🎙️ リアルタイム音声翻訳</h1>
+<p class="sub">マイクに向かって話すと、その場で日本語の文章（または英語）に翻訳します。</p>
 <div id="unsupported" class="warn" hidden>このブラウザは音声認識に対応していません。Chrome / Edge / Safari の最新版でお試しください。</div>
 <div class="bar">
+  <select id="dir"><option value="en-ja">英語で話す → 日本語にする</option><option value="ja-en">日本語で話す → 英語にする</option></select>
   <button id="mic">● 話しはじめる</button>
   <button id="clear">クリア</button>
-  <label><input type="checkbox" id="speak"> 英語を読み上げる</label>
+  <label><input type="checkbox" id="speak"> 翻訳を読み上げる</label>
 </div>
 <p id="status">ボタンを押してマイクの使用を許可してください。</p>
 <div class="live"><div class="ja" id="interimJa">…</div><div id="interimEn"></div></div>
@@ -48,18 +49,24 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
   const interimJa = $('interimJa'), interimEn = $('interimEn');
   if (!SR) { $('unsupported').hidden = false; mic.disabled = true; return; }
 
+  const LANG = {ja: {rec: 'ja-JP', name: '日本語'}, en: {rec: 'en-US', name: '英語'}};
+  let src = 'en', tgt = 'ja';
+  try { const d = localStorage.getItem('dir'); if (d) $('dir').value = d; } catch (e) {}
+
   // Prefer the browser's built-in on-device translator (Chrome 138+); fall back to the MyMemory API.
   let translator = null;
   async function initTranslator() {
+    translator = null;
     try {
-      if ('Translator' in self && (await Translator.availability({sourceLanguage:'ja', targetLanguage:'en'})) !== 'unavailable') {
-        translator = await Translator.create({sourceLanguage:'ja', targetLanguage:'en'});
+      const pair = {sourceLanguage: src, targetLanguage: tgt};
+      if ('Translator' in self && (await Translator.availability(pair)) !== 'unavailable') {
+        translator = await Translator.create(pair);
       }
     } catch (e) { translator = null; }
   }
   async function translate(text) {
     if (translator) { try { return await translator.translate(text); } catch (e) {} }
-    const r = await fetch('https://api.mymemory.translated.net/get?langpair=ja|en&q=' + encodeURIComponent(text));
+    const r = await fetch('https://api.mymemory.translated.net/get?langpair=' + src + '|' + tgt + '&q=' + encodeURIComponent(text));
     const j = await r.json();
     return j.responseData.translatedText;
   }
@@ -84,13 +91,12 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
     translate(text).then(t => {
       en.textContent = t; en.classList.remove('wait');
       if ($('speak').checked) {
-        const u = new SpeechSynthesisUtterance(t); u.lang = 'en-US'; speechSynthesis.speak(u);
+        const u = new SpeechSynthesisUtterance(t); u.lang = LANG[tgt].rec; speechSynthesis.speak(u);
       }
     }).catch(() => { en.textContent = '(翻訳に失敗しました。通信状況を確認してください)'; });
   }
 
   const rec = new SR();
-  rec.lang = 'ja-JP';
   rec.continuous = true;
   rec.interimResults = true;
   let running = false;
@@ -115,14 +121,23 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
   function setUi() {
     mic.classList.toggle('on', running);
     mic.textContent = running ? '■ 停止' : '● 話しはじめる';
-    if (running) status.textContent = '聞き取り中… 日本語で話してください。';
+    if (running) status.textContent = '聞き取り中… ' + LANG[src].name + 'で話してください。';
     else if (!status.textContent.startsWith('マイク')) status.textContent = '停止しました。';
   }
   mic.onclick = async () => {
     running = !running;
-    if (running) { await initTranslator(); try { rec.start(); } catch (e) {} }
+    if (running) {
+      [src, tgt] = $('dir').value.split('-');
+      rec.lang = LANG[src].rec;
+      await initTranslator();
+      try { rec.start(); } catch (e) {}
+    }
     else rec.stop();
     setUi();
+  };
+  $('dir').onchange = () => {
+    try { localStorage.setItem('dir', $('dir').value); } catch (e) {}
+    if (running) { running = false; rec.stop(); setUi(); }
   };
   $('clear').onclick = () => { log.innerHTML = ''; };
 })();

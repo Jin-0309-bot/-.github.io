@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>イヤホン翻訳</title>
+<meta name="description" content="イヤホンをつけると、まわりの会話をリアルタイムで翻訳して耳に流すブラウザツール。">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#dde1ea;--accent:#2f6fec;--ok:#1f9d55;--rec:#e5484d;--warnbg:#fff4d6;--warnfg:#5c4400}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--ok:#3ccf7d;--rec:#ff6b6f;--warnbg:#3a2f10;--warnfg:#ffe08a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;margin:0 0 4px}
+a{color:var(--accent)}
+.sub{color:var(--sub);font-size:14px;margin:0 0 20px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+button,select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 16px;border-radius:10px;cursor:pointer}
+label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
+#arm{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;min-width:200px}
+#arm.on{background:var(--rec);border-color:var(--rec)}
+.state{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.state .icon{font-size:40px;line-height:1;filter:grayscale(1);opacity:.5;transition:.2s}
+.state.ear .icon{filter:none;opacity:1}
+.state.listening{border-color:var(--ok);box-shadow:0 0 0 2px color-mix(in srgb,var(--ok) 30%,transparent)}
+.state b{display:block;font-size:17px}
+.state span{color:var(--sub);font-size:14px}
+#manual{margin-bottom:16px}
+.live{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin-bottom:16px;min-height:52px}
+.live .src{color:var(--sub)}
+#log{display:flex;flex-direction:column-reverse;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.item .src{color:var(--sub);font-size:14px}
+.item .dst{font-size:19px;font-weight:600;margin-top:2px}
+.item .dst.wait{color:var(--sub);font-weight:400}
+.hint{font-size:13px;color:var(--sub)}
+.warn{margin-bottom:12px;background:var(--warnbg);color:var(--warnfg);border-radius:10px;padding:10px 14px;font-size:14px}
+input[type=range]{width:110px}
+</style></head>
+<body><main>
+<h1>🎧 イヤホン翻訳</h1>
+<p class="sub">イヤホンをつけると、まわりで話されている言葉をリアルタイムで翻訳し、翻訳した音声を耳に流します。イヤホンを外すと自動で一時停止します。　<a href="translate.html">文字で見る翻訳はこちら</a></p>
+<div id="nojs" class="warn">この画面ではページの機能（スクリプト）が動いていません。Chrome か Safari でこのページを開いてください。</div>
+<div id="warn" class="warn" hidden></div>
+<div class="bar">
+  <select id="dir">
+    <option value="en-ja">英語を聞く → 日本語で聞こえる</option>
+    <option value="ja-en">日本語を聞く → 英語で聞こえる</option>
+    <option value="zh-ja">中国語を聞く → 日本語で聞こえる</option>
+    <option value="ko-ja">韓国語を聞く → 日本語で聞こえる</option>
+  </select>
+  <button id="arm" type="button">🎧 イヤホン翻訳をオンにする</button>
+</div>
+<div class="bar">
+  <label>速さ <input type="range" id="rate" min="0.7" max="1.8" step="0.1" value="1.1"></label>
+  <label>音量 <input type="range" id="vol" min="0.1" max="1" step="0.1" value="1"></label>
+  <button id="clear" type="button">クリア</button>
+</div>
+<div class="state" id="state"><div class="icon">🎧</div><div><b id="stateTitle">オフ</b><span id="stateText">ボタンを押して、マイクの使用を許可してください。</span></div></div>
+<button id="manual" type="button" hidden>イヤホンをつけています（手動で開始）</button>
+<div class="live"><div class="src" id="interimSrc">…</div><div id="interimDst"></div></div>
+<div id="log"></div>
+<p class="hint">しくみ：マイクで聞き取った言葉を翻訳し、ブラウザの読み上げ機能で再生します。音はイヤホンから流れるので、相手には聞こえません。画面を消すと聞き取りが止まることがあるため、使っている間は画面をつけたままにしてください。イヤホンを自動で見分けられない端末では「手動で開始」を押してください。</p>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  $('nojs').hidden = true;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const log = $('log'), interimSrc = $('interimSrc'), interimDst = $('interimDst');
+
+  const LANG = {
+    ja: {rec: 'ja-JP', api: 'ja', name: '日本語'},
+    en: {rec: 'en-US', api: 'en', name: '英語'},
+    zh: {rec: 'zh-CN', api: 'zh-CN', name: '中国語'},
+    ko: {rec: 'ko-KR', api: 'ko', name: '韓国語'}
+  };
+  let src = 'en', tgt = 'ja';
+  try {
+    const d = localStorage.getItem('earDir'); if (d) $('dir').value = d;
+    for (const k of ['rate', 'vol']) { const v = localStorage.getItem('ear-' + k); if (v) $(k).value = v; }
+  } catch (e) {}
+  for (const k of ['rate', 'vol']) $(k).onchange = () => { try { localStorage.setItem('ear-' + k, $(k).value); } catch (e) {} };
+
+  // Same translation path as translate.html: on-device Translator (Chrome 138+), else the MyMemory API.
+  let translator = null;
+  async function initTranslator() {
+    translator = null;
+    const pair = {sourceLanguage: src, targetLanguage: tgt};
+    try {
+      if (!('Translator' in self) || (await Translator.availability(pair)) === 'unavailable') return;
+      const t = await Translator.create(pair);
+      if (pair.sourceLanguage === src && pair.targetLanguage === tgt) translator = t;
+    } catch (e) {}
+  }
+  async function translate(text) {
+    if (translator) { try { return await translator.translate(text); } catch (e) {} }
+    const r = await fetch('https://api.mymemory.translated.net/get?langpair=' + LANG[src].api + '|' + LANG[tgt].api + '&q=' + encodeURIComponent(text));
+    const j = await r.json();
+    return j.responseData.translatedText;
+  }
+  function syncDir() { [src, tgt] = $('dir').value.split('-'); initTranslator(); }
+  syncDir();
+
+  // ---- Speaking into the earphones ----
+  // Keep it real-time: if translations pile up faster than they can be read, drop the backlog.
+  const tts = 'speechSynthesis' in self ? speechSynthesis : null;
+  let queued = 0;
+  function voiceFor(lang) {
+    const vs = tts.getVoices();
+    return vs.find(v => v.lang === lang) || vs.find(v => v.lang.startsWith(lang.slice(0, 2)));
+  }
+  function speak(text) {
+    if (!tts || !listening()) return;
+    if (queued >= 2) { tts.cancel(); queued = 0; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = LANG[tgt].rec;
+    const v = voiceFor(u.lang); if (v) u.voice = v;
+    u.rate = +$('rate').value;
+    u.volume = +$('vol').value;
+    u.onend = u.onerror = () => { queued = Math.max(0, queued - 1); };
+    queued++;
+    tts.speak(u);
+  }
+
+  // Translations finish out of order; speak them in the order they were heard.
+  let speakChain = Promise.resolve();
+  function addFinal(text) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = '<div class="src"></div><div class="dst wait">翻訳中…</div>';
+    item.querySelector('.src').textContent = text;
+    log.appendChild(item);
+    const dst = item.querySelector('.dst');
+    const p = translate(text).then(t => { dst.textContent = t; dst.classList.remove('wait'); return t; },
+      () => { dst.textContent = '(翻訳できませんでした。インターネット接続を確認してください)'; return null; });
+    speakChain = speakChain.then(() => p).then(t => { if (t) speak(t); });
+  }
+
+  let interimTimer = null, interimSeq = 0;
+  function showInterim(text) {
+    clearTimeout(interimTimer);
+    if (!text) { interimSeq++; interimSrc.textContent = '…'; interimDst.textContent = ''; return; }
+    interimSrc.textContent = text;
+    interimTimer = setTimeout(async () => {
+      const seq = ++interimSeq;
+      try { const t = await translate(text); if (seq === interimSeq) interimDst.textContent = t; } catch (e) {}
+    }, 600);
+  }
+  $('clear').onclick = () => { log.innerHTML = ''; showInterim(''); };
+
+  // ---- Earphone detection ----
+  // Device labels are only exposed after microphone permission. Safari lists inputs only,
+  // so a Bluetooth/wired headset's microphone counts as "earphones in" too.
+  const EAR_RE = /head(phone|set)|ear(phone|bud|piece)|airpods|buds|bluetooth|hands-?free|beats|イヤホン|イヤフォン|ヘッドホン|ヘッドフォン|ヘッドセット/i;
+  async function detectEarphones() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return null;
+    const devs = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind !== 'videoinput' && d.label);
+    if (!devs.length) return null;
+    return devs.some(d => EAR_RE.test(d.label));
+  }
+
+  let armed = false, ear = null, manual = false;
+  const listening = () => armed && (ear === true || manual);
+
+  // ---- Speech recognition ----
+  let rec = null, recRunning = false;
+  if (SR) {
+    rec = new SR();
+    rec.continuous = true;
+    rec.interimResults = true;
+    rec.onresult = e => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript.trim();
+        if (!t) continue;
+        if (e.results[i].isFinal) addFinal(t); else interim += t;
+      }
+      showInterim(interim);
+    };
+    rec.onerror = e => {
+      if (e.error === 'no-speech' || e.error === 'aborted') return;
+      const msg = {
+        'not-allowed': 'マイクの使用が許可されていません。ブラウザの設定でマイクを「許可」にしてください。',
+        'service-not-allowed': 'このブラウザでは音声認識が使えません。Chrome（パソコン・Android）か Safari（iPhone）で開いてください。',
+        'audio-capture': 'マイクが見つかりません。',
+        'network': '音声認識に必要な通信ができませんでした。インターネット接続を確認してください。'
+      }[e.error] || 'エラー: ' + e.error;
+      showWarn(msg);
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { armed = false; apply(); }
+    };
+    // Recognition ends on its own after silence; restart while we should be listening.
+    rec.onend = () => {
+      recRunning = false;
+      if (listening()) { try { rec.start(); recRunning = true; } catch (e) {} }
+    };
+  }
+
+  let wakeLock = null;
+  async function keepAwake(on) {
+    try {
+      if (on && !wakeLock && 'wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.onrelease = () => { wakeLock = null; }; }
+      if (!on && wakeLock) { wakeLock.release(); wakeLock = null; }
+    } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') keepAwake(listening()); });
+
+  function showWarn(msg) { $('warn').textContent = msg; $('warn').hidden = !msg; }
+
+  // Start or stop listening to match the current state, and update the UI.
+  function apply() {
+    const on = listening();
+    if (rec) {
+      if (on && !recRunning) { rec.lang = LANG[src].rec; try { rec.start(); recRunning = true; } catch (e) {} }
+      if (!on && recRunning) { rec.stop(); }
+    }
+    if (!on) { if (tts) tts.cancel(); queued = 0; showInterim(''); }
+    keepAwake(on);
+
+    const arm = $('arm');
+    arm.classList.toggle('on', armed);
+    arm.textContent = armed ? '■ イヤホン翻訳をオフにする' : '🎧 イヤホン翻訳をオンにする';
+    $('state').classList.toggle('ear', ear === true || manual);
+    $('state').classList.toggle('listening', on);
+    $('manual').hidden = !armed || ear === true;
+    $('manual').textContent = manual ? '手動での開始をやめる' : 'イヤホンをつけています（手動で開始）';
+    let title, text;
+    if (!armed) { title = 'オフ'; text = 'ボタンを押して、マイクの使用を許可してください。'; }
+    else if (on) { title = '翻訳中 — ' + LANG[src].name + ' → ' + LANG[tgt].name; text = (manual && ear !== true ? '手動で開始しました。' : 'イヤホンを検出しました。') + '聞こえた' + LANG[src].name + 'を' + LANG[tgt].name + 'にして耳に流しています。'; }
+    else if (ear === null) { title = 'イヤホンを確認できません'; text = 'この端末ではイヤホンを自動で見分けられません。イヤホンをつけたら「手動で開始」を押してください。'; }
+    else { title = 'イヤホン待ち'; text = 'イヤホンをつけると自動で翻訳が始まります。'; }
+    $('stateTitle').textContent = title;
+    $('stateText').textContent = text;
+  }
+
+  async function refreshEar() {
+    try { ear = await detectEarphones(); } catch (e) { ear = null; }
+    apply();
+  }
+  if (navigator.mediaDevices && 'ondevicechange' in navigator.mediaDevices) {
+    navigator.mediaDevices.addEventListener('devicechange', () => { if (armed) refreshEar(); });
+  }
+
+  $('arm').onclick = async () => {
+    if (armed) { armed = false; manual = false; apply(); return; }
+    if (!SR) { showWarn('このブラウザでは音声認識が使えません。Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。'); return; }
+    showWarn('');
+    // Speaking must first be allowed from a tap (iPhone); an empty utterance unlocks it.
+    if (tts) { tts.cancel(); tts.speak(new SpeechSynthesisUtterance('')); }
+    $('stateTitle').textContent = 'マイクを確認中…';
+    try {
+      const s = await navigator.mediaDevices.getUserMedia({audio: true});
+      s.getTracks().forEach(t => t.stop());
+    } catch (e) {
+      showWarn('マイクの使用が許可されていません。ブラウザの設定でマイクを「許可」にしてください。');
+      apply();
+      return;
+    }
+    armed = true;
+    refreshEar();
+  };
+  $('manual').onclick = () => { manual = !manual; apply(); };
+  $('dir').onchange = () => {
+    try { localStorage.setItem('earDir', $('dir').value); } catch (e) {}
+    syncDir();
+    if (recRunning) rec.stop(); // onend restarts it in the new language
+    if (rec) rec.lang = LANG[src].rec;
+    apply();
+  };
+  apply();
+})();
+</script>
+</body></html>

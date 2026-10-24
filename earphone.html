@@ -35,6 +35,8 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
 .hint{font-size:13px;color:var(--sub)}
 .warn{margin-bottom:12px;background:var(--warnbg);color:var(--warnfg);border-radius:10px;padding:10px 14px;font-size:14px}
 input[type=range]{width:110px}
+.dict{margin-bottom:16px}
+.dict textarea{width:100%;font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;min-height:48px}
 .engine{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:16px}
 .engine summary{cursor:pointer;font-size:14px;color:var(--sub)}
 .engine .bar{margin:10px 0 0}
@@ -74,6 +76,7 @@ input[type=range]{width:110px}
 <div class="state" id="state"><div class="icon">🎧</div><div><b id="stateTitle">オフ</b><span id="stateText">ボタンを押して、マイクの使用を許可してください。</span></div></div>
 <button id="manual" type="button" hidden>イヤホンをつけています（手動で開始）</button>
 <div class="live"><div class="src" id="interimSrc">…</div><div id="interimDst"></div></div>
+<div class="dict"><textarea id="dict" rows="2" placeholder="聞き取りができないときは、ここをタップしてキーボードの 🎤 で聞き取れます"></textarea></div>
 <div id="log"></div>
 <p class="hint">しくみ：マイクで聞き取った言葉を翻訳し、ブラウザの読み上げ機能で再生します。「翻訳の精度」で高精度モードにすると、会話の流れから聞き間違いも補正して訳します。音はイヤホンから流れるので、相手には聞こえません。画面を消すと聞き取りが止まることがあるため、使っている間は画面をつけたままにしてください。イヤホンを自動で見分けられない端末では「手動で開始」を押してください。</p>
 </main>
@@ -307,15 +310,44 @@ input[type=range]{width:110px}
         'audio-capture': 'マイクが見つかりません。',
         'network': '音声認識に必要な通信ができませんでした。インターネット接続を確認してください。'
       }[e.error] || 'エラー: ' + e.error;
-      showWarn(msg);
-      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { armed = false; apply(); }
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') useDictation();
+      else showWarn(msg);
     };
     // Recognition ends on its own after silence; restart while we should be listening.
     rec.onend = () => {
       recRunning = false;
-      if (listening()) { try { rec.start(); recRunning = true; } catch (e) {} }
+      if (listening() && !srBlocked) { try { rec.start(); recRunning = true; } catch (e) {} }
     };
   }
+
+  // Where the page may not use the microphone itself (inside some app views, or no speech recognition),
+  // the keyboard's own voice input (🎤) still works in a text field: translate what it writes and
+  // speak it into the earphones as usual.
+  let srBlocked = !SR;
+  const dict = $('dict');
+  function useDictation() {
+    srBlocked = true;
+    if (recRunning) rec.abort();
+    if (armed) manual = true;
+    showWarn('この画面ではボタンでの聞き取りが使えません。下の入力欄をタップして、キーボードの 🎤（音声入力）を押してください。聞き取った言葉を翻訳してイヤホンに流します。');
+    apply();
+    dict.focus();
+  }
+  let committed = 0, dictTimer = null;
+  dict.addEventListener('input', () => {
+    if (committed > dict.value.length) committed = 0;
+    const pending = dict.value.slice(committed).trim();
+    showInterim(pending);
+    clearTimeout(dictTimer);
+    // Dictation pauses between phrases; treat a short pause as the end of one.
+    dictTimer = setTimeout(() => {
+      const t = dict.value.slice(committed).trim();
+      committed = dict.value.length;
+      if (t) { showInterim(''); addFinal(t); }
+    }, 1200);
+  });
+  // Clearing the field while dictating can interrupt it, so only tidy up once it is left.
+  dict.addEventListener('blur', () => { setTimeout(() => { if (document.activeElement !== dict && !dict.value.slice(committed).trim()) { dict.value = ''; committed = 0; } }, 1500); });
 
   let wakeLock = null;
   async function keepAwake(on) {
@@ -331,7 +363,7 @@ input[type=range]{width:110px}
   // Start or stop listening to match the current state, and update the UI.
   function apply() {
     const on = listening();
-    if (rec) {
+    if (rec && !srBlocked) {
       if (on && !recRunning) { rec.lang = LANG[src].rec; try { rec.start(); recRunning = true; } catch (e) {} }
       if (!on && recRunning) { rec.stop(); }
     }
@@ -347,6 +379,7 @@ input[type=range]{width:110px}
     $('manual').textContent = manual ? '手動での開始をやめる' : 'イヤホンをつけています（手動で開始）';
     let title, text;
     if (!armed) { title = 'オフ'; text = 'ボタンを押して、マイクの使用を許可してください。'; }
+    else if (on && srBlocked) { title = '入力欄で翻訳中 — ' + LANG[src].name + ' → ' + LANG[tgt].name; text = '下の入力欄でキーボードの 🎤 を押すと、聞き取った言葉を翻訳してイヤホンに流します。'; }
     else if (on) { title = '翻訳中 — ' + LANG[src].name + ' → ' + LANG[tgt].name; text = (manual && ear !== true ? '手動で開始しました。' : '「' + earName + '」を検出しました。') + '聞こえた' + LANG[src].name + 'を' + LANG[tgt].name + 'にして耳に流しています。'; }
     else if (ear === null) { title = 'イヤホンを確認できません'; text = 'この端末ではイヤホンを自動で見分けられません。イヤホンをつけたら「手動で開始」を押してください。'; }
     else { title = 'イヤホン待ち'; text = 'イヤホンをつけると自動で翻訳が始まります。'; }
@@ -367,21 +400,24 @@ input[type=range]{width:110px}
 
   $('arm').onclick = async () => {
     if (armed) { armed = false; manual = false; apply(); return; }
-    if (!SR) { showWarn('このブラウザでは音声認識が使えません。Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。'); return; }
     showWarn('');
     // Speaking must first be allowed from a tap (iPhone); an empty utterance unlocks it.
     if (tts) { tts.cancel(); tts.speak(new SpeechSynthesisUtterance('')); }
     $('stateTitle').textContent = 'マイクを確認中…';
+    // Microphone access is only needed to read device names for earphone detection; never let it
+    // block turning the mode on.
+    let micOk = false;
     try {
-      const s = await navigator.mediaDevices.getUserMedia({audio: true});
+      const s = await Promise.race([
+        navigator.mediaDevices.getUserMedia({audio: true}),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+      ]);
       s.getTracks().forEach(t => t.stop());
-    } catch (e) {
-      showWarn('マイクの使用が許可されていません。ブラウザの設定でマイクを「許可」にしてください。');
-      apply();
-      return;
-    }
+      micOk = true;
+    } catch (e) {}
     armed = true;
     ear = null;
+    if (!micOk || srBlocked) { useDictation(); return; }
     apply();
     refreshEar();
   };

@@ -155,10 +155,12 @@ input[type=range]{width:110px}
     if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return null;
     const devs = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind !== 'videoinput' && d.label);
     if (!devs.length) return null;
-    return devs.some(d => EAR_RE.test(d.label));
+    const hit = devs.find(d => EAR_RE.test(d.label));
+    earName = hit ? hit.label.replace(/^(default|communications|既定|通信)\s*-\s*/i, '') : '';
+    return !!hit;
   }
 
-  let armed = false, ear = null, manual = false;
+  let armed = false, ear = null, earName = '', manual = false;
   const listening = () => armed && (ear === true || manual);
 
   // ---- Speech recognition ----
@@ -224,7 +226,7 @@ input[type=range]{width:110px}
     $('manual').textContent = manual ? '手動での開始をやめる' : 'イヤホンをつけています（手動で開始）';
     let title, text;
     if (!armed) { title = 'オフ'; text = 'ボタンを押して、マイクの使用を許可してください。'; }
-    else if (on) { title = '翻訳中 — ' + LANG[src].name + ' → ' + LANG[tgt].name; text = (manual && ear !== true ? '手動で開始しました。' : 'イヤホンを検出しました。') + '聞こえた' + LANG[src].name + 'を' + LANG[tgt].name + 'にして耳に流しています。'; }
+    else if (on) { title = '翻訳中 — ' + LANG[src].name + ' → ' + LANG[tgt].name; text = (manual && ear !== true ? '手動で開始しました。' : '「' + earName + '」を検出しました。') + '聞こえた' + LANG[src].name + 'を' + LANG[tgt].name + 'にして耳に流しています。'; }
     else if (ear === null) { title = 'イヤホンを確認できません'; text = 'この端末ではイヤホンを自動で見分けられません。イヤホンをつけたら「手動で開始」を押してください。'; }
     else { title = 'イヤホン待ち'; text = 'イヤホンをつけると自動で翻訳が始まります。'; }
     $('stateTitle').textContent = title;
@@ -232,9 +234,12 @@ input[type=range]{width:110px}
   }
 
   async function refreshEar() {
+    const before = ear + earName;
     try { ear = await detectEarphones(); } catch (e) { ear = null; }
-    apply();
+    if (before !== ear + earName) apply();
   }
+  // Safari doesn't always fire devicechange when AirPods connect or disconnect, so also check periodically.
+  setInterval(() => { if (armed) refreshEar(); }, 3000);
   if (navigator.mediaDevices && 'ondevicechange' in navigator.mediaDevices) {
     navigator.mediaDevices.addEventListener('devicechange', () => { if (armed) refreshEar(); });
   }
@@ -255,6 +260,8 @@ input[type=range]{width:110px}
       return;
     }
     armed = true;
+    ear = null;
+    apply();
     refreshEar();
   };
   $('manual').onclick = () => { manual = !manual; apply(); };

@@ -47,7 +47,12 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
   const $ = id => document.getElementById(id);
   const mic = $('mic'), status = $('status'), log = $('log');
   const interimJa = $('interimJa'), interimEn = $('interimEn');
-  if (!SR) { $('unsupported').hidden = false; mic.disabled = true; return; }
+  const UNSUPPORTED = 'このブラウザでは音声認識が使えません。LINEやInstagramなどのアプリ内ブラウザやファイルのプレビューではなく、Chrome（パソコン・Android）か Safari（iPhone）で直接開いてください。';
+  if (!SR) {
+    $('unsupported').hidden = false; $('unsupported').textContent = UNSUPPORTED;
+    mic.onclick = () => alert(UNSUPPORTED);
+    return;
+  }
 
   const LANG = {ja: {rec: 'ja-JP', name: '日本語'}, en: {rec: 'en-US', name: '英語'}};
   let src = 'en', tgt = 'ja';
@@ -55,14 +60,15 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
 
   // Prefer the browser's built-in on-device translator (Chrome 138+); fall back to the MyMemory API.
   let translator = null;
+  // Runs in the background: the online fallback is used until the on-device model is ready.
   async function initTranslator() {
     translator = null;
+    const pair = {sourceLanguage: src, targetLanguage: tgt};
     try {
-      const pair = {sourceLanguage: src, targetLanguage: tgt};
-      if ('Translator' in self && (await Translator.availability(pair)) !== 'unavailable') {
-        translator = await Translator.create(pair);
-      }
-    } catch (e) { translator = null; }
+      if (!('Translator' in self) || (await Translator.availability(pair)) === 'unavailable') return;
+      const t = await Translator.create(pair);
+      if (pair.sourceLanguage === src && pair.targetLanguage === tgt) translator = t;
+    } catch (e) {}
   }
   async function translate(text) {
     if (translator) { try { return await translator.translate(text); } catch (e) {} }
@@ -111,9 +117,17 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
     if (interim) { interimJa.textContent = interim; translateInterim(interim); }
     else { clearTimeout(interimTimer); interimSeq++; interimJa.textContent = '…'; interimEn.textContent = ''; }
   };
+  const ERRORS = {
+    'not-allowed': 'マイクの使用が許可されていません。アドレスバーの鍵マーク（またはブラウザの設定）からマイクを「許可」にしてください。',
+    'service-not-allowed': 'このブラウザでは音声認識が使えません。Chrome か Safari で開いてください。',
+    'audio-capture': 'マイクが見つかりません。マイクがつながっているか確認してください。',
+    'network': '音声認識に必要な通信ができませんでした。インターネット接続を確認してください。'
+  };
   rec.onerror = e => {
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { running = false; setUi(); status.textContent = 'マイクの使用が許可されていません。'; }
-    else if (e.error !== 'no-speech' && e.error !== 'aborted') status.textContent = 'エラー: ' + e.error;
+    if (e.error === 'no-speech' || e.error === 'aborted') return;
+    if (ERRORS[e.error] && e.error !== 'network') running = false;
+    setUi();
+    status.textContent = ERRORS[e.error] || 'エラー: ' + e.error;
   };
   // Recognition stops on its own after silence; restart while the user wants it on.
   rec.onend = () => { if (running) { try { rec.start(); } catch (e) {} } };
@@ -122,18 +136,17 @@ label{font-size:14px;color:var(--sub);display:flex;gap:6px;align-items:center}
     mic.classList.toggle('on', running);
     mic.textContent = running ? '■ 停止' : '● 話しはじめる';
     if (running) status.textContent = '聞き取り中… ' + LANG[src].name + 'で話してください。';
-    else if (!status.textContent.startsWith('マイク')) status.textContent = '停止しました。';
+    else status.textContent = '停止しました。';
   }
-  mic.onclick = async () => {
+  mic.onclick = () => {
     running = !running;
-    if (running) {
-      [src, tgt] = $('dir').value.split('-');
-      rec.lang = LANG[src].rec;
-      await initTranslator();
-      try { rec.start(); } catch (e) {}
-    }
-    else rec.stop();
     setUi();
+    if (!running) { rec.stop(); return; }
+    [src, tgt] = $('dir').value.split('-');
+    rec.lang = LANG[src].rec;
+    try { rec.start(); }
+    catch (e) { running = false; setUi(); status.textContent = '音声認識を開始できませんでした: ' + e.message; return; }
+    initTranslator();
   };
   $('dir').onchange = () => {
     try { localStorage.setItem('dir', $('dir').value); } catch (e) {}

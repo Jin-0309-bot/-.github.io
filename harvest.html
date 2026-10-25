@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>株式会社ハーヴェスト｜岐阜市の飲食サービス企業</title>
+<meta name="description" content="株式会社ハーヴェスト（岐阜県岐阜市薮田南）の公式ホームページ。飲食店の運営を通じて、地域の毎日においしさと笑顔を届けます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f2;--surface:#ffffff;--ink:#2b2620;--muted:#6d655a;--line:#e6dfd2;
+  --accent:#c8722c;--accent-ink:#ffffff;--deep:#3d5a3a;--soft:#f3ece0;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1916;--surface:#24211d;--ink:#efe9df;--muted:#b3a99a;--line:#3a352e;
+    --accent:#e08d45;--accent-ink:#1b1916;--deep:#8fb487;--soft:#2b2722;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1916;--surface:#24211d;--ink:#efe9df;--muted:#b3a99a;--line:#3a352e;
+  --accent:#e08d45;--accent-ink:#1b1916;--deep:#8fb487;--soft:#2b2722;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.8;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+img{max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;letter-spacing:.04em}
+.logo svg{flex:none}
+.logo small{display:block;font-size:.68rem;font-weight:500;color:var(--muted);letter-spacing:.18em;line-height:1}
+.menu{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.menu a{color:var(--ink);text-decoration:none;font-size:.92rem}
+.menu a:hover{color:var(--accent)}
+.burger{display:none;background:none;border:0;color:var(--ink);padding:8px;cursor:pointer}
+@media (max-width:760px){
+  .burger{display:block}
+  .menu{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--surface);border-bottom:1px solid var(--line)}
+  .menu.open{display:flex}
+  .menu a{display:block;padding:14px 16px;border-top:1px solid var(--line)}
+}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:96px 0 88px;background:
+  radial-gradient(1200px 400px at 85% -10%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%),
+  radial-gradient(800px 400px at -10% 110%,color-mix(in srgb,var(--deep) 22%,transparent),transparent 60%)}
+.hero .eyebrow{color:var(--accent);font-weight:700;letter-spacing:.24em;font-size:.8rem}
+.hero h1{font-family:"Noto Serif JP",serif;font-size:clamp(2rem,6vw,3.4rem);line-height:1.35;margin:12px 0 20px}
+.hero p{max-width:560px;color:var(--muted);margin:0 0 32px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.95rem;border:2px solid var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{color:var(--accent)}
+.btn:hover{filter:brightness(1.06)}
+.wheat{position:absolute;right:-20px;bottom:-30px;width:320px;opacity:.16;color:var(--accent);pointer-events:none}
+@media (max-width:760px){.hero{padding:64px 0}.wheat{width:200px}}
+
+/* sections */
+section{padding:88px 0}
+section.alt{background:var(--soft)}
+.sec-head{text-align:center;margin-bottom:48px}
+.sec-head span{color:var(--accent);font-weight:700;letter-spacing:.24em;font-size:.78rem}
+.sec-head h2{font-family:"Noto Serif JP",serif;font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 0}
+
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.about h3{font-family:"Noto Serif JP",serif;font-size:1.5rem;line-height:1.6;margin:0 0 16px}
+.about p{color:var(--muted);margin:0 0 12px}
+.about-visual{aspect-ratio:4/3;border-radius:20px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 40%,var(--deep)));display:grid;place-items:center;color:#fff}
+.about-visual svg{width:42%;opacity:.95}
+@media (max-width:760px){.about{grid-template-columns:1fr;gap:28px}}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px}
+.card .ic{width:48px;height:48px;border-radius:12px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);display:grid;place-items:center;margin-bottom:16px}
+.card h3{margin:0 0 8px;font-size:1.08rem}
+.card p{margin:0;color:var(--muted);font-size:.93rem}
+@media (max-width:860px){.cards{grid-template-columns:1fr}}
+
+.profile{max-width:760px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.profile dl{margin:0;display:grid;grid-template-columns:180px 1fr}
+.profile dt,.profile dd{margin:0;padding:18px 24px;border-bottom:1px solid var(--line)}
+.profile dt{background:var(--soft);font-weight:700;font-size:.92rem}
+.profile dl > :nth-last-child(-n+2){border-bottom:0}
+@media (max-width:560px){
+  .profile dl{grid-template-columns:1fr}
+  .profile dt{padding:12px 16px 4px;border-bottom:0}
+  .profile dd{padding:4px 16px 14px}
+  .profile dl > dt:last-of-type{border-bottom:0}
+}
+
+.recruit{display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:space-between;background:var(--deep);color:#fff;border-radius:20px;padding:48px 40px}
+.recruit h2{font-family:"Noto Serif JP",serif;margin:0 0 8px;font-size:clamp(1.4rem,4vw,1.9rem)}
+.recruit p{margin:0;opacity:.9;max-width:520px}
+.recruit .btn{background:#fff;color:var(--deep);border-color:#fff}
+@media (max-width:560px){.recruit{padding:32px 20px}}
+
+.access{display:grid;grid-template-columns:1fr 1.3fr;gap:32px;align-items:stretch}
+.access .info{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px}
+.access .info h3{margin:0 0 12px}
+.access .info p{margin:0 0 10px;color:var(--muted)}
+.tel{font-size:1.6rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+.map{border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:300px}
+.map iframe{width:100%;height:100%;min-height:300px;border:0;display:block}
+@media (max-width:760px){.access{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:.85rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="株式会社ハーヴェスト トップへ">
+      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="var(--accent)"/><path d="M24 38V14M24 20c-4-1-6-4-6-7 4 0 6 3 6 7Zm0 0c4-1 6-4 6-7-4 0-6 3-6 7Zm0 7c-4-1-6-4-6-7 4 0 6 3 6 7Zm0 0c4-1 6-4 6-7-4 0-6 3-6 7Zm0 7c-4-1-6-4-6-7 4 0 6 3 6 7Zm0 0c4-1 6-4 6-7-4 0-6 3-6 7Z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>株式会社ハーヴェスト<small>HARVEST CO., LTD.</small></span>
+    </a>
+    <button class="burger" aria-label="メニュー" aria-expanded="false" aria-controls="menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <ul class="menu" id="menu">
+      <li><a href="#about">私たちについて</a></li>
+      <li><a href="#business">事業内容</a></li>
+      <li><a href="#company">会社概要</a></li>
+      <li><a href="#recruit">採用情報</a></li>
+      <li><a href="#access">アクセス</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="eyebrow">GIFU ・ FOOD SERVICE</div>
+      <h1>おいしい時間を、<br>地域のまいにちに。</h1>
+      <p>株式会社ハーヴェストは、岐阜市を拠点に飲食店を運営する会社です。手軽でおいしい食事と気持ちのよい接客で、地域のみなさまの暮らしに寄り添います。</p>
+      <div class="btns">
+        <a class="btn primary" href="#business">事業内容を見る</a>
+        <a class="btn ghost" href="#recruit">採用情報</a>
+      </div>
+    </div>
+    <svg class="wheat" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 46V8M24 16c-5-1-8-5-8-9 5 0 8 4 8 9Zm0 0c5-1 8-5 8-9-5 0-8 4-8 9Zm0 9c-5-1-8-5-8-9 5 0 8 4 8 9Zm0 0c5-1 8-5 8-9-5 0-8 4-8 9Zm0 9c-5-1-8-5-8-9 5 0 8 4 8 9Zm0 0c5-1 8-5 8-9-5 0-8 4-8 9Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head"><span>ABOUT</span><h2>私たちについて</h2></div>
+      <div class="about">
+        <div>
+          <h3>「ハーヴェスト（収穫）」の名のとおり、<br>日々の積み重ねを実りに。</h3>
+          <p>私たちは、お客さまに「また来たい」と思っていただけるお店づくりを大切にしています。</p>
+          <p>一皿ひと皿の品質、清潔で居心地のよい店内、そして笑顔の接客。あたりまえのことを丁寧に続けることが、地域から信頼される店につながると考えています。</p>
+          <p>また、ともに働くスタッフ一人ひとりの成長を応援し、働く人にとっても実りのある職場を目指しています。</p>
+        </div>
+        <div class="about-visual" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 34h48a24 24 0 0 1-48 0Z"/><path d="M4 34h56"/><path d="M24 26c0-4 4-4 4-8M32 26c0-4 4-4 4-8M40 26c0-4 4-4 4-8"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="business" class="alt">
+    <div class="wrap">
+      <div class="sec-head"><span>BUSINESS</span><h2>事業内容</h2></div>
+      <div class="cards">
+        <div class="card">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18l-1.5 10h-15Z"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg></div>
+          <h3>飲食店の運営</h3>
+          <p>ファストフードを中心とした飲食店舗を運営。スピーディーで安定した品質のサービスをお届けします。</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 4 3.5 7 8 8 4.5-1 8-4 8-8V7Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>品質・衛生管理</h3>
+          <p>食材の取り扱いから店内の清掃まで、徹底した衛生管理で、安心して食事を楽しめる環境を守ります。</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.5 1-4.5 3-5 2 .5 3 2.5 3 5"/></svg></div>
+          <h3>人材育成</h3>
+          <p>未経験からでも活躍できる教育体制を整え、店舗スタッフから店長・マネージャーへのステップアップを支援します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="company">
+    <div class="wrap">
+      <div class="sec-head"><span>COMPANY</span><h2>会社概要</h2></div>
+      <div class="profile">
+        <dl>
+          <dt>商号</dt><dd>株式会社ハーヴェスト</dd>
+          <dt>代表者</dt><dd>代表取締役　大塚 勲</dd>
+          <dt>本社所在地</dt><dd>〒500-8384<br>岐阜県岐阜市薮田南3丁目8番22号</dd>
+          <dt>電話番号</dt><dd><a href="tel:0582147103">058-214-7103</a></dd>
+          <dt>設立</dt><dd>2014年</dd>
+          <dt>事業内容</dt><dd>飲食店の経営（ファストフード関連）</dd>
+          <dt>従業員数</dt><dd>35名</dd>
+          <dt>法人番号</dt><dd>7200001030630</dd>
+          <dt>適格請求書発行事業者<br>登録番号</dt><dd>T7200001030630</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="recruit" class="alt">
+    <div class="wrap">
+      <div class="recruit">
+        <div>
+          <h2>いっしょに働く仲間を募集しています</h2>
+          <p>店舗スタッフをはじめ、さまざまなポジションで募集中です。未経験の方も歓迎します。募集要項・応募は採用サイトからご確認ください。</p>
+        </div>
+        <a class="btn" href="https://laq6z6b23.jbplt.jp/" target="_blank" rel="noopener">採用サイトへ</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="access">
+    <div class="wrap">
+      <div class="sec-head"><span>ACCESS</span><h2>アクセス・お問い合わせ</h2></div>
+      <div class="access">
+        <div class="info">
+          <h3>本社</h3>
+          <p>〒500-8384<br>岐阜県岐阜市薮田南3丁目8番22号</p>
+          <p>お電話でのお問い合わせ</p>
+          <a class="tel" href="tel:0582147103">058-214-7103</a>
+        </div>
+        <div class="map">
+          <iframe title="本社の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=%E5%B2%90%E9%98%9C%E7%9C%8C%E5%B2%90%E9%98%9C%E5%B8%82%E8%96%AE%E7%94%B0%E5%8D%97%EF%BC%93%E4%B8%81%E7%9B%AE%EF%BC%98%E2%88%92%EF%BC%92%EF%BC%92&z=16&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; <span id="y">2026</span> 株式会社ハーヴェスト All Rights Reserved.</div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+const b=document.querySelector('.burger'),m=document.getElementById('menu');
+b.addEventListener('click',()=>{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('open');b.setAttribute('aria-expanded',false)}));
+</script>
+</body>
+</html>

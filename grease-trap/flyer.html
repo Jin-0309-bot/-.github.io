@@ -13,20 +13,20 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);-webkit-print-color-
 .page{width:210mm;height:297mm;margin:0 auto;background:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column}
 @media print{html,body{background:#fff}}
 
-.head{background:linear-gradient(160deg,var(--brand),var(--deep));color:#fff;padding:10mm 12mm 8mm;position:relative}
+.head{background:linear-gradient(160deg,var(--brand),var(--deep));color:#fff;padding:9mm 12mm 7mm;position:relative}
 .head .tag{display:inline-block;background:var(--accent);color:var(--ink);font-weight:900;font-size:11pt;padding:1.2mm 4mm;border-radius:20mm}
-.head h1{font-size:30pt;line-height:1.25;margin:4mm 0 3mm;font-weight:900;letter-spacing:.01em}
+.head h1{font-size:28pt;line-height:1.25;margin:4mm 0 3mm;font-weight:900;letter-spacing:.01em}
 .head h1 em{font-style:normal;color:var(--accent)}
 .head p{margin:0;font-size:11.5pt;opacity:.95;line-height:1.6}
 .head svg{position:absolute;right:-8mm;top:6mm;width:62mm;opacity:.13}
 
-.body{padding:6mm 12mm 6mm;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:5mm}
+.body{padding:5mm 12mm 5mm;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:5mm}
 h2{font-size:15pt;margin:0 0 3mm;font-weight:900;display:flex;align-items:center;gap:2.5mm}
 h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radius:1mm}
 
-.checks{display:grid;grid-template-columns:1fr 1fr;gap:2.4mm 4mm;margin:0;padding:0;list-style:none}
-.checks li{font-size:10.8pt;font-weight:500;padding:2.4mm 3mm 2.4mm 9mm;border:0.3mm solid var(--line);border-radius:2mm;position:relative}
-.checks li::before{content:"✓";position:absolute;left:2.5mm;top:2.2mm;width:4.6mm;height:4.6mm;line-height:4.6mm;text-align:center;background:var(--warn);color:#fff;border-radius:1mm;font-size:8pt;font-weight:900}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:2mm 4mm;margin:0;padding:0;list-style:none}
+.checks li{font-size:10.5pt;font-weight:500;padding:1.8mm 3mm 1.8mm 9mm;border:0.3mm solid var(--line);border-radius:2mm;position:relative}
+.checks li::before{content:"✓";position:absolute;left:2.5mm;top:1.7mm;width:4.6mm;height:4.6mm;line-height:4.6mm;text-align:center;background:var(--warn);color:#fff;border-radius:1mm;font-size:8pt;font-weight:900}
 
 .plans{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
 .plan{border:0.4mm solid var(--line);border-radius:3mm;padding:5mm 5mm 4mm;position:relative}
@@ -36,6 +36,8 @@ h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radi
 .plan .p{font-size:30pt;font-weight:900;color:var(--brand);line-height:1.15;margin:1mm 0}
 .plan .p small{font-size:9.5pt;color:var(--muted);font-weight:500}
 .plan ul{margin:0;padding-left:4.5mm;font-size:9.5pt;color:var(--muted);line-height:1.6}
+.option{margin-top:3mm;border:0.4mm dashed var(--brand);border-radius:3mm;padding:2.5mm 4mm;font-size:9.8pt}
+.option b{color:var(--brand);margin-right:2mm}
 .prov{font-size:8.5pt;color:var(--muted);margin:2mm 0 0}
 
 .points{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
@@ -47,7 +49,7 @@ h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radi
 .foot .free{display:inline-block;background:var(--accent);color:var(--ink);font-weight:900;font-size:11pt;padding:1mm 4mm;border-radius:10mm}
 .foot .tel{font-size:30pt;font-weight:900;letter-spacing:.02em;line-height:1.2;margin:1.5mm 0}
 .foot .tel small{font-size:12pt;margin-right:2mm}
-.foot .co{font-size:9.5pt;line-height:1.6;opacity:.9}
+.foot .co{font-size:9pt;line-height:1.6;opacity:.9}
 .qr{background:#fff;padding:2mm;border-radius:2mm;text-align:center;color:var(--ink);font-size:7.5pt;font-weight:700;width:30mm}
 .qr img{width:26mm;height:26mm;display:block;margin-bottom:1mm}
 </style>
@@ -55,9 +57,9 @@ h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radi
 <body>
 <div class="page">
   <div class="head">
-    <span class="tag">岐阜市・各務原市・大垣市の飲食店さまへ</span>
+    <span class="tag">岐阜・愛知・三重の飲食店さまへ</span>
     <h1>グリストラップの<br><em>におい・詰まり</em>、<br>まるごとお任せください。</h1>
-    <p>定期清掃から汚泥の回収・処分まで、ひとつの窓口で対応します。</p>
+    <p>定期清掃から汚泥の回収・処分、厨房機器の回収まで、ひとつの窓口で対応します。</p>
     <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.1"><path d="M12 2.5S5 10 5 14.5a7 7 0 0 0 14 0C19 10 12 2.5 12 2.5Z"/></svg>
   </div>
 
@@ -85,18 +87,19 @@ h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radi
         </div>
         <div class="plan">
           <h3>汚泥回収・処分</h3>
-          <div class="p">15,000<small>円〜／1回（税込）</small></div>
+          <div class="p">12,000<small>円〜／1回（税込）</small></div>
           <ul><li>底にたまった汚泥を吸引・回収</li><li>産業廃棄物として適正に処分</li><li>マニフェストを発行</li></ul>
         </div>
       </div>
+      <div class="option"><b>オプション</b>閉店・改装・入れ替えで不要になった<b style="color:var(--ink);margin:0">厨房機器の回収</b>もご依頼に応じて対応します（お見積り）。</div>
       <p class="prov">※ 料金は目安です。槽の容量・設置場所・汚れの量により変わります。</p>
     </div>
 
     <div>
       <h2>ハーヴェストが選ばれる理由</h2>
       <div class="points">
-        <div><b>清掃から処分まで一括</b><span>清掃と汚泥の回収・処分を窓口ひとつで。</span></div>
-        <div><b>許可を持って適正処理</b><span>産業廃棄物収集運搬業の許可を取得。マニフェストを発行します。</span></div>
+        <div><b>清掃から回収まで一括</b><span>清掃・汚泥処分・厨房機器の回収を窓口ひとつで。</span></div>
+        <div><b>許可を持って適正処理</b><span>愛知・岐阜・三重で産業廃棄物収集運搬業の許可を取得。マニフェストを発行します。</span></div>
         <div><b>営業時間外も相談可</b><span>開店前・閉店後の作業もご相談ください。</span></div>
       </div>
     </div>
@@ -106,7 +109,7 @@ h2::before{content:"";width:2.2mm;height:6mm;background:var(--brand);border-radi
     <div>
       <span class="free">現地調査・お見積り 無料</span>
       <div class="tel"><small>TEL</small>058-214-7103</div>
-      <div class="co">株式会社ハーヴェスト　〒500-8384 岐阜県岐阜市薮田南3丁目8番22号<br>産業廃棄物収集運搬業許可　岐阜県 第◯◯◯◯◯◯◯◯◯◯号</div>
+      <div class="co">株式会社ハーヴェスト　〒500-8384 岐阜県岐阜市薮田南3丁目8番22号<br>産業廃棄物収集運搬業許可　愛知県 第◯◯◯◯号／岐阜県 第◯◯◯◯号／三重県 第◯◯◯◯号</div>
     </div>
     <div class="qr"><img src="qr.svg" alt="Webページへのリンク">詳しくはWebで</div>
   </div>

@@ -489,17 +489,17 @@ const LAZY = {
 };
 
 /* ---- 参照の書き換え（コピー・行列の挿入削除・シート名変更） ---- */
-const REF_RE = new RegExp(`(?<![\\w$.!${JP}])((?:[A-Za-z_${JP}][\\w${JP}]*)!)?(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+)(?::(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+))?(?![\\w(!])`, 'g');
+const REF_RE = new RegExp(`(^|[^\\w$.!${JP}])((?:[A-Za-z_${JP}][\\w${JP}]*)!)?(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+)(?::(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+))?(?![\\w(!])`, 'g');
 const fmtRef = p => (p.ac ? '$' : '') + colName(p.c) + (p.ar ? '$' : '') + (p.r + 1);
 const outsideStrings = (f, fn) => f.split(/("(?:[^"]|"")*"?)/).map((part, i) => i % 2 ? part : fn(part)).join('');
 function mapRefs(f, fn) {
-  return outsideStrings(f, part => part.replace(REF_RE, (m, sh, ac1, c1, ar1, r1, ac2, c2, ar2, r2) => {
+  return outsideStrings(f, part => part.replace(REF_RE, (m, pre, sh, ac1, c1, ar1, r1, ac2, c2, ar2, r2) => {
     const a = { c: colIdx(c1), r: +r1 - 1, ac: !!ac1, ar: !!ar1 };
     const b = c2 ? { c: colIdx(c2), r: +r2 - 1, ac: !!ac2, ar: !!ar2 } : null;
     const res = fn(sh ? sh.slice(0, -1) : null, a, b);
     if (res === undefined) return m;
-    if (res === null) return '#REF!';
-    return (sh || '') + fmtRef(res.a) + (res.b ? ':' + fmtRef(res.b) : '');
+    if (res === null) return pre + '#REF!';
+    return pre + (sh || '') + fmtRef(res.a) + (res.b ? ':' + fmtRef(res.b) : '');
   }));
 }
 function shiftFormula(f, dr, dc) {
@@ -857,6 +857,7 @@ wrap.addEventListener('mousedown', e => {
   }
   updateSel(); focusNav();
 });
+wrap.addEventListener('click', () => { if (touch && editing && document.activeElement !== editor && document.activeElement !== fbar) editor.focus(); });
 wrap.addEventListener('dblclick', e => {
   const td = e.target.closest('#grid td'); if (!td || touch) return;
   const p = posOf(td); act = p; ext = { ...p };
@@ -1140,10 +1141,10 @@ function renameSheet(i) {
   const nn = name.trim();
   if (!SHEET_NAME.test(nn)) { alert('この名前は使えません。先頭は数字以外、記号やスペースなしにしてください。'); return; }
   if (nn.toLowerCase() !== old.toLowerCase() && sheetIdx(nn) >= 0) { alert('同じ名前のシートがあります。'); return; }
-  const re = new RegExp(`(?<![\\w$.!${JP}])${old.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}!`, 'gi');
+  const re = new RegExp(`(^|[^\\w$.!${JP}])${old.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}!`, 'gi');
   commit(() => {
     state.sheets[i].name = nn;
-    for (const s of state.sheets) for (const cell of Object.values(s.cells)) if (isFormula(cell.v)) cell.v = outsideStrings(cell.v, p => p.replace(re, nn + '!'));
+    for (const s of state.sheets) for (const cell of Object.values(s.cells)) if (isFormula(cell.v)) cell.v = outsideStrings(cell.v, p => p.replace(re, '$1' + nn + '!'));
   });
 }
 function deleteSheet(i) {

@@ -489,7 +489,8 @@ const SELC = '#217346';
 function paintSel() {
   for (const td of painted) td.style.boxShadow = '';
   painted = [];
-  if (fhTd) { const fh = fhTd.querySelector('#fh'); if (fh) fh.remove(); if (fhTd._rel) { fhTd.style.position = ''; fhTd._rel = 0; } fhTd = null; }
+  const keepFh = drag && drag.touch && drag.t === 'cell';
+  if (fhTd && !keepFh) { const fh = fhTd.querySelector('#fh'); if (fh) fh.remove(); if (fhTd._rel) { fhTd.style.position = ''; fhTd._rel = 0; } fhTd = null; }
   for (const th of hlHeads) th.classList.remove('hl', 'full');
   hlHeads = [];
   const R = rect(), A = anchorOf(act), single = isSingle(R), hidR = rowHiddenSet(book.cur);
@@ -510,7 +511,7 @@ function paintSel() {
       if (sh.length) { td.style.boxShadow = sh.join(','); painted.push(td); }
     }
   }
-  if (!chartOn && !editing) {
+  if (!chartOn && !editing && !keepFh) {
     let br = R.r1; while (br > R.r0 && hidR.has(br)) br--;
     let bc = R.c1; while (bc > R.c0 && isColHidden(bc)) bc--;
     const a = anchorOf({ r: br, c: bc }), td = tds[a.r][a.c];
@@ -1306,26 +1307,47 @@ function finishResize(d) {
   undoS.push(d.snap); redoS.length = 0; afterChange();
 }
 /* タッチ操作：列の幅・行の高さを指でドラッグして変更 */
+let lp = null;
 wrap.addEventListener('touchstart', e => {
   const t = e.touches[0];
+  clearTimeout(lp && lp.timer); lp = null;
   if (e.touches.length !== 1) return;
+  if (e.target.id === 'fh' && !editing) { e.preventDefault(); drag = { t: 'cell', touch: true }; return; }
   const eh = edgeHit(e.target, t.clientX, t.clientY, 14);
-  if (!eh) return;
-  e.preventDefault();
-  drag = eh.t === 'resize' ? { t: 'resize', c: eh.c, x: t.clientX, w: sheet().colW[eh.c] || DEFW, snap: snapshot(), touch: true }
-    : { t: 'resizeR', r: eh.r, y: t.clientY, h: sheet().rowH[eh.r] || DEFH, snap: snapshot(), touch: true };
+  if (eh) {
+    e.preventDefault();
+    drag = eh.t === 'resize' ? { t: 'resize', c: eh.c, x: t.clientX, w: sheet().colW[eh.c] || DEFW, snap: snapshot(), touch: true }
+      : { t: 'resizeR', r: eh.r, y: t.clientY, h: sheet().rowH[eh.r] || DEFH, snap: snapshot(), touch: true };
+    return;
+  }
+  // 長押しでメニュー
+  if (editing || !e.target.closest('#grid td,#grid th')) return;
+  lp = { x: t.clientX, y: t.clientY, fired: false };
+  lp.timer = setTimeout(() => {
+    const h = hitAt(lp.x, lp.y); if (!h) return;
+    const R = rect(), inside = h.r >= R.r0 && h.r <= R.r1 && h.c >= R.c0 && h.c <= R.c1;
+    if (h.col && !inside) select({ r: 0, c: h.c }, { r: ROWS - 1, c: h.c }, true);
+    else if (h.row && !inside) select({ r: h.r, c: 0 }, { r: h.r, c: COLS - 1 }, true);
+    else if (h.td && !inside) select({ r: h.r, c: h.c }, null, true);
+    lp.fired = true;
+    if (navigator.vibrate) try { navigator.vibrate(10); } catch (err) { /* 無視 */ }
+    App.showCellMenu(lp.x, lp.y + 10, h.col ? 'col' : h.row ? 'row' : 'cell');
+  }, 550);
 }, { passive: false });
 document.addEventListener('touchmove', e => {
+  if (lp && !lp.fired) { const t = e.touches[0]; if (Math.abs(t.clientX - lp.x) + Math.abs(t.clientY - lp.y) > 10) { clearTimeout(lp.timer); lp = null; } }
   if (!drag || !drag.touch) return;
   e.preventDefault();
   const t = e.touches[0]; dragMove(t.clientX, t.clientY);
 }, { passive: false });
-document.addEventListener('touchend', () => {
+document.addEventListener('touchend', e => {
+  if (lp) { clearTimeout(lp.timer); if (lp.fired && e.cancelable) e.preventDefault(); lp = null; }
   if (!drag || !drag.touch) return;
   const d = drag; drag = null;
   if (sizeTip) sizeTip.hidden = true;
+  if (d.t === 'cell') { updateSel(); return; }
   finishResize(d);
-});
+}, { passive: false });
 /* メモのホバー表示 */
 let noteTip = null;
 wrap.addEventListener('mouseover', e => {
@@ -1794,12 +1816,22 @@ App.moveSheet = (from, to, copy) => {
 };
 
 /* ================= 起動 ================= */
+/* 自動で入れていた見本データかどうか（そのままなら空のブックに置き換える） */
+function isAutoSample(b) {
+  if (!b || !Array.isArray(b.sheets) || b.sheets.length !== 1) return false;
+  const c = b.sheets[0].cells || {}, v = k => c[k] && c[k].v;
+  const n = Object.values(c).filter(x => x.v != null && x.v !== '').length;
+  const old = v('A1') === '品目' && v('A2') === 'りんご' && v('A5') === 'バナナ' && n <= 30;
+  const kakei = v('A1') === '家計簿（10月）' && v('A4') === '2026/10/1' && v('C4') === 'スーパー' && n <= 50 && (b.name === 'Book1');
+  return old || kakei;
+}
 App.init = () => {
   build();
   const idx = readIndex();
   let data = null, id = null;
   if (idx.current) { try { data = JSON.parse(lsGet(BOOK_KEY(idx.current))); id = idx.current; } catch (e) { data = null; } }
-  if (!data) { data = migrateV1() || App.sampleBook(); id = null; }
+  if (data && isAutoSample(data)) { const b = newBook(data.name || 'Book1'); data = b; }
+  if (!data) { const m = migrateV1(); data = m && !isAutoSample(m) ? m : newBook('Book1'); id = null; }
   autosave = lsGet('hyokeisan-autosave') !== '0';
   $('autosaveBtn').classList.toggle('on', autosave);
   loadBookData(data, id);

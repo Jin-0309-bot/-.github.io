@@ -157,6 +157,7 @@ function showTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.dataset.panel === name));
   const rb = $('ribbon');
   if (rb.classList.contains('min')) rb.classList.add('peek');
+  rb.scrollLeft = 0;
   fitRibbon();
 }
 function fitRibbon() {
@@ -164,7 +165,16 @@ function fitRibbon() {
   rb.classList.remove('c1', 'c2', 'c3', 'c4');
   if (!panel) return;
   for (const c of ['c1', 'c2', 'c3', 'c4']) { if (panel.scrollWidth <= rb.clientWidth) break; rb.classList.add(c); }
+  ribbonArrows();
 }
+function ribbonArrows() {
+  const rb = $('ribbon'), max = rb.scrollWidth - rb.clientWidth;
+  $('rsL').hidden = rb.scrollLeft <= 2;
+  $('rsR').hidden = max <= 2 || rb.scrollLeft >= max - 2;
+}
+$('ribbon').addEventListener('scroll', ribbonArrows, { passive: true });
+$('rsL').onclick = () => $('ribbon').scrollBy({ left: -Math.round($('ribbon').clientWidth * .7), behavior: 'smooth' });
+$('rsR').onclick = () => $('ribbon').scrollBy({ left: Math.round($('ribbon').clientWidth * .7), behavior: 'smooth' });
 addEventListener('resize', fitRibbon);
 App.fitRibbon = fitRibbon;
 App.showTab = showTab;
@@ -392,6 +402,7 @@ function setZoom(z) {
 }
 const CMD = {
   save: () => { needSel(); if (App.saveNow()) App.toast('このブラウザに保存しました'); },
+  saveDialog: () => saveDialog(),
   undo: () => App.undo(), redo: () => App.redo(),
   cut: () => { needSel(); const c = App.doCopy(true); if (c && navigator.clipboard) navigator.clipboard.writeText(c.text).catch(() => {}); },
   copy: () => { needSel(); const c = App.doCopy(false); if (c && navigator.clipboard) navigator.clipboard.writeText(c.text).catch(() => {}); },
@@ -1690,8 +1701,9 @@ function download(blob, name) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
-function exportCsv() {
-  const U = App.usedRect(); if (!U) { App.alert('このシートは空です。'); return; }
+function exportCsv() { const b = csvBlob(); if (b) download(b, `${book().name}_${sheet().name}.csv`); }
+function csvBlob() {
+  const U = App.usedRect(); if (!U) { App.alert('このシートは空です。'); return null; }
   const si = book().cur, lines = [];
   for (let r = 0; r <= U.r1; r++) {
     const row = [];
@@ -1703,7 +1715,7 @@ function exportCsv() {
     }
     lines.push(row.join(','));
   }
-  download(new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv' }), `${book().name}_${sheet().name}.csv`);
+  return new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv' });
 }
 $('fileCsv').onchange = async e => {
   const f = e.target.files[0]; e.target.value = ''; if (!f) return;
@@ -1802,7 +1814,8 @@ async function importXlsx(file) {
   if (truncated) App.alert(`このブックは ${App.ROWS} 行 × ${App.COLS} 列 (A〜${colName(App.COLS - 1)}) を超える部分があるため、その部分は読み込んでいません。`);
 }
 $('fileXlsx').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) importXlsx(f); };
-async function exportXlsx() {
+async function exportXlsx() { download(await xlsxBlob(), (book().name || 'Book1') + '.xlsx'); }
+async function xlsxBlob() {
   const X = await loadXLSX();
   const wb = X.utils.book_new(), b = book();
   b.sheets.forEach((sh, si) => {
@@ -1828,8 +1841,50 @@ async function exportXlsx() {
     if (sh.merges.length) ws['!merges'] = sh.merges.map(m => ({ s: { r: m.r0, c: m.c0 }, e: { r: m.r1, c: m.c1 } }));
     X.utils.book_append_sheet(wb, ws, sh.name);
   });
-  X.writeFile(wb, (b.name || 'Book1') + '.xlsx');
+  return new Blob([X.write(wb, { type: 'array', bookType: 'xlsx' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 }
+
+
+/* ================= 保存パネル ================= */
+function saveDialog() {
+  if (App.isEditing()) App.commitEdit(0, 0);
+  const safe = n => (n || 'Book1').replace(/[\\/:*?"<>|]/g, '_');
+  const canShare = !!(navigator.canShare && window.File && (() => { try { return navigator.canShare({ files: [new File(['x'], 'a.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })] }); } catch (e) { return false; } })());
+  const body = document.createElement('div');
+  body.style.cssText = 'width:min(420px,calc(100vw - 64px))';
+  body.innerHTML = `<label class="f">ファイル名</label><input type="text" id="svName" style="width:100%;height:32px;font-size:16px">
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+      <button class="bsbtn" data-s="browser" style="max-width:none;border-color:#d0d0d0"><span style="font-size:22px;width:32px;text-align:center">💾</span><span><b>このブラウザに保存</b><small>この端末のこのブラウザに保存します（次に開いたときもそのまま残ります）</small></span></button>
+      ${canShare ? `<button class="bsbtn" data-s="share" style="max-width:none;border-color:#d0d0d0"><span style="font-size:22px;width:32px;text-align:center">📤</span><span><b>ファイルとして保存・共有</b><small>「ファイル」アプリに保存したり、LINE やメールで送ったりできます (.xlsx)</small></span></button>` : ''}
+      <button class="bsbtn" data-s="xlsx" style="max-width:none;border-color:#d0d0d0"><span data-icon="xlsx32"></span><span><b>Excel ファイルをダウンロード (.xlsx)</b><small>Excel やスマホの表計算アプリで開けます</small></span></button>
+      <button class="bsbtn" data-s="csv" style="max-width:none;border-color:#d0d0d0"><span data-icon="csv32"></span><span><b>CSV をダウンロード</b><small>今のシートだけを保存します</small></span></button>
+    </div><p id="svMsg" style="color:#555;min-height:18px;margin:10px 0 0"></p>`;
+  const d = dialog({ title: '保存', body, buttons: [{ label: '閉じる' }] });
+  paintIcons(body);
+  const name = body.querySelector('#svName'), msg = body.querySelector('#svMsg');
+  name.value = book().name;
+  const applyName = () => { const n = name.value.trim(); if (n && n !== book().name) { book().name = n; App.afterChange(); } };
+  body.addEventListener('click', async e => {
+    const b = e.target.closest('[data-s]'); if (!b) return;
+    applyName();
+    const kind = b.dataset.s, fname = safe(book().name);
+    try {
+      if (kind === 'browser') { if (App.saveNow()) { d.close(); App.toast('このブラウザに保存しました'); } else msg.textContent = '保存できませんでした（ブラウザの容量が足りないか、プライベートモードの可能性があります）。'; return; }
+      if (kind === 'csv') { const bl = csvBlob(); if (bl) { download(bl, `${fname}_${safe(sheet().name)}.csv`); d.close(); App.toast('ダウンロードしました'); } return; }
+      msg.textContent = 'ファイルを作成しています…';
+      const blob = await xlsxBlob();
+      App.saveNow();
+      if (kind === 'share') {
+        const file = new File([blob], fname + '.xlsx', { type: blob.type });
+        try { await navigator.share({ files: [file], title: fname }); d.close(); }
+        catch (err) { if (err && err.name === 'AbortError') msg.textContent = ''; else { download(blob, fname + '.xlsx'); d.close(); } }
+        return;
+      }
+      download(blob, fname + '.xlsx'); d.close(); App.toast('ダウンロードしました');
+    } catch (err) { msg.textContent = 'Excel ファイルを作成できませんでした。インターネットに接続されているか確認してください。'; }
+  });
+}
+App.saveDialog = saveDialog;
 
 /* ================= 印刷 ================= */
 function doPrint() {

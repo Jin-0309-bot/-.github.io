@@ -331,3 +331,10 @@ svg{display:block}
 .menu .mi .mic svg{max-width:18px;max-height:18px}
 .dlg .dt .x:focus-visible{outline:2px solid #0078d7;outline-offset:-2px}
 .dlg .dt .x:focus:not(:focus-visible){outline:none}
+
+html{touch-action:manipulation}
+.rscroll{position:sticky;z-index:5;flex:none;align-self:stretch;width:24px;border:0;padding:0;font-size:22px;line-height:1;color:#444;background:linear-gradient(90deg,rgba(243,243,243,.6),#f3f3f3 40%);cursor:pointer}
+.rscroll.l{left:0;margin-right:-24px;background:linear-gradient(270deg,rgba(243,243,243,.6),#f3f3f3 40%)}
+.rscroll.r{right:0;margin-left:-24px}
+.rscroll:hover{color:#217346}
+.rscroll[hidden]{display:none}

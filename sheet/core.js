@@ -1451,19 +1451,15 @@ function handleTap(x, y, target) {
     select({ r: h.r, c: 0 }, { r: h.r, c: COLS - 1 }, true); act = { r: h.r, c: 0 }; updateSel();
   }
 }
-let lp = null, tap = null, pinch = null, zoomRaf = 0;
-function liveZoom(z) {
-  cancelAnimationFrame(zoomRaf);
-  zoomRaf = requestAnimationFrame(() => { sheet().zoom = z; render(); updateSel(); App.onChange && App.onChange(); });
-}
-wrap.addEventListener('gesturestart', e => e.preventDefault());
+let lp = null, tap = null, multi = false;
+// ピンチ操作で画面やシートの大きさが変わらないようにする
+['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 wrap.addEventListener('touchstart', e => {
   clearTimeout(lp && lp.timer); lp = null;
   if (e.touches.length === 2) {
     tap = null;
     if (drag && drag.touch && drag.t !== 'resize' && drag.t !== 'resizeR') { drag = null; hidePick(); }
-    const [a, b] = e.touches;
-    pinch = { d0: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1, z0: sheet().zoom || 100, z: sheet().zoom || 100 };
+    multi = true;
     hideActionBar(); e.preventDefault(); return;
   }
   if (e.touches.length !== 1) return;
@@ -1501,15 +1497,7 @@ wrap.addEventListener('touchstart', e => {
   }, 450);
 }, { passive: false });
 document.addEventListener('touchmove', e => {
-  if (pinch) {
-    if (e.touches.length === 2) {
-      e.preventDefault();
-      const [a, b] = e.touches, d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-      const z = Math.max(25, Math.min(400, Math.round(pinch.z0 * d / pinch.d0 / 5) * 5));
-      if (z !== pinch.z) { pinch.z = z; liveZoom(z); }
-    }
-    return;
-  }
+  if (multi || e.touches.length > 1) { if (e.cancelable) e.preventDefault(); return; }
   const t = e.touches[0];
   if (tap && !tap.moved && Math.abs(t.clientX - tap.x) + Math.abs(t.clientY - tap.y) > 8) { tap.moved = true; hideActionBar(); }
   if (lp && !lp.fired && tap && tap.moved) { clearTimeout(lp.timer); lp = null; }
@@ -1523,7 +1511,7 @@ document.addEventListener('touchmove', e => {
   }
 }, { passive: false });
 document.addEventListener('touchend', e => {
-  if (pinch) { if (e.touches.length < 2) { const z = pinch.z; pinch = null; if (z !== (sheet().zoom || 100) || true) { sheet().zoom = z; afterChange(); } } return; }
+  if (multi) { if (!e.touches.length) multi = false; return; }
   const tp = tap, l = lp;
   tap = null; if (l) clearTimeout(l.timer); lp = null;
   if (drag && drag.touch) {
@@ -2028,6 +2016,7 @@ App.init = () => {
   autosave = lsGet('hyokeisan-autosave') !== '0';
   $('autosaveBtn').classList.toggle('on', autosave);
   loadBookData(data, id);
+  if (touch && lsGet('hyokeisan-zoomreset-1') !== '1') { book.sheets.forEach(s => { s.zoom = 100; }); lsSet('hyokeisan-zoomreset-1', '1'); }
   if (!id) saveNow();
   afterChange(true);
   dirty = false; updateTitle();

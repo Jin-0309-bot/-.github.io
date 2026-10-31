@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>投稿アイデア整理</title>
+<meta name="description" content="思いついた投稿アイデアをテーマ・読者の悩み・投稿形式に整理し、次に作る投稿を提案するツール。">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#dde1ea;--accent:#2f6fec;--soft:#eaf0fe;--warnbg:#fff4d6;--warnfg:#5c4400;--done:#8a93a5}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1b2029;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--accent:#6c9bff;--soft:#1f2a42;--warnbg:#3a2f10;--warnfg:#ffe08a;--done:#6b7385}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:0 0 10px}
+.sub{color:var(--sub);font-size:14px;margin:0 0 20px}
+section{margin-bottom:24px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+button,select,input[type=text],textarea{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px}
+button,select{padding:8px 14px;cursor:pointer}
+input[type=text]{padding:8px 10px;min-width:0}
+textarea{width:100%;padding:10px 12px;resize:vertical;min-height:120px;display:block}
+.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar.top{margin-top:10px}
+.hint{font-size:13px;color:var(--sub);margin:6px 0 0}
+.warn{margin-bottom:12px;background:var(--warnbg);color:var(--warnfg);border-radius:10px;padding:10px 14px;font-size:14px}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:10px}
+.themes{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.themes .row{display:flex;gap:6px}
+.themes .row input{flex:1}
+/* 提案 */
+.pick{background:var(--soft);border:1px solid var(--accent);border-radius:12px;padding:14px}
+.pick .label{font-size:13px;color:var(--accent);font-weight:600}
+.pick .title{font-size:19px;font-weight:700;margin:2px 0 6px;overflow-wrap:anywhere}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.tag{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:1px 10px}
+.spare{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.spare .item{display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.spare .item div{min-width:0;overflow-wrap:anywhere}
+.spare .meta{font-size:13px;color:var(--sub)}
+.empty{color:var(--sub);font-size:14px}
+/* 一覧 */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.filters button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.count{font-size:12px;opacity:.85}
+#list{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.card.done{opacity:.6}
+.card.done .text{text-decoration:line-through;color:var(--done)}
+.card .text{font-weight:600;border-color:transparent;padding:4px 6px;margin:-4px -6px 6px;width:calc(100% + 12px)}
+.card .text:focus{border-color:var(--line)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fields label{display:flex;flex-direction:column;font-size:12px;color:var(--sub);gap:2px;min-width:0}
+.fields .wide{grid-column:1/-1}
+.fields select,.fields input{width:100%}
+.missing{border-color:#e0a030}
+.card .bar{margin-top:10px;justify-content:space-between}
+.small{padding:6px 12px;font-size:14px}
+.danger{color:#d4373c}
+@media (max-width:480px){.fields{grid-template-columns:1fr}}
+</style></head>
+<body><main>
+<h1>💡 投稿アイデア整理</h1>
+<p class="sub">思いついたアイデアをテーマ・読者の悩み・投稿形式で整理し、作りやすいものから次の投稿を提案します。（Instagram向け）</p>
+<div id="nojs" class="warn">この画面ではページの機能（スクリプト）が動いていません。Chrome か Safari でこのページを開いてください。</div>
+<div id="nostore" class="warn" hidden>このブラウザでは保存が使えないため、ページを閉じると内容が消えます。「書き出し」でバックアップしてください。</div>
+
+<section>
+  <h2>1. アイデアを追加</h2>
+  <div class="panel">
+    <textarea id="input" placeholder="- 朝5分でできるスキンケア&#10;- 失敗しない作り置きのコツ&#10;- 1か月の食費を公開"></textarea>
+    <div class="bar top"><button id="add" class="primary" type="button">一覧に追加</button><span id="addMsg" class="hint" style="margin:0"></span></div>
+    <p class="hint">1行に1件。行頭の「-」「・」「*」「1.」などは自動で取り除きます。同じ内容は追加しません。</p>
+  </div>
+</section>
+
+<section>
+  <details id="themePanel" class="panel">
+    <summary>テーマの管理（<span id="themeCount">0</span>件）</summary>
+    <div id="themes" class="themes"></div>
+    <div class="bar"><input type="text" id="newTheme" placeholder="新しいテーマ（例：時短家事）"><button id="addTheme" type="button">追加</button></div>
+  </details>
+</section>
+
+<section>
+  <h2>2. 次に作る投稿</h2>
+  <div id="proposal"></div>
+</section>
+
+<section>
+  <h2>3. 候補一覧</h2>
+  <div class="filters" id="filters"></div>
+  <div class="bar" style="margin-bottom:10px">
+    <label class="hint" style="margin:0">並べ替え
+      <select id="sort">
+        <option value="new">新しい順</option>
+        <option value="old">古い順</option>
+        <option value="effort">手間が小さい順</option>
+        <option value="theme">テーマ順</option>
+        <option value="format">形式順</option>
+      </select>
+    </label>
+  </div>
+  <div id="list"></div>
+</section>
+
+<section>
+  <h2>バックアップ</h2>
+  <div class="bar">
+    <button id="export" type="button">書き出し（JSON）</button>
+    <button id="import" type="button">読み込み</button>
+    <input type="file" id="file" accept="application/json,.json" hidden>
+  </div>
+  <p class="hint">内容はこのブラウザに自動保存されます。別の端末に移すときや念のための控えに「書き出し」を使ってください。</p>
+</section>
+
+<datalist id="pains"></datalist>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  $('nojs').hidden = true;
+
+  const KEY = 'postIdeas.v1';
+  const FORMATS = ['フィード（1枚）', 'カルーセル', 'リール', 'ストーリーズ'];
+  const FORMAT_EFFORT = { 'フィード（1枚）': 1, 'カルーセル': 2, 'リール': 3, 'ストーリーズ': 1 };
+  const EFFORTS = { 1: '小', 2: '中', 3: '大' };
+  const FILTERS = [['all', 'すべて'], ['unsorted', '未分類'], ['todo', '未着手'], ['done', '投稿済み']];
+
+  let state = { ideas: [], themes: [] };
+  let filter = 'all';
+
+  // --- 保存 ---
+  let canStore = true;
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) state = normalize(JSON.parse(raw));
+  } catch (e) { canStore = false; }
+  if (!canStore) $('nostore').hidden = false;
+
+  function save() {
+    if (!canStore) return;
+    try { localStorage.setItem(KEY, JSON.stringify(state)); }
+    catch (e) { canStore = false; $('nostore').hidden = false; }
+  }
+
+  function normalize(d) {
+    const themes = Array.isArray(d && d.themes) ? d.themes.filter(t => typeof t === 'string' && t.trim()) : [];
+    const ideas = Array.isArray(d && d.ideas) ? d.ideas.filter(i => i && typeof i.text === 'string').map(i => ({
+      id: String(i.id || uid()),
+      text: i.text,
+      theme: themes.includes(i.theme) ? i.theme : '',
+      pain: typeof i.pain === 'string' ? i.pain : '',
+      format: FORMATS.includes(i.format) ? i.format : '',
+      effort: EFFORTS[i.effort] ? Number(i.effort) : 0,
+      effortManual: !!i.effortManual,
+      status: i.status === 'done' ? 'done' : 'todo',
+      createdAt: Number(i.createdAt) || Date.now()
+    })) : [];
+    return { ideas, themes };
+  }
+
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  const isSorted = i => i.theme && i.pain.trim() && i.format;
+  const byId = id => state.ideas.find(i => i.id === id);
+
+  // --- 追加 ---
+  $('add').onclick = () => {
+    const seen = new Set(state.ideas.map(i => i.text));
+    const now = Date.now();
+    let added = 0, skipped = 0;
+    $('input').value.split('\n').forEach(line => {
+      const text = line.replace(/^\s*(?:[-*・●○•]|\d+[.)．、]|[（(]\d+[)）])\s*/, '').trim();
+      if (!text) return;
+      if (seen.has(text)) { skipped++; return; }
+      seen.add(text);
+      state.ideas.push({ id: uid(), text, theme: '', pain: '', format: '', effort: 0, effortManual: false, status: 'todo', createdAt: now + added });
+      added++;
+    });
+    $('addMsg').textContent = added ? `${added}件追加しました` + (skipped ? `（重複${skipped}件はスキップ）` : '')
+      : skipped ? 'すべて追加済みのアイデアでした' : 'アイデアを入力してください';
+    if (added) { $('input').value = ''; save(); renderAll(); }
+  };
+
+  // --- テーマ管理 ---
+  function addTheme(name) {
+    name = (name || '').trim();
+    if (!name || state.themes.includes(name)) return name;
+    state.themes.push(name);
+    save();
+    return name;
+  }
+  $('addTheme').onclick = () => {
+    if (addTheme($('newTheme').value)) { $('newTheme').value = ''; renderAll(); }
+  };
+  $('newTheme').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) $('addTheme').click(); });
+
+  function renderThemes() {
+    $('themeCount').textContent = state.themes.length;
+    const box = $('themes');
+    box.innerHTML = '';
+    if (!state.themes.length) {
+      box.innerHTML = '<p class="empty" style="margin:0">テーマがまだありません。発信しているジャンルを追加してください。</p>';
+      return;
+    }
+    state.themes.forEach(t => {
+      const row = el('div', 'row');
+      const inp = el('input'); inp.type = 'text'; inp.value = t; inp.setAttribute('aria-label', 'テーマ名');
+      inp.onchange = () => {
+        const v = inp.value.trim();
+        if (!v || (v !== t && state.themes.includes(v))) { inp.value = t; return; }
+        state.themes[state.themes.indexOf(t)] = v;
+        state.ideas.forEach(i => { if (i.theme === t) i.theme = v; });
+        save(); renderAll();
+      };
+      const del = el('button', 'small danger', '削除'); del.type = 'button';
+      del.onclick = () => {
+        const n = state.ideas.filter(i => i.theme === t).length;
+        if (n && !confirm(`「${t}」を削除すると、${n}件のアイデアのテーマが未設定に戻ります。削除しますか？`)) return;
+        state.themes = state.themes.filter(x => x !== t);
+        state.ideas.forEach(i => { if (i.theme === t) i.theme = ''; });
+        save(); renderAll();
+      };
+      row.append(inp, del);
+      box.append(row);
+    });
+  }
+
+  // --- 提案 ---
+  function renderProposal() {
+    const box = $('proposal');
+    box.innerHTML = '';
+    const cands = state.ideas.filter(i => i.status === 'todo' && isSorted(i))
+      .sort((a, b) => effortOf(a) - effortOf(b) || a.createdAt - b.createdAt);
+    if (!cands.length) {
+      const unsorted = state.ideas.filter(i => i.status === 'todo' && !isSorted(i)).length;
+      box.append(el('p', 'empty', !state.ideas.length ? 'アイデアを追加すると、ここに次の投稿が表示されます。'
+        : unsorted ? `テーマ・悩み・形式がすべて決まったアイデアから提案します。あと${unsorted}件が未分類です。`
+        : '未着手のアイデアがありません。新しいアイデアを追加しましょう。'));
+      return;
+    }
+    const [top, ...rest] = cands;
+    const pick = el('div', 'pick');
+    pick.append(el('div', 'label', '次に作る投稿'), el('div', 'title', top.text), tagsOf(top));
+    const bar = el('div', 'bar top');
+    bar.append(doneButton(top, 'primary small'));
+    pick.append(bar);
+    box.append(pick);
+    if (rest.length) {
+      const spare = el('div', 'spare');
+      spare.append(el('div', 'hint', '予備の候補'));
+      rest.slice(0, 2).forEach(i => {
+        const item = el('div', 'item');
+        const info = el('div');
+        info.append(el('div', '', i.text), el('div', 'meta', `手間：${EFFORTS[effortOf(i)]}／${i.format}／${i.theme}`));
+        item.append(info, doneButton(i, 'small'));
+        spare.append(item);
+      });
+      box.append(spare);
+    }
+  }
+  const effortOf = i => i.effort || FORMAT_EFFORT[i.format] || 2;
+  function tagsOf(i) {
+    const t = el('div', 'tags');
+    [`手間：${EFFORTS[effortOf(i)]}`, i.format, `テーマ：${i.theme}`, `悩み：${i.pain}`].forEach(s => t.append(el('span', 'tag', s)));
+    return t;
+  }
+  function doneButton(i, cls) {
+    const b = el('button', cls, '投稿済みにする'); b.type = 'button';
+    b.onclick = () => { i.status = 'done'; save(); renderAll(); };
+    return b;
+  }
+
+  // --- 一覧 ---
+  const matches = {
+    all: () => true,
+    unsorted: i => !isSorted(i),
+    todo: i => i.status === 'todo',
+    done: i => i.status === 'done'
+  };
+  function renderFilters() {
+    const box = $('filters');
+    box.innerHTML = '';
+    FILTERS.forEach(([k, label]) => {
+      const b = el('button', 'small'); b.type = 'button';
+      b.setAttribute('aria-pressed', String(filter === k));
+      b.append(label + ' ', el('span', 'count', String(state.ideas.filter(matches[k]).length)));
+      b.onclick = () => { filter = k; renderFilters(); renderList(); };
+      box.append(b);
+    });
+  }
+  $('sort').onchange = () => renderList();
+
+  function sorted(list) {
+    const s = $('sort').value;
+    const idx = (arr, v) => v ? arr.indexOf(v) : 1e9;
+    const cmp = {
+      new: (a, b) => b.createdAt - a.createdAt,
+      old: (a, b) => a.createdAt - b.createdAt,
+      effort: (a, b) => (a.format || a.effort ? effortOf(a) : 9) - (b.format || b.effort ? effortOf(b) : 9) || a.createdAt - b.createdAt,
+      theme: (a, b) => idx(state.themes, a.theme) - idx(state.themes, b.theme) || a.createdAt - b.createdAt,
+      format: (a, b) => idx(FORMATS, a.format) - idx(FORMATS, b.format) || a.createdAt - b.createdAt
+    }[s];
+    return list.slice().sort(cmp);
+  }
+
+  function renderList() {
+    const box = $('list');
+    box.innerHTML = '';
+    const list = sorted(state.ideas.filter(matches[filter]));
+    if (!list.length) {
+      box.append(el('p', 'empty', state.ideas.length ? 'この条件に当てはまるアイデアはありません。' : 'まだアイデアがありません。上の欄に箇条書きで貼り付けてください。'));
+      return;
+    }
+    list.forEach(i => box.append(card(i)));
+  }
+
+  function card(i) {
+    const c = el('div', 'card' + (i.status === 'done' ? ' done' : ''));
+    const text = el('input', 'text'); text.type = 'text'; text.value = i.text; text.setAttribute('aria-label', 'アイデア');
+    text.onchange = () => { const v = text.value.trim(); if (v) { i.text = v; save(); renderProposal(); } else text.value = i.text; };
+
+    const f = el('div', 'fields');
+    const theme = select([['', '未設定'], ...state.themes.map(t => [t, t]), ['__new', '＋ 新しいテーマ…']], i.theme);
+    theme.onchange = () => {
+      if (theme.value === '__new') {
+        const name = addTheme(prompt('新しいテーマ名を入力してください') || '');
+        if (name) i.theme = name;
+        save(); renderAll(); return;
+      }
+      i.theme = theme.value; changed();
+    };
+    const format = select([['', '未設定'], ...FORMATS.map(x => [x, x])], i.format);
+    format.onchange = () => {
+      i.format = format.value;
+      if (!i.effortManual) i.effort = FORMAT_EFFORT[i.format] || 0;
+      effort.value = String(i.effort || '');
+      changed();
+    };
+    const effort = select([['', '未設定'], ...Object.entries(EFFORTS)], String(i.effort || ''));
+    effort.onchange = () => { i.effort = Number(effort.value) || 0; i.effortManual = !!i.effort; changed(); };
+    const pain = el('input'); pain.type = 'text'; pain.value = i.pain; pain.setAttribute('list', 'pains');
+    pain.placeholder = '例：朝の準備に時間がかかる';
+    pain.oninput = () => { i.pain = pain.value; mark(); save(); renderProposal(); renderFilters(); };
+    pain.onchange = () => { i.pain = pain.value.trim(); pain.value = i.pain; mark(); save(); renderPains(); renderProposal(); renderFilters(); };
+
+    f.append(field('テーマ', theme), field('投稿形式', format), field('読者の悩み', pain, 'wide'), field('手間', effort));
+
+    const bar = el('div', 'bar');
+    const toggle = el('button', 'small', i.status === 'done' ? '未着手に戻す' : '投稿済みにする'); toggle.type = 'button';
+    toggle.onclick = () => { i.status = i.status === 'done' ? 'todo' : 'done'; save(); renderAll(); };
+    const del = el('button', 'small danger', '削除'); del.type = 'button';
+    del.onclick = () => { if (confirm(`「${i.text}」を削除しますか？`)) { state.ideas = state.ideas.filter(x => x !== i); save(); renderAll(); } };
+    bar.append(toggle, del);
+
+    c.append(text, f, bar);
+    function mark() {
+      theme.classList.toggle('missing', !i.theme);
+      format.classList.toggle('missing', !i.format);
+      pain.classList.toggle('missing', !i.pain.trim());
+    }
+    function changed() { mark(); save(); renderProposal(); renderFilters(); }
+    mark();
+    return c;
+  }
+
+  function renderPains() {
+    const box = $('pains');
+    box.innerHTML = '';
+    [...new Set(state.ideas.map(i => i.pain.trim()).filter(Boolean))].forEach(p => { const o = el('option'); o.value = p; box.append(o); });
+  }
+
+  // --- バックアップ ---
+  $('export').onclick = () => {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const a = el('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `post-ideas-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+  $('import').onclick = () => $('file').click();
+  $('file').onchange = async () => {
+    const f = $('file').files[0];
+    $('file').value = '';
+    if (!f) return;
+    try {
+      const data = normalize(JSON.parse(await f.text()));
+      if (!confirm(`${data.ideas.length}件のアイデアを読み込みます。今の内容は置き換わります。よろしいですか？`)) return;
+      state = data; save(); renderAll();
+    } catch (e) { alert('読み込めませんでした。このツールで書き出した JSON ファイルを選んでください。'); }
+  };
+
+  // --- 共通 ---
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function select(opts, value) {
+    const s = el('select');
+    opts.forEach(([v, label]) => { const o = el('option', '', label); o.value = v; s.append(o); });
+    s.value = value;
+    return s;
+  }
+  function field(label, input, cls) {
+    const l = el('label', cls || '');
+    l.append(label, input);
+    return l;
+  }
+  function renderAll() { renderThemes(); renderProposal(); renderFilters(); renderList(); renderPains(); }
+
+  if (!state.themes.length) $('themePanel').open = true;
+  renderAll();
+})();
+</script>
+</body></html>

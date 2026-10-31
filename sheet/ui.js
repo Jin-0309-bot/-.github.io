@@ -415,6 +415,8 @@ const CMD = {
   pasteFormulas: () => { needSel(); App.getClip() ? App.pasteInternal('formulas') : CMD.paste(); },
   pasteFormats: () => { needSel(); if (App.getClip()) App.pasteInternal('formats'); },
   pasteTranspose: () => { needSel(); if (App.getClip()) App.pasteInternal('transpose'); },
+  negate: () => negateSel(),
+  pasteOp: op => pasteOp(op),
   painter: () => { if (App.painter) stopPainter(); else startPainter(false); },
   painterSticky: () => startPainter(true),
   painterOff: () => stopPainter(),
@@ -582,6 +584,67 @@ function toggleFilter() {
   App.commit(() => { sh.filter = { r0: R.r0, r1: R.r1, c0: R.c0, c1: R.c1, crit: {} }; });
 }
 
+
+/* ================= 符号の反転・計算して貼り付け ================= */
+const NOCALC_FMT = /date|ldate|md|datetime|time|hm|text/;
+function negateSel() {
+  needSel();
+  const R = App.rect(), sh = sheet();
+  let n = 0;
+  App.commit(() => {
+    App.eachIn(R, (r, c) => {
+      const x = sh.cells[keyOf(r, c)];
+      if (!x || x.v == null || x.v === '' || (x.fmt && NOCALC_FMT.test(x.fmt))) return;
+      if (isFormula(x.v)) {
+        const m = /^=-\(([\s\S]*)\)$/.exec(x.v);
+        x.v = m ? '=' + m[1] : '=-(' + x.v.slice(1) + ')';
+        n++; return;
+      }
+      const p = E.parseInput(String(x.v));
+      if (typeof p.v !== 'number') return;
+      if (p.fmt && !x.fmt) x.fmt = p.fmt;
+      x.v = String(-p.v);
+      n++;
+    });
+    if (!n) return false;
+  });
+  App.toast(n ? `${n} 個のセルの符号を反転しました` : '反転できる数値のセルがありません');
+}
+function pasteOp(op) {
+  needSel();
+  const clip = App.getClip();
+  if (!clip) { App.alert('先に、計算に使う数値のセルをコピーしてください。\n（例：全部に -1 を掛けたいときは、どこかのセルに -1 と入力してコピーします）'); return; }
+  const h = clip.vals.length, w = clip.vals[0].length, R0 = App.rect();
+  const R = App.isSingle(R0) ? { r0: R0.r0, r1: Math.min(App.ROWS - 1, R0.r0 + h - 1), c0: R0.c0, c1: Math.min(App.COLS - 1, R0.c0 + w - 1) } : R0;
+  const sym = { add: '+', sub: '-', mul: '*', div: '/' }[op];
+  const sh = sheet();
+  let n = 0;
+  App.commit(() => {
+    App.eachIn(R, (r, c) => {
+      const s = clip.vals[(r - R.r0) % h][(c - R.c0) % w];
+      if (typeof s !== 'number') return;
+      const x = sh.cells[keyOf(r, c)];
+      if (!x || x.v == null || x.v === '' || (x.fmt && NOCALC_FMT.test(x.fmt))) return;
+      if (isFormula(x.v)) { x.v = `=(${x.v.slice(1)})${sym}${s < 0 ? '(' + s + ')' : s}`; n++; return; }
+      const p = E.parseInput(String(x.v));
+      if (typeof p.v !== 'number') return;
+      if (p.fmt && !x.fmt) x.fmt = p.fmt;
+      if (op === 'div' && s === 0) { x.v = '#DIV/0!'; n++; return; }
+      const v = op === 'add' ? p.v + s : op === 'sub' ? p.v - s : op === 'mul' ? p.v * s : p.v / s;
+      x.v = String(E.roundTo(v, 12));
+      n++;
+    });
+    if (!n) return false;
+  });
+  App.toast(n ? `${n} 個のセルを計算しました` : '計算できる数値のセルがありません');
+}
+const CALC_MENU = () => [
+  { label: '足し算（コピーした数を足す）', action: () => App.cmd('pasteOp:add') },
+  { label: '引き算（コピーした数を引く）', action: () => App.cmd('pasteOp:sub') },
+  { label: '掛け算（コピーした数を掛ける）', action: () => App.cmd('pasteOp:mul') },
+  { label: '割り算（コピーした数で割る）', action: () => App.cmd('pasteOp:div') },
+];
+
 /* ================= メニューの定義 ================= */
 const FMT_LIST = [
   ['general', '標準', 'ABC\n123'], ['number', '数値', '12'], ['currency', '通貨', '¥'], ['accounting', '会計', '¥'], ['date', '短い日付形式', '📅'], ['ldate', '長い日付形式', '📅'],
@@ -665,6 +728,9 @@ const MENUS = {
     { label: '値', action: () => App.cmd('pasteValues') },
     { label: '書式設定', icon: 'painter', action: () => App.cmd('pasteFormats') },
     { label: '行/列の入れ替え', action: () => App.cmd('pasteTranspose') },
+    '-',
+    { label: '計算して貼り付け', sub: CALC_MENU },
+    { label: '符号を反転（マイナスをつける）', action: () => App.cmd('negate') },
   ],
   underline: () => [{ label: '下線', icon: 'underline', action: () => App.cmd('underline') }, { label: '二重下線', action: () => App.cmd('underlineDouble') }],
   borders: () => [
@@ -910,6 +976,8 @@ App.showCellMenu = (x, y, kind) => {
     { label: '数式だけ貼り付け(F)', disabled: !clip, action: () => App.cmd('pasteFormulas') },
     { label: '書式だけ貼り付け(R)', icon: 'painter', disabled: !clip, action: () => App.cmd('pasteFormats') },
     { label: '行と列を入れ替えて貼り付け(T)', disabled: !clip, action: () => App.cmd('pasteTranspose') },
+    { label: '計算して貼り付け(O)', disabled: !clip, sub: CALC_MENU },
+    { label: '符号を反転（マイナスをつける）', action: () => App.cmd('negate') },
     '-',
     isRow ? { label: `挿入(I)`, action: () => App.cmd('insertRows') } : isCol ? { label: '挿入(I)', action: () => App.cmd('insertCols') } : { label: '挿入(I)...', action: () => cellsDialog(true) },
     isRow ? { label: '削除(D)', action: () => App.cmd('deleteRows') } : isCol ? { label: '削除(D)', action: () => App.cmd('deleteCols') } : { label: '削除(D)...', action: () => cellsDialog(false) },

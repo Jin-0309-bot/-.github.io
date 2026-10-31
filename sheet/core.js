@@ -1144,7 +1144,17 @@ function tdPos(td) {
 function hitAt(x, y) {
   const el = document.elementFromPoint(x, y);
   if (!el || !el.closest) return null;
-  const td = el.closest('#grid td'); if (td) return { ...tdPos(td), td: true };
+  const td = el.closest('#grid td');
+  if (td) {
+    // 隣のセルからはみ出した文字などに引っぱられないよう、触れた位置の座標そのものでセルを決める
+    const r = td.parentNode.rowIndex - 1, row = tds[r];
+    for (let c = 0; c < COLS; c++) {
+      const t = row[c]; if (t._cov) continue;
+      const b = t.getBoundingClientRect();
+      if (b.width > 0 && x >= b.left && x < b.right) return { r, c, td: true };
+    }
+    return { ...tdPos(td), td: true };
+  }
   const th = el.closest('#grid th');
   if (th && th.classList.contains('ch')) return { r: 0, c: colHeads.indexOf(th), col: true };
   if (th && th.classList.contains('rh')) return { r: th.parentNode.rowIndex - 1, c: 0, row: true };

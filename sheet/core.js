@@ -526,7 +526,8 @@ function updateSel(opts) {
   paintSel();
   const R = rect();
   if (document.activeElement !== nameBox) nameBox.value = drag && drag.t === 'cell' && !isSingle(R) ? `${R.r1 - R.r0 + 1}R x ${R.c1 - R.c0 + 1}C` : keyOf(act.r, act.c);
-  if (!editing) { fbar.value = rawForEdit(act); placeEditor(); }
+  if (!editing) { fbar.value = rawForEdit(act); placeEditor(); if (editor.value.trim()) resetNav(); setMode(clip && !clip.done ? (touch ? '貼り付けたいセルをタップして［貼り付け］を押します' : '貼り付け先を選択し、Enter キーを押すか、貼り付けを選択します。') : '準備完了'); }
+  if (!editing && App.hideActionBar && !(opts && opts.keepBar)) App.hideActionBar();
   updateStatus(R);
   placeDv();
   if (clip && !clip.done && clip.si === book.cur) showAnts(clip.R); else hideAnts();
@@ -764,7 +765,7 @@ function growEditor() {
   if (editor.scrollHeight > editor.clientHeight) editor.style.height = editor.scrollHeight + 'px';
 }
 function setMode(m) { $('mode').textContent = m; }
-function resetNav() { if (!editing) { editor.value = ' '; try { editor.setSelectionRange(0, 1); } catch (e) { /* 無視 */ } } }
+function resetNav() { if (!editing) { editor.value = touch ? '' : ' '; if (!touch) try { editor.setSelectionRange(0, 1); } catch (e) { /* 無視 */ } } }
 function focusNav() {
   if (editing || touch) return;
   const ae = document.activeElement;
@@ -795,6 +796,7 @@ function startEdit(kind, value) {
 App.startEdit = startEdit;
 function endEdit() {
   editing = false; editKind = null; refIns = null;
+  editor.value = ''; resetNav();
   editor.classList.remove('on'); editor.style.fontSize = '';
   $('fCancel').disabled = true; $('fEnter').disabled = true;
   hideAC(); hideArgTip(); clearRefBoxes(); hidePick();
@@ -1082,7 +1084,7 @@ function navKey(e) {
   }
   if (e.shiftKey && (k === ' ' || e.code === 'Space') && !mod) { e.preventDefault(); return selectRows(); }
   switch (k) {
-    case 'Enter': e.preventDefault(); moveInSel(e.shiftKey ? -1 : 1, 0); break;
+    case 'Enter': e.preventDefault(); if (clip && !e.shiftKey) { pasteInternal('all'); clip = null; hideAnts(); updateSel(); break; } moveInSel(e.shiftKey ? -1 : 1, 0); break;
     case 'Tab': e.preventDefault(); moveInSel(0, e.shiftKey ? -1 : 1); break;
     case 'F2': e.preventDefault(); if (startEdit('edit', rawForEdit(act))) editor.setSelectionRange(editor.value.length, editor.value.length); break;
     case 'F9': e.preventDefault(); App.refresh(); break;
@@ -1094,7 +1096,7 @@ function navKey(e) {
     case 'Home': e.preventDefault(); select({ r: act.r, c: 0 }); break;
     case 'PageDown': e.preventDefault(); move(Math.max(1, Math.floor(wrap.clientHeight / rowH(act.r)) - 1), 0); break;
     case 'PageUp': e.preventDefault(); move(-Math.max(1, Math.floor(wrap.clientHeight / rowH(act.r)) - 1), 0); break;
-    case 'Escape': if (clip) { clip = null; hideAnts(); } if (App.painter) App.cmd('painterOff'); break;
+    case 'Escape': if (clip) { clip = null; hideAnts(); updateSel(); } if (App.painter) App.cmd('painterOff'); break;
     case 'ContextMenu': e.preventDefault(); { const b = cellRectPx(act.r, act.c), wr = wrap.getBoundingClientRect(); App.showCellMenu(wr.left + b.x - wrap.scrollLeft + b.w / 2, wr.top + b.y - wrap.scrollTop + b.h, 'cell'); } break;
   }
 }
@@ -1166,8 +1168,18 @@ function edgeHit(target, x, y, tol) {
   return null;
 }
 let hoverEdgeEl = null;
+function selBorderHit(x, y, tol) {
+  if (editing || App.chartSel != null) return false;
+  const R = rect(), b = rangeRectPx(R), wr = wrap.getBoundingClientRect();
+  const cx = x - wr.left + wrap.scrollLeft - wrap.clientLeft, cy = y - wr.top + wrap.scrollTop - wrap.clientTop;
+  const out = cx >= b.x - tol && cx <= b.x + b.w + tol && cy >= b.y - tol && cy <= b.y + b.h + tol;
+  const inn = cx > b.x + tol && cx < b.x + b.w - tol && cy > b.y + tol && cy < b.y + b.h - tol;
+  const nearFill = cx > b.x + b.w - 10 && cy > b.y + b.h - 10;
+  return out && !inn && !nearFill;
+}
 wrap.addEventListener('mousemove', e => {
   if (drag) return;
+  wrap.classList.toggle('mv', !touch && !!(e.target.closest && e.target.closest('#grid td')) && e.target.id !== 'fh' && selBorderHit(e.clientX, e.clientY, 4));
   const eh = edgeHit(e.target, e.clientX, e.clientY, 5);
   const th = e.target.closest && e.target.closest('#grid th');
   if (hoverEdgeEl && hoverEdgeEl !== th) { hoverEdgeEl.style.cursor = ''; hoverEdgeEl = null; }
@@ -1198,6 +1210,12 @@ wrap.addEventListener('mousedown', e => {
   if (e.target.closest('.fbtn')) { e.preventDefault(); const b = e.target.closest('.fbtn'); App.showFilterMenu(+b.dataset.fc, b); return; }
   if (e.target.closest('.dvbtn')) return;
   const h = hitAt(e.clientX, e.clientY);
+  if (h && h.td && e.button === 0 && !e.shiftKey && selBorderHit(e.clientX, e.clientY, 4)) {
+    e.preventDefault();
+    const R = rect();
+    drag = { t: 'move', R, grab: { r: Math.min(Math.max(h.r, R.r0), R.r1), c: Math.min(Math.max(h.c, R.c0), R.c1) }, dr: 0, dc: 0, moved: false };
+    return;
+  }
   if (!h) {
     if (e.target.closest('th.corner')) { e.preventDefault(); if (editing) commitEdit(0, 0); select({ r: 0, c: 0 }, { r: ROWS - 1, c: COLS - 1 }, true); act = { r: 0, c: 0 }; updateSel(); focusNav(); }
     return;
@@ -1259,6 +1277,14 @@ function dragMove(x, y) {
   if (drag.t === 'cell' && h.td) { if (ext.r !== h.r || ext.c !== h.c) { ext = { r: h.r, c: h.c }; updateSel(); } }
   else if (drag.t === 'col') { ext = { r: ROWS - 1, c: h.c }; act = { r: 0, c: drag.a }; updateSel(); }
   else if (drag.t === 'row') { ext = { r: h.r, c: COLS - 1 }; updateSel(); }
+  else if (drag.t === 'move' && h.td) {
+    const R = drag.R;
+    let dr = h.r - drag.grab.r, dc = h.c - drag.grab.c;
+    dr = Math.max(-R.r0, Math.min(ROWS - 1 - R.r1, dr)); dc = Math.max(-R.c0, Math.min(COLS - 1 - R.c1, dc));
+    drag.dr = dr; drag.dc = dc; if (dr || dc) drag.moved = true;
+    const D = { r0: R.r0 + dr, r1: R.r1 + dr, c0: R.c0 + dc, c1: R.c1 + dc };
+    if (dr || dc) { showPick(D); nameBox.value = rangeName(D); } else hidePick();
+  }
   else if (drag.t === 'pick' && h.td) {
     const a = drag.a, R = expandRect({ r0: Math.min(a.r, h.r), r1: Math.max(a.r, h.r), c0: Math.min(a.c, h.c), c1: Math.max(a.c, h.c) });
     insertRef(drag.inp, rangeName(R)); showPick(R);
@@ -1281,7 +1307,7 @@ document.addEventListener('mousemove', e => {
   if (!drag) return;
   lastMouse = { x: e.clientX, y: e.clientY };
   dragMove(e.clientX, e.clientY);
-  if (['cell', 'pick', 'fill', 'col', 'row'].includes(drag.t)) {
+  if (['cell', 'pick', 'fill', 'col', 'row', 'move'].includes(drag.t)) {
     const wr = wrap.getBoundingClientRect();
     const dx = e.clientX > wr.right - 20 ? 20 : e.clientX < wr.left + 50 ? -20 : 0;
     const dy = e.clientY > wr.bottom - 20 ? 20 : e.clientY < wr.top + 30 ? -20 : 0;
@@ -1289,10 +1315,11 @@ document.addEventListener('mousemove', e => {
     if (dx || dy) autoScroll = setInterval(() => { wrap.scrollLeft += dx; wrap.scrollTop += dy; if (lastMouse) dragMove(Math.min(Math.max(lastMouse.x, wr.left + 50), wr.right - 22), Math.min(Math.max(lastMouse.y, wr.top + 30), wr.bottom - 22)); }, 50);
   }
 });
-document.addEventListener('mouseup', () => {
+document.addEventListener('mouseup', e => {
   clearInterval(autoScroll);
-  if (!drag) return;
+  if (!drag || drag.touch) return;
   const d = drag; drag = null;
+  if (d.t === 'move') { hidePick(); if (d.moved && (d.dr || d.dc)) moveRange(d.R, d.dr, d.dc, e.ctrlKey || e.metaKey); else updateSel(); return; }
   if (sizeTip) sizeTip.hidden = true;
   if (d.t === 'resize' || d.t === 'resizeR') finishResize(d);
   if (d.t === 'fill') { hidePick(); if (d.to) applyFill(d.to); focusNav(); }
@@ -1305,47 +1332,201 @@ function finishResize(d) {
   if (d.t === 'resizeR' && R.c0 === 0 && R.c1 === COLS - 1 && d.r >= R.r0 && d.r <= R.r1) for (let r = R.r0; r <= R.r1; r++) sh.rowH[r] = sh.rowH[d.r];
   undoS.push(d.snap); redoS.length = 0; afterChange();
 }
-/* タッチ操作：列の幅・行の高さを指でドラッグして変更 */
-let lp = null;
+/* ================= セルの移動（ドラッグで移動） ================= */
+function moveRange(R, dr, dc, copy) {
+  if (!dr && !dc) return;
+  const sh = sheet(), si = book.cur;
+  const D = { r0: R.r0 + dr, r1: R.r1 + dr, c0: R.c0 + dc, c1: R.c1 + dc };
+  if (D.r0 < 0 || D.c0 < 0 || D.r1 >= ROWS || D.c1 >= COLS) return;
+  const inR = (r, c) => r >= R.r0 && r <= R.r1 && c >= R.c0 && c <= R.c1;
+  let occupied = false;
+  eachIn(D, (r, c) => { if (!inR(r, c) && hasValue(sh, r, c)) occupied = true; });
+  const run = () => commit(() => {
+    const src = {};
+    eachIn(R, (r, c) => { const x = sh.cells[keyOf(r, c)]; src[keyOf(r, c)] = x ? JSON.parse(JSON.stringify(x)) : null; });
+    const srcMerges = sh.merges.filter(m => m.r0 >= R.r0 && m.r1 <= R.r1 && m.c0 >= R.c0 && m.c1 <= R.c1);
+    if (!copy) eachIn(R, (r, c) => delete sh.cells[keyOf(r, c)]);
+    eachIn(R, (r, c) => {
+      const x = src[keyOf(r, c)], k = keyOf(r + dr, c + dc);
+      if (!x) { delete sh.cells[k]; return; }
+      if (copy && isFormula(x.v)) x.v = engine.shiftFormula(x.v, dr, dc);
+      sh.cells[k] = x;
+    });
+    sh.merges = sh.merges.filter(m => (!copy && srcMerges.includes(m)) ? false : (m.r1 < D.r0 || m.r0 > D.r1 || m.c1 < D.c0 || m.c0 > D.c1));
+    for (const m of srcMerges) { sh.merges.push({ r0: m.r0 + dr, r1: m.r1 + dr, c0: m.c0 + dc, c1: m.c1 + dc }); if (copy) sh.merges.push(m); }
+    if (!copy) {
+      // 移動したセルを参照している数式も一緒に書き換える（Excel と同じ）
+      book.sheets.forEach((s2, idx) => {
+        for (const cell of Object.values(s2.cells)) if (isFormula(cell.v)) {
+          cell.v = engine.mapRefs(cell.v, (shn, a, b2) => {
+            const t = shn ? sheetIdx(shn) : idx; if (t !== si || a.full) return undefined;
+            const mv = p => ({ ...p, r: p.r + dr, c: p.c + dc });
+            if (b2) return inR(a.r, a.c) && inR(b2.r, b2.c) ? { a: mv(a), b: mv(b2) } : undefined;
+            return inR(a.r, a.c) ? { a: mv(a), b: null } : undefined;
+          });
+        }
+      });
+    }
+    act = { r: act.r + dr, c: act.c + dc }; ext = { r: ext.r + dr, c: ext.c + dc };
+    if (clip) clip = null;
+  });
+  if (occupied) App.confirm('ここにはすでにデータがあります。置き換えますか?', run, { ok: '置き換える' }); else run();
+}
+App.moveRange = moveRange;
+
+/* ================= タッチ操作 ================= */
+// ・タップ位置そのもので判定する（ブラウザによる「近くの要素への補正」を使わない）
+// ・選択中のセルをもう一度タップ → 操作バー、ダブルタップ → 編集
+// ・長押しして指を動かす → セルの移動、そのまま離す → 操作バー
+// ・2本指でピンチ → ズーム
+const abar = document.createElement('div'); abar.id = 'abar'; abar.hidden = true; document.body.appendChild(abar);
+function hideActionBar() { abar.hidden = true; }
+App.hideActionBar = hideActionBar;
+function showActionBar() {
+  if (editing) return;
+  const R = rect(), b = rangeRectPx(R), wr = wrap.getBoundingClientRect();
+  const left = wr.left + b.x - wrap.scrollLeft, top = wr.top + b.y - wrap.scrollTop;
+  const items = [['edit', '編集'], ['cut', '切り取り'], ['copy', 'コピー'], ['paste', '貼り付け'], ['clear', '消去'], ['more', '…']];
+  abar.innerHTML = items.map(([k, l]) => `<button data-a="${k}"${k === 'paste' && clip ? ' class="hot"' : ''}>${l}</button>`).join('');
+  abar.hidden = false;
+  const w = abar.offsetWidth, h = abar.offsetHeight;
+  let x = Math.max(6, Math.min(innerWidth - w - 6, left + Math.min(b.w, wr.width) / 2 - w / 2));
+  let y = top - h - 10;
+  if (y < wr.top + 2) y = Math.min(innerHeight - h - 6, top + Math.min(b.h, wr.height) + 10);
+  abar.style.left = x + 'px'; abar.style.top = Math.max(wr.top + 2, y) + 'px';
+}
+App.showActionBar = showActionBar;
+abar.addEventListener('click', e => {
+  const b = e.target.closest('[data-a]'); if (!b) return;
+  const k = b.dataset.a, r = abar.getBoundingClientRect();
+  hideActionBar();
+  if (k === 'edit') { if (startEdit('edit', rawForEdit(act))) { editor.focus(); editor.setSelectionRange(editor.value.length, editor.value.length); } }
+  else if (k === 'clear') clearRange('contents');
+  else if (k === 'more') App.showCellMenu(r.left, r.bottom + 4, isSingle(rect()) || !(rect().r0 === 0 && rect().r1 === ROWS - 1) ? (rect().c0 === 0 && rect().c1 === COLS - 1 ? 'row' : 'cell') : 'col');
+  else App.cmd(k);
+});
+wrap.addEventListener('scroll', hideActionBar, { passive: true });
+function handleTap(x, y, target) {
+  App.hideMenus && App.hideMenus();
+  hideActionBar();
+  if (target && target.closest && target.closest('th.corner')) { if (editing && !commitEdit(0, 0)) return; select({ r: 0, c: 0 }, { r: ROWS - 1, c: COLS - 1 }, true); act = { r: 0, c: 0 }; updateSel(); return; }
+  const h = hitAt(x, y); if (!h) return;
+  if (editing) {
+    const inp = curInput();
+    if (h.td && canInsertRef(inp)) { insertRef(inp, keyOf(h.r, h.c)); showPick({ r0: h.r, r1: h.r, c0: h.c, c1: h.c }); return; }
+    if (!commitEdit(0, 0)) return;
+  }
+  App.chartSel = null;
+  const now = Date.now();
+  if (h.td) {
+    const a = anchorOf(h), R = rect();
+    const same = a.r === act.r && a.c === act.c;
+    if (same && isSingle(R) && now - lastTap.t < 380 && lastTap.r === h.r && lastTap.c === h.c) {
+      lastTap = { t: 0, r: -1, c: -1 };
+      if (startEdit('edit', rawForEdit(act))) { editor.focus(); editor.setSelectionRange(editor.value.length, editor.value.length); }
+      return;
+    }
+    lastTap = { t: now, r: h.r, c: h.c };
+    const inside = h.r >= R.r0 && h.r <= R.r1 && h.c >= R.c0 && h.c <= R.c1;
+    if ((same && isSingle(R)) || (inside && !isSingle(R))) { showActionBar(); return; }
+    act = { r: a.r, c: a.c }; ext = { r: h.r, c: h.c }; updateSel();
+    if (App.painter) App.cmd('painterApply');
+  } else if (h.col) {
+    const R = rect();
+    if (R.r0 === 0 && R.r1 === ROWS - 1 && h.c >= R.c0 && h.c <= R.c1) { showActionBar(); return; }
+    select({ r: 0, c: h.c }, { r: ROWS - 1, c: h.c }, true); act = { r: 0, c: h.c }; updateSel();
+  } else if (h.row) {
+    const R = rect();
+    if (R.c0 === 0 && R.c1 === COLS - 1 && h.r >= R.r0 && h.r <= R.r1) { showActionBar(); return; }
+    select({ r: h.r, c: 0 }, { r: h.r, c: COLS - 1 }, true); act = { r: h.r, c: 0 }; updateSel();
+  }
+}
+let lp = null, tap = null, pinch = null, zoomRaf = 0;
+function liveZoom(z) {
+  cancelAnimationFrame(zoomRaf);
+  zoomRaf = requestAnimationFrame(() => { sheet().zoom = z; render(); updateSel(); App.onChange && App.onChange(); });
+}
+wrap.addEventListener('gesturestart', e => e.preventDefault());
 wrap.addEventListener('touchstart', e => {
-  const t = e.touches[0];
   clearTimeout(lp && lp.timer); lp = null;
+  if (e.touches.length === 2) {
+    tap = null;
+    if (drag && drag.touch && drag.t !== 'resize' && drag.t !== 'resizeR') { drag = null; hidePick(); }
+    const [a, b] = e.touches;
+    pinch = { d0: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1, z0: sheet().zoom || 100, z: sheet().zoom || 100 };
+    hideActionBar(); e.preventDefault(); return;
+  }
   if (e.touches.length !== 1) return;
-  if (e.target.id === 'fh' && !editing) { e.preventDefault(); drag = { t: 'cell', touch: true }; return; }
-  const eh = edgeHit(e.target, t.clientX, t.clientY, 14);
+  const t = e.touches[0], el = e.target;
+  if (!el.closest || el === editor || el.closest('.chart,.fbtn,.dvbtn')) return;
+  if (el.id === 'fh' && !editing) { e.preventDefault(); hideActionBar(); drag = { t: 'cell', touch: true }; return; }
+  const eh = edgeHit(el, t.clientX, t.clientY, 8);
   if (eh) {
-    e.preventDefault();
+    e.preventDefault(); hideActionBar();
     drag = eh.t === 'resize' ? { t: 'resize', c: eh.c, x: t.clientX, w: sheet().colW[eh.c] || DEFW, snap: snapshot(), touch: true }
       : { t: 'resizeR', r: eh.r, y: t.clientY, h: sheet().rowH[eh.r] || DEFH, snap: snapshot(), touch: true };
     return;
   }
-  // 長押しでメニュー
-  if (editing || !e.target.closest('#grid td,#grid th')) return;
+  if (!el.closest('#grid td,#grid th')) return;
+  tap = { x: t.clientX, y: t.clientY, t: Date.now(), moved: false, el };
+  if (editing) return;
   lp = { x: t.clientX, y: t.clientY, fired: false };
   lp.timer = setTimeout(() => {
+    if (!tap || tap.moved || !lp) return;
     const h = hitAt(lp.x, lp.y); if (!h) return;
     const R = rect(), inside = h.r >= R.r0 && h.r <= R.r1 && h.c >= R.c0 && h.c <= R.c1;
     if (h.col && !inside) select({ r: 0, c: h.c }, { r: ROWS - 1, c: h.c }, true);
     else if (h.row && !inside) select({ r: h.r, c: 0 }, { r: h.r, c: COLS - 1 }, true);
     else if (h.td && !inside) select({ r: h.r, c: h.c }, null, true);
     lp.fired = true;
-    if (navigator.vibrate) try { navigator.vibrate(10); } catch (err) { /* 無視 */ }
-    App.showCellMenu(lp.x, lp.y + 10, h.col ? 'col' : h.row ? 'row' : 'cell');
-  }, 550);
+    hideActionBar();
+    if (navigator.vibrate) try { navigator.vibrate(12); } catch (err) { /* 無視 */ }
+    if (h.td) {
+      const R2 = rect();
+      drag = { t: 'move', touch: true, R: R2, grab: { r: Math.min(Math.max(h.r, R2.r0), R2.r1), c: Math.min(Math.max(h.c, R2.c0), R2.c1) }, dr: 0, dc: 0, moved: false };
+      wrap.classList.add('lifting');
+      showPick(R2);
+      App.toast && App.toast('指を動かすと、選んだセルを移動できます');
+    }
+  }, 450);
 }, { passive: false });
 document.addEventListener('touchmove', e => {
-  if (lp && !lp.fired) { const t = e.touches[0]; if (Math.abs(t.clientX - lp.x) + Math.abs(t.clientY - lp.y) > 10) { clearTimeout(lp.timer); lp = null; } }
+  if (pinch) {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const [a, b] = e.touches, d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      const z = Math.max(25, Math.min(400, Math.round(pinch.z0 * d / pinch.d0 / 5) * 5));
+      if (z !== pinch.z) { pinch.z = z; liveZoom(z); }
+    }
+    return;
+  }
+  const t = e.touches[0];
+  if (tap && !tap.moved && Math.abs(t.clientX - tap.x) + Math.abs(t.clientY - tap.y) > 8) { tap.moved = true; hideActionBar(); }
+  if (lp && !lp.fired && tap && tap.moved) { clearTimeout(lp.timer); lp = null; }
   if (!drag || !drag.touch) return;
   e.preventDefault();
-  const t = e.touches[0]; dragMove(t.clientX, t.clientY);
+  dragMove(t.clientX, t.clientY);
+  if (drag.t === 'move') {
+    const wr = wrap.getBoundingClientRect();
+    if (t.clientY > wr.bottom - 30) wrap.scrollTop += 12; else if (t.clientY < wr.top + 40) wrap.scrollTop -= 12;
+    if (t.clientX > wr.right - 30) wrap.scrollLeft += 12; else if (t.clientX < wr.left + 50) wrap.scrollLeft -= 12;
+  }
 }, { passive: false });
 document.addEventListener('touchend', e => {
-  if (lp) { clearTimeout(lp.timer); if (lp.fired && e.cancelable) e.preventDefault(); lp = null; }
-  if (!drag || !drag.touch) return;
-  const d = drag; drag = null;
-  if (sizeTip) sizeTip.hidden = true;
-  if (d.t === 'cell') { updateSel(); return; }
-  finishResize(d);
+  if (pinch) { if (e.touches.length < 2) { const z = pinch.z; pinch = null; if (z !== (sheet().zoom || 100) || true) { sheet().zoom = z; afterChange(); } } return; }
+  const tp = tap, l = lp;
+  tap = null; if (l) clearTimeout(l.timer); lp = null;
+  if (drag && drag.touch) {
+    const d = drag; drag = null;
+    if (sizeTip) sizeTip.hidden = true;
+    wrap.classList.remove('lifting');
+    if (e.cancelable) e.preventDefault();
+    if (d.t === 'cell') { updateSel(); return; }
+    if (d.t === 'move') { hidePick(); if (d.moved && (d.dr || d.dc)) moveRange(d.R, d.dr, d.dc, false); else { updateSel({ keepBar: true }); showActionBar(); } return; }
+    finishResize(d); return;
+  }
+  if (l && l.fired) { if (e.cancelable) e.preventDefault(); updateSel({ keepBar: true }); showActionBar(); return; }
+  if (tp && !tp.moved && Date.now() - tp.t < 700) { if (e.cancelable) e.preventDefault(); handleTap(tp.x, tp.y, tp.el); }
 }, { passive: false });
 /* メモのホバー表示 */
 let noteTip = null;
@@ -1520,6 +1701,7 @@ function doCopy(cut) {
   const merges = sh.merges.filter(m => m.r0 >= R.r0 && m.r1 <= R.r1 && m.c0 >= R.c0 && m.c1 <= R.c1).map(m => ({ r0: m.r0 - R.r0, r1: m.r1 - R.r0, c0: m.c0 - R.c0, c1: m.c1 - R.c0 }));
   const html = buildHtmlClip(R);
   clip = { si: book.cur, R, cells, vals, text: lines.join('\n'), html, cut, merges };
+  App.toast && App.toast(cut ? '切り取りました。移動先を選んでください' : 'コピーしました。貼り付けたい場所を選んでください');
   updateSel();
   return clip;
 }
@@ -1557,6 +1739,7 @@ function parseDelim(text, d) {
 App.parseDelim = parseDelim;
 const norm = t => t.replace(/\r\n?/g, '\n').replace(/\n+$/, '');
 function pasteText(text) {
+  setTimeout(() => App.toast && App.toast('貼り付けました'), 0);
   if (clip && norm(text) === norm(clip.text)) return pasteInternal('all');
   const data = parseDelim(text, '\t'); if (!data.length) return;
   const R = rect();
@@ -1568,6 +1751,7 @@ function pasteText(text) {
 }
 App.pasteText = pasteText;
 function pasteInternal(mode) {
+  setTimeout(() => App.toast && App.toast({ values: '値を貼り付けました', formats: '書式を貼り付けました', formulas: '数式を貼り付けました', transpose: '行と列を入れ替えて貼り付けました' }[mode] || '貼り付けました'), 0);
   const cl = clip; if (!cl || !book.sheets[cl.si]) { clip = null; return; }
   const R = rect();
   const h = cl.cells.length, w = cl.cells[0].length;

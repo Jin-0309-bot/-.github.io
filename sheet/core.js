@@ -1149,19 +1149,45 @@ function hitAt(x, y) {
   return null;
 }
 App.hitAt = hitAt;
+/* 見出しの境界（列の幅・行の高さの変更位置）の判定 */
+function edgeHit(target, x, y, tol) {
+  const th = target && target.closest && target.closest('#grid th.ch,#grid th.rh');
+  if (!th) return null;
+  const b = th.getBoundingClientRect();
+  if (th.classList.contains('ch')) {
+    let c = colHeads.indexOf(th);
+    if (x >= b.right - tol) return { t: 'resize', c };
+    if (x <= b.left + tol) { c--; while (c >= 0 && isColHidden(c)) c--; if (c >= 0) return { t: 'resize', c }; }
+    return null;
+  }
+  let r = rowHeads.indexOf(th);
+  if (y >= b.bottom - Math.min(tol, 4)) return { t: 'resizeR', r };
+  if (y <= b.top + Math.min(tol, 3)) { r--; while (r >= 0 && isRowHidden(r)) r--; if (r >= 0) return { t: 'resizeR', r }; }
+  return null;
+}
+let hoverEdgeEl = null;
+wrap.addEventListener('mousemove', e => {
+  if (drag) return;
+  const eh = edgeHit(e.target, e.clientX, e.clientY, 5);
+  const th = e.target.closest && e.target.closest('#grid th');
+  if (hoverEdgeEl && hoverEdgeEl !== th) { hoverEdgeEl.style.cursor = ''; hoverEdgeEl = null; }
+  if (th) { th.style.cursor = eh ? (eh.t === 'resize' ? 'col-resize' : 'row-resize') : ''; hoverEdgeEl = th; }
+});
 let lastTap = { t: 0, r: -1, c: -1 }, autoScroll = 0, lastMouse = null;
 wrap.addEventListener('mousedown', e => {
   App.hideMenus && App.hideMenus();
   if (e.target.closest('.chart')) return;
-  if (e.target.classList.contains('rz')) {
-    e.preventDefault(); const c = colHeads.indexOf(e.target.parentNode);
-    if (e.detail === 2) { App.cmd('autofitCol:' + c); return; }
-    drag = { t: 'resize', c, x: e.clientX, w: sheet().colW[c] || DEFW }; return;
-  }
-  if (e.target.classList.contains('rzr')) {
-    e.preventDefault(); const r = rowHeads.indexOf(e.target.parentNode);
-    if (e.detail === 2) { commit(() => { delete sheet().rowH[r]; }); return; }
-    drag = { t: 'resizeR', r, y: e.clientY, h: sheet().rowH[r] || DEFH }; return;
+  const eh = edgeHit(e.target, e.clientX, e.clientY, 5);
+  if (eh && e.button === 0) {
+    e.preventDefault();
+    if (eh.t === 'resize') {
+      if (e.detail === 2) { App.cmd('autofitCol:' + eh.c); return; }
+      drag = { t: 'resize', c: eh.c, x: e.clientX, w: sheet().colW[eh.c] || DEFW, snap: snapshot() };
+    } else {
+      if (e.detail === 2) { commit(() => { delete sheet().rowH[eh.r]; }); return; }
+      drag = { t: 'resizeR', r: eh.r, y: e.clientY, h: sheet().rowH[eh.r] || DEFH, snap: snapshot() };
+    }
+    return;
   }
   if (e.target.id === 'fh') {
     e.preventDefault(); e.stopPropagation();
@@ -1227,7 +1253,7 @@ wrap.addEventListener('dblclick', e => {
 wrap.addEventListener('click', () => { if (touch && editing && document.activeElement !== editor && document.activeElement !== fbar) editor.focus(); });
 function dragMove(x, y) {
   if (!drag) return;
-  if (drag.t === 'resize') { const Z = zoom(); sheet().colW[drag.c] = Math.max(0, Math.round(drag.w + (x - drag.x) / Z)); applySizes(); paintSel(); App.renderCharts && App.renderCharts(); showSizeTip(x, y, `幅: ${(sheet().colW[drag.c] / 8).toFixed(2)} (${sheet().colW[drag.c]} ピクセル)`); return; }
+  if (drag.t === 'resize') { const Z = zoom(); sheet().colW[drag.c] = Math.max(0, Math.round(drag.w + (x - drag.x) / Z)); applySizes(); paintSel(); App.renderCharts && App.renderCharts(); showSizeTip(x, y, `幅: ${((sheet().colW[drag.c] - 5) / 8).toFixed(2)} (${sheet().colW[drag.c]} ピクセル)`); return; }
   if (drag.t === 'resizeR') { const Z = zoom(); sheet().rowH[drag.r] = Math.max(4, Math.round(drag.h + (y - drag.y) / Z)); applySizes(); paintSel(); showSizeTip(x, y, `高さ: ${(sheet().rowH[drag.r] * .75).toFixed(2)} (${sheet().rowH[drag.r]} ピクセル)`); return; }
   const h = hitAt(x, y); if (!h) return;
   if (drag.t === 'cell' && h.td) { if (ext.r !== h.r || ext.c !== h.c) { ext = { r: h.r, c: h.c }; updateSel(); } }
@@ -1268,10 +1294,37 @@ document.addEventListener('mouseup', () => {
   if (!drag) return;
   const d = drag; drag = null;
   if (sizeTip) sizeTip.hidden = true;
-  if (d.t === 'resize' || d.t === 'resizeR') { const s = snapshot(); undoS.push(s); afterChange(); }
+  if (d.t === 'resize' || d.t === 'resizeR') finishResize(d);
   if (d.t === 'fill') { hidePick(); if (d.to) applyFill(d.to); focusNav(); }
   if (d.t === 'pick') { hidePick(); }
   if (d.t === 'cell') { updateSel(); if (App.painter) App.cmd('painterApply'); }
+});
+function finishResize(d) {
+  const R = rect(), sh = sheet();
+  if (d.t === 'resize' && R.r0 === 0 && R.r1 === ROWS - 1 && d.c >= R.c0 && d.c <= R.c1) for (let c = R.c0; c <= R.c1; c++) sh.colW[c] = sh.colW[d.c];
+  if (d.t === 'resizeR' && R.c0 === 0 && R.c1 === COLS - 1 && d.r >= R.r0 && d.r <= R.r1) for (let r = R.r0; r <= R.r1; r++) sh.rowH[r] = sh.rowH[d.r];
+  undoS.push(d.snap); redoS.length = 0; afterChange();
+}
+/* タッチ操作：列の幅・行の高さを指でドラッグして変更 */
+wrap.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  if (e.touches.length !== 1) return;
+  const eh = edgeHit(e.target, t.clientX, t.clientY, 14);
+  if (!eh) return;
+  e.preventDefault();
+  drag = eh.t === 'resize' ? { t: 'resize', c: eh.c, x: t.clientX, w: sheet().colW[eh.c] || DEFW, snap: snapshot(), touch: true }
+    : { t: 'resizeR', r: eh.r, y: t.clientY, h: sheet().rowH[eh.r] || DEFH, snap: snapshot(), touch: true };
+}, { passive: false });
+document.addEventListener('touchmove', e => {
+  if (!drag || !drag.touch) return;
+  e.preventDefault();
+  const t = e.touches[0]; dragMove(t.clientX, t.clientY);
+}, { passive: false });
+document.addEventListener('touchend', () => {
+  if (!drag || !drag.touch) return;
+  const d = drag; drag = null;
+  if (sizeTip) sizeTip.hidden = true;
+  finishResize(d);
 });
 /* メモのホバー表示 */
 let noteTip = null;

@@ -324,7 +324,7 @@ svg{display:block}
   #printArea th{background:#f3f3f3;border:1px solid #bfbfbf;font-weight:400;font-size:9pt}
   #printArea .fbtn,#printArea #fh{display:none}
 }
-@media (pointer:coarse){#editor,#fbar,#nameBox{font-size:16px}}
+@media (pointer:coarse){#editor,#fbar,#nameBox{font-size:16px}.rz{right:-9px;width:18px}.rzr{bottom:-9px;height:18px}}
 
 #ribbon.c1 [data-lvl="1"] .t,#ribbon.c2 [data-lvl="2"] .t,#ribbon.c3 [data-lvl="3"] .t{display:none}
 #ribbon.c4 .big .lbl{font-size:10.5px}

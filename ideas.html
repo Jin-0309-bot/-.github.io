@@ -58,6 +58,17 @@ details[open] summary{margin-bottom:10px}
 .small{padding:6px 12px;font-size:14px}
 .danger{color:#d4373c}
 @media (max-width:480px){.fields{grid-template-columns:1fr}}
+.card .bar>div{display:flex;flex-wrap:wrap;gap:8px}
+/* 書く */
+dialog{width:min(640px,calc(100% - 32px));max-height:calc(100% - 32px);border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--fg);padding:16px}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.whead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.whead .title{font-size:18px;font-weight:700;overflow-wrap:anywhere}
+#wText{min-height:260px;margin-top:4px}
+.btnlink{display:inline-block;color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:14px}
+fieldset.use{border:1px solid var(--line);border-radius:10px;margin:12px 0 0;padding:8px 12px;display:flex;flex-wrap:wrap;gap:16px}
+fieldset.use legend{font-size:13px;color:var(--sub);padding:0 4px}
+fieldset.use label{display:flex;gap:6px;align-items:center;cursor:pointer}
 </style></head>
 <body><main>
 <h1>💡 投稿アイデア整理</h1>
@@ -69,8 +80,8 @@ details[open] summary{margin-bottom:10px}
   <h2>1. アイデアを追加</h2>
   <div class="panel">
     <textarea id="input" placeholder="- 朝5分でできるスキンケア&#10;- 失敗しない作り置きのコツ&#10;- 1か月の食費を公開"></textarea>
-    <div class="bar top"><button id="add" class="primary" type="button">一覧に追加</button><span id="addMsg" class="hint" style="margin:0"></span></div>
-    <p class="hint">1行に1件。行頭の「-」「・」「*」「1.」などは自動で取り除きます。同じ内容は追加しません。</p>
+    <div class="bar top"><button id="add" class="primary" type="button">一覧に追加</button><button id="addSeed" type="button">おすすめアイデアを入れ直す</button><span id="addMsg" class="hint" style="margin:0"></span></div>
+    <p class="hint">1行に1件。行頭の「-」「・」「*」「1.」などは自動で取り除きます。同じ内容は追加しません。おすすめアイデア（72件）は最初から一覧に入っています。消したものを戻したいときは「おすすめアイデアを入れ直す」を押してください。</p>
   </div>
 </section>
 
@@ -115,6 +126,25 @@ details[open] summary{margin-bottom:10px}
 </section>
 
 <datalist id="pains"></datalist>
+<dialog id="writer" aria-labelledby="wTitle">
+  <div class="whead">
+    <div><div class="hint" style="margin:0">このアイデアで書く</div><div id="wTitle" class="title"></div></div>
+    <form method="dialog"><button class="small" aria-label="閉じる">✕</button></form>
+  </div>
+  <div id="wTags" class="tags" style="margin:6px 0 10px"></div>
+  <label class="hint" for="wText">note に貼る下書きのたたき台（ここで書き換えてからコピーできます）</label>
+  <textarea id="wText"></textarea>
+  <div class="bar top">
+    <button id="wCopy" class="primary" type="button">📋 note用にコピー</button>
+    <a class="btnlink" href="https://note.com/notes/new" target="_blank" rel="noopener">note で新しく書く ↗</a>
+    <span id="wMsg" class="hint" style="margin:0"></span>
+  </div>
+  <fieldset class="use">
+    <legend>使用状況</legend>
+    <label><input type="radio" name="use" value="todo"> 未使用</label>
+    <label><input type="radio" name="use" value="done"> 使用済み</label>
+  </fieldset>
+</dialog>
 </main>
 <script>
 (() => {
@@ -125,17 +155,92 @@ details[open] summary{margin-bottom:10px}
   const FORMATS = ['つぶやき', '体験談・エッセイ', 'まとめ・リスト記事', 'レビュー・比較', 'ハウツー記事'];
   const FORMAT_EFFORT = { 'つぶやき': 1, '体験談・エッセイ': 2, 'まとめ・リスト記事': 2, 'レビュー・比較': 3, 'ハウツー記事': 3 };
   const EFFORTS = { 1: '小', 2: '中', 3: '大' };
-  const FILTERS = [['all', 'すべて'], ['unsorted', '未分類'], ['todo', '未着手'], ['done', '投稿済み']];
+  const FILTERS = [['all', 'すべて'], ['unsorted', '未分類'], ['todo', '未使用'], ['done', '使用済み']];
+  // 最初から入れておくおすすめアイデア：[テーマ, アイデア, 読者の悩み, 投稿形式]
+  const SEED = [
+    ["時短家事", "冷蔵庫の中身を見える化したら食材を捨てなくなった話", "買った食材を使い切れない", "体験談・エッセイ"],
+    ["時短家事", "100円ショップで買ってよかったキッチン用品5選", "何を買えば家事がラクになるかわからない", "まとめ・リスト記事"],
+    ["時短家事", "洗濯をラクにするために手放したもの", "洗濯に時間を取られている", "体験談・エッセイ"],
+    ["時短家事", "掃除は「ついで」でいい：毎日5分の分担表", "まとまった掃除の時間が取れない", "ハウツー記事"],
+    ["時短家事", "朝の家事を10分短くした段取りの順番", "朝の準備がいつもバタバタする", "ハウツー記事"],
+    ["時短家事", "食洗機を買う前に知りたかったこと", "食洗機を買うか迷っている", "体験談・エッセイ"],
+    ["時短家事", "床にモノを置かないだけで掃除がラクになった", "掃除機をかけるのが面倒", "体験談・エッセイ"],
+    ["時短家事", "洗濯物をたたまない収納に変えた話", "洗濯物をたたむ時間がもったいない", "体験談・エッセイ"],
+    ["時短家事", "家事の「見えない仕事」リスト20", "家族に家事の大変さが伝わらない", "まとめ・リスト記事"],
+    ["時短家事", "週末にまとめてやらない家事の回し方", "休日が家事でつぶれる", "ハウツー記事"],
+    ["時短家事", "時短家電3つを1年使ってみた正直な感想", "時短家電が本当に役立つかわからない", "レビュー・比較"],
+    ["時短家事", "ロボット掃除機が使える部屋・使えない部屋", "ロボット掃除機を買うか迷っている", "レビュー・比較"],
+    ["時短家事", "水回りの掃除は「濡れたついで」が一番ラク", "水回りの汚れがすぐたまる", "つぶやき"],
+    ["時短家事", "子どもと一緒にできるお手伝い家事5選", "家事を一人で抱えてしまう", "まとめ・リスト記事"],
+    ["時短家事", "買い物の回数を週1回に減らす方法", "買い物に行く時間が取れない", "ハウツー記事"],
+    ["時短家事", "家事の分担表を作ったら夫婦げんかが減った", "家事の分担でもめる", "体験談・エッセイ"],
+    ["時短家事", "やめてよかった家事10選", "家事が多すぎて終わらない", "まとめ・リスト記事"],
+    ["時短家事", "アイロンがけをしなくていい服の選び方", "アイロンがけが面倒", "ハウツー記事"],
+    ["時短家事", "寝る前5分のリセットで朝がラクになる", "朝起きると部屋が散らかっている", "つぶやき"],
+    ["時短家事", "ネットスーパー3社を使い比べてみた", "どのネットスーパーがいいかわからない", "レビュー・比較"],
+    ["時短家事", "玄関の掃除が続くようになった小さな工夫", "玄関がすぐ散らかる", "つぶやき"],
+    ["時短家事", "家事のやる気が出ない日の最低限リスト", "疲れて家事をする気になれない", "まとめ・リスト記事"],
+    ["時短家事", "引っ越しを機に見直した家事動線", "家の中の移動が多くて疲れる", "体験談・エッセイ"],
+    ["時短家事", "掃除道具を減らしたら掃除の回数が増えた", "掃除道具が多くて管理できない", "体験談・エッセイ"],
+    ["料理", "平日の夕飯を15分で作るための3つのルール", "仕事のあとに料理する時間がない", "まとめ・リスト記事"],
+    ["料理", "作り置きをやめて「下ごしらえだけ」にした理由", "休日の作り置きがしんどい", "体験談・エッセイ"],
+    ["料理", "ミールキットと自炊を1か月比べてみた", "ミールキットが本当にお得かわからない", "レビュー・比較"],
+    ["料理", "今日の夕飯、迷ったら卵料理", "献立を考えるのが面倒", "つぶやき"],
+    ["料理", "1週間の献立を15分で決める方法", "毎日の献立を考えるのがつらい", "ハウツー記事"],
+    ["料理", "冷凍しておくと便利な食材10選", "食材をすぐ傷ませてしまう", "まとめ・リスト記事"],
+    ["料理", "調味料を減らしても味が決まる基本の組み合わせ", "調味料が多くて使いこなせない", "ハウツー記事"],
+    ["料理", "料理が苦手だった私が最初に覚えた3品", "料理に自信がない", "体験談・エッセイ"],
+    ["料理", "電子レンジだけで作れる平日おかず5選", "火を使うのが面倒", "まとめ・リスト記事"],
+    ["料理", "包丁を使わない日の夕飯アイデア", "疲れて包丁を握る気になれない", "まとめ・リスト記事"],
+    ["料理", "炊飯器で作れるおかずを試してみた", "一度に何品も作れない", "レビュー・比較"],
+    ["料理", "下味冷凍を1か月続けてわかったこと", "平日の調理時間を減らしたい", "体験談・エッセイ"],
+    ["料理", "お弁当を「詰めるだけ」にする前日の準備", "朝のお弁当作りがしんどい", "ハウツー記事"],
+    ["料理", "余った野菜は全部スープにする", "野菜を使い切れない", "つぶやき"],
+    ["料理", "子どもが野菜を食べるようになった工夫", "子どもが野菜を食べない", "体験談・エッセイ"],
+    ["料理", "一人分の料理を無駄なく作るコツ", "一人分だと食材が余る", "ハウツー記事"],
+    ["料理", "市販の合わせ調味料を食べ比べてみた", "どの合わせ調味料がおいしいかわからない", "レビュー・比較"],
+    ["料理", "鍋ひとつで作る洗い物の少ない夕飯", "洗い物が多くて片付けが大変", "まとめ・リスト記事"],
+    ["料理", "料理の手順を変えたら片付けが早くなった", "料理のあとの片付けが面倒", "体験談・エッセイ"],
+    ["料理", "今週買ってよかった食材", "何を買えばいいか迷う", "つぶやき"],
+    ["料理", "作り置きが余らない量の決め方", "作り置きを食べきれず捨ててしまう", "ハウツー記事"],
+    ["料理", "圧力鍋と自動調理鍋を使い比べてみた", "調理家電の選び方がわからない", "レビュー・比較"],
+    ["料理", "外食したくなる日の「おうち定食」", "外食が増えて食費がかさむ", "つぶやき"],
+    ["料理", "献立に迷ったときの主菜早見表", "同じ献立ばかりになる", "まとめ・リスト記事"],
+    ["節約", "食費を月1万円減らした買い物リストの作り方", "食費がいつの間にか増えている", "ハウツー記事"],
+    ["節約", "固定費の見直しで最初にやるべき3つのこと", "何から節約すればいいかわからない", "まとめ・リスト記事"],
+    ["節約", "ふるさと納税を日用品で選ぶメリットと注意点", "ふるさと納税の選び方がわからない", "レビュー・比較"],
+    ["節約", "家計簿が続かなかった私が続けられた方法", "家計簿が三日坊主で終わる", "体験談・エッセイ"],
+    ["節約", "スマホ代を格安プランに変えて1年たった感想", "スマホ代が高いと感じている", "体験談・エッセイ"],
+    ["節約", "使っていないサブスクを見つける方法", "サブスク代がかさんでいる", "ハウツー記事"],
+    ["節約", "電気代が上がった月にやった5つのこと", "電気代が高くて困っている", "まとめ・リスト記事"],
+    ["節約", "ポイント還元より大事なお金の使い方", "ポイ活に振り回されている", "体験談・エッセイ"],
+    ["節約", "先取り貯金を始めて変わったこと", "お金が貯まらない", "体験談・エッセイ"],
+    ["節約", "予算を袋分けするやり方", "使いすぎを止められない", "ハウツー記事"],
+    ["節約", "衝動買いを防ぐ「24時間ルール」", "ついネットで買ってしまう", "つぶやき"],
+    ["節約", "家計簿アプリ3つを使い比べてみた", "どの家計簿アプリがいいかわからない", "レビュー・比較"],
+    ["節約", "子どもの教育費をいつから準備するか", "教育費がいくらかかるか不安", "ハウツー記事"],
+    ["節約", "保険を見直して月5,000円減らした話", "保険料が高いと感じている", "体験談・エッセイ"],
+    ["節約", "「安いから買う」をやめて減ったもの", "安物買いで結局損をしている", "体験談・エッセイ"],
+    ["節約", "まとめ買いで損をしないためのチェックリスト", "まとめ買いが逆に高くつく", "まとめ・リスト記事"],
+    ["節約", "冬の暖房費を抑える小さな工夫", "冬の光熱費が高い", "まとめ・リスト記事"],
+    ["節約", "お金をかけない休日の過ごし方10選", "休日にお金を使いすぎる", "まとめ・リスト記事"],
+    ["節約", "NISAを始める前に家計で確認したこと", "NISAを始めていいか不安", "ハウツー記事"],
+    ["節約", "今月の食費、予算内で終われた", "予算を守れるか不安", "つぶやき"],
+    ["節約", "節約しすぎて失敗したこと", "節約がストレスになっている", "体験談・エッセイ"],
+    ["節約", "年に一度の固定費チェック表", "固定費の見直しを忘れてしまう", "まとめ・リスト記事"],
+    ["節約", "ドラッグストアとスーパーの日用品価格を比べてみた", "日用品をどこで買うのが安いかわからない", "レビュー・比較"],
+    ["節約", "給料日前でも慌てない家計の回し方", "給料日前にお金が足りなくなる", "ハウツー記事"]
+  ];
+
 
   let state = { ideas: [], themes: [] };
   let filter = 'all';
 
   // --- 保存 ---
-  let canStore = true;
-  try {
-    const raw = localStorage.getItem(KEY);
-    if (raw) state = normalize(JSON.parse(raw));
-  } catch (e) { canStore = false; }
+  let canStore = true, saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) { canStore = false; }
+  try { if (saved) state = normalize(JSON.parse(saved)); } catch (e) { saved = null; }
+  if (!saved) { addSeeds(); save(); }
   if (!canStore) $('nostore').hidden = false;
 
   function save() {
@@ -181,6 +286,25 @@ details[open] summary{margin-bottom:10px}
     $('addMsg').textContent = added ? `${added}件追加しました` + (skipped ? `（重複${skipped}件はスキップ）` : '')
       : skipped ? 'すべて追加済みのアイデアでした' : 'アイデアを入力してください';
     if (added) { $('input').value = ''; save(); renderAll(); }
+  };
+
+  // おすすめアイデアのうち、一覧にないものだけを追加する
+  function addSeeds() {
+    const seen = new Set(state.ideas.map(i => i.text));
+    const now = Date.now();
+    let added = 0;
+    SEED.forEach(([theme, text, pain, format]) => {
+      if (!state.themes.includes(theme)) state.themes.push(theme);
+      if (seen.has(text)) return;
+      state.ideas.push({ id: uid(), text, theme, pain, format, effort: FORMAT_EFFORT[format], effortManual: false, status: 'todo', createdAt: now + added });
+      added++;
+    });
+    return added;
+  }
+  $('addSeed').onclick = () => {
+    const added = addSeeds();
+    $('addMsg').textContent = added ? `おすすめアイデアを${added}件入れ直しました` : 'おすすめアイデアはすべて一覧に入っています';
+    save(); renderAll();
   };
 
   // --- テーマ管理 ---
@@ -237,14 +361,14 @@ details[open] summary{margin-bottom:10px}
       const unsorted = state.ideas.filter(i => i.status === 'todo' && !isSorted(i)).length;
       box.append(el('p', 'empty', !state.ideas.length ? 'アイデアを追加すると、ここに次の投稿が表示されます。'
         : unsorted ? `テーマ・悩み・形式がすべて決まったアイデアから提案します。あと${unsorted}件が未分類です。`
-        : '未着手のアイデアがありません。新しいアイデアを追加しましょう。'));
+        : '未使用のアイデアがありません。新しいアイデアを追加しましょう。'));
       return;
     }
     const [top, ...rest] = cands;
     const pick = el('div', 'pick');
     pick.append(el('div', 'label', '次に作る投稿'), el('div', 'title', top.text), tagsOf(top));
     const bar = el('div', 'bar top');
-    bar.append(doneButton(top, 'primary small'));
+    bar.append(writeButton(top, 'primary small'), doneButton(top, 'small'));
     pick.append(bar);
     box.append(pick);
     if (rest.length) {
@@ -254,7 +378,7 @@ details[open] summary{margin-bottom:10px}
         const item = el('div', 'item');
         const info = el('div');
         info.append(el('div', '', i.text), el('div', 'meta', `手間：${EFFORTS[effortOf(i)]}／${i.format}／${i.theme}`));
-        item.append(info, doneButton(i, 'small'));
+        item.append(info, writeButton(i, 'small'));
         spare.append(item);
       });
       box.append(spare);
@@ -267,10 +391,57 @@ details[open] summary{margin-bottom:10px}
     return t;
   }
   function doneButton(i, cls) {
-    const b = el('button', cls, '投稿済みにする'); b.type = 'button';
+    const b = el('button', cls, '使用済みにする'); b.type = 'button';
     b.onclick = () => { i.status = 'done'; save(); renderAll(); };
     return b;
   }
+  function writeButton(i, cls) {
+    const b = el('button', cls, '✏️ このアイデアで書く'); b.type = 'button';
+    b.onclick = () => openWriter(i);
+    return b;
+  }
+
+  // --- 書く（note用にコピー） ---
+  const OUTLINES = {
+    'つぶやき': ['気づいたこと・やってみたこと（2〜3行）', '読者へのひと言'],
+    '体験談・エッセイ': ['はじめに：こんなことで困っていました', 'やってみたこと', '変わったこと・よかったこと', 'うまくいかなかったこと', 'おわりに：同じ悩みの人へ'],
+    'まとめ・リスト記事': ['はじめに：こんな悩みはありませんか', '1.', '2.', '3.', '4.', '5.', 'まとめ：まず1つ試すなら'],
+    'レビュー・比較': ['比べようと思った理由', '比べたもの', '比べたポイント（価格・手間・満足度）', '結果', 'こんな人におすすめ'],
+    'ハウツー記事': ['この記事でできるようになること', '用意するもの', '手順1', '手順2', '手順3', 'つまずきやすいポイント', 'まとめ']
+  };
+  let writing = null;
+  function draftOf(i) {
+    const lines = [i.text, ''];
+    if (i.pain.trim()) lines.push(`想定読者の悩み：${i.pain.trim()}`, '');
+    (OUTLINES[i.format] || ['はじめに', '本文', 'おわりに']).forEach(h => lines.push(`■ ${h}`, '', ''));
+    return lines.join('\n').trimEnd() + '\n';
+  }
+  function openWriter(i) {
+    writing = i;
+    $('wTitle').textContent = i.text;
+    $('wTags').innerHTML = '';
+    [i.format || '形式：未設定', i.theme && `テーマ：${i.theme}`, i.pain.trim() && `悩み：${i.pain.trim()}`].filter(Boolean)
+      .forEach(t => $('wTags').append(el('span', 'tag', t)));
+    $('wText').value = draftOf(i);
+    $('wMsg').textContent = '';
+    setUse();
+    $('writer').showModal();
+  }
+  function setUse() {
+    document.querySelectorAll('input[name=use]').forEach(r => { r.checked = r.value === writing.status; });
+  }
+  document.querySelectorAll('input[name=use]').forEach(r => r.onchange = () => {
+    writing.status = r.value; save(); renderAll();
+  });
+  $('wCopy').onclick = async () => {
+    const text = $('wText').value;
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      $('wText').select();
+      try { ok = document.execCommand('copy'); } catch (e2) {}
+    }
+    $('wMsg').textContent = ok ? 'コピーしました。note に貼り付けたら、下で「使用済み」を選んでください。' : 'コピーできませんでした。上の欄を長押しして全選択→コピーしてください。';
+  };
 
   // --- 一覧 ---
   const matches = {
@@ -348,11 +519,13 @@ details[open] summary{margin-bottom:10px}
     f.append(field('テーマ', theme), field('投稿形式', format), field('読者の悩み', pain, 'wide'), field('手間', effort));
 
     const bar = el('div', 'bar');
-    const toggle = el('button', 'small', i.status === 'done' ? '未着手に戻す' : '投稿済みにする'); toggle.type = 'button';
+    const left = el('div');
+    const toggle = el('button', 'small', i.status === 'done' ? '未使用に戻す' : '使用済みにする'); toggle.type = 'button';
     toggle.onclick = () => { i.status = i.status === 'done' ? 'todo' : 'done'; save(); renderAll(); };
     const del = el('button', 'small danger', '削除'); del.type = 'button';
     del.onclick = () => { if (confirm(`「${i.text}」を削除しますか？`)) { state.ideas = state.ideas.filter(x => x !== i); save(); renderAll(); } };
-    bar.append(toggle, del);
+    left.append(writeButton(i, 'small'), toggle);
+    bar.append(left, del);
 
     c.append(text, f, bar);
     function mark() {

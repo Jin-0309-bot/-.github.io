@@ -61,7 +61,7 @@ details[open] summary{margin-bottom:10px}
 </style></head>
 <body><main>
 <h1>💡 投稿アイデア整理</h1>
-<p class="sub">思いついたアイデアをテーマ・読者の悩み・投稿形式で整理し、作りやすいものから次の投稿を提案します。（Instagram向け）</p>
+<p class="sub">思いついたアイデアをテーマ・読者の悩み・投稿形式で整理し、作りやすいものから次の投稿を提案します。（note向け）</p>
 <div id="nojs" class="warn">この画面ではページの機能（スクリプト）が動いていません。Chrome か Safari でこのページを開いてください。</div>
 <div id="nostore" class="warn" hidden>このブラウザでは保存が使えないため、ページを閉じると内容が消えます。「書き出し」でバックアップしてください。</div>
 
@@ -122,8 +122,8 @@ details[open] summary{margin-bottom:10px}
   $('nojs').hidden = true;
 
   const KEY = 'postIdeas.v1';
-  const FORMATS = ['フィード（1枚）', 'カルーセル', 'リール', 'ストーリーズ'];
-  const FORMAT_EFFORT = { 'フィード（1枚）': 1, 'カルーセル': 2, 'リール': 3, 'ストーリーズ': 1 };
+  const FORMATS = ['つぶやき', '体験談・エッセイ', 'まとめ・リスト記事', 'レビュー・比較', 'ハウツー記事'];
+  const FORMAT_EFFORT = { 'つぶやき': 1, '体験談・エッセイ': 2, 'まとめ・リスト記事': 2, 'レビュー・比較': 3, 'ハウツー記事': 3 };
   const EFFORTS = { 1: '小', 2: '中', 3: '大' };
   const FILTERS = [['all', 'すべて'], ['unsorted', '未分類'], ['todo', '未着手'], ['done', '投稿済み']];
 
@@ -151,9 +151,10 @@ details[open] summary{margin-bottom:10px}
       text: i.text,
       theme: themes.includes(i.theme) ? i.theme : '',
       pain: typeof i.pain === 'string' ? i.pain : '',
+      // 形式の一覧から外れた形式は未設定に戻し、自動で入れた手間もやり直す
       format: FORMATS.includes(i.format) ? i.format : '',
-      effort: EFFORTS[i.effort] ? Number(i.effort) : 0,
-      effortManual: !!i.effortManual,
+      effort: !EFFORTS[i.effort] ? 0 : i.effortManual ? Number(i.effort) : FORMAT_EFFORT[i.format] || 0,
+      effortManual: !!i.effortManual && !!EFFORTS[i.effort],
       status: i.status === 'done' ? 'done' : 'todo',
       createdAt: Number(i.createdAt) || Date.now()
     })) : [];

@@ -157,6 +157,7 @@ function showTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.dataset.panel === name));
   const rb = $('ribbon');
   if (rb.classList.contains('min')) rb.classList.add('peek');
+  rb.scrollLeft = 0;
   fitRibbon();
 }
 function fitRibbon() {
@@ -164,7 +165,16 @@ function fitRibbon() {
   rb.classList.remove('c1', 'c2', 'c3', 'c4');
   if (!panel) return;
   for (const c of ['c1', 'c2', 'c3', 'c4']) { if (panel.scrollWidth <= rb.clientWidth) break; rb.classList.add(c); }
+  ribbonArrows();
 }
+function ribbonArrows() {
+  const rb = $('ribbon'), max = rb.scrollWidth - rb.clientWidth;
+  $('rsL').hidden = rb.scrollLeft <= 2;
+  $('rsR').hidden = max <= 2 || rb.scrollLeft >= max - 2;
+}
+$('ribbon').addEventListener('scroll', ribbonArrows, { passive: true });
+$('rsL').onclick = () => $('ribbon').scrollBy({ left: -Math.round($('ribbon').clientWidth * .7), behavior: 'smooth' });
+$('rsR').onclick = () => $('ribbon').scrollBy({ left: Math.round($('ribbon').clientWidth * .7), behavior: 'smooth' });
 addEventListener('resize', fitRibbon);
 App.fitRibbon = fitRibbon;
 App.showTab = showTab;

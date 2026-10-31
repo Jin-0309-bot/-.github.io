@@ -2,1283 +2,351 @@
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>表計算シート</title>
-<meta name="description" content="Excelのように使えるブラウザの表計算ツール。数式・関数・複数シート・CSV読み込み/書き出しに対応。">
-<style>
-:root{--bg:#f3f4f7;--card:#fff;--fg:#1d2330;--sub:#5d6678;--line:#d6dae3;--grid:#e2e5eb;--head:#f1f3f6;--headhl:#d3eadc;--headfg:#1f7a4d;--accent:#1f7a4d;--sel:rgba(31,122,77,.10);--err:#d1343a;--btnon:#d9efe2}
-@media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#181c24;--fg:#e8ebf2;--sub:#9aa3b5;--line:#2c3340;--grid:#262c37;--head:#1e232d;--headhl:#1f3a2c;--headfg:#7bd3a3;--accent:#3fb37a;--sel:rgba(63,179,122,.16);--err:#ff6b6f;--btnon:#1f3a2c}}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;overflow:hidden}
-header{background:var(--card);border-bottom:1px solid var(--line)}
-.top{display:flex;align-items:center;gap:10px;padding:8px 12px 4px}
-.top h1{font-size:16px;margin:0;white-space:nowrap}
-.top .saved{font-size:12px;color:var(--sub);margin-left:auto;white-space:nowrap}
-.tools{display:flex;gap:4px;align-items:center;padding:4px 12px 8px;overflow-x:auto;scrollbar-width:thin}
-.tools .sep{width:1px;align-self:stretch;background:var(--line);margin:2px 4px;flex:none}
-.tools button,.tools select,.tools label{flex:none;font:inherit;font-size:13px;height:30px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:0 9px;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
-.tools button:hover,.tools label:hover{background:var(--head)}
-.tools button.on{background:var(--btnon);border-color:var(--accent)}
-.tools input[type=color]{width:22px;height:18px;border:0;padding:0;background:none;cursor:pointer}
-.tools input[type=file]{display:none}
-#fbarRow{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--card)}
-#nameBox{width:84px;flex:none;border:0;border-right:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit;padding:0 8px;text-align:center}
-#fbarRow .fx{flex:none;padding:0 10px;color:var(--sub);font-style:italic;display:flex;align-items:center;border-right:1px solid var(--line)}
-#fbar{flex:1;min-width:0;border:0;background:var(--card);color:var(--fg);font:inherit;padding:6px 8px}
-#nameBox:focus,#fbar:focus{outline:2px solid var(--accent);outline-offset:-2px}
-#wrap{flex:1;overflow:auto;position:relative;background:var(--card);overscroll-behavior:contain}
-#grid{border-collapse:separate;border-spacing:0;table-layout:fixed;user-select:none;-webkit-user-select:none}
-#grid th,#grid td{border-right:1px solid var(--grid);border-bottom:1px solid var(--grid);height:25px;padding:0 4px;white-space:nowrap;overflow:hidden}
-#grid td{cursor:cell}
-#grid td.l{text-align:left}#grid td.r{text-align:right}#grid td.c{text-align:center}
-#grid td.err{color:var(--err)}
-#grid thead th{position:sticky;top:0;z-index:3;background:var(--head);color:var(--sub);font-weight:500;text-align:center;position:sticky}
-#grid tbody th{position:sticky;left:0;z-index:2;background:var(--head);color:var(--sub);font-weight:500;text-align:center;font-size:12px;cursor:e-resize}
-#grid thead th.ch{cursor:s-resize}
-#grid thead th.corner{left:0;z-index:4;cursor:pointer}
-#grid th.hl{background:var(--headhl);color:var(--headfg);font-weight:700}
-.rz{position:absolute;right:-3px;top:0;width:7px;height:100%;cursor:col-resize;z-index:5}
-#selbox,#pickbox,#clipbox{position:absolute;pointer-events:none;z-index:1}
-#selbox{border:2px solid var(--accent)}
-#selbox.multi{background:var(--sel)}
-#fh{position:absolute;right:-5px;bottom:-5px;width:8px;height:8px;background:var(--accent);border:1px solid var(--card);pointer-events:auto;cursor:crosshair}
-#pickbox{border:2px dashed #2f6fec;background:rgba(47,111,236,.08)}
-#clipbox{border:2px dashed var(--accent)}
-#editor{position:absolute;z-index:6;margin:0;border:0;padding:0 4px;font:inherit;color:var(--fg);background:var(--card);opacity:0;pointer-events:none;caret-color:transparent;outline:none}
-#editor.on{opacity:1;pointer-events:auto;caret-color:auto;outline:2px solid var(--accent);outline-offset:-1px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
-footer{display:flex;align-items:center;gap:6px;background:var(--head);border-top:1px solid var(--line);padding:4px 8px calc(4px + env(safe-area-inset-bottom));min-height:36px}
-#tabs{display:flex;gap:2px;overflow-x:auto;max-width:60%;scrollbar-width:none}
-.tab{font:inherit;font-size:13px;border:1px solid transparent;background:none;color:var(--fg);padding:4px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
-.tab.on{background:var(--card);border-color:var(--line);color:var(--accent);font-weight:700;box-shadow:inset 0 -2px 0 var(--accent)}
-#addSheet{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;width:30px;height:28px;cursor:pointer;flex:none}
-#stat{margin-left:auto;font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.menu{position:fixed;z-index:50;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:4px;min-width:180px}
-.menu button{display:block;width:100%;text-align:left;font:inherit;border:0;background:none;color:var(--fg);padding:7px 12px;border-radius:5px;cursor:pointer}
-.menu button:hover{background:var(--head)}
-.menu hr{border:0;border-top:1px solid var(--line);margin:4px 0}
-dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);max-width:min(640px,calc(100vw - 32px));padding:20px 22px}
-dialog::backdrop{background:rgba(0,0,0,.35)}
-dialog h2{font-size:18px;margin:0 0 10px}
-dialog h3{font-size:14px;margin:16px 0 6px}
-dialog table{border-collapse:collapse;width:100%;font-size:13px}
-dialog td{border-bottom:1px solid var(--line);padding:4px 6px;vertical-align:top}
-dialog td:first-child{font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap;color:var(--accent)}
-dialog ul{margin:0;padding-left:20px;font-size:13px}
-dialog .close{float:right;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:4px 12px;cursor:pointer}
-#nojs{padding:10px 14px;background:#fff4d6;color:#5c4400;font-size:14px}
-@media (pointer:coarse){#fbar,#nameBox,#editor{font-size:16px}}
-@media (max-width:600px){.top .saved{display:none}#tabs{max-width:70%}#stat{display:none}}
-</style></head>
+<meta name="description" content="Excelのように使えるブラウザの表計算ツール。リボン、数式と関数、書式設定、条件付き書式、グラフ、フィルター、xlsx・CSVの読み書きに対応。">
+<link rel="stylesheet" href="sheet/style.css">
+</head>
 <body>
-<div id="nojs">この画面ではスクリプトが動いていません。Chrome・Edge・Safari などのブラウザで開いてください。</div>
-<header>
-  <div class="top"><h1>📊 表計算シート</h1><span class="saved" id="saved">自動保存（このブラウザ内）</span></div>
-  <div class="tools" id="tools">
-    <button id="bUndo" title="元に戻す (Ctrl+Z)">↶</button>
-    <button id="bRedo" title="やり直し (Ctrl+Y)">↷</button>
-    <span class="sep"></span>
-    <button id="bBold" title="太字 (Ctrl+B)"><b>B</b></button>
-    <button id="bItal" title="斜体 (Ctrl+I)"><i>I</i></button>
-    <button id="bAlL" title="左揃え">左</button>
-    <button id="bAlC" title="中央揃え">中</button>
-    <button id="bAlR" title="右揃え">右</button>
-    <span class="sep"></span>
-    <select id="fmt" title="表示形式">
-      <option value="">標準</option><option value="num">数値 (1,234)</option><option value="yen">通貨 (¥)</option><option value="pct">パーセント (%)</option>
-    </select>
-    <button id="bDecUp" title="小数点以下の桁数を増やす">.0←</button>
-    <button id="bDecDn" title="小数点以下の桁数を減らす">.0→</button>
-    <span class="sep"></span>
-    <label title="塗りつぶしの色">塗り<input type="color" id="cBg" value="#fff2a8"></label>
-    <label title="文字の色">文字<input type="color" id="cFc" value="#d1343a"></label>
-    <button id="bClrFmt" title="選択範囲の書式をクリア">書式クリア</button>
-    <span class="sep"></span>
-    <button id="bSortA" title="選択中の列で昇順に並べ替え">昇順↑</button>
-    <button id="bSortD" title="選択中の列で降順に並べ替え">降順↓</button>
-    <span class="sep"></span>
-    <label title="CSVファイルを新しいシートとして読み込む">CSV読込<input type="file" id="fCsv" accept=".csv,.tsv,.txt,text/csv"></label>
-    <button id="bCsv" title="このシートをCSVで保存（Excelで開けます）">CSV保存</button>
-    <button id="bHelp" title="使い方と関数一覧">？使い方</button>
+<div id="titlebar">
+  <span class="appicon" data-icon="appicon"></span>
+  <div class="autosave" title="このブラウザに自動で保存します"><span>自動保存</span><button class="toggle on" id="autosaveBtn" aria-label="自動保存"></button></div>
+  <div class="qat">
+    <button data-cmd="save" title="上書き保存 (Ctrl+S)"><span data-icon="save"></span></button>
+    <button data-cmd="undo" id="qUndo" title="元に戻す (Ctrl+Z)"><span data-icon="undo"></span></button>
+    <button data-cmd="redo" id="qRedo" title="やり直し (Ctrl+Y)"><span data-icon="redo"></span></button>
   </div>
-  <div id="fbarRow"><input id="nameBox" aria-label="セル番地" spellcheck="false" autocomplete="off"><span class="fx">fx</span><input id="fbar" aria-label="数式バー" spellcheck="false" autocomplete="off"></div>
-</header>
-<div id="wrap">
-  <table id="grid"></table>
-  <div id="clipbox" hidden></div>
-  <div id="pickbox" hidden></div>
-  <div id="selbox"><div id="fh" title="ドラッグでコピー（連続データ）"></div></div>
-  <input id="editor" spellcheck="false" autocomplete="off" aria-label="セル入力">
+  <div id="docTitle" title="ブック名を変更">Book1 - 保存済み</div>
+  <label class="tsearch"><span data-icon="search"></span><input id="tsearch" placeholder="検索 (Alt + Q)" autocomplete="off"></label>
 </div>
-<footer><div id="tabs"></div><button id="addSheet" title="シートを追加">＋</button><div id="stat"></div></footer>
-<div id="menu" class="menu" hidden></div>
-<dialog id="help">
-  <button class="close" id="helpClose">閉じる</button>
-  <h2>使い方</h2>
-  <ul>
-    <li>セルを選んでそのまま入力 → <b>Enter</b> で確定（下へ）、<b>Tab</b> で右へ。<b>Esc</b> で取り消し。</li>
-    <li>ダブルクリック / <b>F2</b>（スマホは同じセルをもう一度タップ）で中身を編集。上の数式バーでも編集できます。</li>
-    <li><b>=</b> から始めると数式。入力中にセルをクリック／ドラッグすると番地が入ります。例：<code>=B2*C2</code>、<code>=SUM(D2:D10)</code></li>
-    <li>Shift+矢印・ドラッグで範囲選択。右下の■をドラッグするとコピー（数値2つ以上なら連続データ）。</li>
-    <li>Ctrl+C / X / V でコピー・切り取り・貼り付け（Excel や Google スプレッドシートとの間でも可）。Ctrl+Z / Y で元に戻す・やり直し。</li>
-    <li>右クリックで行・列の挿入／削除。シート名はダブルクリックで変更、右クリックで削除。</li>
-    <li>別シートの参照：<code>=Sheet2!A1</code>。<code>$A$1</code> で絶対参照。</li>
-    <li>データはこのブラウザに自動保存されます。別の端末へ移すときは「CSV保存」を使ってください。</li>
-  </ul>
-  <h3>使える関数</h3>
-  <table>
-    <tr><td>SUM / AVERAGE / MIN / MAX</td><td>合計・平均・最小・最大</td></tr>
-    <tr><td>COUNT / COUNTA / COUNTBLANK</td><td>数値の個数・空白以外の個数・空白の個数</td></tr>
-    <tr><td>SUMIF / COUNTIF / AVERAGEIF</td><td>条件付きの合計・個数・平均　例：<code>=COUNTIF(B2:B9,"&gt;=100")</code></td></tr>
-    <tr><td>IF / IFERROR / AND / OR / NOT</td><td>条件分岐・エラー時の値・論理</td></tr>
-    <tr><td>VLOOKUP / INDEX / MATCH</td><td>表から値を探す</td></tr>
-    <tr><td>ROUND / ROUNDUP / ROUNDDOWN / INT</td><td>四捨五入・切り上げ・切り捨て・整数化</td></tr>
-    <tr><td>ABS / SQRT / POWER / MOD / PRODUCT / MEDIAN / PI / RAND</td><td>数学</td></tr>
-    <tr><td>CONCAT / LEN / LEFT / RIGHT / MID / UPPER / LOWER / TRIM / SUBSTITUTE</td><td>文字列（<code>&amp;</code> でも連結できます）</td></tr>
-    <tr><td>TODAY / NOW</td><td>今日の日付・現在の日時</td></tr>
-  </table>
-</dialog>
-<script>
-(() => {
-'use strict';
-document.getElementById('nojs').remove();
-const COLS = 26, ROWS = 200, DEFW = 96, RHW = 46, STORE = 'hyokeisan-v1';
-const $ = id => document.getElementById(id);
-const touch = matchMedia('(pointer:coarse)').matches;
-const colName = c => String.fromCharCode(65 + c);
-const colIdx = s => { let n = 0; for (const ch of s.toUpperCase()) n = n * 26 + ch.charCodeAt(0) - 64; return n - 1; };
-const keyOf = (r, c) => colName(c) + (r + 1);
-const parseKey = k => { const m = /^([A-Z]+)(\d+)$/.exec(k); return m ? { r: +m[2] - 1, c: colIdx(m[1]) } : null; };
-const inGrid = p => p.r >= 0 && p.r < ROWS && p.c >= 0 && p.c < COLS;
-const clampP = p => ({ r: Math.max(0, Math.min(ROWS - 1, p.r)), c: Math.max(0, Math.min(COLS - 1, p.c)) });
-const JP = '\\u3040-\\u30ff\\u3400-\\u9fff';
-const SHEET_NAME = new RegExp(`^[A-Za-z_${JP}][\\w${JP}]*$`);
-const toHalf = s => s.replace(/[！-～]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)).replace(/　/g, ' ');
 
-/* ================= 計算エンジン ================= */
-class Err { constructor(code) { this.code = code; } }
-const isErr = v => v instanceof Err;
-class Range {
-  constructor(rows) { this.rows = rows; }
-  *[Symbol.iterator]() { for (const r of this.rows) yield* r; }
-}
+<div id="tabbar">
+  <button class="rtab file" data-tab="file">ファイル</button>
+  <button class="rtab on" data-tab="home">ホーム</button>
+  <button class="rtab" data-tab="insert">挿入</button>
+  <button class="rtab" data-tab="layout">ページ レイアウト</button>
+  <button class="rtab" data-tab="formulas">数式</button>
+  <button class="rtab" data-tab="data">データ</button>
+  <button class="rtab" data-tab="review">校閲</button>
+  <button class="rtab" data-tab="view">表示</button>
+  <button class="rtab" data-tab="help">ヘルプ</button>
+  <button class="rtab ctx hidden" data-tab="chart" id="chartTab">グラフのデザイン</button>
+  <span class="tabspacer"></span>
+  <button class="rtab collapse" data-cmd="toggleRibbon" title="リボンを折りたたむ (Ctrl+F1)" id="ribbonToggle"><span data-icon="collapse"></span></button>
+</div>
 
-let state;
-const sheet = () => state.sheets[state.cur];
-const sheetIdx = name => state.sheets.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
-const isFormula = v => typeof v === 'string' && v.length > 1 && v[0] === '=';
+<div id="ribbon">
+  <!-- ===== ホーム ===== -->
+  <div class="panel on" data-panel="home">
+    <div class="grp"><div class="gbody">
+      <div class="split big"><button class="rb top" data-cmd="paste" title="貼り付け (Ctrl+V)"><span data-icon="paste32"></span></button><button class="rb bottom" data-menu="paste">貼り付け<br>▾</button></div>
+      <div class="col">
+        <button class="rb sm" data-lvl="1" data-cmd="cut" title="切り取り (Ctrl+X)"><span data-icon="cut"></span><span class="t">切り取り</span></button>
+        <button class="rb sm" data-lvl="1" data-cmd="copy" title="コピー (Ctrl+C)"><span data-icon="copy"></span><span class="t">コピー</span></button>
+        <button class="rb sm" data-lvl="1" data-cmd="painter" id="painterBtn" title="書式のコピー/貼り付け"><span data-icon="painter"></span><span class="t">書式のコピー/貼り付け</span></button>
+      </div>
+    </div><div class="glabel">クリップボード</div></div>
 
-function parseLiteral(s) {
-  let t = toHalf(String(s)).trim();
-  if (/^(true|false)$/i.test(t)) return t.toUpperCase() === 'TRUE';
-  t = t.replace(/^([+-]?)[¥$]/, '$1');
-  const pct = t.endsWith('%'); if (pct) t = t.slice(0, -1);
-  if (/\d/.test(t) && /^[+-]?(\d{1,3}(,\d{3})+|\d+)?(\.\d+)?([eE][+-]?\d+)?$/.test(t)) {
-    const n = Number(t.replace(/,/g, ''));
-    if (!isNaN(n)) return pct ? n / 100 : n;
-  }
-  return s;
-}
-function fmtGeneral(n) {
-  if (!isFinite(n)) return '#NUM!';
-  const a = Math.abs(n);
-  if (a !== 0 && (a >= 1e15 || a < 1e-9)) return n.toExponential(6).replace(/\.?0+e/, 'e');
-  return String(Number(n.toPrecision(12)));
-}
-const toStr = v => v == null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : typeof v === 'number' ? fmtGeneral(v) : String(v);
-function scalar(v) {
-  if (v instanceof Range) return v.rows.length === 1 && v.rows[0].length === 1 ? v.rows[0][0] : new Err('#VALUE!');
-  return v;
-}
-function toNum(v) {
-  if (isErr(v)) return v;
-  if (v == null) return 0;
-  if (typeof v === 'number') return v;
-  if (typeof v === 'boolean') return v ? 1 : 0;
-  if (v.trim() === '') return 0;
-  const n = parseLiteral(v);
-  return typeof n === 'number' ? n : new Err('#VALUE!');
-}
-function compareVals(a, b) {
-  if (a == null) a = typeof b === 'string' ? '' : typeof b === 'boolean' ? false : 0;
-  if (b == null) b = typeof a === 'string' ? '' : typeof a === 'boolean' ? false : 0;
-  const rank = v => typeof v === 'number' ? 0 : typeof v === 'string' ? 1 : 2;
-  const ra = rank(a), rb = rank(b);
-  if (ra !== rb) return ra < rb ? -1 : 1;
-  if (ra === 1) { a = a.toLowerCase(); b = b.toLowerCase(); }
-  return a < b ? -1 : a > b ? 1 : 0;
-}
-function cmpOp(op, a, b) {
-  const c = compareVals(a, b);
-  switch (op) { case '=': return c === 0; case '<>': return c !== 0; case '<': return c < 0; case '>': return c > 0; case '<=': return c <= 0; case '>=': return c >= 0; }
-  return false;
-}
+    <div class="grp"><div class="gbody"><div class="col">
+      <div class="row">
+        <select class="rsel" id="fontName" title="フォント"></select>
+        <select class="rsel" id="fontSize" title="フォント サイズ"></select>
+        <button class="rb ic" data-cmd="growFont" data-icon="growFont" title="フォント サイズの拡大"></button>
+        <button class="rb ic" data-cmd="shrinkFont" data-icon="shrinkFont" title="フォント サイズの縮小"></button>
+      </div>
+      <div class="row">
+        <button class="rb ic" data-cmd="bold" data-icon="bold" id="bBold" title="太字 (Ctrl+B)"></button>
+        <button class="rb ic" data-cmd="italic" data-icon="italic" id="bItalic" title="斜体 (Ctrl+I)"></button>
+        <div class="split"><button class="rb ic" data-cmd="underline" data-icon="underline" id="bUnder" title="下線 (Ctrl+U)"></button><button class="rb arrow" data-menu="underline">▾</button></div>
+        <span style="width:6px"></span>
+        <div class="split"><button class="rb ic" data-cmd="borderLast" id="bBorder" title="罫線"><span data-icon="borderBottom" id="borderIcon"></span></button><button class="rb arrow" data-menu="borders">▾</button></div>
+        <span style="width:4px"></span>
+        <div class="split"><button class="rb ic cbarwrap" data-cmd="fillLast" title="塗りつぶしの色"><span data-icon="fill"></span><i class="cbar" id="fillBar" style="background:#ffff00"></i></button><button class="rb arrow" data-menu="fillColor">▾</button></div>
+        <div class="split"><button class="rb ic cbarwrap" data-cmd="fontColorLast" title="フォントの色"><span data-icon="fontColor"></span><i class="cbar" id="fcBar" style="background:#ff0000"></i></button><button class="rb arrow" data-menu="fontColor">▾</button></div>
+      </div>
+    </div></div><div class="glabel">フォント<button class="launch" data-cmd="formatCells:font" title="フォントの設定" data-icon="launcher"></button></div></div>
 
-const REF_TOKEN = new RegExp(`^(?:([A-Za-z_${JP}][\\w${JP}]*)!)?(\\$?[A-Za-z]{1,3}\\$?\\d+)(?::(\\$?[A-Za-z]{1,3}\\$?\\d+))?(?![\\w(])`);
-function tokenize(src) {
-  const t = []; let i = 0;
-  while (i < src.length) {
-    const ch = src[i];
-    if (/\s/.test(ch)) { i++; continue; }
-    if (ch === '"') {
-      let j = i + 1, s = '';
-      for (;;) {
-        if (j >= src.length) throw new Err('#ERROR!');
-        if (src[j] === '"') { if (src[j + 1] === '"') { s += '"'; j += 2; continue; } break; }
-        s += src[j++];
-      }
-      t.push({ t: 'str', v: s }); i = j + 1; continue;
-    }
-    const rest = src.slice(i); let m;
-    if (rest.startsWith('#REF!')) throw new Err('#REF!');
-    if ((m = /^(\d+\.?\d*(?:[eE][+-]?\d+)?|\.\d+)/.exec(rest))) { t.push({ t: 'num', v: parseFloat(m[1]) }); i += m[1].length; continue; }
-    if ((m = REF_TOKEN.exec(rest))) { t.push({ t: 'ref', sheet: m[1] || null, a: m[2], b: m[3] || null }); i += m[0].length; continue; }
-    if ((m = /^[A-Za-z_][\w.]*/.exec(rest))) { t.push({ t: 'id', v: m[0].toUpperCase() }); i += m[0].length; continue; }
-    if ((m = /^(<=|>=|<>)/.exec(rest))) { t.push({ t: 'op', v: m[1] }); i += 2; continue; }
-    if ('+-*/^&=<>(),%'.includes(ch)) { t.push({ t: 'op', v: ch }); i++; continue; }
-    throw new Err('#ERROR!');
-  }
-  return t;
-}
-function parse(tokens) {
-  let p = 0;
-  const peek = () => tokens[p];
-  const isOp = v => peek() && peek().t === 'op' && peek().v === v;
-  const expect = v => { if (!isOp(v)) throw new Err('#ERROR!'); p++; };
-  const CMP = ['=', '<>', '<', '>', '<=', '>='];
-  function cmp() { let l = cat(); while (peek() && peek().t === 'op' && CMP.includes(peek().v)) { const o = tokens[p++].v; l = { k: 'bin', o, l, r: cat() }; } return l; }
-  function cat() { let l = add(); while (isOp('&')) { p++; l = { k: 'bin', o: '&', l, r: add() }; } return l; }
-  function add() { let l = mul(); while (isOp('+') || isOp('-')) { const o = tokens[p++].v; l = { k: 'bin', o, l, r: mul() }; } return l; }
-  function mul() { let l = pow(); while (isOp('*') || isOp('/')) { const o = tokens[p++].v; l = { k: 'bin', o, l, r: pow() }; } return l; }
-  function pow() { let l = unary(); while (isOp('^')) { p++; l = { k: 'bin', o: '^', l, r: unary() }; } return l; }
-  function unary() { if (isOp('-')) { p++; return { k: 'neg', e: unary() }; } if (isOp('+')) { p++; return unary(); } return post(); }
-  function post() { let e = prim(); while (isOp('%')) { p++; e = { k: 'pct', e }; } return e; }
-  function prim() {
-    const tk = tokens[p++];
-    if (!tk) throw new Err('#ERROR!');
-    if (tk.t === 'num' || tk.t === 'str') return { k: 'lit', v: tk.v };
-    if (tk.t === 'ref') return { k: 'ref', sheet: tk.sheet, a: tk.a, b: tk.b };
-    if (tk.t === 'id') {
-      if (isOp('(')) {
-        p++; const args = [];
-        if (!isOp(')')) { do { args.push(cmp()); } while (isOp(',') && ++p); }
-        expect(')'); return { k: 'fn', name: tk.v, args };
-      }
-      if (tk.v === 'TRUE') return { k: 'lit', v: true };
-      if (tk.v === 'FALSE') return { k: 'lit', v: false };
-      throw new Err('#NAME?');
-    }
-    if (tk.t === 'op' && tk.v === '(') { const e = cmp(); expect(')'); return e; }
-    throw new Err('#ERROR!');
-  }
-  const e = cmp();
-  if (p < tokens.length) throw new Err('#ERROR!');
-  return e;
-}
+    <div class="grp"><div class="gbody"><div class="col">
+      <div class="row">
+        <button class="rb ic" data-cmd="vaTop" data-icon="alignTop" id="bVaT" title="上揃え"></button>
+        <button class="rb ic" data-cmd="vaMiddle" data-icon="alignMiddle" id="bVaM" title="上下中央揃え"></button>
+        <button class="rb ic" data-cmd="vaBottom" data-icon="alignBottom" id="bVaB" title="下揃え"></button>
+        <span style="width:4px"></span>
+        <button class="rb sm" data-lvl="2" data-cmd="wrap" id="bWrap" title="折り返して全体を表示する"><span data-icon="wrap"></span><span class="t">折り返して全体を表示する</span></button>
+      </div>
+      <div class="row">
+        <button class="rb ic" data-cmd="alLeft" data-icon="alignLeft" id="bAlL" title="左揃え"></button>
+        <button class="rb ic" data-cmd="alCenter" data-icon="alignCenter" id="bAlC" title="中央揃え"></button>
+        <button class="rb ic" data-cmd="alRight" data-icon="alignRight" id="bAlR" title="右揃え"></button>
+        <span style="width:4px"></span>
+        <button class="rb ic" data-cmd="indentDec" data-icon="indentDec" title="インデントを減らす"></button>
+        <button class="rb ic" data-cmd="indentInc" data-icon="indentInc" title="インデントを増やす"></button>
+        <span style="width:4px"></span>
+        <div class="split"><button class="rb sm" data-lvl="2" data-cmd="mergeCenter" id="bMerge" title="セルを結合して中央揃え"><span data-icon="merge"></span><span class="t">セルを結合して中央揃え</span></button><button class="rb arrow" data-menu="merge">▾</button></div>
+      </div>
+    </div></div><div class="glabel">配置<button class="launch" data-cmd="formatCells:align" title="配置の設定" data-icon="launcher"></button></div></div>
 
-const cache = new Map(), visiting = new Set(), astCache = new Map();
-function getCellValue(si, r, c) {
-  const k = si + ':' + r + ':' + c;
-  if (cache.has(k)) return cache.get(k);
-  if (visiting.has(k)) return new Err('#CIRC!');
-  const cell = state.sheets[si].cells[keyOf(r, c)];
-  let v;
-  if (!cell || cell.v == null || cell.v === '') v = null;
-  else if (isFormula(cell.v)) {
-    visiting.add(k);
-    try { v = evaluateFormula(cell.v.slice(1), si); }
-    catch (e) { v = isErr(e) ? e : new Err('#ERROR!'); }
-    visiting.delete(k);
-  } else v = parseLiteral(cell.v);
-  cache.set(k, v);
-  return v;
-}
-function evaluateFormula(src, si) {
-  let ast = astCache.get(src);
-  if (!ast) { ast = parse(tokenize(src)); astCache.set(src, ast); }
-  let v = scalar(evalNode(ast, si));
-  if (v == null) v = 0;
-  if (typeof v === 'number' && !isFinite(v)) v = new Err('#NUM!');
-  return v;
-}
-function parseA1(s) { const m = /^\$?([A-Za-z]+)\$?(\d+)$/.exec(s); return { c: colIdx(m[1]), r: +m[2] - 1 }; }
-function refNode(n, si) {
-  let s = si;
-  if (n.sheet) { s = sheetIdx(n.sheet); if (s < 0) return new Err('#REF!'); }
-  const a = parseA1(n.a), b = n.b ? parseA1(n.b) : a;
-  if (!inGrid(a) || !inGrid(b)) return new Err('#REF!');
-  const rows = [];
-  for (let r = Math.min(a.r, b.r); r <= Math.max(a.r, b.r); r++) {
-    const row = [];
-    for (let c = Math.min(a.c, b.c); c <= Math.max(a.c, b.c); c++) row.push(getCellValue(s, r, c));
-    rows.push(row);
-  }
-  return new Range(rows);
-}
-function evalNode(n, si) {
-  switch (n.k) {
-    case 'lit': return n.v;
-    case 'ref': return refNode(n, si);
-    case 'neg': { const v = toNum(scalar(evalNode(n.e, si))); return isErr(v) ? v : -v; }
-    case 'pct': { const v = toNum(scalar(evalNode(n.e, si))); return isErr(v) ? v : v / 100; }
-    case 'bin': {
-      const a = scalar(evalNode(n.l, si)), b = scalar(evalNode(n.r, si));
-      if (isErr(a)) return a; if (isErr(b)) return b;
-      if (n.o === '&') return toStr(a) + toStr(b);
-      if (['=', '<>', '<', '>', '<=', '>='].includes(n.o)) return cmpOp(n.o, a, b);
-      const x = toNum(a), y = toNum(b);
-      if (isErr(x)) return x; if (isErr(y)) return y;
-      switch (n.o) {
-        case '+': return x + y; case '-': return x - y; case '*': return x * y;
-        case '/': return y === 0 ? new Err('#DIV/0!') : x / y;
-        case '^': return Math.pow(x, y);
-      }
-      return new Err('#ERROR!');
-    }
-    case 'fn': {
-      if (LAZY[n.name]) return LAZY[n.name](n.args, si);
-      const f = FN[n.name];
-      if (!f) return new Err('#NAME?');
-      return f(n.args.map(a => evalNode(a, si)));
-    }
-  }
-  return new Err('#ERROR!');
-}
+    <div class="grp"><div class="gbody"><div class="col">
+      <div class="row"><button class="fmtbox" data-menu="numFormat" id="fmtBox" title="表示形式"><span id="fmtName">標準</span><span data-icon="ddArrow"></span></button></div>
+      <div class="row">
+        <div class="split"><button class="rb ic" data-cmd="fmtCurrency" data-icon="currency" title="通貨表示形式"></button><button class="rb arrow" data-menu="currency">▾</button></div>
+        <button class="rb ic" data-cmd="fmtPct" data-icon="percent" title="パーセント スタイル (Ctrl+Shift+%)"></button>
+        <button class="rb ic" data-cmd="fmtComma" data-icon="comma" title="桁区切りスタイル"></button>
+        <span style="width:4px"></span>
+        <button class="rb ic" data-cmd="decInc" data-icon="decInc" title="小数点以下の表示桁数を増やす"></button>
+        <button class="rb ic" data-cmd="decDec" data-icon="decDec" title="小数点以下の表示桁数を減らす"></button>
+      </div>
+    </div></div><div class="glabel">数値<button class="launch" data-cmd="formatCells:number" title="表示形式の設定" data-icon="launcher"></button></div></div>
 
-/* ---- 関数 ---- */
-function collect(vals) {
-  const out = [];
-  for (const v of vals) {
-    if (isErr(v)) return v;
-    if (v instanceof Range) { for (const x of v) { if (isErr(x)) return x; if (typeof x === 'number') out.push(x); } }
-    else { const n = toNum(v); if (isErr(n)) return n; out.push(n); }
-  }
-  return out;
-}
-function bools(vals) {
-  const out = [];
-  for (const v of vals) {
-    if (v instanceof Range) { for (const x of v) { if (isErr(x)) return x; if (typeof x === 'boolean' || typeof x === 'number') out.push(!!x); } }
-    else { const n = toNum(v); if (isErr(n)) return n; out.push(n !== 0); }
-  }
-  return out.length ? out : new Err('#VALUE!');
-}
-const agg = f => vals => { const n = collect(vals); return isErr(n) ? n : f(n); };
-const num1 = v => toNum(scalar(v));
-const str1 = v => { v = scalar(v); return isErr(v) ? v : toStr(v); };
-const guard = (...xs) => xs.find(isErr) || null;
-const sum = n => n.reduce((a, b) => a + b, 0);
-function roundTo(x, d, mode) {
-  const f = Math.pow(10, d), a = Number((Math.abs(x) * f).toPrecision(15));
-  const r = mode === 'up' ? Math.ceil(a) : mode === 'down' ? Math.floor(a) : Math.round(a);
-  return Math.sign(x) * r / f;
-}
-const rnd = mode => ([x, d]) => { x = num1(x); d = d === undefined ? 0 : num1(d); return guard(x, d) || roundTo(x, Math.trunc(d), mode); };
-const math1 = f => ([x]) => { x = num1(x); return guard(x) || f(x); };
-const text1 = f => ([s]) => { s = str1(s); return isErr(s) ? s : f(s); };
-function makeCrit(c) {
-  if (isErr(c)) return c;
-  if (typeof c === 'number' || typeof c === 'boolean') return x => x === c || (typeof x === 'string' && parseLiteral(x) === c);
-  const m = /^(<=|>=|<>|<|>|=)?([\s\S]*)$/.exec(c == null ? '' : String(c));
-  const op = m[1] || '=', raw = m[2], lit = raw === '' ? '' : parseLiteral(raw);
-  if (typeof lit === 'number' || typeof lit === 'boolean') {
-    return x => { if (typeof x === 'string') { const p = parseLiteral(x); if (typeof p === typeof lit) x = p; } return typeof x !== typeof lit ? op === '<>' : cmpOp(op, x, lit); };
-  }
-  if (op === '=' || op === '<>') {
-    let test;
-    if (raw === '') test = x => x == null || x === '';
-    else if (/[*?]/.test(raw)) {
-      const re = new RegExp('^' + raw.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.') + '$', 'i');
-      test = x => typeof x === 'string' && re.test(x);
-    } else { const l = raw.toLowerCase(); test = x => x != null && toStr(x).toLowerCase() === l; }
-    return op === '=' ? test : x => !test(x);
-  }
-  return x => typeof x === 'string' && cmpOp(op, x, raw);
-}
-function condAgg(rg, cr, sr, f) {
-  if (!(rg instanceof Range)) return new Err('#VALUE!');
-  const t = makeCrit(scalar(cr)); if (isErr(t)) return t;
-  const s = sr instanceof Range ? sr : rg, out = [];
-  rg.rows.forEach((row, i) => row.forEach((x, j) => { if (t(x)) { const y = s.rows[i] && s.rows[i][j]; out.push(y); } }));
-  return f(out);
-}
-const pad2 = n => String(n).padStart(2, '0');
-const dateStr = d => `${d.getFullYear()}/${pad2(d.getMonth() + 1)}/${pad2(d.getDate())}`;
-const FN = {
-  SUM: agg(sum),
-  AVERAGE: agg(n => n.length ? sum(n) / n.length : new Err('#DIV/0!')),
-  MIN: agg(n => n.length ? Math.min(...n) : 0),
-  MAX: agg(n => n.length ? Math.max(...n) : 0),
-  PRODUCT: agg(n => n.length ? n.reduce((a, b) => a * b, 1) : 0),
-  MEDIAN: agg(n => { if (!n.length) return new Err('#NUM!'); const s = [...n].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }),
-  COUNT: vals => { let k = 0; for (const v of vals) { if (v instanceof Range) { for (const x of v) if (typeof x === 'number') k++; } else if (v != null && typeof toNum(v) === 'number') k++; } return k; },
-  COUNTA: vals => { let k = 0; for (const v of vals) { if (v instanceof Range) { for (const x of v) if (x != null && x !== '') k++; } else k++; } return k; },
-  COUNTBLANK: vals => { let k = 0; for (const v of vals) if (v instanceof Range) for (const x of v) if (x == null || x === '') k++; return k; },
-  ROUND: rnd(), ROUNDUP: rnd('up'), ROUNDDOWN: rnd('down'),
-  INT: math1(Math.floor), ABS: math1(Math.abs),
-  SQRT: math1(x => x < 0 ? new Err('#NUM!') : Math.sqrt(x)),
-  POWER: ([a, b]) => { a = num1(a); b = num1(b); return guard(a, b) || Math.pow(a, b); },
-  MOD: ([a, b]) => { a = num1(a); b = num1(b); return guard(a, b) || (b === 0 ? new Err('#DIV/0!') : a - b * Math.floor(a / b)); },
-  PI: () => Math.PI, RAND: () => Math.random(),
-  AND: vals => { const b = bools(vals); return isErr(b) ? b : b.every(Boolean); },
-  OR: vals => { const b = bools(vals); return isErr(b) ? b : b.some(Boolean); },
-  NOT: ([x]) => { x = num1(x); return guard(x) || x === 0; },
-  CONCAT: vals => { let s = ''; for (const v of vals) { if (v instanceof Range) { for (const x of v) { if (isErr(x)) return x; s += toStr(x); } } else { if (isErr(v)) return v; s += toStr(v); } } return s; },
-  LEN: text1(s => [...s].length), UPPER: text1(s => s.toUpperCase()), LOWER: text1(s => s.toLowerCase()),
-  TRIM: text1(s => s.trim().replace(/\s+/g, ' ')),
-  LEFT: ([s, n]) => { s = str1(s); n = n === undefined ? 1 : num1(n); return guard(s, n) || [...s].slice(0, Math.max(0, n)).join(''); },
-  RIGHT: ([s, n]) => { s = str1(s); n = n === undefined ? 1 : num1(n); return guard(s, n) || (n <= 0 ? '' : [...s].slice(-n).join('')); },
-  MID: ([s, st, n]) => { s = str1(s); st = num1(st); n = num1(n); return guard(s, st, n) || (st < 1 ? new Err('#VALUE!') : [...s].slice(st - 1, st - 1 + Math.max(0, n)).join('')); },
-  SUBSTITUTE: ([s, a, b]) => { s = str1(s); a = str1(a); b = str1(b); return guard(s, a, b) || (a === '' ? s : s.split(a).join(b)); },
-  TODAY: () => dateStr(new Date()),
-  NOW: () => { const d = new Date(); return `${dateStr(d)} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`; },
-  SUMIF: ([rg, cr, sr]) => condAgg(rg, cr, sr, ys => sum(ys.filter(y => typeof y === 'number'))),
-  COUNTIF: ([rg, cr]) => condAgg(rg, cr, null, ys => ys.length),
-  AVERAGEIF: ([rg, cr, sr]) => condAgg(rg, cr, sr, ys => { const n = ys.filter(y => typeof y === 'number'); return n.length ? sum(n) / n.length : new Err('#DIV/0!'); }),
-  VLOOKUP: ([v, tb, ci, ap]) => {
-    v = scalar(v); ci = num1(ci);
-    const e = guard(v, ci); if (e) return e;
-    if (!(tb instanceof Range)) return new Err('#VALUE!');
-    ci = Math.trunc(ci);
-    if (ci < 1 || ci > tb.rows[0].length) return new Err('#REF!');
-    let approx = true;
-    if (ap !== undefined) { const a = num1(ap); if (isErr(a)) return a; approx = a !== 0; }
-    let idx = -1;
-    if (!approx) idx = tb.rows.findIndex(r => r[0] != null && !isErr(r[0]) && compareVals(r[0], v) === 0);
-    else for (let i = 0; i < tb.rows.length; i++) {
-      const k = tb.rows[i][0];
-      if (k == null || isErr(k) || typeof k !== typeof v) continue;
-      if (compareVals(k, v) <= 0) idx = i; else break;
-    }
-    if (idx < 0) return new Err('#N/A');
-    const out = tb.rows[idx][ci - 1];
-    return out == null ? 0 : out;
-  },
-  MATCH: ([v, rg, ty]) => {
-    v = scalar(v); if (isErr(v)) return v;
-    if (!(rg instanceof Range)) return new Err('#N/A');
-    ty = ty === undefined ? 1 : num1(ty); if (isErr(ty)) return ty;
-    const list = [...rg]; let idx = -1;
-    if (ty === 0) idx = list.findIndex(x => x != null && !isErr(x) && compareVals(x, v) === 0);
-    else for (let i = 0; i < list.length; i++) {
-      const x = list[i]; if (x == null || isErr(x)) continue;
-      const c = compareVals(x, v);
-      if (ty > 0 ? c <= 0 : c >= 0) idx = i; else break;
-    }
-    return idx < 0 ? new Err('#N/A') : idx + 1;
-  },
-  INDEX: ([rg, r, c]) => {
-    if (!(rg instanceof Range)) return new Err('#VALUE!');
-    r = r === undefined ? 1 : num1(r); c = c === undefined ? 1 : num1(c);
-    const e = guard(r, c); if (e) return e;
-    if (rg.rows.length === 1 && c === 1 && r > 1) { c = r; r = 1; }
-    const row = rg.rows[r - 1]; if (!row || row[c - 1] === undefined) return new Err('#REF!');
-    return row[c - 1] == null ? 0 : row[c - 1];
-  },
-};
-FN.CONCATENATE = FN.CONCAT;
-const LAZY = {
-  IF: (args, si) => {
-    const c = toNum(scalar(evalNode(args[0] || { k: 'lit', v: false }, si)));
-    if (isErr(c)) return c;
-    if (c !== 0) return args[1] ? evalNode(args[1], si) : true;
-    return args[2] ? evalNode(args[2], si) : false;
-  },
-  IFERROR: (args, si) => {
-    const v = scalar(evalNode(args[0] || { k: 'lit', v: 0 }, si));
-    return isErr(v) ? (args[1] ? evalNode(args[1], si) : '') : v;
-  },
-};
+    <div class="grp"><div class="gbody">
+      <button class="rb big dd" data-menu="condFmt"><span data-icon="condFmt32"></span><span class="lbl">条件付き
+書式</span></button>
+      <button class="rb big dd" data-menu="tableFmt"><span data-icon="table32"></span><span class="lbl">テーブルとして
+書式設定</span></button>
+      <button class="rb big dd" data-menu="cellStyles"><span data-icon="cellStyles32"></span><span class="lbl">セルの
+スタイル</span></button>
+    </div><div class="glabel">スタイル</div></div>
 
-/* ---- 参照の書き換え（コピー・行列の挿入削除・シート名変更） ---- */
-const REF_RE = new RegExp(`(^|[^\\w$.!${JP}])((?:[A-Za-z_${JP}][\\w${JP}]*)!)?(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+)(?::(\\$?)([A-Za-z]{1,3})(\\$?)(\\d+))?(?![\\w(!])`, 'g');
-const fmtRef = p => (p.ac ? '$' : '') + colName(p.c) + (p.ar ? '$' : '') + (p.r + 1);
-const outsideStrings = (f, fn) => f.split(/("(?:[^"]|"")*"?)/).map((part, i) => i % 2 ? part : fn(part)).join('');
-function mapRefs(f, fn) {
-  return outsideStrings(f, part => part.replace(REF_RE, (m, pre, sh, ac1, c1, ar1, r1, ac2, c2, ar2, r2) => {
-    const a = { c: colIdx(c1), r: +r1 - 1, ac: !!ac1, ar: !!ar1 };
-    const b = c2 ? { c: colIdx(c2), r: +r2 - 1, ac: !!ac2, ar: !!ar2 } : null;
-    const res = fn(sh ? sh.slice(0, -1) : null, a, b);
-    if (res === undefined) return m;
-    if (res === null) return pre + '#REF!';
-    return pre + (sh || '') + fmtRef(res.a) + (res.b ? ':' + fmtRef(res.b) : '');
-  }));
-}
-function shiftFormula(f, dr, dc) {
-  return mapRefs(f, (sh, a, b) => {
-    const mv = p => ({ ...p, r: p.ar ? p.r : p.r + dr, c: p.ac ? p.c : p.c + dc });
-    const A = mv(a), B = b && mv(b);
-    if (!inGrid(A) || (B && !inGrid(B))) return null;
-    return { a: A, b: B };
-  });
-}
-function normalizeInput(v) {
-  if (v[0] === '＝') v = '=' + v.slice(1);
-  if (!isFormula(v)) return v;
-  v = outsideStrings(v, p => toHalf(p));
-  v = outsideStrings(v, p => p.replace(/[A-Za-z_][\w.]*(?=\s*\()/g, s => s.toUpperCase()).replace(REF_RE, m => m.replace(/[a-z]+(?=\$?\d)/g, s => s.toUpperCase())));
-  let depth = 0;
-  outsideStrings(v, p => { for (const ch of p) { if (ch === '(') depth++; else if (ch === ')') depth--; } return p; });
-  if (depth > 0) v += ')'.repeat(depth);
-  return v;
-}
+    <div class="grp"><div class="gbody">
+      <div class="split big"><button class="rb top" data-cmd="insertCellsSmart" title="挿入"><span data-icon="insertCells32"></span></button><button class="rb bottom" data-menu="insert">挿入<br>▾</button></div>
+      <div class="split big"><button class="rb top" data-cmd="deleteCellsSmart" title="削除"><span data-icon="deleteCells32"></span></button><button class="rb bottom" data-menu="delete">削除<br>▾</button></div>
+      <button class="rb big dd" data-menu="format"><span data-icon="formatCells32"></span><span class="lbl">書式</span></button>
+    </div><div class="glabel">セル</div></div>
 
-/* ================= 状態・保存 ================= */
-function sample() {
-  const c = {}, set = (k, v, o) => { c[k] = Object.assign({ v }, o || {}); };
-  const H = { b: true, bg: '#d9efe2', al: 'c' };
-  set('A1', '品目', H); set('B1', '単価', H); set('C1', '数量', H); set('D1', '小計', H);
-  [['りんご', 120, 3], ['みかん', 80, 5], ['ぶどう', 450, 1], ['バナナ', 200, 2]].forEach(([n, p, q], i) => {
-    const r = i + 2; set('A' + r, n); set('B' + r, String(p), { fmt: 'yen' }); set('C' + r, String(q)); set('D' + r, `=B${r}*C${r}`, { fmt: 'yen' });
-  });
-  set('A6', '合計', { b: true }); set('C6', '=SUM(C2:C5)', { b: true }); set('D6', '=SUM(D2:D5)', { b: true, fmt: 'yen', bg: '#fff2a8' });
-  set('A8', '平均単価'); set('B8', '=AVERAGE(B2:B5)', { fmt: 'yen' });
-  set('A9', '200円以上'); set('B9', '=COUNTIF(B2:B5,">=200")&"品目"');
-  set('A10', '判定'); set('B10', '=IF(D6>1000,"予算オーバー","OK")');
-  return { sheets: [{ name: 'Sheet1', cells: c, colW: {} }], cur: 0 };
-}
-function load() {
-  try {
-    const s = JSON.parse(localStorage.getItem(STORE));
-    if (s && Array.isArray(s.sheets) && s.sheets.length && s.sheets.every(x => x && typeof x.name === 'string' && x.cells && typeof x.cells === 'object')) {
-      s.sheets.forEach(x => { x.colW = x.colW || {}; });
-      s.cur = Math.min(Math.max(0, s.cur | 0), s.sheets.length - 1);
-      return s;
-    }
-  } catch (e) { /* 読み込めないときはサンプルから */ }
-  return sample();
-}
-let saveTimer = 0;
-function save() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    try { localStorage.setItem(STORE, JSON.stringify(state)); $('saved').textContent = '保存しました ' + new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }); }
-    catch (e) { $('saved').textContent = '⚠ このブラウザでは保存できません'; }
-  }, 300);
-}
-const undoS = [], redoS = [];
-function commit(fn) {
-  undoS.push(JSON.stringify(state)); if (undoS.length > 100) undoS.shift();
-  redoS.length = 0;
-  fn(); afterChange();
-}
-function undo() { if (!undoS.length) return; redoS.push(JSON.stringify(state)); state = JSON.parse(undoS.pop()); clip = null; afterChange(); }
-function redo() { if (!redoS.length) return; undoS.push(JSON.stringify(state)); state = JSON.parse(redoS.pop()); clip = null; afterChange(); }
-function cleanCell(sh, k) {
-  const c = sh.cells[k]; if (!c) return;
-  if (c.v === '' || c.v == null) delete c.v;
-  for (const p in c) if (c[p] == null || c[p] === false) delete c[p];
-  if (!Object.keys(c).length) delete sh.cells[k];
-}
+    <div class="grp"><div class="gbody">
+      <div class="col">
+        <div class="split"><button class="rb sm" data-lvl="3" data-cmd="autoSum:SUM" title="オート SUM (Alt+=)"><span data-icon="sum"></span><span class="t">オート SUM</span></button><button class="rb arrow" data-menu="autoSum">▾</button></div>
+        <button class="rb sm dd" data-lvl="3" data-menu="fill" title="フィル"><span data-icon="fillDown"></span><span class="t">フィル</span></button>
+        <button class="rb sm dd" data-lvl="3" data-menu="clear" title="クリア"><span data-icon="clear"></span><span class="t">クリア</span></button>
+      </div>
+      <button class="rb big dd" data-menu="sortFilter"><span data-icon="sortFilter32"></span><span class="lbl">並べ替えと
+フィルター</span></button>
+      <button class="rb big dd" data-menu="findSelect"><span data-icon="find32"></span><span class="lbl">検索と
+選択</span></button>
+    </div><div class="glabel">編集</div></div>
+  </div>
 
-/* ================= 画面 ================= */
-const wrap = $('wrap'), table = $('grid'), editor = $('editor'), fbar = $('fbar'), nameBox = $('nameBox');
-const selbox = $('selbox'), pickbox = $('pickbox'), clipbox = $('clipbox'), fh = $('fh'), menu = $('menu');
-const tds = [], colHeads = [], rowHeads = [], cols = [];
-let act = { r: 0, c: 0 }, ext = { r: 0, c: 0 };
-let editing = false, editKind = null, refIns = null, drag = null, clip = null;
+  <!-- ===== 挿入 ===== -->
+  <div class="panel" data-panel="insert">
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="insertTable" title="テーブル (Ctrl+T)"><span data-icon="table32b"></span><span class="lbl">テーブル</span></button>
+    </div><div class="glabel">テーブル</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="chart:col" title="おすすめグラフ"><span data-icon="recChart32"></span><span class="lbl">おすすめ
+グラフ</span></button>
+      <div class="col">
+        <div class="row">
+          <button class="rb ic dd" data-menu="chartCol" title="縦棒グラフの挿入"><span data-icon="colChart"></span></button>
+          <button class="rb ic dd" data-menu="chartLine" title="折れ線グラフの挿入"><span data-icon="lineChart"></span></button>
+        </div>
+        <div class="row">
+          <button class="rb ic dd" data-menu="chartPie" title="円またはドーナツ グラフの挿入"><span data-icon="pieChart"></span></button>
+          <button class="rb ic dd" data-menu="chartBar" title="横棒グラフの挿入"><span data-icon="barChart"></span></button>
+        </div>
+        <div class="row">
+          <button class="rb ic dd" data-menu="chartArea" title="面グラフの挿入"><span data-icon="areaChart"></span></button>
+        </div>
+      </div>
+    </div><div class="glabel">グラフ</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="newNote"><span data-icon="note32"></span><span class="lbl">メモ</span></button>
+    </div><div class="glabel">メモ</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="symbol"><span data-icon="symbol32"></span><span class="lbl">記号と
+特殊文字</span></button>
+    </div><div class="glabel">記号と特殊文字</div></div>
+  </div>
 
-function build() {
-  let h = `<colgroup><col style="width:${RHW}px">`;
-  for (let c = 0; c < COLS; c++) h += '<col>';
-  h += '</colgroup><thead><tr><th class="corner" title="すべて選択"></th>';
-  for (let c = 0; c < COLS; c++) h += `<th class="ch" style="position:sticky">${colName(c)}<div class="rz"></div></th>`;
-  h += '</tr></thead><tbody>';
-  const row = '<td></td>'.repeat(COLS);
-  for (let r = 0; r < ROWS; r++) h += `<tr><th class="rh">${r + 1}</th>${row}</tr>`;
-  table.innerHTML = h + '</tbody>';
-  cols.push(...table.querySelectorAll('col'));
-  colHeads.push(...table.querySelectorAll('th.ch'));
-  [...table.tBodies[0].rows].forEach(tr => { rowHeads.push(tr.cells[0]); tds.push([...tr.cells].slice(1)); });
-}
-function applyWidths() {
-  const w = sheet().colW; let total = RHW;
-  for (let c = 0; c < COLS; c++) { const x = w[c] || DEFW; cols[c + 1].style.width = x + 'px'; total += x; }
-  table.style.width = total + 'px';
-}
-function fmtNum(n, cell) {
-  const d = cell.dec;
-  const loc = (x, dd) => x.toLocaleString('ja-JP', { minimumFractionDigits: dd, maximumFractionDigits: dd });
-  switch (cell.fmt) {
-    case 'num': return loc(n, d ?? 0);
-    case 'yen': return (n < 0 ? '-' : '') + '¥' + loc(Math.abs(n), d ?? 0);
-    case 'pct': return loc(n * 100, d ?? 0) + '%';
-  }
-  return d != null ? n.toFixed(d) : fmtGeneral(n);
-}
-function display(v, cell) {
-  let t, al = 'l', err = false;
-  if (isErr(v)) { t = v.code; al = 'c'; err = true; }
-  else if (v == null) t = '';
-  else if (typeof v === 'boolean') { t = v ? 'TRUE' : 'FALSE'; al = 'c'; }
-  else if (typeof v === 'number') { t = fmtNum(v, cell); al = 'r'; }
-  else t = v;
-  return [t, (cell.al || al) + (err ? ' err' : '')];
-}
-function render() {
-  cache.clear();
-  const sh = sheet();
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-    const td = tds[r][c], cell = sh.cells[keyOf(r, c)];
-    if (!cell) { if (td._d) { td.textContent = ''; td.className = ''; td.style.cssText = ''; td._d = 0; } continue; }
-    const [t, cls] = display(getCellValue(state.cur, r, c), cell);
-    td.textContent = t; td.className = cls; td._d = 1;
-    td.style.cssText = (cell.b ? 'font-weight:700;' : '') + (cell.i ? 'font-style:italic;' : '') +
-      (cell.bg ? `background:${cell.bg};` : '') + (cell.fc || cell.bg ? `color:${cell.fc || '#1d2330'};` : '');
-  }
-}
-function renderTabs() {
-  const tabs = $('tabs'); tabs.innerHTML = '';
-  state.sheets.forEach((s, i) => {
-    const b = document.createElement('button');
-    b.className = 'tab' + (i === state.cur ? ' on' : ''); b.textContent = s.name;
-    b.onclick = () => switchSheet(i);
-    b.ondblclick = () => renameSheet(i);
-    b.oncontextmenu = e => { e.preventDefault(); showMenu(e.clientX, e.clientY, [['名前を変更', () => renameSheet(i)], ['シートを削除', () => deleteSheet(i)]]); };
-    tabs.appendChild(b);
-  });
-}
-const rect = () => ({ r0: Math.min(act.r, ext.r), r1: Math.max(act.r, ext.r), c0: Math.min(act.c, ext.c), c1: Math.max(act.c, ext.c) });
-function cellBox(r, c) { const td = tds[r][c]; return { x: td.offsetLeft + table.offsetLeft, y: td.offsetTop + table.offsetTop, w: td.offsetWidth, h: td.offsetHeight }; }
-function boxStyle(el, R) {
-  const a = cellBox(R.r0, R.c0), b = cellBox(R.r1, R.c1);
-  Object.assign(el.style, { left: a.x - 1 + 'px', top: a.y - 1 + 'px', width: b.x + b.w - a.x + 1 + 'px', height: b.y + b.h - a.y + 1 + 'px' });
-}
-const rawOf = p => { const c = sheet().cells[keyOf(p.r, p.c)]; return c && c.v != null ? c.v : ''; };
-const rangeName = R => keyOf(R.r0, R.c0) + (R.r0 === R.r1 && R.c0 === R.c1 ? '' : ':' + keyOf(R.r1, R.c1));
-function updateSel() {
-  const R = rect();
-  boxStyle(selbox, R);
-  selbox.classList.toggle('multi', R.r0 !== R.r1 || R.c0 !== R.c1);
-  for (let c = 0; c < COLS; c++) colHeads[c].classList.toggle('hl', c >= R.c0 && c <= R.c1);
-  for (let r = 0; r < ROWS; r++) rowHeads[r].classList.toggle('hl', r >= R.r0 && r <= R.r1);
-  if (document.activeElement !== nameBox) nameBox.value = rangeName(R);
-  if (!editing) { fbar.value = rawOf(act); placeEditor(); }
-  if (clip && !clip.done && clip.si === state.cur) { clipbox.hidden = false; boxStyle(clipbox, clip.R); } else clipbox.hidden = true;
-  const cell = sheet().cells[keyOf(act.r, act.c)] || {};
-  $('bBold').classList.toggle('on', !!cell.b); $('bItal').classList.toggle('on', !!cell.i);
-  $('bAlL').classList.toggle('on', cell.al === 'l'); $('bAlC').classList.toggle('on', cell.al === 'c'); $('bAlR').classList.toggle('on', cell.al === 'r');
-  $('fmt').value = cell.fmt || '';
-  updateStatus(R);
-}
-function updateStatus(R) {
-  const stat = $('stat');
-  if (R.r0 === R.r1 && R.c0 === R.c1) { stat.textContent = ''; return; }
-  let s = 0, n = 0, k = 0;
-  for (let r = R.r0; r <= R.r1; r++) for (let c = R.c0; c <= R.c1; c++) {
-    const v = getCellValue(state.cur, r, c);
-    if (v != null && v !== '') k++;
-    if (typeof v === 'number') { s += v; n++; }
-  }
-  stat.textContent = n ? `平均: ${fmtGeneral(roundTo(s / n, 10))}　データの個数: ${k}　合計: ${fmtGeneral(s)}` : k ? `データの個数: ${k}` : '';
-}
-function placeEditor() {
-  const b = cellBox(act.r, act.c);
-  Object.assign(editor.style, { left: b.x + 'px', top: b.y + 'px', width: b.w + 'px', height: b.h + 'px' });
-}
-function growEditor() {
-  const b = cellBox(act.r, act.c);
-  editor.style.width = b.w + 'px';
-  if (editor.scrollWidth > editor.clientWidth) editor.style.width = Math.min(editor.scrollWidth + 12, 900) + 'px';
-}
-function ensureVisible(p) {
-  const b = cellBox(p.r, p.c), hh = table.tHead.offsetHeight;
-  if (b.y - hh < wrap.scrollTop) wrap.scrollTop = b.y - hh;
-  else if (b.y + b.h > wrap.scrollTop + wrap.clientHeight) wrap.scrollTop = b.y + b.h - wrap.clientHeight;
-  if (b.x - RHW < wrap.scrollLeft) wrap.scrollLeft = b.x - RHW;
-  else if (b.x + b.w > wrap.scrollLeft + wrap.clientWidth) wrap.scrollLeft = b.x + b.w - wrap.clientWidth;
-}
-function afterChange() {
-  if (state.cur >= state.sheets.length) state.cur = state.sheets.length - 1;
-  act = clampP(act); ext = clampP(ext);
-  applyWidths(); render(); renderTabs(); updateSel(); save();
-}
-function resetNav() { if (!editing) { editor.value = ' '; try { editor.setSelectionRange(0, 1); } catch (e) {} } }
-function focusNav() {
-  if (editing || touch) return;
-  if (document.activeElement !== editor) editor.focus({ preventScroll: true });
-  resetNav();
-}
-function select(a, b) { act = clampP(a); ext = clampP(b || a); updateSel(); ensureVisible(ext); }
-function move(dr, dc) { select({ r: act.r + dr, c: act.c + dc }); }
+  <!-- ===== ページ レイアウト ===== -->
+  <div class="panel" data-panel="layout">
+    <div class="grp"><div class="gbody">
+      <button class="rb big dd" data-menu="margins"><span data-icon="margins32"></span><span class="lbl">余白</span></button>
+      <button class="rb big dd" data-menu="orient"><span data-icon="orient32"></span><span class="lbl">印刷の
+向き</span></button>
+      <button class="rb big dd" data-menu="paperSize"><span data-icon="size32"></span><span class="lbl">サイズ</span></button>
+      <button class="rb big" data-cmd="print"><span data-icon="print32"></span><span class="lbl">印刷</span></button>
+    </div><div class="glabel">ページ設定</div></div>
+    <div class="grp"><div class="gbody">
+      <div class="col"><div class="colhead">枠線</div>
+        <label class="chk"><input type="checkbox" data-view="grid">表示</label>
+        <label class="chk"><input type="checkbox" data-page="grid">印刷</label></div>
+      <div class="col"><div class="colhead">見出し</div>
+        <label class="chk"><input type="checkbox" data-view="headings">表示</label>
+        <label class="chk"><input type="checkbox" data-page="heads">印刷</label></div>
+    </div><div class="glabel">シートのオプション</div></div>
+  </div>
 
-/* ---- 入力 ---- */
-function startEdit(kind, val) {
-  editing = true; editKind = kind; refIns = null;
-  if (val !== undefined) editor.value = val;
-  const cell = sheet().cells[keyOf(act.r, act.c)] || {};
-  editor.style.fontWeight = cell.b ? '700' : ''; editor.style.fontStyle = cell.i ? 'italic' : '';
-  editor.classList.add('on'); placeEditor(); growEditor();
-  fbar.value = editor.value;
-}
-function endEdit() { editing = false; editKind = null; refIns = null; editor.classList.remove('on'); pickbox.hidden = true; }
-function commitEdit(dr, dc) {
-  if (!editing) return;
-  const v = normalizeInput(editor.value);
-  endEdit();
-  if (v !== rawOf(act)) setCell(act, v);
-  move(dr || 0, dc || 0);
-  focusNav();
-}
-function cancelEdit() { endEdit(); updateSel(); focusNav(); }
-function setCell(p, v) {
-  commit(() => {
-    const sh = sheet(), k = keyOf(p.r, p.c);
-    sh.cells[k] = Object.assign(sh.cells[k] || {}, { v }); cleanCell(sh, k);
-  });
-}
-const isFormulaText = s => /^[=＝]/.test(s);
-function canInsertRef(inp) {
-  if (!isFormulaText(inp.value)) return false;
-  const pos = inp.selectionStart;
-  if (refIns && refIns.inp === inp && refIns.end === pos) return true;
-  return /[=＝+\-*/^&(,<>:]$/.test(inp.value.slice(0, pos).replace(/\s+$/, ''));
-}
-function insertRef(inp, text) {
-  let s, e;
-  if (refIns && refIns.inp === inp && refIns.end === inp.selectionStart) { s = refIns.start; e = refIns.end; }
-  else { s = inp.selectionStart; e = inp.selectionEnd; }
-  inp.value = inp.value.slice(0, s) + text + inp.value.slice(e);
-  refIns = { inp, start: s, end: s + text.length };
-  inp.setSelectionRange(refIns.end, refIns.end);
-  (inp === editor ? fbar : editor).value = inp.value;
-  growEditor();
-}
-function onEditKey(e) {
-  if (e.isComposing || e.keyCode === 229) return;
-  const arrows = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
-  if (e.key === 'Enter') { e.preventDefault(); commitEdit(e.shiftKey ? -1 : 1, 0); }
-  else if (e.key === 'Tab') { e.preventDefault(); commitEdit(0, e.shiftKey ? -1 : 1); }
-  else if (e.key === 'Escape') { e.preventDefault(); cancelEdit(); }
-  else if (arrows[e.key] && editKind === 'enter' && !isFormulaText(editor.value) && e.target === editor) { e.preventDefault(); commitEdit(...arrows[e.key]); }
-}
-function jump(p, dr, dc) {
-  const filled = (r, c) => { const x = sheet().cells[keyOf(r, c)]; return !!(x && x.v != null && x.v !== ''); };
-  const inb = (r, c) => r >= 0 && r < ROWS && c >= 0 && c < COLS;
-  let { r, c } = p;
-  if (!inb(r + dr, c + dc)) return p;
-  if (filled(r, c) && filled(r + dr, c + dc)) { while (inb(r + dr, c + dc) && filled(r + dr, c + dc)) { r += dr; c += dc; } }
-  else { r += dr; c += dc; while (!filled(r, c) && inb(r + dr, c + dc)) { r += dr; c += dc; } }
-  return { r, c };
-}
-editor.addEventListener('keydown', e => {
-  if (editing) return onEditKey(e);
-  if (e.isComposing || e.keyCode === 229) return;
-  const mod = e.ctrlKey || e.metaKey, k = e.key;
-  if (mod) {
-    const l = k.toLowerCase();
-    if (l === 'z') e.shiftKey ? redo() : undo();
-    else if (l === 'y') redo();
-    else if (l === 'b') toggleStyle('b');
-    else if (l === 'i') toggleStyle('i');
-    else if (l === 'a') select({ r: 0, c: 0 }, { r: ROWS - 1, c: COLS - 1 });
-    else if (k === 'Home') select({ r: 0, c: 0 });
-    else if (k.startsWith('Arrow')) {
-      const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[k];
-      const to = jump(e.shiftKey ? ext : act, ...d);
-      e.shiftKey ? select(act, to) : select(to);
-    }
-    else return; // Ctrl+C/X/V はブラウザのコピー/貼り付けイベントへ
-    e.preventDefault(); return;
-  }
-  const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[k];
-  if (d) { e.preventDefault(); if (e.shiftKey) { ext = clampP({ r: ext.r + d[0], c: ext.c + d[1] }); updateSel(); ensureVisible(ext); } else move(...d); return; }
-  switch (k) {
-    case 'Enter': e.preventDefault(); move(e.shiftKey ? -1 : 1, 0); break;
-    case 'Tab': e.preventDefault(); move(0, e.shiftKey ? -1 : 1); break;
-    case 'F2': e.preventDefault(); startEdit('edit', rawOf(act)); editor.setSelectionRange(editor.value.length, editor.value.length); break;
-    case 'Delete': e.preventDefault(); clearContents(); break;
-    case 'Backspace': e.preventDefault(); startEdit('enter', ''); break;
-    case 'Home': e.preventDefault(); select({ r: act.r, c: 0 }); break;
-    case 'PageDown': e.preventDefault(); move(20, 0); break;
-    case 'PageUp': e.preventDefault(); move(-20, 0); break;
-    case 'Escape': if (clip) { clip = null; updateSel(); } break;
-  }
-});
-editor.addEventListener('compositionstart', () => { if (!editing) startEdit('enter'); });
-editor.addEventListener('input', () => { if (!editing) startEdit('enter'); fbar.value = editor.value; growEditor(); });
-fbar.addEventListener('focus', () => { if (!editing) { startEdit('edit', rawOf(act)); } });
-fbar.addEventListener('input', () => { editor.value = fbar.value; growEditor(); });
-fbar.addEventListener('keydown', e => { if (editing) onEditKey(e); });
-nameBox.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { nameBox.blur(); updateSel(); focusNav(); return; }
-  if (e.key !== 'Enter') return;
-  e.preventDefault();
-  const m = /^\s*\$?([A-Za-z]{1,3})\$?(\d+)(?::\$?([A-Za-z]{1,3})\$?(\d+))?\s*$/.exec(toHalf(nameBox.value));
-  if (m) {
-    const a = { r: +m[2] - 1, c: colIdx(m[1]) }, b = m[3] ? { r: +m[4] - 1, c: colIdx(m[3]) } : a;
-    if (inGrid(a) && inGrid(b)) { nameBox.blur(); select(a, b); focusNav(); return; }
-  }
-  nameBox.select();
-});
-nameBox.addEventListener('focus', () => { if (editing) commitEdit(0, 0); nameBox.select(); });
+  <!-- ===== 数式 ===== -->
+  <div class="panel" data-panel="formulas">
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="insertFunction" title="関数の挿入 (Shift+F3)"><span data-icon="fx32"></span><span class="lbl">関数の
+挿入</span></button>
+      <button class="rb big dd" data-menu="autoSum"><span data-icon="sum32"></span><span class="lbl">オート
+SUM</span></button>
+      <button class="rb big dd" data-menu="fnRecent"><span data-icon="recent32"></span><span class="lbl">最近使用
+した関数</span></button>
+      <button class="rb big dd" data-menu="fn:論理"><span data-icon="book:#c9a227"></span><span class="lbl">論理</span></button>
+      <button class="rb big dd" data-menu="fn:文字列操作"><span data-icon="book:#2b6cc4"></span><span class="lbl">文字列
+操作</span></button>
+      <button class="rb big dd" data-menu="fn:日付/時刻"><span data-icon="book:#c43e1c"></span><span class="lbl">日付/
+時刻</span></button>
+      <button class="rb big dd" data-menu="fn:検索/行列"><span data-icon="book:#217346"></span><span class="lbl">検索/
+行列</span></button>
+      <button class="rb big dd" data-menu="fn:数学/三角"><span data-icon="book:#7a4fb5"></span><span class="lbl">数学/
+三角</span></button>
+      <button class="rb big dd" data-menu="fnMore"><span data-icon="book:#7a7a7a"></span><span class="lbl">その他の
+関数</span></button>
+    </div><div class="glabel">関数ライブラリ</div></div>
+    <div class="grp"><div class="gbody"><div class="col">
+      <button class="rb sm" data-cmd="showFormulas" id="bShowF"><span data-icon="showFormulas"></span>数式の表示</button>
+    </div></div><div class="glabel">ワークシート分析</div></div>
+    <div class="grp"><div class="gbody"><div class="col">
+      <button class="rb sm" data-cmd="recalc" title="再計算実行 (F9)"><span data-icon="calc"></span>再計算実行</button>
+    </div></div><div class="glabel">計算方法</div></div>
+  </div>
 
-/* ---- マウス ---- */
-const posOf = td => ({ r: td.parentNode.rowIndex - 1, c: td.cellIndex - 1 });
-function hitAt(x, y) {
-  const el = document.elementFromPoint(x, y);
-  if (!el || !el.closest) return null;
-  const td = el.closest('#grid td'); if (td) return { ...posOf(td), td: true };
-  const th = el.closest('#grid th');
-  if (th && th.classList.contains('ch')) return { r: 0, c: th.cellIndex - 1, col: true };
-  if (th && th.classList.contains('rh')) return { r: th.parentNode.rowIndex - 1, c: 0, row: true };
-  return null;
-}
-wrap.addEventListener('mousedown', e => {
-  hideMenu();
-  if (e.target.classList.contains('rz')) { e.preventDefault(); const c = e.target.parentNode.cellIndex - 1; drag = { t: 'resize', c, x: e.clientX, w: sheet().colW[c] || DEFW }; return; }
-  if (e.target === fh) { e.preventDefault(); e.stopPropagation(); if (editing) commitEdit(0, 0); drag = { t: 'fill', to: null }; return; }
-  const h = hitAt(e.clientX, e.clientY);
-  if (!h) { if (e.target.closest('th.corner')) { e.preventDefault(); if (editing) commitEdit(0, 0); select({ r: 0, c: 0 }, { r: ROWS - 1, c: COLS - 1 }); focusNav(); } return; }
-  if (e.button !== 0) return;
-  if (editing && h.td) {
-    const inp = document.activeElement === fbar ? fbar : editor;
-    if (canInsertRef(inp)) {
-      e.preventDefault();
-      drag = { t: 'pick', a: h, inp };
-      insertRef(inp, keyOf(h.r, h.c));
-      pickbox.hidden = false; boxStyle(pickbox, { r0: h.r, r1: h.r, c0: h.c, c1: h.c });
-      return;
-    }
-  }
-  if (editing && e.target === editor) return;
-  e.preventDefault();
-  if (editing) commitEdit(0, 0);
-  if (h.td) {
-    if (touch && !e.shiftKey && h.r === act.r && h.c === act.c && act.r === ext.r && act.c === ext.c) {
-      startEdit('edit', rawOf(act)); editor.focus(); editor.setSelectionRange(editor.value.length, editor.value.length); return;
-    }
-    if (e.shiftKey) ext = { r: h.r, c: h.c }; else { act = { r: h.r, c: h.c }; ext = { ...act }; }
-    drag = { t: 'cell' };
-  } else if (h.col) {
-    if (!e.shiftKey) act = { r: 0, c: h.c };
-    ext = { r: ROWS - 1, c: h.c }; act.r = 0; drag = { t: 'col' };
-  } else if (h.row) {
-    if (!e.shiftKey) act = { r: h.r, c: 0 };
-    ext = { r: h.r, c: COLS - 1 }; act.c = 0; drag = { t: 'row' };
-  }
-  updateSel(); focusNav();
-});
-wrap.addEventListener('click', () => { if (touch && editing && document.activeElement !== editor && document.activeElement !== fbar) editor.focus(); });
-wrap.addEventListener('dblclick', e => {
-  const td = e.target.closest('#grid td'); if (!td || touch) return;
-  const p = posOf(td); act = p; ext = { ...p };
-  updateSel(); startEdit('edit', rawOf(act)); editor.focus(); editor.setSelectionRange(editor.value.length, editor.value.length);
-});
-document.addEventListener('mousemove', e => {
-  if (!drag) return;
-  if (drag.t === 'resize') { const c = drag.c; sheet().colW[c] = Math.max(30, Math.round(drag.w + e.clientX - drag.x)); applyWidths(); updateSel(); return; }
-  const h = hitAt(e.clientX, e.clientY); if (!h) return;
-  if (drag.t === 'cell' && h.td) { ext = { r: h.r, c: h.c }; updateSel(); }
-  else if (drag.t === 'col') { ext = { r: ROWS - 1, c: h.c }; updateSel(); }
-  else if (drag.t === 'row') { ext = { r: h.r, c: COLS - 1 }; updateSel(); }
-  else if (drag.t === 'pick' && h.td) {
-    const a = drag.a, R = { r0: Math.min(a.r, h.r), r1: Math.max(a.r, h.r), c0: Math.min(a.c, h.c), c1: Math.max(a.c, h.c) };
-    insertRef(drag.inp, rangeName(R)); boxStyle(pickbox, R);
-  } else if (drag.t === 'fill' && h.td) {
-    const R = rect(); let to = null;
-    if (h.r > R.r1 && h.r - R.r1 >= h.c - R.c1) { to = { dir: 'd', n: h.r }; boxStyle(pickbox, { ...R, r1: h.r }); }
-    else if (h.c > R.c1) { to = { dir: 'r', n: h.c }; boxStyle(pickbox, { ...R, c1: h.c }); }
-    pickbox.hidden = !to; drag.to = to;
-  }
-});
-document.addEventListener('mouseup', () => {
-  if (!drag) return;
-  const d = drag; drag = null;
-  if (d.t === 'resize') save();
-  if (d.t === 'fill') { pickbox.hidden = true; if (d.to) applyFill(d.to); focusNav(); }
-  if (d.t === 'pick') { pickbox.hidden = true; }
-});
+  <!-- ===== データ ===== -->
+  <div class="panel" data-panel="data">
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="importCsv"><span data-icon="csv32"></span><span class="lbl">テキストまたは
+CSV から</span></button>
+      <button class="rb big" data-cmd="openXlsx"><span data-icon="xlsx32"></span><span class="lbl">Excel
+ブックから</span></button>
+    </div><div class="glabel">データの取得と変換</div></div>
+    <div class="grp"><div class="gbody">
+      <div class="col">
+        <button class="rb ic" data-cmd="sortAsc" data-icon="sortAZ" title="昇順"></button>
+        <button class="rb ic" data-cmd="sortDesc" data-icon="sortZA" title="降順"></button>
+      </div>
+      <button class="rb big" data-cmd="sortDialog"><span data-icon="sort32"></span><span class="lbl">並べ替え</span></button>
+      <button class="rb big" data-cmd="filter" id="bFilter" title="フィルター (Ctrl+Shift+L)"><span data-icon="filter32"></span><span class="lbl">フィルター</span></button>
+      <div class="col">
+        <button class="rb sm" data-cmd="filterClear"><span data-icon="filterClear"></span>クリア</button>
+        <button class="rb sm" data-cmd="filterReapply"><span data-icon="filterReapply"></span>再適用</button>
+      </div>
+    </div><div class="glabel">並べ替えとフィルター</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="dedupe"><span data-icon="dedupe32"></span><span class="lbl">重複の
+削除</span></button>
+      <button class="rb big" data-cmd="validation"><span data-icon="validation32"></span><span class="lbl">データの
+入力規則</span></button>
+    </div><div class="glabel">データ ツール</div></div>
+  </div>
 
-/* ---- 編集操作 ---- */
-function eachInRect(R, fn) { for (let r = R.r0; r <= R.r1; r++) for (let c = R.c0; c <= R.c1; c++) fn(r, c); }
-function clearContents() {
-  const R = rect();
-  commit(() => { const sh = sheet(); eachInRect(R, (r, c) => { const k = keyOf(r, c); if (sh.cells[k]) { delete sh.cells[k].v; cleanCell(sh, k); } }); });
-}
-function applyStyle(patch) {
-  if (editing) commitEdit(0, 0);
-  const R = rect();
-  commit(() => { const sh = sheet(); eachInRect(R, (r, c) => { const k = keyOf(r, c); sh.cells[k] = Object.assign(sh.cells[k] || {}, patch); cleanCell(sh, k); }); });
-  focusNav();
-}
-function toggleStyle(p) { const cell = sheet().cells[keyOf(act.r, act.c)] || {}; applyStyle({ [p]: !cell[p] }); }
-function copyCell(sh, sr, sc, r, c) {
-  const src = sh.cells[keyOf(sr, sc)], k = keyOf(r, c);
-  if (!src) { delete sh.cells[k]; return; }
-  const n = { ...src };
-  if (isFormula(n.v)) n.v = shiftFormula(n.v, r - sr, c - sc);
-  sh.cells[k] = n;
-}
-function numSeries(sh, list) {
-  if (list.length < 2) return null;
-  const vals = list.map(k => { const c = sh.cells[k]; if (!c || c.v == null || isFormula(c.v)) return null; const n = parseLiteral(c.v); return typeof n === 'number' ? n : null; });
-  if (vals.some(v => v == null)) return null;
-  const step = (vals[vals.length - 1] - vals[0]) / (vals.length - 1);
-  return i => fmtGeneral(roundTo(vals[0] + step * i, 10));
-}
-function applyFill(to) {
-  const R = rect();
-  commit(() => {
-    const sh = sheet();
-    if (to.dir === 'd') {
-      const h = R.r1 - R.r0 + 1;
-      for (let c = R.c0; c <= R.c1; c++) {
-        const keys = []; for (let r = R.r0; r <= R.r1; r++) keys.push(keyOf(r, c));
-        const ser = numSeries(sh, keys);
-        for (let r = R.r1 + 1; r <= to.n; r++) {
-          const sr = R.r0 + (r - R.r1 - 1) % h;
-          copyCell(sh, sr, c, r, c);
-          if (ser) sh.cells[keyOf(r, c)].v = ser(r - R.r0);
-        }
-      }
-      ext = { r: to.n, c: R.c1 };
-    } else {
-      const w = R.c1 - R.c0 + 1;
-      for (let r = R.r0; r <= R.r1; r++) {
-        const keys = []; for (let c = R.c0; c <= R.c1; c++) keys.push(keyOf(r, c));
-        const ser = numSeries(sh, keys);
-        for (let c = R.c1 + 1; c <= to.n; c++) {
-          const sc = R.c0 + (c - R.c1 - 1) % w;
-          copyCell(sh, r, sc, r, c);
-          if (ser) sh.cells[keyOf(r, c)].v = ser(c - R.c0);
-        }
-      }
-      ext = { r: R.r1, c: to.n };
-    }
-    act = { r: R.r0, c: R.c0 };
-  });
-}
+  <!-- ===== 校閲 ===== -->
+  <div class="panel" data-panel="review">
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="newNote"><span data-icon="noteNew32"></span><span class="lbl">新しい
+メモ</span></button>
+      <div class="col">
+        <button class="rb sm" data-cmd="deleteNote"><span data-icon="noteDel"></span>メモの削除</button>
+        <button class="rb sm" data-cmd="showNotes" id="bShowNotes"><span data-icon="noteShow"></span>すべてのメモを表示</button>
+      </div>
+    </div><div class="glabel">メモ</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="protect" id="bProtect"><span data-icon="protect32"></span><span class="lbl">シートの
+保護</span></button>
+    </div><div class="glabel">保護</div></div>
+  </div>
 
-/* ---- コピー・貼り付け ---- */
-const norm = t => t.replace(/\r\n?/g, '\n').replace(/\n$/, '');
-function doCopy(cut) {
-  const R = rect(), sh = sheet(), cells = [], lines = [];
-  for (let r = R.r0; r <= R.r1; r++) {
-    const row = [], txt = [];
-    for (let c = R.c0; c <= R.c1; c++) {
-      const cell = sh.cells[keyOf(r, c)];
-      row.push(cell ? { ...cell } : null);
-      let t = cell ? display(getCellValue(state.cur, r, c), cell)[0] : '';
-      if (/[\t\n"]/.test(t)) t = '"' + t.replace(/"/g, '""') + '"';
-      txt.push(t);
-    }
-    cells.push(row); lines.push(txt.join('\t'));
-  }
-  const text = lines.join('\n');
-  clip = { si: state.cur, R, cells, text, cut };
-  updateSel();
-  return text;
-}
-function parseDelim(text, d) {
-  const rows = []; let row = [], f = '', q = false, i = 0;
-  text = text.replace(/\r\n?/g, '\n');
-  while (i < text.length) {
-    const ch = text[i];
-    if (q) { if (ch === '"') { if (text[i + 1] === '"') { f += '"'; i += 2; continue; } q = false; i++; continue; } f += ch; i++; continue; }
-    if (ch === '"' && f === '') { q = true; i++; continue; }
-    if (ch === d) { row.push(f); f = ''; i++; continue; }
-    if (ch === '\n') { row.push(f); rows.push(row); row = []; f = ''; i++; continue; }
-    f += ch; i++;
-  }
-  if (f !== '' || row.length) { row.push(f); rows.push(row); }
-  return rows;
-}
-function pasteText(text) {
-  if (clip && norm(text) === norm(clip.text)) return pasteInternal();
-  const data = parseDelim(text, '\t'); if (!data.length) return;
-  const R = rect();
-  commit(() => {
-    const sh = sheet();
-    if (data.length === 1 && data[0].length === 1 && (R.r0 !== R.r1 || R.c0 !== R.c1)) {
-      eachInRect(R, (r, c) => { const k = keyOf(r, c); sh.cells[k] = Object.assign(sh.cells[k] || {}, { v: data[0][0] }); cleanCell(sh, k); });
-      return;
-    }
-    data.forEach((row, i) => row.forEach((v, j) => {
-      const p = { r: R.r0 + i, c: R.c0 + j }; if (!inGrid(p)) return;
-      const k = keyOf(p.r, p.c); sh.cells[k] = Object.assign(sh.cells[k] || {}, { v }); cleanCell(sh, k);
-    }));
-    act = { r: R.r0, c: R.c0 }; ext = clampP({ r: R.r0 + data.length - 1, c: R.c0 + Math.max(...data.map(r => r.length)) - 1 });
-  });
-}
-function pasteInternal() {
-  const R = rect(), cl = clip;
-  if (!state.sheets[cl.si]) { clip = null; return; }
-  commit(() => {
-    const sh = sheet();
-    if (cl.cut) { const src = state.sheets[cl.si]; eachInRect(cl.R, (r, c) => delete src.cells[keyOf(r, c)]); }
-    cl.cells.forEach((row, i) => row.forEach((cell, j) => {
-      const p = { r: R.r0 + i, c: R.c0 + j }; if (!inGrid(p)) return;
-      const k = keyOf(p.r, p.c);
-      if (!cell) { delete sh.cells[k]; return; }
-      const n = { ...cell };
-      if (!cl.cut && isFormula(n.v)) n.v = shiftFormula(n.v, p.r - (cl.R.r0 + i), p.c - (cl.R.c0 + j));
-      sh.cells[k] = n;
-    }));
-    act = { r: R.r0, c: R.c0 }; ext = clampP({ r: R.r0 + cl.cells.length - 1, c: R.c0 + cl.cells[0].length - 1 });
-    if (cl.cut) clip = null;
-  });
-}
-const navTarget = t => !editing && (t === editor || t === document.body || t === wrap);
-document.addEventListener('copy', e => { if (!navTarget(e.target)) return; e.preventDefault(); e.clipboardData.setData('text/plain', doCopy(false)); });
-document.addEventListener('cut', e => { if (!navTarget(e.target)) return; e.preventDefault(); e.clipboardData.setData('text/plain', doCopy(true)); });
-document.addEventListener('paste', e => { if (!navTarget(e.target)) return; e.preventDefault(); pasteText(e.clipboardData.getData('text/plain')); resetNav(); });
+  <!-- ===== 表示 ===== -->
+  <div class="panel" data-panel="view">
+    <div class="grp"><div class="gbody">
+      <button class="rb big on"><span data-icon="normalView32"></span><span class="lbl">標準</span></button>
+    </div><div class="glabel">ブックの表示</div></div>
+    <div class="grp"><div class="gbody"><div class="col" style="padding-top:4px">
+      <label class="chk"><input type="checkbox" data-view="grid">目盛線</label>
+      <label class="chk"><input type="checkbox" data-view="fbar">数式バー</label>
+      <label class="chk"><input type="checkbox" data-view="headings">見出し</label>
+    </div></div><div class="glabel">表示</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="zoomDialog"><span data-icon="zoom32"></span><span class="lbl">ズーム</span></button>
+      <button class="rb big" data-cmd="zoom:100"><span data-icon="zoom100"></span><span class="lbl">100%</span></button>
+      <button class="rb big" data-cmd="zoomSel"><span data-icon="zoomSel32"></span><span class="lbl">選択範囲に合わせて
+拡大/縮小</span></button>
+    </div><div class="glabel">ズーム</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big dd" data-menu="freeze"><span data-icon="freeze32"></span><span class="lbl">ウィンドウ枠
+の固定</span></button>
+    </div><div class="glabel">ウィンドウ</div></div>
+  </div>
 
-/* ---- 行・列の挿入/削除 ---- */
-function structural(axis, at, n, insert) {
-  const si = state.cur, lim = axis === 'r' ? ROWS : COLS;
-  const mvIns = v => v >= at ? v + n : v;
-  const fixRef = (a, b) => {
-    const A = { ...a }, B = b && { ...b };
-    if (insert) {
-      A[axis] = mvIns(A[axis]); if (B) B[axis] = mvIns(B[axis]);
-      if (A[axis] >= lim || (B && B[axis] >= lim)) { if (!B) return null; B[axis] = Math.min(B[axis], lim - 1); if (A[axis] >= lim) return null; }
-      return { a: A, b: B };
-    }
-    const end = at + n;
-    if (!B) { if (A[axis] >= at && A[axis] < end) return null; if (A[axis] >= end) A[axis] -= n; return { a: A, b: null }; }
-    const lo = Math.min(A[axis], B[axis]), hi = Math.max(A[axis], B[axis]);
-    const nlo = lo < at ? lo : lo >= end ? lo - n : at, nhi = hi < at ? hi : hi >= end ? hi - n : at - 1;
-    if (nhi < nlo) return null;
-    A[axis] = nlo; B[axis] = nhi; return { a: A, b: B };
-  };
-  commit(() => {
-    state.sheets.forEach((s, idx) => {
-      for (const cell of Object.values(s.cells)) if (isFormula(cell.v)) {
-        cell.v = mapRefs(cell.v, (sh, a, b) => { const t = sh ? sheetIdx(sh) : idx; return t === si ? fixRef(a, b) : undefined; });
-      }
-    });
-    const sh = state.sheets[si], cells = {};
-    for (const [k, cell] of Object.entries(sh.cells)) {
-      const p = parseKey(k); let v = p[axis];
-      if (insert) v = mvIns(v); else if (v >= at && v < at + n) continue; else if (v >= at + n) v -= n;
-      if (v >= lim) continue;
-      p[axis] = v; cells[keyOf(p.r, p.c)] = cell;
-    }
-    sh.cells = cells;
-    if (axis === 'c') {
-      const w = {};
-      for (const [c, x] of Object.entries(sh.colW)) { let v = +c; if (insert) v = mvIns(v); else if (v >= at && v < at + n) continue; else if (v >= at + n) v -= n; if (v < COLS) w[v] = x; }
-      sh.colW = w;
-    }
-    clip = null;
-  });
-}
+  <!-- ===== ヘルプ ===== -->
+  <div class="panel" data-panel="help">
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="help"><span data-icon="help32"></span><span class="lbl">ヘルプ</span></button>
+      <button class="rb big" data-cmd="shortcuts"><span data-icon="keys32"></span><span class="lbl">ショートカット
+キー</span></button>
+    </div><div class="glabel">ヘルプ</div></div>
+  </div>
 
-/* ---- 並べ替え ---- */
-function usedRect() {
-  let r1 = -1, c1 = -1;
-  for (const k of Object.keys(sheet().cells)) { const c = sheet().cells[k]; if (c.v == null) continue; const p = parseKey(k); r1 = Math.max(r1, p.r); c1 = Math.max(c1, p.c); }
-  return r1 < 0 ? null : { r0: 0, r1, c0: 0, c1 };
-}
-function currentRegion(p) {
-  const filled = (r, c) => { const x = sheet().cells[keyOf(r, c)]; return !!(x && x.v != null && x.v !== ''); };
-  if (!filled(p.r, p.c)) return null;
-  const R = { r0: p.r, r1: p.r, c0: p.c, c1: p.c };
-  const rowHas = (r, c0, c1) => { if (r < 0 || r >= ROWS) return false; for (let c = Math.max(0, c0); c <= Math.min(COLS - 1, c1); c++) if (filled(r, c)) return true; return false; };
-  const colHas = (c, r0, r1) => { if (c < 0 || c >= COLS) return false; for (let r = Math.max(0, r0); r <= Math.min(ROWS - 1, r1); r++) if (filled(r, c)) return true; return false; };
-  for (let grew = true; grew;) {
-    grew = false;
-    if (rowHas(R.r0 - 1, R.c0 - 1, R.c1 + 1)) { R.r0--; grew = true; }
-    if (rowHas(R.r1 + 1, R.c0 - 1, R.c1 + 1)) { R.r1++; grew = true; }
-    if (colHas(R.c0 - 1, R.r0 - 1, R.r1 + 1)) { R.c0--; grew = true; }
-    if (colHas(R.c1 + 1, R.r0 - 1, R.r1 + 1)) { R.c1++; grew = true; }
-  }
-  return R;
-}
-const collator = new Intl.Collator('ja', { numeric: true });
-function sortRange(desc) {
-  if (editing) commitEdit(0, 0);
-  let R = rect();
-  if (R.r0 === R.r1) {
-    R = currentRegion(act); if (!R) return;
-    const first = []; for (let c = R.c0; c <= R.c1; c++) first.push(getCellValue(state.cur, R.r0, c));
-    if (first.some(v => typeof v === 'string') && first.every(v => v == null || typeof v === 'string')) R.r0++;
-    if (R.r1 <= R.r0) return;
-  }
-  const col = Math.min(Math.max(act.c, R.c0), R.c1), sh = sheet(), rows = [];
-  for (let r = R.r0; r <= R.r1; r++) {
-    const cells = []; for (let c = R.c0; c <= R.c1; c++) cells.push(sh.cells[keyOf(r, c)]);
-    rows.push({ r, key: getCellValue(state.cur, r, col), cells });
-  }
-  rows.sort((a, b) => {
-    const ea = a.key == null || a.key === '', eb = b.key == null || b.key === '';
-    if (ea || eb) return ea - eb;
-    const d = typeof a.key === 'string' && typeof b.key === 'string' ? collator.compare(a.key, b.key) : compareVals(a.key, b.key);
-    return d * (desc ? -1 : 1);
-  });
-  commit(() => {
-    rows.forEach((row, i) => {
-      const nr = R.r0 + i;
-      row.cells.forEach((cell, j) => {
-        const k = keyOf(nr, R.c0 + j);
-        if (!cell) { delete sh.cells[k]; return; }
-        const n = { ...cell }; if (isFormula(n.v)) n.v = shiftFormula(n.v, nr - row.r, 0);
-        sh.cells[k] = n;
-      });
-    });
-    act = { r: R.r0, c: col }; ext = { r: R.r1, c: R.c1 }; act.c = R.c0; ext.c = R.c1;
-  });
-  focusNav();
-}
+  <!-- ===== グラフのデザイン ===== -->
+  <div class="panel" data-panel="chart">
+    <div class="grp"><div class="gbody">
+      <div class="col">
+        <button class="rb sm dd" data-menu="chartElements"><span data-icon="chartTitle"></span>グラフ要素を追加</button>
+        <button class="rb sm dd" data-menu="chartColors"><span data-icon="legend"></span>色の変更</button>
+      </div>
+    </div><div class="glabel">グラフのレイアウト</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big" data-cmd="chartSwitch"><span data-icon="switchRC32"></span><span class="lbl">行/列の
+切り替え</span></button>
+      <button class="rb big" data-cmd="chartData"><span data-icon="selectData32"></span><span class="lbl">データの
+選択</span></button>
+    </div><div class="glabel">データ</div></div>
+    <div class="grp"><div class="gbody">
+      <button class="rb big dd" data-menu="chartType"><span data-icon="chartType32"></span><span class="lbl">グラフの種類
+の変更</span></button>
+    </div><div class="glabel">種類</div></div>
+  </div>
+</div>
 
-/* ---- シート ---- */
-function switchSheet(i) {
-  if (editing) commitEdit(0, 0);
-  if (i === state.cur) return;
-  state.cur = i; act = { r: 0, c: 0 }; ext = { r: 0, c: 0 };
-  wrap.scrollTop = 0; wrap.scrollLeft = 0;
-  afterChange(); focusNav();
-}
-function addSheet() {
-  if (editing) commitEdit(0, 0);
-  let n = state.sheets.length + 1; while (sheetIdx('Sheet' + n) >= 0) n++;
-  commit(() => { state.sheets.push({ name: 'Sheet' + n, cells: {}, colW: {} }); state.cur = state.sheets.length - 1; act = { r: 0, c: 0 }; ext = { r: 0, c: 0 }; });
-  focusNav();
-}
-function renameSheet(i) {
-  const old = state.sheets[i].name;
-  const name = prompt('新しいシート名（英数字・ひらがな・カタカナ・漢字・_ が使えます）', old);
-  if (name == null) return;
-  const nn = name.trim();
-  if (!SHEET_NAME.test(nn)) { alert('この名前は使えません。先頭は数字以外、記号やスペースなしにしてください。'); return; }
-  if (nn.toLowerCase() !== old.toLowerCase() && sheetIdx(nn) >= 0) { alert('同じ名前のシートがあります。'); return; }
-  const re = new RegExp(`(^|[^\\w$.!${JP}])${old.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}!`, 'gi');
-  commit(() => {
-    state.sheets[i].name = nn;
-    for (const s of state.sheets) for (const cell of Object.values(s.cells)) if (isFormula(cell.v)) cell.v = outsideStrings(cell.v, p => p.replace(re, '$1' + nn + '!'));
-  });
-}
-function deleteSheet(i) {
-  if (state.sheets.length <= 1) { alert('最後のシートは削除できません。'); return; }
-  if (!confirm(`「${state.sheets[i].name}」を削除しますか？（元に戻すで復元できます）`)) return;
-  commit(() => { state.sheets.splice(i, 1); if (state.cur >= i && state.cur > 0) state.cur--; act = { r: 0, c: 0 }; ext = { r: 0, c: 0 }; });
-}
+<div id="fbarRow">
+  <div class="namewrap"><input id="nameBox" aria-label="名前ボックス" spellcheck="false" autocomplete="off"></div>
+  <div class="fbtns">
+    <button id="fCancel" title="キャンセル" disabled><span data-icon="close"></span></button>
+    <button id="fEnter" title="入力" disabled><span data-icon="check"></span></button>
+    <button id="fFx" title="関数の挿入" style="font:italic 700 14px Georgia,serif;color:#444">fx</button>
+  </div>
+  <textarea id="fbar" rows="1" aria-label="数式バー" spellcheck="false" autocomplete="off"></textarea>
+  <button id="fbarExpand" title="数式バーを展開"><span data-icon="expand"></span></button>
+</div>
 
-/* ---- メニュー ---- */
-function showMenu(x, y, items) {
-  menu.innerHTML = '';
-  for (const it of items) {
-    if (it === '-') { menu.appendChild(document.createElement('hr')); continue; }
-    const b = document.createElement('button'); b.textContent = it[0];
-    b.onclick = () => { hideMenu(); it[1](); };
-    menu.appendChild(b);
-  }
-  menu.hidden = false;
-  const w = menu.offsetWidth, h = menu.offsetHeight;
-  menu.style.left = Math.max(4, Math.min(x, innerWidth - w - 4)) + 'px';
-  menu.style.top = Math.max(4, Math.min(y, innerHeight - h - 4)) + 'px';
-}
-function hideMenu() { menu.hidden = true; }
-document.addEventListener('mousedown', e => { if (!menu.hidden && !menu.contains(e.target)) hideMenu(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') hideMenu(); });
-wrap.addEventListener('contextmenu', e => {
-  const h = hitAt(e.clientX, e.clientY); if (!h) return;
-  e.preventDefault();
-  if (editing) commitEdit(0, 0);
-  let R = rect();
-  const inside = h.r >= R.r0 && h.r <= R.r1 && h.c >= R.c0 && h.c <= R.c1;
-  if (h.col && !(inside && R.r0 === 0 && R.r1 === ROWS - 1)) select({ r: 0, c: h.c }, { r: ROWS - 1, c: h.c });
-  else if (h.row && !(inside && R.c0 === 0 && R.c1 === COLS - 1)) select({ r: h.r, c: 0 }, { r: h.r, c: COLS - 1 });
-  else if (h.td && !inside) select({ r: h.r, c: h.c });
-  R = rect();
-  const nr = R.r1 - R.r0 + 1, nc = R.c1 - R.c0 + 1;
-  const copyToSystem = cut => { const t = doCopy(cut); if (navigator.clipboard) navigator.clipboard.writeText(t).catch(() => {}); };
-  showMenu(e.clientX, e.clientY, [
-    ['切り取り', () => copyToSystem(true)],
-    ['コピー', () => copyToSystem(false)],
-    ['貼り付け', () => {
-      if (clip) return pasteInternal();
-      if (navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(pasteText).catch(() => alert('Ctrl+V（⌘+V）で貼り付けてください。'));
-    }],
-    '-',
-    [`上に${nr}行挿入`, () => structural('r', R.r0, nr, true)],
-    [`${nr}行を削除`, () => structural('r', R.r0, nr, false)],
-    [`左に${nc}列挿入`, () => structural('c', R.c0, nc, true)],
-    [`${nc}列を削除`, () => structural('c', R.c0, nc, false)],
-    '-',
-    ['昇順で並べ替え', () => sortRange(false)],
-    ['降順で並べ替え', () => sortRange(true)],
-    '-',
-    ['内容をクリア', clearContents],
-    ['書式をクリア', clearFormat],
-  ]);
-});
+<div id="gridArea">
+  <div id="wrap">
+    <table id="grid"></table>
+    <div id="objs"></div>
+    <textarea id="editor" spellcheck="false" autocomplete="off" aria-label="セル入力" rows="1"></textarea>
+  </div>
+</div>
 
-/* ---- ツールバー ---- */
-$('tools').addEventListener('mousedown', e => { if (e.target.closest('button')) e.preventDefault(); });
-$('tabs').addEventListener('mousedown', e => e.preventDefault());
-$('bUndo').onclick = () => { if (editing) cancelEdit(); undo(); focusNav(); };
-$('bRedo').onclick = () => { if (editing) cancelEdit(); redo(); focusNav(); };
-$('bBold').onclick = () => toggleStyle('b');
-$('bItal').onclick = () => toggleStyle('i');
-const alignBtn = al => () => { const cell = sheet().cells[keyOf(act.r, act.c)] || {}; applyStyle({ al: cell.al === al ? null : al }); };
-$('bAlL').onclick = alignBtn('l'); $('bAlC').onclick = alignBtn('c'); $('bAlR').onclick = alignBtn('r');
-$('fmt').onchange = e => applyStyle({ fmt: e.target.value || null });
-function decStep(d) {
-  const cell = sheet().cells[keyOf(act.r, act.c)] || {};
-  let base = cell.dec;
-  if (base == null) { const v = getCellValue(state.cur, act.r, act.c); base = typeof v === 'number' && cell.fmt == null ? ((fmtGeneral(v).split('.')[1] || '').length) : 0; }
-  applyStyle({ dec: Math.max(0, Math.min(10, base + d)) });
-}
-$('bDecUp').onclick = () => decStep(1);
-$('bDecDn').onclick = () => decStep(-1);
-const okColor = c => /^#[0-9a-f]{6}$/i.test(c) ? c : null;
-$('cBg').onchange = e => applyStyle({ bg: okColor(e.target.value) });
-$('cFc').onchange = e => applyStyle({ fc: okColor(e.target.value) });
-function clearFormat() { applyStyle({ b: null, i: null, al: null, fmt: null, dec: null, bg: null, fc: null }); }
-$('bClrFmt').onclick = clearFormat;
-$('bSortA').onclick = () => sortRange(false);
-$('bSortD').onclick = () => sortRange(true);
-$('addSheet').onclick = addSheet;
-$('bHelp').onclick = () => { if (editing) commitEdit(0, 0); $('help').showModal(); };
-$('helpClose').onclick = () => $('help').close();
-$('help').addEventListener('close', focusNav);
-$('bCsv').onclick = () => {
-  if (editing) commitEdit(0, 0);
-  const R = usedRect(); if (!R) { alert('このシートは空です。'); return; }
-  const lines = [];
-  for (let r = 0; r <= R.r1; r++) {
-    const row = [];
-    for (let c = 0; c <= R.c1; c++) {
-      const v = getCellValue(state.cur, r, c);
-      let t = isErr(v) ? v.code : toStr(v);
-      if (/[",\n\r]/.test(t)) t = '"' + t.replace(/"/g, '""') + '"';
-      row.push(t);
-    }
-    lines.push(row.join(','));
-  }
-  const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = sheet().name + '.csv';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  focusNav();
-};
-$('fCsv').onchange = async e => {
-  const f = e.target.files[0]; e.target.value = '';
-  if (!f) return;
-  const buf = await f.arrayBuffer();
-  let text;
-  try { text = new TextDecoder('utf-8', { fatal: true }).decode(buf); }
-  catch (err) { text = new TextDecoder('shift_jis').decode(buf); }
-  text = text.replace(/^﻿/, '');
-  const d = /\.tsv$/i.test(f.name) || (!text.includes(',') && text.includes('\t')) ? '\t' : ',';
-  const rows = parseDelim(text, d);
-  let base = f.name.replace(/\.[^.]+$/, '').replace(new RegExp(`[^\\w${JP}]`, 'g'), '_');
-  if (!SHEET_NAME.test(base)) base = 'CSV_' + base;
-  let name = base, n = 2; while (sheetIdx(name) >= 0) name = base + '_' + n++;
-  const cells = {};
-  rows.slice(0, ROWS).forEach((row, r) => row.slice(0, COLS).forEach((v, c) => { if (v !== '') cells[keyOf(r, c)] = { v }; }));
-  commit(() => { state.sheets.push({ name, cells, colW: {} }); state.cur = state.sheets.length - 1; act = { r: 0, c: 0 }; ext = { r: 0, c: 0 }; });
-  if (rows.length > ROWS || rows.some(r => r.length > COLS)) alert(`${ROWS}行 × ${COLS}列 を超える部分は読み込んでいません。`);
-  focusNav();
-};
-addEventListener('resize', () => { updateSel(); if (editing) growEditor(); });
+<div id="sheetbar">
+  <div class="snav">
+    <button data-cmd="prevSheet" title="前のシート"><span data-icon="chevL"></span></button>
+    <button data-cmd="nextSheet" title="次のシート"><span data-icon="chevR"></span></button>
+  </div>
+  <div id="tabs"></div>
+  <button id="addSheet" data-cmd="addSheet" title="新しいシート (Shift+F11)"><span data-icon="plusCircle"></span></button>
+  <div class="hscrollspace"></div>
+</div>
+<div id="statusbar">
+  <span id="mode">準備完了</span>
+  <span id="stat"></span>
+  <div class="zoomctl">
+    <button data-cmd="zoomOut" title="縮小">−</button>
+    <input type="range" id="zoomRange" min="10" max="400" step="5" value="100" aria-label="ズーム">
+    <button data-cmd="zoomIn" title="拡大">＋</button>
+    <span id="zoomPct" title="ズーム">100%</span>
+  </div>
+</div>
 
-/* ---- 起動 ---- */
-state = load();
-build();
-afterChange();
-focusNav();
-})();
-</script>
+<div id="printArea"></div>
+<div id="toast"></div>
+<input type="file" id="fileCsv" accept=".csv,.tsv,.txt,text/csv" hidden>
+<input type="file" id="fileXlsx" accept=".xlsx,.xlsm,.xls,.ods" hidden>
+<noscript><p style="padding:20px">この表計算はスクリプトを使います。JavaScript を有効にしてください。</p></noscript>
+
+<script src="sheet/engine.js"></script>
+<script src="sheet/icons.js"></script>
+<script src="sheet/core.js"></script>
+<script src="sheet/chart.js"></script>
+<script src="sheet/ui.js"></script>
 </body></html>

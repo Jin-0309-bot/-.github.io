@@ -74,7 +74,6 @@ function markDirty() {
 }
 function updateTitle(msg) {
   $('docTitle').textContent = `${book.name} - ${msg || (dirty ? (autosave ? '保存中…' : '未保存') : '保存済み')}`;
-  document.title = book.name + ' - 表計算シート';
 }
 App.updateTitle = updateTitle;
 App.setAutosave = on => { autosave = on; $('autosaveBtn').classList.toggle('on', on); if (on && dirty) saveNow(); updateTitle(); lsSet('hyokeisan-autosave', on ? '1' : '0'); };

@@ -64,7 +64,8 @@ dialog{width:min(640px,calc(100% - 32px));max-height:calc(100% - 32px);border:1p
 dialog::backdrop{background:rgba(0,0,0,.45)}
 .whead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
 .whead .title{font-size:18px;font-weight:700;overflow-wrap:anywhere}
-#wText{min-height:260px;margin-top:4px}
+#wText{min-height:320px;margin-top:4px}
+.wopts{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:8px}
 .btnlink{display:inline-block;color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:14px}
 fieldset.use{border:1px solid var(--line);border-radius:10px;margin:12px 0 0;padding:8px 12px;display:flex;flex-wrap:wrap;gap:16px}
 fieldset.use legend{font-size:13px;color:var(--sub);padding:0 4px}
@@ -132,7 +133,14 @@ fieldset.use label{display:flex;gap:6px;align-items:center;cursor:pointer}
     <form method="dialog"><button class="small" aria-label="閉じる">✕</button></form>
   </div>
   <div id="wTags" class="tags" style="margin:6px 0 10px"></div>
-  <label class="hint" for="wText">note に貼る下書きのたたき台（ここで書き換えてからコピーできます）</label>
+  <div class="wopts">
+    <label class="hint" style="margin:0" id="wKindBox">記事の種類
+      <select id="wKind"><option value="free">無料記事（読者を集める）</option><option value="paid">有料記事（収入にする）</option></select>
+    </label>
+    <span id="wCount" class="hint" style="margin:0"></span>
+  </div>
+  <p id="wGoal" class="hint" style="margin:0 0 6px"></p>
+  <label class="hint" for="wText">下書きのたたき台。【】の部分を自分の言葉に書き換えてください（ここで書き換えてからコピーもできます）。1行目は note のタイトル欄に入れます。</label>
   <textarea id="wText"></textarea>
   <div class="bar top">
     <button id="wCopy" class="primary" type="button">📋 note用にコピー</button>
@@ -355,8 +363,7 @@ fieldset.use label{display:flex;gap:6px;align-items:center;cursor:pointer}
   function renderProposal() {
     const box = $('proposal');
     box.innerHTML = '';
-    const cands = state.ideas.filter(i => i.status === 'todo' && isSorted(i))
-      .sort((a, b) => effortOf(a) - effortOf(b) || a.createdAt - b.createdAt);
+    const cands = candidates();
     if (!cands.length) {
       const unsorted = state.ideas.filter(i => i.status === 'todo' && !isSorted(i)).length;
       box.append(el('p', 'empty', !state.ideas.length ? 'アイデアを追加すると、ここに次の投稿が表示されます。'
@@ -385,6 +392,8 @@ fieldset.use label{display:flex;gap:6px;align-items:center;cursor:pointer}
     }
   }
   const effortOf = i => i.effort || FORMAT_EFFORT[i.format] || 2;
+  const candidates = () => state.ideas.filter(i => i.status === 'todo' && isSorted(i))
+    .sort((a, b) => effortOf(a) - effortOf(b) || a.createdAt - b.createdAt);
   function tagsOf(i) {
     const t = el('div', 'tags');
     [`手間：${EFFORTS[effortOf(i)]}`, i.format, `テーマ：${i.theme}`, `悩み：${i.pain}`].forEach(s => t.append(el('span', 'tag', s)));
@@ -402,27 +411,101 @@ fieldset.use label{display:flex;gap:6px;align-items:center;cursor:pointer}
   }
 
   // --- 書く（note用にコピー） ---
+  // 収入につなげるための構成：[見出し, 書くことのヒント]
+  // free は有料記事でも無料で見せる部分、main は本題、paid は有料記事にだけ足す部分
   const OUTLINES = {
-    'つぶやき': ['気づいたこと・やってみたこと（2〜3行）', '読者へのひと言'],
-    '体験談・エッセイ': ['はじめに：こんなことで困っていました', 'やってみたこと', '変わったこと・よかったこと', 'うまくいかなかったこと', 'おわりに：同じ悩みの人へ'],
-    'まとめ・リスト記事': ['はじめに：こんな悩みはありませんか', '1.', '2.', '3.', '4.', '5.', 'まとめ：まず1つ試すなら'],
-    'レビュー・比較': ['比べようと思った理由', '比べたもの', '比べたポイント（価格・手間・満足度）', '結果', 'こんな人におすすめ'],
-    'ハウツー記事': ['この記事でできるようになること', '用意するもの', '手順1', '手順2', '手順3', 'つまずきやすいポイント', 'まとめ']
+    '体験談・エッセイ': {
+      free: [['以前のわたし', '困っていた場面を具体的に。時間・回数・金額などの数字があると伝わりやすい'], ['変えようと思ったきっかけ', '']],
+      main: [['実際にやったこと', '工夫を3つほど、順番に'], ['やってみて変わったこと', 'ビフォー・アフターを数字で'], ['うまくいかなかったこと・注意点', '失敗談は信頼につながる']],
+      paid: [['わたしのやり方をそのまま公開', '手順・使ったもの・1日の流れなど、マネできる形で'], ['よくある失敗と対処法', ''], ['特典：チェックリスト', 'コピーして使えるリストや表']]
+    },
+    'まとめ・リスト記事': {
+      free: [['選んだ基準', 'どんな人に向けて、何を基準に選んだか'], ['1. 【項目名】', 'おすすめの理由・使い方・注意点']],
+      main: [['2. 【項目名】', ''], ['3. 【項目名】', ''], ['4. 【項目名】', ''], ['5. 【項目名】', '']],
+      paid: [['6〜10. さらにおすすめの【項目】', '有料部分ではリストを増やし、くわしくする'], ['どれから試すべきか（優先順位）', ''], ['特典：一覧表', '']]
+    },
+    'レビュー・比較': {
+      free: [['比べようと思った理由', ''], ['比べたもの', '名前・価格・どこで買えるか']],
+      main: [['比べたポイント', '価格・手間・満足度など3〜4項目'], ['結果', '表にすると読みやすい'], ['よかった点・気になった点', '正直に書くほど信頼される'], ['こんな人におすすめ', '']],
+      paid: [['実際の記録', '1か月の使用記録・費用の内訳・写真など'], ['目的別のおすすめ', '「〇〇な人には△△」の形で'], ['買う前のチェックリスト', '']]
+    },
+    'ハウツー記事': {
+      free: [['この記事でできるようになること', '読んだあとの状態を具体的に'], ['用意するもの', '']],
+      main: [['手順1', ''], ['手順2', ''], ['手順3', ''], ['つまずきやすいポイント', '']],
+      paid: [['そのまま使えるテンプレート・表', ''], ['ケース別の応用', '家族の人数・予算別など'], ['よくある質問', '']]
+    }
   };
-  let writing = null;
-  function draftOf(i) {
-    const lines = [i.text, ''];
-    if (i.pain.trim()) lines.push(`想定読者の悩み：${i.pain.trim()}`, '');
-    (OUTLINES[i.format] || ['はじめに', '本文', 'おわりに']).forEach(h => lines.push(`■ ${h}`, '', ''));
-    return lines.join('\n').trimEnd() + '\n';
+  const GOALS = {
+    tweet: '目安：140〜300字。人柄や近況を伝えて、フォロワーとの距離を縮める投稿です。',
+    free: '目安：2,000〜4,000字。検索やSNSから読者を集めて、フォローしてもらうための記事です。',
+    paid: '目安：無料部分1,500字＋有料部分3,000字以上。価格は300〜500円から始めて、反応を見て調整します。'
+  };
+  let writing = null, edited = false;
+  const guide = t => t ? `【${t}】` : '';
+  const section = ([h, g]) => [`■ ${h}`, ...(g ? [guide(g)] : []), '', ''];
+  function draftOf(i, kind) {
+    const pain = i.pain.trim() || '読者の悩み';
+    const tags = [i.theme && `#${i.theme}`, '#【タグ】', '#【タグ】'].filter(Boolean).join(' ');
+    const next = candidates().find(x => x !== i && x.format !== 'つぶやき');
+    const about = state.themes.length ? `${state.themes.join('・')}について、がんばらずに続けられる工夫を発信しています。` : '【このnoteで発信していること】を発信しています。';
+    if (kind === 'tweet') return [
+      `【気づいたこと・やってみたことを1〜2文で（テーマ：${i.text}）】`, '',
+      '【具体的な例を1つ】', '',
+      next ? `【読者への問いかけ、または「くわしくは記事で」と記事へのリンク】` : '【読者への問いかけ】', '',
+      tags
+    ].join('\n') + '\n';
+
+    const o = OUTLINES[i.format] || { free: [], main: [['本文', '']], paid: [['有料部分の本文', '']] };
+    const lines = [`${i.text}｜【読むと得られることを一言で】`, '', '■ はじめに',
+      `【「${pain}」――そんな経験はありませんか？ と読者の悩みに共感する1〜2文】`,
+      '【自分も同じだった、という一言】', '',
+      'この記事でわかること', '・【】', '・【】', '・【】', '', ''];
+    o.free.forEach(x => lines.push(...section(x)));
+    if (kind === 'paid') lines.push(
+      'ここまで読んでいただき、ありがとうございます。', 'この先の有料部分では、',
+      '・【有料部分で手に入るもの1】', '・【有料部分で手に入るもの2】', '・【有料部分で手に入るもの3】',
+      'をくわしく紹介します。', '',
+      '━━━━━━━━━━ ここから有料 ━━━━━━━━━━',
+      '【note の「有料エリア設定」でこの位置を境目にしたら、この線とメモは消す】', '', '');
+    o.main.forEach(x => lines.push(...section(x)));
+    if (kind === 'paid') o.paid.forEach(x => lines.push(...section(x)));
+    lines.push(...section(['まとめ', '要点を3行で。最後に「今日からできる最初の一歩」を1つ']));
+    lines.push('■ おわりに');
+    if (kind === 'paid') lines.push('最後まで読んでいただき、ありがとうございました。', '【感想をもらえるとうれしい、などの一言】');
+    lines.push(about, '役に立ったら、スキやフォローで応援してもらえるとうれしいです。');
+    lines.push(next ? `次回は「${next.text}」をお届けする予定です。` : '次回は「【次に書くテーマ】」をお届けする予定です。');
+    lines.push('', tags);
+    return lines.join('\n') + '\n';
   }
+  const kindOf = i => i.format === 'つぶやき' ? 'tweet' : $('wKind').value;
+  function fillDraft() {
+    const kind = kindOf(writing);
+    $('wText').value = draftOf(writing, kind);
+    $('wGoal').textContent = GOALS[kind];
+    edited = false;
+    countChars();
+  }
+  function countChars() {
+    const n = $('wText').value.replace(/【[^】]*】/g, '').replace(/\s/g, '').length;
+    $('wCount').textContent = `本文の文字数：約${n.toLocaleString()}字（【】内と空白を除く）`;
+  }
+  $('wText').oninput = () => { edited = true; countChars(); };
+  $('wKind').onchange = () => {
+    if (edited && !confirm('種類を変えると、書き換えた下書きは新しいたたき台に置き換わります。よろしいですか？')) {
+      $('wKind').value = $('wKind').value === 'paid' ? 'free' : 'paid';
+      return;
+    }
+    fillDraft();
+  };
   function openWriter(i) {
     writing = i;
     $('wTitle').textContent = i.text;
     $('wTags').innerHTML = '';
     [i.format || '形式：未設定', i.theme && `テーマ：${i.theme}`, i.pain.trim() && `悩み：${i.pain.trim()}`].filter(Boolean)
       .forEach(t => $('wTags').append(el('span', 'tag', t)));
-    $('wText').value = draftOf(i);
+    $('wKindBox').hidden = i.format === 'つぶやき';
+    $('wKind').value = 'free';
+    fillDraft();
     $('wMsg').textContent = '';
     setUse();
     $('writer').showModal();

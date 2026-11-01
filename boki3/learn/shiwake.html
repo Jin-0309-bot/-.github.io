@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>仕訳の基本｜やさしい簿記3級ドリル</title>
+<meta name="description" content="簿記3級の第一歩、仕訳のルールをやさしく解説。5つのグループと「増えたら左右どちら」のルールを覚えれば、仕訳は迷わず切れます。">
+<link rel="canonical" href="https://jin-0309-bot.github.io/-.github.io/boki3/learn/shiwake.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="やさしい簿記3級ドリル">
+<meta property="og:title" content="仕訳の基本｜やさしい簿記3級ドリル">
+<meta property="og:description" content="簿記3級の第一歩、仕訳のルールをやさしく解説。5つのグループと「増えたら左右どちら」のルールを覚えれば、仕訳は迷わず切れます。">
+<meta property="og:url" content="https://jin-0309-bot.github.io/-.github.io/boki3/learn/shiwake.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="../common.css">
+<style>
+.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+.toc a { font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; color: var(--fg); background: var(--surface); }
+.toc a[aria-current="page"] { background: var(--dr); border-color: var(--dr); color: var(--surface); font-weight: 700; }
+article { display: flex; flex-direction: column; gap: 18px; }
+article section { display: flex; flex-direction: column; gap: 10px; }
+article ul, article ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 4px; }
+.ex h3 { margin: 0; }
+.point { border-left: 4px solid var(--dr); background: var(--dr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.warn { border-left: 4px solid var(--cr); background: var(--cr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.go { align-self: flex-start; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../">やさしい<span>簿記3級</span>ドリル</a>
+  <nav><a href="../">トップ</a><a href="shiwake.html" aria-current="page">解説</a><a href="../drill.html">仕訳ドリル</a><a href="../cards.html">暗記カード</a></nav>
+</div></header>
+<main><div class="wrap">
+  <nav class="toc" aria-label="解説の目次"><a href="shiwake.html" aria-current="page">① 仕訳の基本</a><a href="yokin.html">② 現金・預金</a><a href="shohin.html">③ 商品売買</a></nav>
+  <article>
+    <h1>仕訳の基本</h1>
+
+    <p class="lead">簿記は、会社のお金やモノの動きを記録するしくみです。その記録の第一歩が「仕訳（しわけ）」。ここでは、仕訳を切るためのルールを順番に見ていきましょう。</p>
+
+    <section>
+      <h2>仕訳とは、取引を「左」と「右」に分けて書くこと</h2>
+      <p>たとえば「銀行から現金を借りた」という取引には、2つの面があります。</p>
+      <ul><li>現金が増えた</li><li>返さなければならない借金が増えた</li></ul>
+      <p>仕訳では、この2つの面を<span class="tag-dr">左側（借方：かりかた）</span>と<span class="tag-cr">右側（貸方：かしかた）</span>に分けて書きます。「借りる」「貸す」という言葉の意味は気にせず、<strong>借方＝左、貸方＝右</strong>と覚えてしまいましょう。</p>
+      <p class="point">覚え方：「かり<strong>か</strong>た」の「り」は左にはらう形、「かし<strong>か</strong>た」の「し」は右にはらう形。</p>
+    </section>
+
+    <section>
+      <h2>勘定科目は5つのグループに分かれる</h2>
+      <p>「現金」「借入金」のように、記録に使う名前を<strong>勘定科目</strong>といいます。勘定科目は、次の5つのグループのどれかに入ります。</p>
+      <div class="scroll"><table class="rules">
+        <tr><th>グループ</th><th>どんなもの？</th><th>例</th></tr>
+        <tr><td class="tag-dr">資産</td><td>持っている財産や、あとでもらえる権利</td><td>現金、普通預金、売掛金、備品</td></tr>
+        <tr><td class="tag-cr">負債</td><td>あとで支払わなければならない義務</td><td>借入金、買掛金、未払金</td></tr>
+        <tr><td class="tag-cr">純資産</td><td>会社の元手や、これまでの儲け</td><td>資本金、繰越利益剰余金</td></tr>
+        <tr><td class="tag-cr">収益</td><td>稼いだもの（儲けのもと）</td><td>売上、受取利息、受取手数料</td></tr>
+        <tr><td class="tag-dr">費用</td><td>稼ぐためにかかったもの</td><td>仕入、給料、支払家賃、通信費</td></tr>
+      </table></div>
+      <p>どの科目がどのグループかは、<a href="../cards.html">暗記カード</a>で練習できます。</p>
+    </section>
+
+    <section>
+      <h2>「増えたら、いつもの側」がルール</h2>
+      <p>5つのグループには、それぞれ「いつもの側（ホームポジション）」があります。</p>
+      <div class="scroll"><table class="rules">
+        <tr><th>グループ</th><th>増えた・発生した</th><th>減った・取り消した</th></tr>
+        <tr><td>資産</td><td class="tag-dr">借方（左）</td><td class="tag-cr">貸方（右）</td></tr>
+        <tr><td>負債</td><td class="tag-cr">貸方（右）</td><td class="tag-dr">借方（左）</td></tr>
+        <tr><td>純資産</td><td class="tag-cr">貸方（右）</td><td class="tag-dr">借方（左）</td></tr>
+        <tr><td>収益</td><td class="tag-cr">貸方（右）</td><td class="tag-dr">借方（左）</td></tr>
+        <tr><td>費用</td><td class="tag-dr">借方（左）</td><td class="tag-cr">貸方（右）</td></tr>
+      </table></div>
+      <p class="point"><strong>資産と費用は左、負債・純資産・収益は右</strong>がいつもの側。増えたらいつもの側に、減ったら反対側に書きます。</p>
+    </section>
+
+    <section>
+      <h2>例で確かめよう</h2>
+      <div class="panel ex"><h3>例1　会社を設立した</h3><p>株式を発行して出資を受け、現金1,000,000円を受け取った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>現金</span><span>1,000,000</span></div></div><div class="side"><div class="line"><span>資本金</span><span>1,000,000</span></div></div></div><p class="note">現金（資産）が増えた → 左。元手の資本金（純資産）が増えた → 右。</p></div>
+      <div class="panel ex"><h3>例2　お金を借りた</h3><p>銀行から現金500,000円を借り入れた。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>現金</span><span>500,000</span></div></div><div class="side"><div class="line"><span>借入金</span><span>500,000</span></div></div></div><p class="note">現金（資産）が増えた → 左。借入金（負債）が増えた → 右。</p></div>
+      <div class="panel ex"><h3>例3　備品を買った</h3><p>事務所の机を200,000円で購入し、現金で支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>備品</span><span>200,000</span></div></div><div class="side"><div class="line"><span>現金</span><span>200,000</span></div></div></div><p class="note">備品（資産）が増えた → 左。現金（資産）が減った → 右。</p></div>
+      <div class="panel ex"><h3>例4　家賃を払った</h3><p>事務所の家賃80,000円を現金で支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>支払家賃</span><span>80,000</span></div></div><div class="side"><div class="line"><span>現金</span><span>80,000</span></div></div></div><p class="note">支払家賃（費用）が発生した → 左。現金（資産）が減った → 右。</p></div>
+    </section>
+
+    <section>
+      <h2>仕訳を切る3つのステップ</h2>
+      <ol>
+        <li><strong>何が動いたかを2つ以上見つける</strong>（例：現金が減った、家賃を払った）</li>
+        <li><strong>それぞれの勘定科目と、グループを決める</strong>（現金＝資産、支払家賃＝費用）</li>
+        <li><strong>増えたか減ったかで、左右を決める</strong>（資産が減った→右、費用が発生→左）</li>
+      </ol>
+      <p class="point">最後に、<strong>左の合計と右の合計が同じ</strong>になっているか確かめましょう。仕訳では、左右の金額の合計は必ず一致します。</p>
+    </section>
+
+    <section>
+      <h2>まちがえやすいポイント</h2>
+      <ul class="warn">
+        <li><strong>借入金と貸付金</strong>：お金を「借りた」ら借入金（負債）、「貸した」ら貸付金（資産）。</li>
+        <li><strong>買掛金と未払金</strong>：商品を後払いで買ったら買掛金、商品以外（パソコンなど）を後払いで買ったら未払金。</li>
+        <li><strong>備品と消耗品費</strong>：長く使う机やパソコンは備品、すぐに使う文房具は消耗品費。</li>
+      </ul>
+    </section>
+
+    <a class="btn primary go" href="../drill.html?cat=kihon">このテーマの仕訳ドリルを解く</a>
+  </article>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+  <p>解説はすべてオリジナルです。誤りに気づいたら、学校の先生や公式の教材でも確認してください。</p>
+</div></footer>
+</body></html>

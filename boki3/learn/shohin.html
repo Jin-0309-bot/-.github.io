@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>商品売買｜やさしい簿記3級ドリル</title>
+<meta name="description" content="簿記3級の商品売買（三分法）をやさしく解説。掛け取引、返品、引取運賃と発送費、内金、クレジット売掛金まで仕訳の例つき。">
+<link rel="canonical" href="https://jin-0309-bot.github.io/-.github.io/boki3/learn/shohin.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="やさしい簿記3級ドリル">
+<meta property="og:title" content="商品売買｜やさしい簿記3級ドリル">
+<meta property="og:description" content="簿記3級の商品売買（三分法）をやさしく解説。掛け取引、返品、引取運賃と発送費、内金、クレジット売掛金まで仕訳の例つき。">
+<meta property="og:url" content="https://jin-0309-bot.github.io/-.github.io/boki3/learn/shohin.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="../common.css">
+<style>
+.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+.toc a { font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; color: var(--fg); background: var(--surface); }
+.toc a[aria-current="page"] { background: var(--dr); border-color: var(--dr); color: var(--surface); font-weight: 700; }
+article { display: flex; flex-direction: column; gap: 18px; }
+article section { display: flex; flex-direction: column; gap: 10px; }
+article ul, article ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 4px; }
+.ex h3 { margin: 0; }
+.point { border-left: 4px solid var(--dr); background: var(--dr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.warn { border-left: 4px solid var(--cr); background: var(--cr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.go { align-self: flex-start; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../">やさしい<span>簿記3級</span>ドリル</a>
+  <nav><a href="../">トップ</a><a href="shiwake.html" aria-current="page">解説</a><a href="../drill.html">仕訳ドリル</a><a href="../cards.html">暗記カード</a></nav>
+</div></header>
+<main><div class="wrap">
+  <nav class="toc" aria-label="解説の目次"><a href="shiwake.html">① 仕訳の基本</a><a href="yokin.html">② 現金・預金</a><a href="shohin.html" aria-current="page">③ 商品売買</a></nav>
+  <article>
+    <h1>商品売買</h1>
+
+    <p class="lead">商品を仕入れて売る取引は、簿記3級の中心です。ここでは「三分法」という記録のしかたを使って、商品売買の仕訳を見ていきましょう。</p>
+
+    <section>
+      <h2>三分法では「仕入」「売上」「繰越商品」の3つを使う</h2>
+      <ul>
+        <li><strong>仕入（費用）</strong>：商品を仕入れたとき</li>
+        <li><strong>売上（収益）</strong>：商品を売ったとき</li>
+        <li><strong>繰越商品（資産）</strong>：決算のときに売れ残っている商品（決算の単元で学びます）</li>
+      </ul>
+      <p>ふだんの取引では、<strong>仕入れたら「仕入」、売ったら「売上」</strong>と覚えれば大丈夫です。</p>
+    </section>
+
+    <section>
+      <h2>代金をあとでやりとりする「掛け」</h2>
+      <div class="panel ex"><h3>例　掛けで仕入れた</h3><p>商品50,000円を仕入れ、代金は掛けとした。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>仕入</span><span>50,000</span></div></div><div class="side"><div class="line"><span>買掛金</span><span>50,000</span></div></div></div><p class="note">仕入（費用）の発生 → 左。あとで払う買掛金（負債）が増えた → 右。</p></div>
+      <div class="panel ex"><h3>例　掛けで売った</h3><p>商品80,000円を売り上げ、代金は掛けとした。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>売掛金</span><span>80,000</span></div></div><div class="side"><div class="line"><span>売上</span><span>80,000</span></div></div></div><p class="note">あとで受け取る売掛金（資産）が増えた → 左。売上（収益）の発生 → 右。</p></div>
+    </section>
+
+    <section>
+      <h2>返品は「逆の仕訳」</h2>
+      <div class="panel ex"><h3>例　仕入れた商品を返品した</h3><p>掛けで仕入れた商品のうち5,000円分を、品違いのため返品した。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>買掛金</span><span>5,000</span></div></div><div class="side"><div class="line"><span>仕入</span><span>5,000</span></div></div></div><p class="note">仕入れたときの仕訳（仕入／買掛金）の左右を逆にします。</p></div>
+      <div class="panel ex"><h3>例　売った商品が返品された</h3><p>掛けで売り上げた商品のうち3,000円分が返品された。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>売上</span><span>3,000</span></div></div><div class="side"><div class="line"><span>売掛金</span><span>3,000</span></div></div></div><p class="note">売り上げたときの仕訳（売掛金／売上）の左右を逆にします。</p></div>
+    </section>
+
+    <section>
+      <h2>運賃は「仕入れるとき」と「売るとき」で扱いが違う</h2>
+      <p>仕入れのときにかかった引取運賃などは、<strong>仕入の金額に含めます</strong>。一方、売るときに当社が負担した送料は<strong>発送費（費用）</strong>として別に記録します。</p>
+      <div class="panel ex"><h3>例　引取運賃を払って仕入れた</h3><p>商品30,000円を現金で仕入れ、引取運賃1,000円も現金で支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>仕入</span><span>31,000</span></div></div><div class="side"><div class="line"><span>現金</span><span>31,000</span></div></div></div><p class="note">30,000円＋1,000円＝31,000円を仕入にします。</p></div>
+      <div class="panel ex"><h3>例　送料を払って売った</h3><p>商品70,000円を掛けで売り上げ、当社負担の送料3,000円を現金で支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>売掛金</span><span>70,000</span></div><div class="line"><span>発送費</span><span>3,000</span></div></div><div class="side"><div class="line"><span>売上</span><span>70,000</span></div><div class="line"><span>現金</span><span>3,000</span></div></div></div><p class="note">当社負担の送料は発送費。売上の金額には含めません。</p></div>
+    </section>
+
+    <section>
+      <h2>商品を受け取る前の「内金・手付金」</h2>
+      <p>商品の受け渡しより先にお金をやりとりしたときは、まだ仕入・売上にはしません。</p>
+      <ul><li>払った側：<strong>前払金（資産）</strong></li><li>受け取った側：<strong>前受金（負債）</strong></li></ul>
+      <div class="panel ex"><h3>例　内金を払った</h3><p>商品を注文し、内金10,000円を現金で支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>前払金</span><span>10,000</span></div></div><div class="side"><div class="line"><span>現金</span><span>10,000</span></div></div></div><p class="note">あとで商品を受け取る権利なので資産です。</p></div>
+      <div class="panel ex"><h3>例　商品を受け取った</h3><p>注文していた商品40,000円を受け取った。内金10,000円と相殺し、残りは掛けとした。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>仕入</span><span>40,000</span></div></div><div class="side"><div class="line"><span>前払金</span><span>10,000</span></div><div class="line"><span>買掛金</span><span>30,000</span></div></div></div><p class="note">商品を受け取ったので、ここで初めて仕入40,000円を記録します。</p></div>
+    </section>
+
+    <section>
+      <h2>クレジットカードで売ったとき</h2>
+      <p>クレジットカードで売った代金は、カード会社からあとで受け取ります。普通の売掛金と区別して<strong>クレジット売掛金</strong>を使い、カード会社に払う手数料は<strong>支払手数料</strong>にします。</p>
+      <div class="panel ex"><h3>例　カード払いで売った</h3><p>商品60,000円をカード払いで売り上げた。手数料は売上代金の2%で、販売時に計上する。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>クレジット売掛金</span><span>58,800</span></div><div class="line"><span>支払手数料</span><span>1,200</span></div></div><div class="side"><div class="line"><span>売上</span><span>60,000</span></div></div></div><p class="note">手数料は60,000円×2%＝1,200円。カード会社から受け取るのは残りの58,800円です。</p></div>
+    </section>
+
+    <section>
+      <h2>まちがえやすいポイント</h2>
+      <ul class="warn">
+        <li>商品を後払いで買ったら<strong>買掛金</strong>、商品以外を後払いで買ったら<strong>未払金</strong>。</li>
+        <li>引取運賃は<strong>仕入に含める</strong>。当社負担の発送運賃は<strong>発送費</strong>。</li>
+        <li>内金・手付金の段階では、まだ<strong>仕入・売上を使わない</strong>。</li>
+      </ul>
+    </section>
+
+    <a class="btn primary go" href="../drill.html?cat=shohin">このテーマの仕訳ドリルを解く</a>
+  </article>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+  <p>解説はすべてオリジナルです。誤りに気づいたら、学校の先生や公式の教材でも確認してください。</p>
+</div></footer>
+</body></html>

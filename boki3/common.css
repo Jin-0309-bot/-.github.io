@@ -1,0 +1,72 @@
+/* やさしい簿記3級ドリル：帳簿の「借方＝青・貸方＝朱」を軸にした学習サイト */
+:root {
+  --bg: #f3f5f8; --surface: #ffffff; --fg: #1c2430; --muted: #5a6575; --line: #d6dce5;
+  --dr: #1f5fa8; --dr-soft: #e6eef9; --cr: #b2461f; --cr-soft: #fbece5;
+  --ok: #1d7a4a; --ok-soft: #e3f3ea; --ng: #b3261e; --ng-soft: #fbe7e5;
+  --accent: #1f5fa8;
+  --font: "BIZ UDPGothic", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", system-ui, sans-serif;
+  --display: "Zen Maru Gothic", "BIZ UDPGothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161d; --surface: #19202a; --fg: #e5eaf1; --muted: #9aa6b6; --line: #2c3644;
+  --dr: #7fb0ec; --dr-soft: #1b2c42; --cr: #f09a74; --cr-soft: #3a241b;
+  --ok: #6fd39d; --ok-soft: #173326; --ng: #f2948d; --ng-soft: #3a1d1b; --accent: #7fb0ec; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11161d; --surface: #19202a; --fg: #e5eaf1; --muted: #9aa6b6; --line: #2c3644;
+  --dr: #7fb0ec; --dr-soft: #1b2c42; --cr: #f09a74; --cr-soft: #3a241b;
+  --ok: #6fd39d; --ok-soft: #173326; --ng: #f2948d; --ng-soft: #3a1d1b; --accent: #7fb0ec; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.75; }
+a { color: var(--accent); }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.site { background: var(--surface); border-bottom: 1px solid var(--line); }
+.site .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding-block: 10px; }
+.logo { font-family: var(--display); font-weight: 700; color: var(--fg); text-decoration: none; font-size: 17px; }
+.logo span { color: var(--dr); }
+.site nav { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14px; }
+.site nav a { color: var(--muted); text-decoration: none; padding: 4px 0; }
+.site nav a[aria-current="page"] { color: var(--fg); font-weight: 700; border-bottom: 2px solid var(--dr); }
+main .wrap { padding-block: 24px 56px; display: flex; flex-direction: column; gap: 22px; }
+h1 { font-family: var(--display); font-size: 26px; line-height: 1.4; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 20px; line-height: 1.45; margin: 0 0 8px; text-wrap: balance; }
+h3 { font-size: 17px; margin: 0 0 6px; }
+p { margin: 0; }
+.lead { color: var(--muted); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.note { font-size: 13px; color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-weight: 700; font-size: 15px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; text-decoration: none; }
+.btn.primary { background: var(--dr); border-color: var(--dr); color: var(--surface); }
+.btn:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--dr); outline-offset: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 10px; border-radius: 999px; background: var(--dr-soft); color: var(--dr); }
+.tag-dr { color: var(--dr); font-weight: 700; }
+.tag-cr { color: var(--cr); font-weight: 700; }
+
+/* T字の仕訳表示 */
+.entry { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-variant-numeric: tabular-nums; }
+.entry > div { padding: 8px 10px; min-width: 0; }
+.entry .h { font-size: 12px; font-weight: 700; text-align: center; padding: 4px; }
+.entry .h.dr { background: var(--dr-soft); color: var(--dr); }
+.entry .h.cr { background: var(--cr-soft); color: var(--cr); }
+.entry .side + .side, .entry .h + .h { border-left: 1px solid var(--line); }
+.entry .line { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+/* 区分の色 */
+.k-資産 { --k: var(--dr); --k-soft: var(--dr-soft); }
+.k-負債 { --k: var(--cr); --k-soft: var(--cr-soft); }
+.k-純資産 { --k: #7a4fb0; --k-soft: #efe8f8; }
+.k-収益 { --k: var(--ok); --k-soft: var(--ok-soft); }
+.k-費用 { --k: #a06a00; --k-soft: #fbf1dc; }
+.k-その他 { --k: var(--muted); --k-soft: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-純資産 { --k: #c4a6ef; --k-soft: #2c2240; } :root:not([data-theme="light"]) .k-費用 { --k: #e9bd5c; --k-soft: #3a2d10; } }
+:root[data-theme="dark"] .k-純資産 { --k: #c4a6ef; --k-soft: #2c2240; }
+:root[data-theme="dark"] .k-費用 { --k: #e9bd5c; --k-soft: #3a2d10; }
+
+table.rules { width: 100%; border-collapse: collapse; font-size: 15px; }
+table.rules th, table.rules td { border: 1px solid var(--line); padding: 8px; text-align: center; }
+table.rules th { background: var(--bg); }
+.scroll { overflow-x: auto; }
+footer.site-foot { border-top: 1px solid var(--line); background: var(--surface); }
+footer.site-foot .wrap { padding-block: 16px; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .flip { transition: transform .35s; } }

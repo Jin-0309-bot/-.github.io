@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>勘定科目の暗記カード｜やさしい簿記3級ドリル</title>
+<meta name="description" content="日商簿記3級で使う80の勘定科目を、資産・負債・純資産・収益・費用のどれにあたるかと一緒に覚える無料の暗記カードとクイズ。">
+<link rel="canonical" href="https://jin-0309-bot.github.io/-.github.io/boki3/cards.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="やさしい簿記3級ドリル">
+<meta property="og:title" content="勘定科目の暗記カード｜やさしい簿記3級ドリル">
+<meta property="og:description" content="簿記3級の勘定科目を、5つのグループと一緒に覚える暗記カードとクイズ。">
+<meta property="og:url" content="https://jin-0309-bot.github.io/-.github.io/boki3/cards.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="common.css">
+<style>
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg button { font: inherit; font-size: 14px; border: 0; background: var(--surface); color: var(--fg); padding: 8px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--dr); color: var(--surface); font-weight: 700; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { font: inherit; font-size: 13px; border-radius: 999px; padding: 4px 12px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--fg); color: var(--surface); border-color: var(--fg); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.card { perspective: 800px; height: 150px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; color: inherit; text-align: left; }
+.flip { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.card[aria-pressed="true"] .flip { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); padding: 12px; display: flex; flex-direction: column; justify-content: center; gap: 6px; overflow: hidden; }
+.front { align-items: center; text-align: center; border-bottom: 4px solid var(--k); }
+.front strong { font-size: 18px; line-height: 1.4; }
+.front small { font-size: 11px; color: var(--muted); }
+.back { transform: rotateY(180deg); background: var(--k-soft); }
+.back .kind { font-weight: 700; color: var(--k); font-size: 15px; }
+.back p { font-size: 13px; line-height: 1.6; }
+.quiz { display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+.qword { font-size: 28px; font-weight: 700; text-align: center; padding: 18px 8px; font-family: var(--display); }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.choices button { font: inherit; font-weight: 700; padding: 14px 8px; border-radius: 10px; border: 2px solid var(--k); background: var(--surface); color: var(--k); cursor: pointer; }
+.choices button:disabled { cursor: default; opacity: .55; }
+.choices button.hit { background: var(--k); color: var(--surface); opacity: 1; }
+.feedback { min-height: 3.5em; border-radius: 10px; padding: 10px 12px; }
+.feedback.ok { background: var(--ok-soft); } .feedback.ng { background: var(--ng-soft); }
+.score { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--k); margin-right: 5px; vertical-align: -1px; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="./">やさしい<span>簿記3級</span>ドリル</a>
+  <nav><a href="./">トップ</a><a href="learn/shiwake.html">解説</a><a href="drill.html">仕訳ドリル</a><a href="cards.html" aria-current="page">暗記カード</a></nav>
+</div></header>
+
+<main><div class="wrap">
+  <section style="display:flex;flex-direction:column;gap:8px">
+    <h1>勘定科目の暗記カード</h1>
+    <p class="lead">勘定科目が5つのグループ（資産・負債・純資産・収益・費用）のどれにあたるかがわかると、仕訳の左右が自然に決まります。カードを押すと裏返って、グループと説明が出ます。</p>
+    <div class="legend"><span class="k-資産">資産</span><span class="k-負債">負債</span><span class="k-純資産">純資産</span><span class="k-収益">収益</span><span class="k-費用">費用</span><span class="k-その他">その他</span></div>
+  </section>
+
+  <div class="seg" role="group" aria-label="モード">
+    <button type="button" id="mCards" aria-pressed="true">カードで覚える</button>
+    <button type="button" id="mQuiz" aria-pressed="false">グループ当てクイズ</button>
+  </div>
+
+  <section id="cardsView" class="panel">
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="quizView" class="panel" hidden>
+    <div class="quiz">
+      <p class="score" id="score"></p>
+      <p class="qword" id="qword"></p>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+      <button type="button" class="btn primary" id="nextQ">次の科目</button>
+    </div>
+    <p class="note">クイズには、5つのグループに入る科目だけが出ます。「その他」の科目（現金過不足・貸倒引当金など）はカードで確認しましょう。</p>
+  </section>
+</div></main>
+
+<footer class="site-foot"><div class="wrap">
+  <p>勘定科目の分け方は、日商簿記3級の学習で一般的に使われるものに合わせています。</p>
+</div></footer>
+
+<script src="data/accounts.js"></script>
+<script>
+(() => {
+  const A = window.BOKI_ACCOUNTS;
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const KINDS = ['資産', '負債', '純資産', '収益', '費用'];
+  const FILTERS = ['すべて', ...KINDS, 'その他'];
+  let filter = 'すべて';
+
+  // カード
+  function renderFilters() {
+    $('filters').innerHTML = FILTERS.map(f => {
+      const n = f === 'すべて' ? A.length : A.filter(a => a[1] === f).length;
+      return `<button type="button" aria-pressed="${f === filter}" data-f="${f}">${f}（${n}）</button>`;
+    }).join('');
+  }
+  $('filters').onclick = e => { const b = e.target.closest('button'); if (!b) return; filter = b.dataset.f; renderFilters(); renderGrid(); };
+  function renderGrid() {
+    $('grid').innerHTML = A.filter(a => filter === 'すべて' || a[1] === filter).map(([name, kind, desc]) => `
+      <button type="button" class="card k-${kind}" aria-pressed="false" aria-label="${esc(name)}（押すと説明）">
+        <div class="flip">
+          <div class="face front"><strong>${esc(name)}</strong><small>押して確認</small></div>
+          <div class="face back"><span class="kind">${kind}</span><p>${esc(desc)}</p></div>
+        </div>
+      </button>`).join('');
+  }
+  $('grid').onclick = e => { const c = e.target.closest('.card'); if (c) c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true')); };
+
+  // クイズ
+  const pool = A.filter(a => KINDS.includes(a[1]));
+  let order = [], qi = 0, right = 0, done = 0;
+  const shuffle = arr => { const r = arr.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
+  function startQuiz() { order = shuffle(pool); qi = 0; right = 0; done = 0; showQ(); }
+  function showQ() {
+    if (qi >= order.length) { order = shuffle(pool); qi = 0; }
+    const [name] = order[qi];
+    $('qword').textContent = name;
+    $('choices').innerHTML = KINDS.map(k => `<button type="button" class="k-${k}" data-k="${k}">${k}</button>`).join('');
+    $('feedback').className = 'feedback'; $('feedback').textContent = 'この勘定科目は、どのグループ？';
+    $('score').textContent = `${done}問中 ${right}問正解`;
+  }
+  $('choices').onclick = e => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    const [name, kind, desc] = order[qi];
+    const ok = b.dataset.k === kind;
+    done++; if (ok) right++;
+    $('choices').querySelectorAll('button').forEach(x => { x.disabled = true; if (x.dataset.k === kind) x.classList.add('hit'); });
+    $('feedback').className = 'feedback ' + (ok ? 'ok' : 'ng');
+    $('feedback').innerHTML = `<strong>${ok ? '正解！' : '残念…'}</strong> ${esc(name)}は「${kind}」。${esc(desc)}`;
+    $('score').textContent = `${done}問中 ${right}問正解`;
+  };
+  $('nextQ').onclick = () => { qi++; showQ(); };
+
+  function setMode(quiz) {
+    $('mCards').setAttribute('aria-pressed', String(!quiz));
+    $('mQuiz').setAttribute('aria-pressed', String(quiz));
+    $('cardsView').hidden = quiz; $('quizView').hidden = !quiz;
+    if (quiz && !order.length) startQuiz();
+  }
+  $('mCards').onclick = () => setMode(false);
+  $('mQuiz').onclick = () => setMode(true);
+
+  renderFilters(); renderGrid();
+})();
+</script>
+</body></html>

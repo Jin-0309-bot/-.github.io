@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>仕訳ドリル｜やさしい簿記3級ドリル</title>
+<meta name="description" content="日商簿記3級の仕訳を、スマホでその場で答え合わせしながら練習できる無料ドリル。候補の勘定科目から選んで金額を入れるだけ。間違えた問題だけの解き直しもできます。">
+<link rel="canonical" href="https://jin-0309-bot.github.io/-.github.io/boki3/drill.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="やさしい簿記3級ドリル">
+<meta property="og:title" content="仕訳ドリル｜やさしい簿記3級ドリル">
+<meta property="og:description" content="日商簿記3級の仕訳を、スマホで答え合わせしながら練習できる無料ドリル。">
+<meta property="og:url" content="https://jin-0309-bot.github.io/-.github.io/boki3/drill.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="common.css">
+<style>
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+select, input { font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg button { font: inherit; font-size: 14px; border: 0; background: var(--surface); color: var(--fg); padding: 8px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--dr); color: var(--surface); font-weight: 700; }
+.progress { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); width: 0; }
+.qhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.qtext { font-size: 17px; line-height: 1.8; }
+.cands { display: flex; flex-wrap: wrap; gap: 6px; }
+.cands span { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; background: var(--bg); }
+.sides { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .sides { grid-template-columns: 1fr; } }
+.side { border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.side.dr { border-top: 4px solid var(--dr); }
+.side.cr { border-top: 4px solid var(--cr); }
+.side h3 { margin: 0; font-size: 15px; }
+.side.dr h3 { color: var(--dr); } .side.cr h3 { color: var(--cr); }
+.line { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 6px; align-items: center; }
+.line input { text-align: right; font-variant-numeric: tabular-nums; width: 100%; }
+.line select { width: 100%; }
+.del { font: inherit; border: 0; background: none; color: var(--muted); cursor: pointer; padding: 6px; font-size: 18px; line-height: 1; }
+.add { font: inherit; font-size: 13px; border: 1px dashed var(--line); background: none; color: var(--muted); border-radius: 8px; padding: 6px; cursor: pointer; }
+.result { border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.result.ok { background: var(--ok-soft); }
+.result.ng { background: var(--ng-soft); }
+.result .verdict { font-weight: 700; font-size: 18px; }
+.result.ok .verdict { color: var(--ok); } .result.ng .verdict { color: var(--ng); }
+.result .entry { background: var(--surface); }
+.label { font-size: 13px; color: var(--muted); font-weight: 700; }
+.navrow { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; }
+.list button { font: inherit; font-size: 13px; font-variant-numeric: tabular-nums; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.list button.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.list button.ng { background: var(--ng-soft); color: var(--ng); border-color: transparent; }
+.list button.cur { outline: 2px solid var(--dr); }
+.empty { text-align: center; padding: 20px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="./">やさしい<span>簿記3級</span>ドリル</a>
+  <nav><a href="./">トップ</a><a href="learn/shiwake.html">解説</a><a href="drill.html" aria-current="page">仕訳ドリル</a><a href="cards.html">暗記カード</a></nav>
+</div></header>
+
+<main><div class="wrap">
+  <section style="display:flex;flex-direction:column;gap:8px">
+    <h1>仕訳ドリル</h1>
+    <p class="lead">取引文を読んで、借方と貸方に勘定科目と金額を入れましょう。勘定科目は、本番のネット試験と同じように、問題ごとの候補から選びます。</p>
+  </section>
+
+  <section class="panel" aria-label="出題の設定">
+    <div class="controls">
+      <label for="cat" class="label">分野</label>
+      <select id="cat"></select>
+      <div class="seg" role="group" aria-label="出題する問題">
+        <button type="button" id="modeAll" aria-pressed="true">全部</button>
+        <button type="button" id="modeNg" aria-pressed="false">間違えた問題</button>
+      </div>
+    </div>
+    <div class="progress" id="progress"></div>
+    <div class="bar"><i id="barFill"></i></div>
+  </section>
+
+  <section class="panel" id="qpanel" aria-live="polite"></section>
+
+  <section class="panel">
+    <h2>問題一覧</h2>
+    <p class="note">緑は正解、赤は不正解だった問題です。番号を押すとその問題に移動します。</p>
+    <div class="list" id="list"></div>
+    <div class="row"><button type="button" class="btn" id="reset">記録をリセット</button><span class="note" id="resetMsg"></span></div>
+  </section>
+</div></main>
+
+<footer class="site-foot"><div class="wrap">
+  <p>問題はすべてオリジナルです。誤りに気づいたら、学校の先生や公式の教材でも確認してください。</p>
+  <p>正解・不正解の記録は、お使いのブラウザの中だけに保存されます。</p>
+</div></footer>
+
+<script src="data/questions.js"></script>
+<script>
+(() => {
+  const Q = window.BOKI_Q, CATS = window.BOKI_CATS;
+  const $ = id => document.getElementById(id);
+  const KEY = 'boki3.drill.v1';
+  let rec = {};
+  try { rec = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { rec = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {} };
+
+  const params = new URLSearchParams(location.search);
+  let cat = CATS[params.get('cat')] ? params.get('cat') : 'all';
+  let mode = 'all';
+  let list = [], pos = 0, answered = false;
+
+  const sel = $('cat');
+  sel.innerHTML = '<option value="all">すべての分野</option>' + Object.entries(CATS).map(([k, v]) => {
+    const n = Q.filter(q => q.cat === k).length;
+    return `<option value="${k}">${v}（${n}問）</option>`;
+  }).join('');
+  sel.value = cat;
+  sel.onchange = () => { cat = sel.value; build(0); };
+  $('modeAll').onclick = () => setMode('all');
+  $('modeNg').onclick = () => setMode('ng');
+  function setMode(m) {
+    mode = m;
+    $('modeAll').setAttribute('aria-pressed', String(m === 'all'));
+    $('modeNg').setAttribute('aria-pressed', String(m === 'ng'));
+    build(0);
+  }
+
+  const yen = n => n.toLocaleString('ja-JP');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // 全角数字・カンマ・円などを取り除いて数値にする
+  const num = s => {
+    const t = String(s).replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0) - 0xFEE0)).replace(/[^0-9]/g, '');
+    return t ? Number(t) : 0;
+  };
+
+  function build(start) {
+    list = Q.filter(q => (cat === 'all' || q.cat === cat) && (mode === 'all' || rec[q.id] === 'ng'));
+    pos = Math.min(start, Math.max(0, list.length - 1));
+    render();
+  }
+
+  function stats() {
+    const pool = Q.filter(q => cat === 'all' || q.cat === cat);
+    const ok = pool.filter(q => rec[q.id] === 'ok').length;
+    const ng = pool.filter(q => rec[q.id] === 'ng').length;
+    $('progress').textContent = `正解 ${ok}問 ／ 不正解 ${ng}問 ／ 全${pool.length}問`;
+    $('barFill').style.width = (pool.length ? ok / pool.length * 100 : 0) + '%';
+    $('list').innerHTML = pool.map(q => {
+      const cls = [rec[q.id] || '', list[pos] && list[pos].id === q.id ? 'cur' : ''].join(' ').trim();
+      return `<button type="button" class="${cls}" data-id="${q.id}" aria-label="問題${q.id}">${q.id}</button>`;
+    }).join('');
+  }
+  $('list').onclick = e => {
+    const b = e.target.closest('button[data-id]'); if (!b) return;
+    const id = Number(b.dataset.id);
+    if (mode === 'ng' && rec[id] !== 'ng') setMode('all');
+    if (!list.some(q => q.id === id)) { cat = 'all'; sel.value = 'all'; build(0); }
+    pos = list.findIndex(q => q.id === id); render();
+    $('qpanel').scrollIntoView({ block: 'start' });
+  };
+
+  function lineHtml(q, side) {
+    return `<div class="line" data-side="${side}">
+      <select aria-label="${side === 'dr' ? '借方' : '貸方'}の勘定科目"><option value="">科目を選ぶ</option>${q.cands.map(c => `<option>${esc(c)}</option>`).join('')}</select>
+      <input type="text" inputmode="numeric" placeholder="金額" aria-label="${side === 'dr' ? '借方' : '貸方'}の金額">
+      <button type="button" class="del" aria-label="この行を消す">×</button>
+    </div>`;
+  }
+
+  function render() {
+    answered = false;
+    stats();
+    const p = $('qpanel');
+    if (!list.length) {
+      p.innerHTML = `<p class="empty">${mode === 'ng' ? '間違えた問題はありません。よくできました！' : 'この分野の問題はまだありません。'}</p>`;
+      return;
+    }
+    const q = list[pos];
+    p.innerHTML = `
+      <div class="qhead"><span>問題 ${q.id}　<span class="chip">${esc(CATS[q.cat])}</span></span><span>${pos + 1} ／ ${list.length}</span></div>
+      <p class="qtext">${esc(q.text)}</p>
+      <div><p class="label">勘定科目の候補</p><div class="cands">${q.cands.map(c => `<span>${esc(c)}</span>`).join('')}</div></div>
+      <div class="sides">
+        <div class="side dr"><h3>借方（左）</h3><div class="lines">${lineHtml(q, 'dr')}</div><button type="button" class="add" data-add="dr">＋ 借方の行を追加</button></div>
+        <div class="side cr"><h3>貸方（右）</h3><div class="lines">${lineHtml(q, 'cr')}</div><button type="button" class="add" data-add="cr">＋ 貸方の行を追加</button></div>
+      </div>
+      <div class="row"><button type="button" class="btn primary" id="check">答え合わせ</button><button type="button" class="btn" id="show">答えを見る</button></div>
+      <div id="result"></div>
+      <div class="navrow"><button type="button" class="btn" id="prev"${pos === 0 ? ' disabled' : ''}>← 前の問題</button><button type="button" class="btn" id="next"${pos >= list.length - 1 ? ' disabled' : ''}>次の問題 →</button></div>`;
+    p.querySelectorAll('.add').forEach(b => b.onclick = () => {
+      b.previousElementSibling.insertAdjacentHTML('beforeend', lineHtml(q, b.dataset.add));
+    });
+    $('check').onclick = () => grade(q, false);
+    $('show').onclick = () => grade(q, true);
+    $('prev').onclick = () => { pos--; render(); };
+    $('next').onclick = () => { pos++; render(); };
+  }
+  // 行の削除と金額の書式は、問題が変わっても使えるよう一度だけ登録する
+  $('qpanel').addEventListener('click', e => {
+    const d = e.target.closest('.del'); if (!d) return;
+    const line = d.closest('.line');
+    if (line.parentElement.children.length > 1) line.remove();
+    else { line.querySelector('select').value = ''; line.querySelector('input').value = ''; }
+  });
+  $('qpanel').addEventListener('focusout', e => {
+    if (!e.target.matches('.line input')) return;
+    const v = num(e.target.value); e.target.value = v ? yen(v) : '';
+  });
+
+  function collect(side) {
+    const m = {};
+    $('qpanel').querySelectorAll(`.line[data-side="${side}"]`).forEach(l => {
+      const a = l.querySelector('select').value, v = num(l.querySelector('input').value);
+      if (a || v) m[a || '（科目なし）'] = (m[a || '（科目なし）'] || 0) + v;
+    });
+    return m;
+  }
+  const toMap = lines => lines.reduce((m, [a, v]) => (m[a] = (m[a] || 0) + v, m), {});
+  const same = (a, b) => { const ka = Object.keys(a), kb = Object.keys(b); return ka.length === kb.length && ka.every(k => a[k] === b[k]); };
+  const entryHtml = (dr, cr) => {
+    const side = m => Object.entries(m).map(([a, v]) => `<div class="line"><span>${esc(a)}</span><span>${yen(v)}</span></div>`).join('') || '<div class="line"><span class="note">（なし）</span></div>';
+    return `<div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side">${side(dr)}</div><div class="side">${side(cr)}</div></div>`;
+  };
+
+  function grade(q, reveal) {
+    const dr = collect('dr'), cr = collect('cr');
+    const ok = !reveal && same(dr, toMap(q.dr)) && same(cr, toMap(q.cr));
+    if (!reveal && !Object.keys(dr).length && !Object.keys(cr).length) {
+      $('result').innerHTML = '<p class="note">借方と貸方に、勘定科目と金額を入れてから答え合わせしてください。</p>';
+      return;
+    }
+    rec[q.id] = ok ? 'ok' : 'ng'; save();
+    let hint = '';
+    if (!ok && !reveal) {
+      const sum = m => Object.values(m).reduce((s, v) => s + v, 0);
+      if (sum(dr) !== sum(cr)) hint = `<p class="note">ヒント：借方の合計（${yen(sum(dr))}円）と貸方の合計（${yen(sum(cr))}円）が一致していません。仕訳では、左右の合計は必ず同じになります。</p>`;
+    }
+    $('result').innerHTML = `<div class="result ${ok ? 'ok' : 'ng'}">
+      <p class="verdict">${ok ? '正解！' : reveal ? '答え' : '不正解'}</p>
+      ${!ok && !reveal ? `<p class="label">あなたの答え</p>${entryHtml(dr, cr)}${hint}` : ''}
+      <p class="label">正しい仕訳</p>${entryHtml(toMap(q.dr), toMap(q.cr))}
+      <p>${esc(q.exp)}</p>
+    </div>`;
+    stats();
+  }
+
+  $('reset').onclick = () => {
+    if ($('reset').dataset.armed) {
+      rec = {}; save(); delete $('reset').dataset.armed;
+      $('reset').textContent = '記録をリセット'; $('resetMsg').textContent = 'リセットしました。';
+      build(0);
+    } else {
+      $('reset').dataset.armed = '1';
+      $('reset').textContent = 'もう一度押すとリセット';
+      $('resetMsg').textContent = '正解・不正解の記録がすべて消えます。';
+    }
+  };
+
+  build(0);
+})();
+</script>
+</body></html>

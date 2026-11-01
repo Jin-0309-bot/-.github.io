@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>現金・預金｜やさしい簿記3級ドリル</title>
+<meta name="description" content="簿記3級の現金・普通預金・当座預金・小切手・現金過不足・小口現金を、仕訳の例と一緒にやさしく解説します。">
+<link rel="canonical" href="https://jin-0309-bot.github.io/-.github.io/boki3/learn/yokin.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="やさしい簿記3級ドリル">
+<meta property="og:title" content="現金・預金｜やさしい簿記3級ドリル">
+<meta property="og:description" content="簿記3級の現金・普通預金・当座預金・小切手・現金過不足・小口現金を、仕訳の例と一緒にやさしく解説します。">
+<meta property="og:url" content="https://jin-0309-bot.github.io/-.github.io/boki3/learn/yokin.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="../common.css">
+<style>
+.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+.toc a { font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; color: var(--fg); background: var(--surface); }
+.toc a[aria-current="page"] { background: var(--dr); border-color: var(--dr); color: var(--surface); font-weight: 700; }
+article { display: flex; flex-direction: column; gap: 18px; }
+article section { display: flex; flex-direction: column; gap: 10px; }
+article ul, article ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 4px; }
+.ex h3 { margin: 0; }
+.point { border-left: 4px solid var(--dr); background: var(--dr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.warn { border-left: 4px solid var(--cr); background: var(--cr-soft); padding: 10px 12px; border-radius: 0 10px 10px 0; }
+.go { align-self: flex-start; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../">やさしい<span>簿記3級</span>ドリル</a>
+  <nav><a href="../">トップ</a><a href="shiwake.html" aria-current="page">解説</a><a href="../drill.html">仕訳ドリル</a><a href="../cards.html">暗記カード</a></nav>
+</div></header>
+<main><div class="wrap">
+  <nav class="toc" aria-label="解説の目次"><a href="shiwake.html">① 仕訳の基本</a><a href="yokin.html" aria-current="page">② 現金・預金</a><a href="shohin.html">③ 商品売買</a></nav>
+  <article>
+    <h1>現金・預金</h1>
+
+    <p class="lead">現金と預金は、ほとんどの取引に登場する勘定科目です。ここでは、どんなものを「現金」として扱うのか、預金の種類や小切手のしくみを見ていきましょう。</p>
+
+    <section>
+      <h2>簿記の「現金」は、お札と硬貨だけではない</h2>
+      <p>簿記では、すぐにお金に換えられる次のようなものも<strong>現金（資産）</strong>として扱います。</p>
+      <ul><li>他人（取引先など）が振り出した小切手</li><li>送金小切手</li><li>郵便為替証書</li></ul>
+      <div class="panel ex"><h3>例　他人振出の小切手を受け取った</h3><p>売掛金80,000円を、得意先が振り出した小切手で受け取った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>現金</span><span>80,000</span></div></div><div class="side"><div class="line"><span>売掛金</span><span>80,000</span></div></div></div><p class="note">他人が振り出した小切手は、当座預金ではなく現金として扱います。</p></div>
+    </section>
+
+    <section>
+      <h2>預金の種類</h2>
+      <div class="scroll"><table class="rules">
+        <tr><th>勘定科目</th><th>特徴</th></tr>
+        <tr><td>普通預金</td><td>いつでも出し入れできる。給料の振込や公共料金の引き落としなどに使う</td></tr>
+        <tr><td>当座預金</td><td>小切手を振り出して支払いに使う。利息はつかない</td></tr>
+        <tr><td>定期預金</td><td>一定期間、引き出さずに預けておく</td></tr>
+      </table></div>
+      <div class="panel ex"><h3>例　預け替え</h3><p>普通預金口座から定期預金口座へ200,000円を預け替えた。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>定期預金</span><span>200,000</span></div></div><div class="side"><div class="line"><span>普通預金</span><span>200,000</span></div></div></div><p class="note">資産どうしの入れ替えです。増えた定期預金が左、減った普通預金が右。</p></div>
+    </section>
+
+    <section>
+      <h2>小切手を「振り出す」と当座預金が減る</h2>
+      <p>自分が小切手を書いて相手に渡すことを「振り出す」といいます。相手がその小切手を銀行に持ち込むと、自分の当座預金から引き落とされます。そのため、<strong>小切手を振り出したら当座預金（資産）の減少</strong>として右に書きます。</p>
+      <div class="panel ex"><h3>例　小切手で支払った</h3><p>買掛金120,000円を、小切手を振り出して支払った。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>買掛金</span><span>120,000</span></div></div><div class="side"><div class="line"><span>当座預金</span><span>120,000</span></div></div></div><p class="note">買掛金（負債）が減った → 左。当座預金（資産）が減った → 右。</p></div>
+      <p class="point">まとめ：<strong>自分が振り出す → 当座預金</strong>、<strong>他人が振り出したものを受け取る → 現金</strong>。</p>
+    </section>
+
+    <section>
+      <h2>現金が合わないときは「現金過不足」</h2>
+      <p>帳簿の現金と、実際に数えた現金が合わないことがあります。原因がわかるまでは、<strong>現金過不足</strong>という一時的な勘定を使い、まず帳簿の現金を実際の金額に合わせます。</p>
+      <div class="panel ex"><h3>例　現金が足りなかった</h3><p>実際の現金が、帳簿より2,000円少なかった。原因はまだわからない。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>現金過不足</span><span>2,000</span></div></div><div class="side"><div class="line"><span>現金</span><span>2,000</span></div></div></div><p class="note">帳簿の現金を2,000円減らして実際の金額に合わせます。</p></div>
+      <div class="panel ex"><h3>例　原因がわかった</h3><p>上の不足のうち1,500円は、電車代の記入もれだとわかった。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>旅費交通費</span><span>1,500</span></div></div><div class="side"><div class="line"><span>現金過不足</span><span>1,500</span></div></div></div><p class="note">正しい科目（旅費交通費）に振り替え、現金過不足を減らします。</p></div>
+      <p>決算になっても原因がわからない残り（この例では500円）は、不足なら<strong>雑損</strong>（費用）、多すぎたなら<strong>雑益</strong>（収益）に振り替えます。</p>
+    </section>
+
+    <section>
+      <h2>小口現金</h2>
+      <p>電車代や切手代のような少額の支払いのために、担当者（小口現金係）に前もって渡しておくお金を<strong>小口現金</strong>といいます。一定期間ごとに、使った内容の報告を受け、使った分を補給します。</p>
+      <div class="panel ex"><h3>例　報告を受けて、すぐに補給した</h3><p>電車代4,000円と郵便切手代1,000円の報告を受け、ただちに同じ額の小切手を振り出して補給した。</p><div class="entry"><div class="h dr">借方</div><div class="h cr">貸方</div><div class="side"><div class="line"><span>旅費交通費</span><span>4,000</span></div><div class="line"><span>通信費</span><span>1,000</span></div></div><div class="side"><div class="line"><span>当座預金</span><span>5,000</span></div></div></div><p class="note">使った分を費用に振り分け、同じ額を補給したので、小口現金は差し引きで変わりません。報告と補給が同時なら、このようにまとめて書けます。</p></div>
+    </section>
+
+    <section>
+      <h2>まちがえやすいポイント</h2>
+      <ul class="warn">
+        <li>他人振出の小切手を受け取ったら、当座預金ではなく<strong>現金</strong>。</li>
+        <li>振込手数料は<strong>支払手数料</strong>（費用）。預金から一緒に引き落とされたら、合計額を右に書く。</li>
+        <li>預金の利息は<strong>受取利息</strong>（収益）。借入金の利息（支払利息）と区別する。</li>
+      </ul>
+    </section>
+
+    <a class="btn primary go" href="../drill.html?cat=yokin">このテーマの仕訳ドリルを解く</a>
+  </article>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+  <p>解説はすべてオリジナルです。誤りに気づいたら、学校の先生や公式の教材でも確認してください。</p>
+</div></footer>
+</body></html>

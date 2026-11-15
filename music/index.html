@@ -13,7 +13,23 @@ body{overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 input{font:inherit;color:inherit}
 svg{width:22px;height:22px;fill:currentColor;display:block;flex:none}
-img{display:block}
+img{display:block;object-fit:cover}
+/* YouTube player (always visible while a YouTube track is current) */
+#ytbox{position:fixed;z-index:15;right:16px;bottom:calc(var(--barh) + 16px);width:356px;height:200px;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+#ytbox.innp{z-index:22;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+#ytbox iframe{width:100%;height:100%;border:0;display:block}
+body.ytmini #view{padding-bottom:240px}
+#npVid{display:none;width:100%;aspect-ratio:16/9;border-radius:10px;background:#000}
+#np.vid #npImg{display:none}
+#np.vid #npVid{display:block}
+.ytadd{display:flex;flex-direction:column;gap:10px;padding:4px 24px 18px;max-width:640px}
+.ytadd form{display:flex;gap:8px}
+.ytadd label{flex:1;display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:999px;padding:0 14px;border:2px solid transparent;min-width:0}
+.ytadd label:focus-within{border-color:var(--tx)}
+.ytadd label svg{color:var(--mu);width:20px;height:20px}
+.ytadd input{flex:1;background:none;border:0;outline:0;padding:11px 0;font-size:15px;min-width:0}
+.ytadd button{flex:none}
+.ytadd p{color:var(--mu);font-size:12px;line-height:1.7}
 [hidden]{display:none!important}
 #app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);grid-template-rows:minmax(0,1fr) var(--barh);height:100vh;height:100dvh;gap:8px;padding:8px 8px 0}
 /* sidebar */
@@ -284,6 +300,8 @@ input[type=range]:hover::-moz-range-thumb{opacity:1}
   #sheet{place-items:end center}
   .sh{width:100%;border-radius:14px 14px 0 0;padding-bottom:max(8px,env(safe-area-inset-bottom));max-height:85vh}
   #toast{bottom:150px}
+  #ytbox{left:8px;right:8px;width:auto;height:auto;aspect-ratio:16/9;max-height:34vh;bottom:calc(132px + env(safe-area-inset-bottom))}
+  body.ytmini #view{padding-bottom:62vw}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
 </style>
@@ -339,7 +357,7 @@ input[type=range]:hover::-moz-range-thumb{opacity:1}
       <div class="np-ctx"><small>再生中</small><b id="npCtx"></b></div>
       <button class="ic" data-cmd="np-more" aria-label="メニュー"></button>
     </div>
-    <div class="np-art"><img id="npImg" alt=""><canvas id="viz"></canvas></div>
+    <div class="np-art"><img id="npImg" alt=""><div id="npVid"></div><canvas id="viz"></canvas></div>
     <div class="np-meta"><div><div class="t" id="npTitle"></div><div class="a" id="npArtist"></div></div><button class="ic like" data-cmd="like" aria-label="いいね"></button></div>
     <div class="np-seek"><input type="range" class="seekr" min="0" max="1000" value="0" aria-label="再生位置"><div class="times"><span class="tcur">0:00</span><span class="tdur">0:00</span></div></div>
     <div class="ctrls big">
@@ -353,6 +371,7 @@ input[type=range]:hover::-moz-range-thumb{opacity:1}
   </div>
 </div>
 
+<div id="ytbox" hidden><div id="ytp"></div></div>
 <div id="qp" hidden>
   <div class="qp-h">再生キュー<button class="ic" data-cmd="queue" aria-label="閉じる"></button></div>
   <div id="qpBody"></div>
@@ -398,6 +417,9 @@ const P={
  edit:'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
  album:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z',
  remove:'M19 13H5v-2h14v2z',
+ link:'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z',
+ open:'M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z',
+ video:'M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-5-6-7 4V7z',
  search:'M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
 };
 const ico=n=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
@@ -442,6 +464,7 @@ function coverSVG(kind,hue,seed=1){
  if(kind==='liked')return `${W}<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b2bd9"/><stop offset="1" stop-color="#b5f0e8"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><g transform="translate(64 64) scale(3)"><path d="${P.heartF}" fill="#fff"/></g></svg>`;
  if(kind==='mix')return `${W}<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#c056ff"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><circle cx="100" cy="100" r="62" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="18"/><text x="100" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="900" font-size="40" fill="#fff">MIX</text><text x="100" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="15" fill="#fff" opacity=".85">TODAY</text></svg>`;
  if(kind==='files')return `${W}<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e8f6e"/><stop offset="1" stop-color="#0f3d58"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><g transform="translate(60 60) scale(3.3)"><path d="${P.upload}" fill="#fff"/></g></svg>`;
+ if(kind==='yt')return `${W}<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e5484d"/><stop offset="1" stop-color="#5a1230"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><g transform="translate(52 52) scale(4)"><path d="${P.video}" fill="#fff"/></g></svg>`;
  // file / playlist
  const h2=(hue+40)%360;let s=`${W}<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${hue} 60% 50%)"/><stop offset="1" stop-color="hsl(${h2} 55% 22%)"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/>`;
  for(let i=0;i<4;i++)s+=`<circle cx="${(R()*200).toFixed(0)}" cy="${(R()*200).toFixed(0)}" r="${(20+R()*60).toFixed(0)}" fill="#fff" opacity="${(.05+R()*.08).toFixed(2)}"/>`;
@@ -451,11 +474,13 @@ function cover(o){ // track, album, or key
  let key,kind,hue,seed;
  if(typeof o==='string'){key=o;kind=o}
  else if(o.kind==='gen'){key='a-'+o.album;kind=o.style;hue=o.hue}
+ else if(o.kind==='yt')return `https://i.ytimg.com/vi/${o.vid}/mqdefault.jpg`;
  else if(o.kind==='file'){key='f-'+o.id;kind='file';hue=o.hue;seed=hash(o.id)}
  else if(o.style){key='a-'+o.id;kind=o.style}
  else {key='p-'+o.id;kind='pl';hue=o.hue;seed=hash(o.id)}
  return COVER[key]||(COVER[key]=svgURI(coverSVG(kind,hue||0,seed||1)))}
-function plCover(p){const ids=p.tracks.filter(T);const c=[...new Set(ids.map(id=>cover(T(id))))];
+function plCover(p){const ids=p.tracks.filter(T);const all=[...new Set(ids.map(id=>cover(T(id))))],c=all.filter(u=>u.startsWith('data:'));
+ if(c.length<4&&all.length)return all[0];
  if(c.length>=4){const k='m-'+c.slice(0,4).join('').length+'-'+hash(c.slice(0,4).join(''));return COVER[k]||(COVER[k]=svgURI(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200">${c.slice(0,4).map((u,i)=>`<image href="${u.replace(/"/g,'%22')}" x="${i%2*100}" y="${(i>>1)*100}" width="100" height="100"/>`).join('')}</svg>`))}
  if(c.length)return c[0];return cover(p)}
 
@@ -602,8 +627,15 @@ async function importFiles(list){
  renderSide();if(location.hash==='#files')route();else location.hash='files'}
 
 /* ========== state ========== */
-const S=Object.assign({likes:[],pls:[],vol:.8,muted:false,shuffle:false,repeat:0,hist:[]},store.get('otobako.state',{}));
-const save=()=>store.set('otobako.state',{likes:S.likes,pls:S.pls,vol:S.vol,muted:S.muted,shuffle:S.shuffle,repeat:S.repeat,hist:S.hist});
+const S=Object.assign({likes:[],pls:[],vol:.8,muted:false,shuffle:false,repeat:0,hist:[],yt:[]},store.get('otobako.state',{}));
+const save=()=>store.set('otobako.state',{likes:S.likes,pls:S.pls,vol:S.vol,muted:S.muted,shuffle:S.shuffle,repeat:S.repeat,hist:S.hist,yt:S.yt});
+/* YouTube tracks (only the video id and title are stored) */
+const YT_IDS=[];
+function addYTTrack(r){const id='y-'+r.vid;if(TRACKS.has(id))return null;
+ const t={id,kind:'yt',vid:r.vid,title:r.title||'YouTube動画',artist:r.artist||'YouTube',albumTitle:'YouTube',dur:r.dur||0,hue:hash(r.vid)%360,added:r.added||Date.now(),titleAuto:r.titleAuto!==false&&!r.title};
+ TRACKS.set(id,t);YT_IDS.unshift(id);return t}
+function saveYT(){S.yt=YT_IDS.map(T).filter(Boolean).reverse().map(t=>({vid:t.vid,title:t.title,artist:t.artist,dur:Math.round(t.dur||0),added:t.added,titleAuto:t.titleAuto}));save()}
+S.yt.forEach(addYTTrack);
 const Q=Object.assign({ids:[],i:0,orig:null,key:'',label:''},store.get('otobako.queue',{}));
 const saveQ=()=>store.set('otobako.queue',{ids:Q.ids.filter(id=>!id.startsWith('f')||TRACKS.has(id)),i:Q.i,orig:Q.orig,key:Q.key,label:Q.label});
 const liked=id=>S.likes.includes(id);
@@ -611,16 +643,54 @@ const curId=()=>Q.ids[Q.i];
 const au=$('#au');let token=0,loading=false,loadedId=null;
 const SILENT='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
 const isSilent=()=>au.getAttribute('src')===SILENT;
+/* YouTube engine: same small interface as the <audio> element (paused, currentTime, duration, play, pause) */
+let ytApi=null;
+function ytAPI(){return ytApi||(ytApi=new Promise((res,rej)=>{if(window.YT&&YT.Player)return res(YT);
+ const prevCb=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{if(prevCb)prevCb();res(YT)};
+ const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=()=>{ytApi=null;rej(new Error('YouTubeに接続できませんでした'))};document.head.appendChild(s);
+ setTimeout(()=>{if(!(window.YT&&YT.Player)){ytApi=null;rej(new Error('YouTubeに接続できませんでした'))}},15000)}))}
+const YTM={p:null,state:-1,vid:null,
+ get paused(){return this.state!==1&&this.state!==3},get ended(){return this.state===0},
+ get currentTime(){try{return this.p&&this.p.getCurrentTime?this.p.getCurrentTime()||0:0}catch(e){return 0}},
+ set currentTime(v){try{if(this.p&&isFinite(v))this.p.seekTo(Math.max(0,v),true)}catch(e){}},
+ get duration(){try{const d=this.p&&this.p.getDuration&&this.p.getDuration();return d>0?d:NaN}catch(e){return NaN}},
+ play(){try{if(this.p)this.p.playVideo()}catch(e){}return Promise.resolve()},
+ pause(){try{if(this.p&&this.p.pauseVideo)this.p.pauseVideo()}catch(e){}},
+ stop(){if(this.p&&this.vid){try{this.p.stopVideo()}catch(e){}}this.state=-1;placeYT()},
+ setVol(v){try{if(this.p&&this.p.setVolume){this.p.setVolume(Math.round(v*100));v>0?this.p.unMute():this.p.mute()}}catch(e){}},
+ async load(vid,auto){await ytAPI();$('#ytbox').hidden=false;placeYT();
+  if(!this.p){await new Promise((res,rej)=>{this.p=new YT.Player('ytp',{width:'100%',height:'100%',videoId:vid,
+    playerVars:{playsinline:1,rel:0,autoplay:auto?1:0,origin:location.protocol.startsWith('http')?location.origin:undefined},
+    events:{onReady:()=>{this.setVol(S.muted?0:S.vol);res()},onStateChange:e=>this.onState(e.data),onError:e=>this.onError(e.data)}});
+    setTimeout(()=>rej(new Error('YouTubeプレーヤーを読み込めませんでした')),20000)});
+   this.vid=vid;if(auto)this.play();return}
+  this.vid=vid;this.state=-1;if(auto)this.p.loadVideoById(vid);else this.p.cueVideoById(vid)},
+ onState(s){this.state=s;const t=T(curId());
+  if(s===1&&t&&t.kind==='yt'){let ch=false;
+   try{const d=this.p.getVideoData()||{};if(t.titleAuto&&d.title){t.title=d.title;t.artist=d.author||t.artist;t.titleAuto=false;ch=true}}catch(e){}
+   const du=this.duration;if(isFinite(du)&&Math.abs((t.dur||0)-du)>1){t.dur=du;ch=true}
+   if(ch){saveYT();updateNow();if(/^#(yt|search)/.test(location.hash))route()}}
+  if(M===YTM){updatePlayState();updateTime();if(s===0)next(true)}},
+ onError(code){if(M!==YTM)return;toast(code===101||code===150?'この動画は埋め込み再生が許可されていません':'この動画を再生できませんでした');
+  if(Q.ids.length>1){const my=token;setTimeout(()=>{if(my===token&&M===YTM)next(false)},1800)}}};
+let M=au;
+function placeYT(){const box=$('#ytbox'),t=T(curId()),on=!!t&&t.kind==='yt'&&M===YTM;
+ box.hidden=!on;document.body.classList.toggle('ytmini',on&&$('#np').hidden);$('#np').classList.toggle('vid',!!t&&t.kind==='yt');
+ if(!on)return;
+ if(!$('#np').hidden){const r=$('#npVid').getBoundingClientRect();box.classList.add('innp');Object.assign(box.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',right:'auto',bottom:'auto',aspectRatio:'auto',maxHeight:'none'})}
+ else{box.classList.remove('innp');box.removeAttribute('style')}}
+setInterval(()=>{if(M===YTM&&!YTM.paused&&!seeking)updateTime()},250);
 
 function dailyMix(){const d=new Date(),R=rng(d.getFullYear()*1000+d.getMonth()*40+d.getDate());const a=[...GEN_IDS];for(let i=a.length-1;i>0;i--){const j=R()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,10)}
 function idsFor(key){const [k,arg]=key.split('/');
  if(k==='album')return (ALBUMS.find(a=>a.id===arg)||{ids:[]}).ids;
  if(k==='pl'){const p=S.pls.find(p=>p.id===arg);return p?p.tracks.filter(T):[]}
  if(k==='liked')return S.likes.filter(T);if(k==='files')return [...FILES];if(k==='mix')return dailyMix();if(k==='hist')return S.hist.filter(T);
- if(k==='all')return [...GEN_IDS,...FILES];return []}
+ if(k==='yt')return [...YT_IDS];
+ if(k==='all')return [...GEN_IDS,...FILES,...YT_IDS];return []}
 function labelFor(key){const [k,arg]=key.split('/');
  if(k==='album')return (ALBUMS.find(a=>a.id===arg)||{}).title||'';if(k==='pl')return (S.pls.find(p=>p.id===arg)||{}).name||'';
- return {liked:'いいねした曲',files:'マイファイル',mix:'今日のミックス',hist:'最近再生した曲',all:'すべての曲',search:'検索結果'}[k]||''}
+ return {liked:'いいねした曲',files:'マイファイル',yt:'YouTube',mix:'今日のミックス',hist:'最近再生した曲',all:'すべての曲',search:'検索結果'}[k]||''}
 function shuffled(a,first){const r=a.filter(x=>x!==first);for(let i=r.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[r[i],r[j]]=[r[j],r[i]]}return first!=null?[first,...r]:r}
 
 /* ========== playback ========== */
@@ -633,6 +703,11 @@ async function load(auto){const id=curId(),t=T(id);if(!t)return;const my=++token
  updateNow();saveQ();
  S.hist=[id,...S.hist.filter(x=>x!==id)].slice(0,20);save();
  au.pause();loadedId=null;
+ if(t.kind==='yt'){M=YTM;placeYT();setLoading(true);
+  try{await YTM.load(t.vid,auto);if(my!==token)return;loadedId=id}
+  catch(e){if(my!==token)return;console.error(e);toast(e.message||'YouTubeに接続できませんでした');M=au;placeYT()}
+  setLoading(false);updatePlayState();updateTime();return}
+ if(M===YTM){YTM.stop();M=au}placeYT();
  try{
   let url;
   if(t.kind==='gen'){if(!CACHE.has(id)){setLoading(true)}url=(await getAudio(id)).url}
@@ -647,13 +722,13 @@ function prefetch(){clearTimeout(prefetch.h);prefetch.h=setTimeout(()=>{const n=
 async function fileEnvelope(id){const t=T(id);if(!t||t.blob.size>40e6||!window.OfflineAudioContext)return;
  try{const buf=await new OfflineAudioContext(2,1,44100).decodeAudioData(await t.blob.arrayBuffer());ENV.set(id,envelope(buf.getChannelData(0),buf.numberOfChannels>1?buf.getChannelData(1):buf.getChannelData(0),buf.sampleRate))}catch(e){}}
 function toggle(){if(loading)return;if(!loadedId||loadedId!==curId()){if(Q.ids.length)load(true);else playList(dailyMix(),0,'mix');return}
- if(au.paused)au.play().catch(()=>{});else au.pause()}
+ if(M.paused)M.play().catch(()=>{});else M.pause()}
 function next(auto){if(!Q.ids.length)return;
- if(auto&&S.repeat===2){au.currentTime=0;au.play();return}
+ if(auto&&S.repeat===2){M.currentTime=0;M.play();return}
  if(Q.i<Q.ids.length-1){Q.i++;load(true)}
  else if(S.repeat===1||!auto){Q.i=0;if(S.shuffle&&Q.orig)Q.ids=shuffled(Q.orig,null);load(S.repeat===1||!auto?true:false)}
- else{au.pause();au.currentTime=0;updatePlayState()}}
-function prev(){if(!Q.ids.length)return;if(au.currentTime>3||Q.i===0){au.currentTime=0;if(au.paused&&au.src)au.play().catch(()=>{});return}Q.i--;load(true)}
+ else{M.pause();M.currentTime=0;updatePlayState()}}
+function prev(){if(!Q.ids.length)return;if(M.currentTime>3||Q.i===0){M.currentTime=0;if(M.paused&&loadedId)M.play().catch(()=>{});return}Q.i--;load(true)}
 function setShuffle(on){S.shuffle=on;save();const id=curId();
  if(on){if(Q.ids.length){Q.orig=[...Q.ids];const rest=shuffled(Q.ids.slice(Q.i+1));Q.ids=[...Q.ids.slice(0,Q.i+1),...rest]}}
  else if(Q.orig){Q.ids=Q.orig;Q.orig=null;Q.i=Math.max(0,Q.ids.indexOf(id))}
@@ -666,7 +741,7 @@ function toggleLike(id){if(!id)return;const on=!liked(id);S.likes=on?[id,...S.li
 
 /* ========== UI updates ========== */
 function setLoading(v){loading=v;$$('[data-cmd=toggle]').forEach(b=>b.classList.toggle('loading',v))}
-function updatePlayState(){const playing=!au.paused&&!au.ended&&!isSilent();
+function updatePlayState(){const playing=!M.paused&&!M.ended&&!(M===au&&isSilent());
  $$('[data-cmd=toggle]').forEach(b=>b.innerHTML=ico(playing?'pause':'play'));
  document.body.classList.toggle('paused',!playing);
  $$('[data-playkey]').forEach(b=>{const on=b.dataset.playkey===Q.key&&playing;b.innerHTML=ico(on?'pause':'play');b.classList.toggle('on',on)});
@@ -675,7 +750,7 @@ function updateModes(){$$('[data-cmd=shuffle]').forEach(b=>{b.innerHTML=ico('shu
  $$('[data-cmd=repeat]').forEach(b=>{b.innerHTML=ico(S.repeat===2?'repeat1':'repeat');b.classList.toggle('on',S.repeat>0)})}
 function updateLike(){const id=curId(),on=!!id&&liked(id);$$('[data-cmd=like]').forEach(b=>{b.innerHTML=ico(on?'heartF':'heart');b.classList.toggle('on',on)})}
 function updateNow(){const t=T(curId());$('#bar').classList.toggle('idle',!t);
- if(!t)return;const c=cover(t);
+ placeYT();if(!t)return;const c=cover(t);
  $('#bImg').src=c;$('#bTitle').textContent=t.title;$('#bArtist').textContent=t.artist;
  $('#npImg').src=c;$('#npTitle').textContent=t.title;$('#npArtist').textContent=t.artist;$('#npCtx').textContent=Q.label||t.albumTitle||'';
  document.documentElement.style.setProperty('--h',t.hue||0);
@@ -684,42 +759,42 @@ function updateNow(){const t=T(curId());$('#bar').classList.toggle('idle',!t);
  updateLike();markRows();renderQueue();renderSide();
  if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,album:t.albumTitle||'',artwork:[]});pngCover(c).then(png=>{if(png&&T(curId())===t)navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,album:t.albumTitle||'',artwork:[{src:png,sizes:'512x512',type:'image/png'}]})})}catch(e){}}}
 const PNG={};
-function pngCover(src){if(PNG[src])return Promise.resolve(PNG[src]);return new Promise(res=>{const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=512;c.getContext('2d').drawImage(im,0,0,512,512);res(PNG[src]=c.toDataURL('image/png'))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
+function pngCover(src){if(/^https?:/.test(src))return Promise.resolve(src.replace('mqdefault','hqdefault'));if(PNG[src])return Promise.resolve(PNG[src]);return new Promise(res=>{const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=512;c.getContext('2d').drawImage(im,0,0,512,512);res(PNG[src]=c.toDataURL('image/png'))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
 function markRows(){const id=curId();$$('.row').forEach(r=>r.classList.toggle('on',r.dataset.id===id))}
 let seeking=false;
-function updateTime(){const d=isFinite(au.duration)&&au.duration?au.duration:(T(curId())||{}).dur||0,c=au.currentTime||0,p=d?c/d:0;
+function updateTime(){const d=isFinite(M.duration)&&M.duration?M.duration:(T(curId())||{}).dur||0,c=M.currentTime||0,p=d?Math.min(1,c/d):0;
  if(!seeking)$$('.seekr').forEach(s=>{s.value=p*1000;s.style.setProperty('--p',p*100+'%')});
  $$('.tcur').forEach(e=>{if(!seeking)e.textContent=fmt(c)});$$('.tdur').forEach(e=>e.textContent=fmt(d));
  $('#mprog i').style.width=p*100+'%';
  if('mediaSession' in navigator&&navigator.mediaSession.setPositionState&&d){try{navigator.mediaSession.setPositionState({duration:d,position:Math.min(c,d),playbackRate:1})}catch(e){}}}
-function setVol(v){S.vol=v;au.volume=S.muted?0:v;const s=$('#vol');s.value=v*100;s.style.setProperty('--p',(S.muted?0:v*100)+'%');$('[data-cmd=mute]').innerHTML=ico(S.muted||v===0?'mute':'vol')}
+function setVol(v){S.vol=v;au.volume=S.muted?0:v;YTM.setVol(S.muted?0:v);const s=$('#vol');s.value=v*100;s.style.setProperty('--p',(S.muted?0:v*100)+'%');$('[data-cmd=mute]').innerHTML=ico(S.muted||v===0?'mute':'vol')}
 
 /* ========== views ========== */
 let VIEW={key:'',ids:[]};
 const playBtn=key=>`<button class="cplay" data-playkey="${esc(key)}" aria-label="再生">${ico('play')}</button>`;
 function rowsHTML(ids,opt={}){if(!ids.length)return '';const cur=curId();
  return `<div class="tl-h"><span>#</span><span></span><span>タイトル</span><span>${opt.noAlb?'':'アルバム'}</span><span></span><span>⏱</span><span></span></div><div class="tl">${ids.map((id,i)=>{const t=T(id);if(!t)return '';const lk=liked(id);
- return `<div class="row${id===cur?' on':''}" data-id="${esc(id)}" data-i="${i}"><div class="n"><span class="num">${i+1}</span><span class="eq"><i></i><i></i><i></i></span></div><img src="${cover(t)}" alt="" loading="lazy"><div class="meta"><div class="t">${esc(t.title)}</div><div class="a">${esc(t.artist)}</div></div><div class="alb">${opt.noAlb?'':esc(t.albumTitle||'')}</div><button class="ic like${lk?' on':''}" data-like="${esc(id)}" aria-label="いいね">${ico(lk?'heartF':'heart')}</button><div class="d">${fmt(t.dur)}</div><button class="ic more" data-more="${esc(id)}" data-i="${i}" aria-label="メニュー">${ico('more')}</button></div>`}).join('')}</div>`}
+ return `<div class="row${id===cur?' on':''}" data-id="${esc(id)}" data-i="${i}"><div class="n"><span class="num">${i+1}</span><span class="eq"><i></i><i></i><i></i></span></div><img src="${cover(t)}" alt="" loading="lazy"><div class="meta"><div class="t">${esc(t.title)}</div><div class="a">${esc(t.artist)}</div></div><div class="alb">${opt.noAlb?'':esc(t.albumTitle||'')}</div><button class="ic like${lk?' on':''}" data-like="${esc(id)}" aria-label="いいね">${ico(lk?'heartF':'heart')}</button><div class="d">${t.dur?fmt(t.dur):"–"}</div><button class="ic more" data-more="${esc(id)}" data-i="${i}" aria-label="メニュー">${ico('more')}</button></div>`}).join('')}</div>`}
 function header({img,kind,title,desc,meta,hue,key,menu}){return `<div class="hd" style="--h:${hue}"><img src="${img}" alt=""><div><div class="kind">${esc(kind)}</div><h1>${esc(title)}</h1>${desc?`<p class="desc">${esc(desc)}</p>`:''}<p>${meta}</p></div></div>
  <div class="acts" style="--h:${hue}"><button class="bigplay" data-playkey="${esc(key)}" aria-label="再生">${ico('play')}</button><button class="ic${S.shuffle?' on':''}" data-shufkey="${esc(key)}" aria-label="シャッフル再生">${ico('shuffle')}</button>${menu?`<button class="ic" data-act="${menu}" aria-label="メニュー">${ico('more')}</button>`:''}</div>`}
 const total=ids=>ids.reduce((s,id)=>s+(T(id)?T(id).dur:0),0);
 function greet(){const h=new Date().getHours();return h<5?'こんばんは':h<11?'おはようございます':h<18?'こんにちは':'こんばんは'}
 const V={
  home(){const hist=S.hist.filter(T).slice(0,8);
-  const q=[{k:'liked',img:cover('liked'),n:'いいねした曲'},{k:'mix',img:cover('mix'),n:'今日のミックス'},...ALBUMS.map(a=>({k:'album/'+a.id,img:cover(a),n:a.title}))];
+  const q=[{k:'liked',img:cover('liked'),n:'いいねした曲'},{k:'yt',img:cover('yt'),n:'YouTube'},{k:'mix',img:cover('mix'),n:'今日のミックス'},...ALBUMS.map(a=>({k:'album/'+a.id,img:cover(a),n:a.title}))];
   VIEW={key:'hist',ids:hist};
   return `<div class="pad"><h1 class="greet">${greet()}</h1><div class="quick">${q.map(x=>`<div class="qt" data-go="${x.k}"><img src="${x.img}" alt=""><span>${esc(x.n)}</span>${playBtn(x.k)}</div>`).join('')}</div>
   ${hist.length?`<h2>最近再生した曲</h2><div class="cards">${hist.map((id,i)=>{const t=T(id);return `<div class="card" data-playhist="${i}"><div class="cimg"><img src="${cover(t)}" alt="" loading="lazy"></div><b>${esc(t.title)}</b><span>${esc(t.artist)}</span></div>`}).join('')}</div>`:''}
   <h2>アルバム</h2><div class="cards">${ALBUMS.map(a=>`<div class="card" data-go="album/${a.id}"><div class="cimg"><img src="${cover(a)}" alt="">${playBtn('album/'+a.id)}</div><b>${esc(a.title)}</b><span>${esc(a.artist)}</span></div>`).join('')}</div>
   <h2>あなたのプレイリスト</h2><div class="cards">${S.pls.map(p=>`<div class="card" data-go="pl/${p.id}"><div class="cimg"><img src="${plCover(p)}" alt="">${playBtn('pl/'+p.id)}</div><b>${esc(p.name)}</b><span>${p.tracks.filter(T).length}曲</span></div>`).join('')}<div class="card add" data-act="newpl"><div class="cimg"><div>${ico('plus')}</div></div><b>新しいプレイリスト</b><span>好きな曲を集めよう</span></div></div>
-  <h2>自分の曲を聴く</h2><div class="cards"><div class="card" data-go="files"><div class="cimg"><img src="${cover('files')}" alt=""></div><b>マイファイル</b><span>${FILES.length?FILES.length+'曲':'端末の音楽ファイルを追加'}</span></div></div>
-  <p class="note">「おとばこ」に入っている曲は、すべてこのページがブラウザ内で自動作曲・合成しているオリジナル曲です。<br>マイファイルに追加した曲は、この端末のブラウザ内にだけ保存され、どこにも送信されません。<br>ショートカット：Space 再生／停止・← → 5秒移動・Shift+← → 前／次の曲・L いいね</p></div>`},
+  <h2>好きな曲を聴く</h2><div class="cards"><div class="card" data-go="yt"><div class="cimg"><img src="${cover('yt')}" alt=""></div><b>YouTube</b><span>${YT_IDS.length?YT_IDS.length+'曲':'URLを貼って追加'}</span></div><div class="card" data-go="files"><div class="cimg"><img src="${cover('files')}" alt=""></div><b>マイファイル</b><span>${FILES.length?FILES.length+'曲':'端末の音楽ファイルを追加'}</span></div></div>
+  <p class="note">「おとばこ」に入っている曲は、すべてこのページがブラウザ内で自動作曲・合成しているオリジナル曲です。<br>マイファイルに追加した曲は、この端末のブラウザ内にだけ保存され、どこにも送信されません。<br>YouTubeの曲は、YouTube公式の埋め込みプレーヤーで再生します（動画は画面に表示されます）。<br>ショートカット：Space 再生／停止・← → 5秒移動・Shift+← → 前／次の曲・L いいね</p></div>`},
  search(arg){const q=decodeURIComponent(arg||'');VIEW={key:'search',ids:[]};
   return `<div class="sbox"><label>${ico('search')}<input id="sq" type="search" placeholder="曲名・アーティスト・アルバム" value="${esc(q)}" autocomplete="off" enterkeyhint="search"></label></div><div id="sres"></div>`},
  lib(){VIEW={key:'',ids:[]};
-  const items=[{k:'liked',img:cover('liked'),n:'いいねした曲',s:`プレイリスト・${S.likes.filter(T).length}曲`},{k:'files',img:cover('files'),n:'マイファイル',s:`${FILES.length}曲`},
+  const items=[{k:'liked',img:cover('liked'),n:'いいねした曲',s:`プレイリスト・${S.likes.filter(T).length}曲`},{k:'yt',img:cover('yt'),n:'YouTube',s:`${YT_IDS.length}曲`},{k:'files',img:cover('files'),n:'マイファイル',s:`${FILES.length}曲`},
    ...S.pls.map(p=>({k:'pl/'+p.id,img:plCover(p),n:p.name,s:`プレイリスト・${p.tracks.filter(T).length}曲`})),...ALBUMS.map(a=>({k:'album/'+a.id,img:cover(a),n:a.title,s:`アルバム・${a.artist}`}))];
-  return `<div class="pad"><h1 class="greet">ライブラリ</h1><div class="libtop"><button class="chip" data-act="newpl">${ico('plus')}プレイリストを作成</button><button class="chip" data-act="import">${ico('upload')}曲を追加</button></div>
+  return `<div class="pad"><h1 class="greet">ライブラリ</h1><div class="libtop"><button class="chip" data-act="newpl">${ico('plus')}プレイリストを作成</button><button class="chip" data-go="yt">${ico('video')}YouTubeから追加</button><button class="chip" data-act="import">${ico('upload')}ファイルを追加</button></div>
   ${items.map(x=>`<div class="li${Q.key===x.k?' playing':''}" data-go="${x.k}"><img src="${x.img}" alt=""><div><b>${esc(x.n)}</b><span>${esc(x.s)}</span></div></div>`).join('')}</div>`},
  album(id){const a=ALBUMS.find(a=>a.id===id);if(!a)return V.home();VIEW={key:'album/'+id,ids:a.ids};
   return header({img:cover(a),kind:'アルバム',title:a.title,desc:a.desc,meta:`<b>${esc(a.artist)}</b>・${a.ids.length}曲、${fmtLong(total(a.ids))}`,hue:a.hue,key:VIEW.key})+rowsHTML(a.ids,{noAlb:1})},
@@ -733,13 +808,19 @@ const V={
   return header({img:cover('mix'),kind:'プレイリスト',title:'今日のミックス',desc:'毎日入れ替わる、おとばこからのおすすめ。',meta:`${ids.length}曲、${fmtLong(total(ids))}`,hue:20,key:'mix'})+rowsHTML(ids)},
  files(){const ids=[...FILES];VIEW={key:'files',ids};
   return header({img:cover('files'),kind:'ローカル',title:'マイファイル',desc:'端末の音楽ファイル（MP3・M4A・WAVなど）を追加して聴けます。ファイルはこのブラウザ内だけに保存されます。',meta:`${ids.length}曲`,hue:165,key:'files',menu:'import'}).replace(`data-act="import" aria-label="メニュー">${ico('more')}`,`data-act="import" aria-label="曲を追加">${ico('upload')}`)+
-   (ids.length?rowsHTML(ids,{noAlb:1}):`<div class="empty"><b>まだ曲がありません</b>パソコンならこの画面にファイルをドラッグ＆ドロップでもOK。<br><button class="chip pri" data-act="import">${ico('upload')}ファイルを選ぶ</button></div>`)}
+   (ids.length?rowsHTML(ids,{noAlb:1}):`<div class="empty"><b>まだ曲がありません</b>パソコンならこの画面にファイルをドラッグ＆ドロップでもOK。<br><button class="chip pri" data-act="import">${ico('upload')}ファイルを選ぶ</button></div>`)},
+ yt(){const ids=[...YT_IDS];VIEW={key:'yt',ids};
+  return header({img:cover('yt'),kind:'YouTube',title:'YouTube',desc:'YouTubeの曲・MVのURLを貼り付けると、ここで聴けます。プレイリストのURLもOK。',meta:`${ids.length}曲${ids.length?'、'+fmtLong(total(ids)):''}`,hue:355,key:'yt'})+
+  `<div class="ytadd"><form id="ytForm" novalidate><label>${ico('link')}<input id="ytUrl" type="text" inputmode="url" autocapitalize="off" spellcheck="false" placeholder="YouTubeのURLを貼り付け" autocomplete="off" enterkeyhint="done"></label><button class="chip pri" type="submit">${ico('plus')}追加</button></form>
+  <form id="ytFind"><label>${ico('search')}<input id="ytQ" type="search" placeholder="曲名やアーティストでYouTubeを検索" autocomplete="off" enterkeyhint="search"></label><button class="chip" type="submit">${ico('open')}探す</button></form>
+  <p>「探す」でYouTubeが開きます。聴きたい動画の「共有」→「コピー」でURLをコピーして、上の欄に貼り付けてください。<br>※ 一部の動画は、権利者の設定により埋め込み再生できません。スマホでは画面を消すと再生が止まることがあります。</p></div>`+
+  (ids.length?rowsHTML(ids,{noAlb:1}):`<div class="empty"><b>まだ曲がありません</b>上の欄にYouTubeのURLを貼り付けて追加しよう。</div>`)}
 };
 const kana=s=>s.normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-96));
 function doSearch(){const q=kana(($('#sq')||{}).value||'').trim(),box=$('#sres');if(!box)return;
  history.replaceState(null,'','#search'+(q?'/'+encodeURIComponent($('#sq').value.trim()):''));
- if(!q){VIEW={key:'search',ids:[]};box.innerHTML=`<div class="pad" style="padding-top:0"><h2 style="margin-top:8px">ジャンルから探す</h2><div class="tiles">${ALBUMS.map(a=>`<div class="tile" style="--h:${a.hue}" data-go="album/${a.id}">${esc({lofi:'ローファイ',chip:'チップチューン',wave:'シンセウェイブ',amb:'アンビエント'}[a.style])}<img src="${cover(a)}" alt=""></div>`).join('')}<div class="tile" style="--h:165" data-go="files">マイファイル<img src="${cover('files')}" alt=""></div><div class="tile" style="--h:255" data-go="liked">いいねした曲<img src="${cover('liked')}" alt=""></div></div></div>`;return}
- const all=[...GEN_IDS,...FILES].filter(id=>{const t=T(id);return kana(`${t.title} ${t.artist} ${t.albumTitle||''}`).includes(q)});
+ if(!q){VIEW={key:'search',ids:[]};box.innerHTML=`<div class="pad" style="padding-top:0"><h2 style="margin-top:8px">ジャンルから探す</h2><div class="tiles">${ALBUMS.map(a=>`<div class="tile" style="--h:${a.hue}" data-go="album/${a.id}">${esc({lofi:'ローファイ',chip:'チップチューン',wave:'シンセウェイブ',amb:'アンビエント'}[a.style])}<img src="${cover(a)}" alt=""></div>`).join('')}<div class="tile" style="--h:355" data-go="yt">YouTube<img src="${cover('yt')}" alt=""></div><div class="tile" style="--h:165" data-go="files">マイファイル<img src="${cover('files')}" alt=""></div><div class="tile" style="--h:255" data-go="liked">いいねした曲<img src="${cover('liked')}" alt=""></div></div></div>`;return}
+ const all=[...GEN_IDS,...FILES,...YT_IDS].filter(id=>{const t=T(id);return kana(`${t.title} ${t.artist} ${t.albumTitle||''}`).includes(q)});
  const albs=ALBUMS.filter(a=>kana(`${a.title} ${a.artist} ${a.style} ${{lofi:'ローファイ lofi',chip:'チップチューン ゲーム 8bit',wave:'シンセウェイブ synthwave',amb:'アンビエント ambient'}[a.style]}`).includes(q));
  const pls=S.pls.filter(p=>kana(p.name).includes(q));
  VIEW={key:'search',ids:all};
@@ -754,7 +835,7 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home',[v,.
  if(view==='search'){const i=$('#sq');doSearch();i.oninput=()=>doSearch();if(matchMedia('(min-width:761px)').matches)i.focus()}
  renderSide();updatePlayState();markRows()}
 function renderSide(){const cur=location.hash.slice(1);
- const items=[{k:'liked',img:cover('liked'),n:'いいねした曲',s:`${S.likes.filter(T).length}曲`},{k:'mix',img:cover('mix'),n:'今日のミックス',s:'毎日更新'},{k:'files',img:cover('files'),n:'マイファイル',s:`${FILES.length}曲`},
+ const items=[{k:'liked',img:cover('liked'),n:'いいねした曲',s:`${S.likes.filter(T).length}曲`},{k:'mix',img:cover('mix'),n:'今日のミックス',s:'毎日更新'},{k:'yt',img:cover('yt'),n:'YouTube',s:`${YT_IDS.length}曲`},{k:'files',img:cover('files'),n:'マイファイル',s:`${FILES.length}曲`},
   ...S.pls.map(p=>({k:'pl/'+p.id,img:plCover(p),n:p.name,s:`プレイリスト・${p.tracks.filter(T).length}曲`})),...ALBUMS.map(a=>({k:'album/'+a.id,img:cover(a),n:a.title,s:`アルバム・${a.artist}`}))];
  $('#sideList').innerHTML=items.map(x=>`<button class="spl${decodeURIComponent(cur)===x.k?' on':''}${Q.key===x.k?' playing':''}" data-go="${esc(x.k)}"><img src="${x.img}" alt=""><div><b>${esc(x.n)}</b><span>${esc(x.s)}</span></div></button>`).join('')}
 function renderQueue(){const qp=$('#qp');if(qp.hidden)return;const id=curId(),t=T(id);
@@ -787,12 +868,18 @@ function trackMenu(id,i){const t=T(id);if(!t)return;const items=[
  if(t.kind==='file'){items.push({ic:'edit',label:'曲名を変更',fn:async()=>{const v=await ask('曲名を変更',t.title,'保存');if(!v)return;t.title=v;persistFile(t);route();if(curId()===id)updateNow()}});
   items.push({ic:'edit',label:'アーティスト名を変更',fn:async()=>{const v=await ask('アーティスト名',t.artist,'保存');if(!v)return;t.artist=v;persistFile(t);route();if(curId()===id)updateNow()}});
   items.push({ic:'trash',label:'端末から削除',danger:1,fn:async()=>{if(!await ask('この曲を削除しますか？','','削除',`「${t.title}」をマイファイルから削除します。`))return;removeFile(id)}})}
+ if(t.kind==='yt'){
+  items.push({ic:'open',label:'YouTubeで開く',fn:()=>{M.pause();window.open('https://www.youtube.com/watch?v='+t.vid,'_blank','noopener')}});
+  items.push({ic:'edit',label:'曲名を変更',fn:async()=>{const v=await ask('曲名を変更',t.title,'保存');if(!v)return;t.title=v;t.titleAuto=false;saveYT();route();if(curId()===id)updateNow()}});
+  items.push({ic:'edit',label:'アーティスト名を変更',fn:async()=>{const v=await ask('アーティスト名',t.artist,'保存');if(!v)return;t.artist=v;t.titleAuto=false;saveYT();route();if(curId()===id)updateNow()}});
+  items.push({ic:'trash',label:'YouTubeリストから削除',danger:1,fn:async()=>{if(!await ask('この曲を削除しますか？','','削除',`「${t.title}」をYouTubeリストから削除します。`))return;removeFile(id)}})}
  sheet(tHead(t),items)}
 function persistFile(t){DB.put({id:t.id,title:t.title,artist:t.artist,blob:t.blob,dur:t.dur,hue:t.hue,added:t.added}).catch(()=>{})}
-function removeFile(id){DB.del(id).catch(()=>{});const k=FILES.indexOf(id);if(k>=0)FILES.splice(k,1);
- const wasCur=curId()===id;TRACKS.delete(id);S.likes=S.likes.filter(x=>x!==id);S.hist=S.hist.filter(x=>x!==id);S.pls.forEach(p=>p.tracks=p.tracks.filter(x=>x!==id));save();
+function removeFile(id){const isYT=(T(id)||{}).kind==='yt';
+ if(isYT){const k=YT_IDS.indexOf(id);if(k>=0)YT_IDS.splice(k,1)}else{DB.del(id).catch(()=>{});const k=FILES.indexOf(id);if(k>=0)FILES.splice(k,1)}
+ const wasCur=curId()===id;TRACKS.delete(id);S.likes=S.likes.filter(x=>x!==id);S.hist=S.hist.filter(x=>x!==id);S.pls.forEach(p=>p.tracks=p.tracks.filter(x=>x!==id));if(isYT)saveYT();save();
  const qi=Q.ids.indexOf(id);if(qi>=0){Q.ids.splice(qi,1);if(Q.orig)Q.orig=Q.orig.filter(x=>x!==id);if(qi<Q.i)Q.i--;}
- if(wasCur){au.pause();au.removeAttribute('src');loadedId=null;au.load();Q.i=Math.min(Q.i,Q.ids.length-1);if(Q.ids.length){Q.i=Math.max(0,Q.i);load(false)}else updateNow()}
+ if(wasCur){au.pause();au.removeAttribute('src');loadedId=null;au.load();if(M===YTM){YTM.stop();M=au}Q.i=Math.min(Q.i,Q.ids.length-1);if(Q.ids.length){Q.i=Math.max(0,Q.i);load(false)}else updateNow()}
  saveQ();route();toast('削除しました')}
 function plMenu(){const id=VIEW.key.split('/')[1],p=S.pls.find(p=>p.id===id);if(!p)return;
  sheet(`<div class="sh-h"><img src="${plCover(p)}" alt=""><div><b>${esc(p.name)}</b><span>プレイリスト</span></div></div>`,[
@@ -805,15 +892,52 @@ const cv=$('#viz'),cx=cv.getContext('2d');let vizOn=false,smooth=new Float32Arra
 function viz(){if(!vizOn)return;requestAnimationFrame(viz);
  const dpr=Math.min(2,devicePixelRatio||1),W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==W*dpr){cv.width=W*dpr;cv.height=H*dpr}
  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
- const env=ENV.get(curId()),f=Math.floor((au.currentTime||0)*30),playing=!au.paused,N=48,bw=W/N,now=performance.now()/1000;
+ const env=ENV.get(curId()),f=Math.floor((M.currentTime||0)*30),playing=!M.paused,N=48,bw=W/N,now=performance.now()/1000;
  let a=0,lo=0,hi=0;if(env&&f*3+2<env.length){a=env[f*3];lo=env[f*3+1];hi=env[f*3+2]}else if(playing){a=.5+.3*Math.sin(now*3);lo=.5+.4*Math.sin(now*2.1);hi=.4+.3*Math.sin(now*5.3)}
  const col=getComputedStyle(document.documentElement).getPropertyValue('--h')||0;
  for(let i=0;i<N;i++){const x=i/(N-1),wob=.55+.45*Math.sin(i*1.7+now*(2+x*4)+Math.sin(i*.9)*3);
   let v=playing?(lo*(1-x)*1.1+hi*x*.9+a*.4)*wob:0;v=Math.min(1,v);smooth[i]+=(v-smooth[i])*(v>smooth[i]?.5:.12);
   const h=Math.max(2,smooth[i]*H*.95);cx.fillStyle=`hsla(${(+col+x*60)%360},85%,${62+x*10}%,.9)`;cx.beginPath();
   if(cx.roundRect)cx.roundRect(i*bw+1.5,H-h,bw-3,h,2);else cx.rect(i*bw+1.5,H-h,bw-3,h);cx.fill()}}
-function openNP(){if(!curId())return;$('#np').hidden=false;vizOn=true;viz();history.pushState({np:1},'',location.hash||'#home')}
-function closeNP(fromPop){if($('#np').hidden)return;$('#np').hidden=true;vizOn=false;if(!fromPop&&history.state&&history.state.np)history.back()}
+function openNP(){if(!curId())return;$('#np').hidden=false;vizOn=true;viz();placeYT();history.pushState({np:1},'',location.hash||'#home')}
+function closeNP(fromPop){if($('#np').hidden)return;$('#np').hidden=true;vizOn=false;placeYT();if(!fromPop&&history.state&&history.state.np)history.back()}
+addEventListener('resize',placeYT);$('#np').addEventListener('scroll',placeYT,{passive:true});$('#np').addEventListener('animationend',placeYT);
+
+/* ========== adding YouTube songs ========== */
+function parseYT(s){s=(s||'').trim();if(/^[\w-]{11}$/.test(s))return{vid:s};let vid=null,list=null;
+ try{const u=new URL(/^https?:\/\//i.test(s)?s:'https://'+s),h=u.hostname.toLowerCase().replace(/^(www|m|music)\./,'');
+  if(h==='youtu.be')vid=u.pathname.split('/')[1];
+  else if(h==='youtube.com'||h==='youtube-nocookie.com'){vid=u.searchParams.get('v');const m=u.pathname.match(/^\/(?:shorts|embed|live|v)\/([\w-]{11})/);if(m)vid=m[1]}
+  else return null;
+  list=u.searchParams.get('list')}catch(e){return null}
+ if(vid&&!/^[\w-]{11}$/.test(vid))vid=null;if(list&&!/^[\w-]+$/.test(list))list=null;return vid||list?{vid,list}:null}
+let oembedOK=true;
+async function ytInfo(vid){if(!oembedOK)return null;
+ try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+vid));if(!r.ok)return null;const j=await r.json();return{title:j.title,artist:j.author_name}}
+ catch(e){oembedOK=false;return null}}
+async function fillInfo(ids){let k=0;const work=async()=>{while(k<ids.length){const t=T(ids[k++]);if(!t||!t.titleAuto)continue;const inf=await ytInfo(t.vid);
+  if(inf&&inf.title&&t.titleAuto){t.title=inf.title;t.artist=inf.artist||t.artist;t.titleAuto=false;saveYT();
+   $$(`.row[data-id="${t.id}"] .t`).forEach(e=>e.textContent=t.title);$$(`.row[data-id="${t.id}"] .a`).forEach(e=>e.textContent=t.artist);if(curId()===t.id)updateNow()}}};
+ await Promise.all([work(),work(),work()])}
+function ytPlaylist(list){return ytAPI().then(()=>new Promise(res=>{const box=document.createElement('div');box.style.cssText='position:fixed;left:-10000px;top:0;width:320px;height:180px';
+ const inner=document.createElement('div');box.appendChild(inner);document.body.appendChild(box);let done=false,pl;
+ const fin=v=>{if(done)return;done=true;clearInterval(iv);try{pl.destroy()}catch(e){}box.remove();res(v)};
+ const iv=setInterval(()=>{try{const a=pl&&pl.getPlaylist&&pl.getPlaylist();if(a&&a.length)fin(a)}catch(e){}},400);setTimeout(()=>fin([]),12000);
+ pl=new YT.Player(inner,{width:320,height:180,playerVars:{listType:'playlist',list},events:{onError:()=>fin([])}})}))}
+async function addYT(input){const r=parseYT(input);if(!r){toast('YouTubeのURLを貼り付けてください');return false}
+ let vids=[];
+ if(r.vid&&r.list){const whole=await new Promise(res=>sheet(`<div class="sh-h"><div><b>プレイリストのURLです</b><span>どちらを追加しますか？</span></div></div>`,[{ic:'video',label:'この動画だけ',fn:()=>res(false)},{ic:'queue',label:'プレイリスト全体',fn:()=>res(true)}]));
+  vids=whole?null:[r.vid]}
+ else if(r.vid)vids=[r.vid];
+ if(!vids){toast('プレイリストを読み込み中…');try{vids=await ytPlaylist(r.list)}catch(e){vids=[]}if(!vids.length){toast(r.vid?'プレイリストを読み込めませんでした。動画だけ追加します':'プレイリストを読み込めませんでした');if(!r.vid)return false;vids=[r.vid]}}
+ const added=[];let dup=0;for(const v of vids){const t=addYTTrack({vid:v});if(t)added.push(t.id);else dup++}
+ saveYT();renderSide();
+ toast(added.length?`${added.length}曲を追加しました`+(dup?`（${dup}曲は追加済み）`:''):'すでに追加されています');
+ if(location.hash!=='#yt')location.hash='yt';else route();
+ fillInfo(added);return true}
+document.addEventListener('submit',async e=>{const f=e.target;
+ if(f.id==='ytForm'){e.preventDefault();const i=$('#ytUrl');if(await addYT(i.value)&&$('#ytUrl'))$('#ytUrl').value=''}
+ else if(f.id==='ytFind'){e.preventDefault();const q=$('#ytQ').value.trim();window.open('https://www.youtube.com/'+(q?'results?search_query='+encodeURIComponent(q):''),'_blank','noopener')}});
 
 /* ========== events ========== */
 document.addEventListener('click',e=>{const el=e.target.closest('[data-cmd],[data-go],[data-playkey],[data-shufkey],[data-like],[data-more],[data-act],[data-playhist],[data-qrm],[data-qi],.row');if(!el)return;
@@ -844,8 +968,8 @@ addEventListener('dragleave',()=>{if(--dragN<=0){dragN=0;$('#drop').hidden=true}
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();dragN=0;$('#drop').hidden=true;if(e.dataTransfer.files.length)importFiles(e.dataTransfer.files)});
 $$('.seekr').forEach(s=>{
- s.addEventListener('input',()=>{seeking=true;const d=isFinite(au.duration)?au.duration:0;s.style.setProperty('--p',s.value/10+'%');$$('.tcur').forEach(e=>e.textContent=fmt(s.value/1000*d))});
- s.addEventListener('change',()=>{const d=isFinite(au.duration)?au.duration:0;if(d)au.currentTime=s.value/1000*d;seeking=false;updateTime()})});
+ s.addEventListener('input',()=>{seeking=true;const d=isFinite(M.duration)?M.duration:((T(curId())||{}).dur||0);s.style.setProperty('--p',s.value/10+'%');$$('.tcur').forEach(e=>e.textContent=fmt(s.value/1000*d))});
+ s.addEventListener('change',()=>{const d=isFinite(M.duration)?M.duration:((T(curId())||{}).dur||0);if(d)M.currentTime=s.value/1000*d;seeking=false;updateTime()})});
 $('#vol').addEventListener('input',e=>{S.muted=false;setVol(e.target.value/100);save()});
 au.addEventListener('play',updatePlayState);au.addEventListener('pause',updatePlayState);
 au.addEventListener('timeupdate',updateTime);au.addEventListener('loadedmetadata',updateTime);
@@ -857,12 +981,12 @@ addEventListener('keydown',e=>{if(e.target.closest('input,textarea')||e.metaKey|
  if(e.key==='Escape'){if(!$('#sheet').hidden)$('#sheet').hidden=true;else if(!$('#qp').hidden)$('#qp').hidden=true;else closeNP();return}
  if(!$('#sheet').hidden)return;
  if(e.code==='Space'){e.preventDefault();toggle()}
- else if(e.key==='ArrowRight'){e.preventDefault();if(e.shiftKey)next(false);else if(au.src)au.currentTime=Math.min((au.duration||0)-.1,au.currentTime+5)}
- else if(e.key==='ArrowLeft'){e.preventDefault();if(e.shiftKey)prev();else if(au.src)au.currentTime=Math.max(0,au.currentTime-5)}
+ else if(e.key==='ArrowRight'){e.preventDefault();if(e.shiftKey)next(false);else if(loadedId)M.currentTime=Math.min((M.duration||0)-.1,M.currentTime+5)}
+ else if(e.key==='ArrowLeft'){e.preventDefault();if(e.shiftKey)prev();else if(loadedId)M.currentTime=Math.max(0,M.currentTime-5)}
  else if(e.key==='l'||e.key==='L')toggleLike(curId())});
 if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms.setActionHandler(a,f)}catch(e){}};
- h('play',()=>toggle());h('pause',()=>au.pause());h('nexttrack',()=>next(false));h('previoustrack',()=>prev());
- h('seekto',e=>{au.currentTime=e.seekTime});h('seekbackward',()=>au.currentTime=Math.max(0,au.currentTime-10));h('seekforward',()=>au.currentTime+=10)}
+ h('play',()=>toggle());h('pause',()=>M.pause());h('nexttrack',()=>next(false));h('previoustrack',()=>prev());
+ h('seekto',e=>{M.currentTime=e.seekTime});h('seekbackward',()=>M.currentTime=Math.max(0,M.currentTime-10));h('seekforward',()=>M.currentTime+=10)}
 // iOS: unlock the <audio> element on the first touch so songs that finish rendering later can start.
 let unlocked=false;addEventListener('pointerdown',()=>{if(unlocked||au.getAttribute('src'))return;unlocked=true;
  au.src=SILENT;au.play().catch(()=>{}).finally(()=>{if(isSilent()){au.pause();au.removeAttribute('src')}})},{capture:true});

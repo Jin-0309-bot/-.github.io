@@ -217,3 +217,131 @@ E01〜E56：確認済み（english1/data.py、english2/data.py の作成時に�
 | E264 | OK | in front of＝〜の前に（behind の反対） |
 | E265 | OK | Tickets are on sale from Monday. |
 | E266 | 要再確認 | within の時間の使い方を出典で確認してから台本にする |
+
+## 丁寧な英語の言い方 B01〜B58（出典：Cambridge Dictionary Grammar の requests、politeness、offers、suggestions、invitations、telephoning、please-and-thank-you ほか）
+
+| No | 判定 | 台本で使う形（修正の場合は直した内容） |
+|---|---|---|
+| B01 | OK | I want は直接的で失礼に聞こえることがある／I'd like は丁寧（would-like、requests） |
+| B02 | OK | 命令文は頼みごとではとても直接的（Could you …, please?） |
+| B03 | OK | can you / will you は could you よりくだけた言い方 |
+| B04 | OK | Would you mind collecting my suit …, please? |
+| B05 | 修正 | 問題を「タクシーを呼んでもらえますか」に。正解 Could you call a taxi for me, please? |
+| B06 | OK | Could you say that again, please?（please-and-thank-you） |
+| B07 | 要再確認 | more slowly の記述を確認してから台本にする |
+| B08 | OK | I would appreciate it if you could …（× appreciate if）／I would be grateful if you could … |
+| B09 | OK | Excuse me, I'm looking for Cathedral Street.（× Where's Cathedral Street?） |
+| B10 | 要再確認 | do me a favour の記述を確認してから台本にする |
+| B11 | OK | Do you mind if I sit here?（mind） |
+| B12 | OK | Shall I wash the car? |
+| B13 | OK | Would you like some cake? |
+| B14 | OK | No, thanks.（申し出への返事） |
+| B15 | OK | Yes, please. |
+| B16 | OK | May I have the bill, please?（may はより改まった言い方） |
+| B17 | OK | Of course, here you are. |
+| B18 | 要再確認 | After you. の記述を確認してから台本にする |
+| B19 | 要再確認 | Help yourself. の記述を確認してから台本にする |
+| B20 | 要再確認 | go ahead の記述を確認してから台本にする |
+| B21 | OK | Shall we …?（提案、shall） |
+| B22 | OK | Why don't you take some time out and rest? |
+| B23 | OK | How about starting a book club?（how about＋ing） |
+| B24 | OK | Would you like to come to dinner on Friday night? |
+| B25 | 修正 | 招待への返事に変更：Thanks, that's very kind of you.／断るとき No thanks. I'm fine. |
+| B26 | OK | could を使った提案 |
+| B27 | OK | I suggest …ing／suggest that … |
+| B28 | OK | Do you want to go for a coffee?（くだけた誘い） |
+| B29 | 要再確認 | That's a good idea. の記述を確認してから台本にする |
+| B30 | 要再確認 | I'd love to. の記述を確認してから台本にする |
+| B31 | 要再確認 | Nice to meet you. の記述を確認してから台本にする |
+| B32 | OK | See you later. |
+| B33 | OK | You're welcome.（× Please. / Nothing.） |
+| B34 | 要再確認 | Thank you so much. の記述を確認してから台本にする |
+| B35 | 修正 | 例文を Thank you for fixing the internet connection. に |
+| B36 | 要再確認 | Sorry I'm late. の記述を確認してから台本にする |
+| B37 | 要再確認 | 人の前を通るときの Excuse me. の記述を確認してから台本にする |
+| B38 | 要再確認 | That's all right. の記述を確認してから台本にする |
+| B39 | OK | Happy New Year! |
+| B40 | 修正 | 正解を Fine, thanks. How about you? に |
+| B41 | OK | This is Carmel.（× I'm Carmel） |
+| B42 | OK | Could I speak to the manager, please? |
+| B43 | 要再確認 | Hold on, please. の記述を確認してから台本にする |
+| B44 | 修正 | 問題を「伝言を承りましょうか」に。正解 Can I take a message? |
+| B45 | OK | I'll call her back later. |
+| B46 | 要再確認 | Best regards の記述を確認してから台本にする |
+| B47 | 要再確認 | Please find attached の出典がない（差し替えの候補） |
+| B48 | 修正 | 正解 I look forward to hearing from you.（look forward to＋ing） |
+| B49 | OK | Thank you for fixing the internet connection.（for＋ing） |
+| B50 | OK | any は疑問文などで多い |
+| B51 | OK | Do you mind if I use your phone? — I'm afraid the battery is dead. |
+| B52 | 修正 | 例文を Your playing could possibly be improved.（やわらかい）／You must improve your playing.（直接的） |
+| B53 | OK | could / may でやわらげる |
+| B54 | OK | Could you just turn the radio down a little, please? |
+| B55 | 要再確認 | not really a fan of の記述を確認してから台本にする |
+| B56 | 修正 | 問題を弱い警告に。正解 I wouldn't swim there if I were you. |
+| B57 | OK | 命令文はとても直接的。please や if you wouldn't mind でやわらげる |
+| B58 | 修正 | 正解を …, if you wouldn't mind に（Open the window a little more, please, if you wouldn't mind.） |
+
+## 和製英語 J01〜J60（出典：Cambridge Dictionary の単語ページ https://dictionary.cambridge.org/dictionary/english/＋単語）
+
+| No | 判定 | 確認した内容・直した内容 |
+|---|---|---|
+| J01 | OK | socket（英）＝電気の差し込み口の意味あり／consent＝許可・同意。outlet は台本作成時に電気の意味の項目を再確認 |
+| J02 | OK | laptop |
+| J03 | OK | mansion＝とても大きく高価な家／apartment |
+| J04 | OK | gas station（米）／petrol station（英） |
+| J05 | 修正 | salaryman は辞書に「長時間働く日本の会社員」としてある。問題を「一般的な会社員は？」にし、office worker を正解、salaryman は特別な意味と解説 |
+| J06 | OK | complaint＝苦情／claim＝（証明できないことを）事実だと主張する |
+| J07 | OK | fries／chips（英） |
+| J08 | OK | mechanical pencil（米）／propelling pencil（英） |
+| J09 | OK | steering wheel／handle＝取っ手 |
+| J10 | OK | plastic bottle |
+| J11 | OK | bread／pan＝なべ |
+| J12 | OK | part-time（work）。arbeit は辞書になし |
+| J13 | OK | stapler |
+| J14 | OK | security guard |
+| J15 | OK | shirt／dress shirt。語源の説明（white shirt）は入れない |
+| J16 | OK | stroller（米）／pushchair（英） |
+| J17 | OK | wake-up call（頼んでおく電話の意味あり） |
+| J18 | OK | smartphone |
+| J19 | OK | key ring／key chain |
+| J20 | OK | cheat（不正をする）／cunning＝ずる賢い |
+| J21 | OK | roller coaster |
+| J22 | OK | custom-made |
+| J23 | OK | renovate＝建物を修理・改良する／reform＝行動や仕組みの改善 |
+| J24 | OK | quota |
+| J25 | OK | physical contact |
+| J26 | 差し替え | paper driver に当たる語が辞書になし → 別の案に |
+| J27 | OK | toll-free（米）／freephone（英） |
+| J28 | OK | prime time |
+| J29 | OK | celebrity／talent＝才能 |
+| J30 | OK | naive＝人を信じすぎる・世間知らず |
+| J31 | OK | front desk |
+| J32 | OK | cards（トランプの遊び）／trump＝切り札 |
+| J33 | OK | sticker／seal は別の意味 |
+| J34 | 要再確認 | plastic bag の項目が見つからず。plastic と bag の項目で確認 |
+| J35 | 差し替え | packing tape の項目が辞書になし → 別の案に |
+| J36 | 修正 | 正解を felt-tip pen に（marker は辞書の最初の意味が「目印」） |
+| J37 | OK | air conditioner／cooler＝保冷箱 |
+| J38 | OK | remote control |
+| J39 | OK | microwave |
+| J40 | OK | sewing machine |
+| J41 | OK | dress／one-piece（米）＝水着 |
+| J42 | OK | hoodie／parka＝フード付きの防寒コート |
+| J43 | OK | sweatshirt／trainer（英）＝運動靴 |
+| J44 | OK | jacket／jumper（英）＝セーター |
+| J45 | 修正 | muffler は「車の消音器（米）」のほか「厚手のマフラー」の意味もある。問題を「ふつうの首に巻くマフラーは？」にし、正解 scarf |
+| J46 | OK | sleeveless |
+| J47 | OK | autograph＝有名人のサイン／signature＝署名 |
+| J48 | OK | questionnaire |
+| J49 | OK | buffet |
+| J50 | OK | green pepper／bell pepper（米） |
+| J51 | OK | soft serve |
+| J52 | OK | cream puff |
+| J53 | OK | one-size-fits-all（米） |
+| J54 | OK | mood＝その時の気分 |
+| J55 | OK | excited／tension＝緊張 |
+| J56 | 修正 | never mind＝気にしないでの意味あり。正解を Never mind.／Don't worry about it. に（Don't mind. は×） |
+| J57 | 差し替え | night game の項目が辞書になし → 別の案に |
+| J58 | OK | slim／smart＝身なりがきちんとした |
+| J59 | OK | convenience store（米） |
+| J60 | OK | photographer／cameraman＝映画やテレビのカメラを操作する人 |

@@ -1,0 +1,15 @@
+{
+  "series": "30秒解説（30秒解説ラボ）",
+  "engine": "VOICEVOX 0.26.2",
+  "main": {"no": 22, "name": "麒ヶ島宗麟", "style": "ノーマル", "speaker_id": 53, "use": "解説の本文すべて"},
+  "opinion_voices": [
+    {"no": 2,  "name": "ずんだもん",   "style": "ノーマル", "speaker_id": 3},
+    {"no": 3,  "name": "春日部つむぎ", "style": "ノーマル", "speaker_id": 8},
+    {"no": 6,  "name": "玄野武宏",     "style": "ノーマル", "speaker_id": 11},
+    {"no": 16, "name": "ちび式じい",   "style": "ノーマル", "speaker_id": 42},
+    {"no": 29, "name": "満別花丸",     "style": "ノーマル", "speaker_id": 69}
+  ],
+  "opinion_rule": "世論・「こういう意見もある」の紹介部分だけを opinion_voices で読み分ける。断定せず意見として紹介する。",
+  "credit_rule": "使った声をすべて「VOICEVOX:名前」で画面下と投稿の説明文に書く",
+  "timing_rule": "最初と最後は1.2倍、中は1.1倍を基準。30秒に収まらない場合は区間の間を詰め、それでも無理なら台本の短縮を相談する"
+}

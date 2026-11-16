@@ -134,8 +134,9 @@ def frame(v, e, now, T):
             hw, hh = (bx1 - bx0) / 2 * scale, (by1 - by0) / 2 * scale
             d.rounded_rectangle((cx - hw, cy - hh, cx + hw, cy + hh), 36, fill=fill, outline=ACC if now < ans_t else fill, width=4)
             d.text((cx - hw + 50, cy - 50), "AB"[i], font=font(BOLD, 80), fill=lab)
-            ft = fit(d, opt, BOLD, 96, 560)
-            d.text((cx - d.textlength(opt, font=ft) / 2 + 20, cy - 62), opt, font=ft, fill=txtc)
+            ft = fit(d, opt, BOLD, 96, 400)  # 右側の「正解」表示ぶんを空ける
+            bb = d.textbbox((0, 0), opt, font=ft)
+            d.text((cx - 35 - (bb[2] - bb[0]) / 2 - bb[0], cy - (bb[3] - bb[1]) / 2 - bb[1]), opt, font=ft, fill=txtc)
             if now >= ans_t and i == qs["answer"]:
                 d.text((cx + hw - 170, cy - 40), "正解", font=font(BOLD, 60), fill=BG)
         if cs <= now < ans_t:

@@ -8,6 +8,7 @@
 
 ## 完成した回（承認済み）
 - #1 年末調整の控除（声：麒ヶ島宗麟）
+  - 投稿：2026-11-16（時刻は未記録） https://www.instagram.com/reel/Dfyx0pYP99Q/
   - 出典：国税庁「令和8年4月 源泉所得税の改正のあらまし」 https://www.nta.go.jp/publication/pamph/gensen/2026kaisei.pdf
 
 ## プロフィール

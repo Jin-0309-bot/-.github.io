@@ -11,6 +11,11 @@
   - 投稿：2026-11-16 16:08 https://www.instagram.com/reel/Dfyx0pYP99Q/
   - 出典：国税庁「令和8年4月 源泉所得税の改正のあらまし」 https://www.nta.go.jp/publication/pamph/gensen/2026kaisei.pdf
 
+- #2〜#7（承認済み・未投稿）台本・概要欄は batch1/ を参照
+  - #2 大学生の子どものバイト代と親の控除／#3 生命保険料控除の上限／#4 ふるさと納税のワンストップ特例
+  - #5 ITパスポート／#6 多要素認証／#7 英語 bored と boring
+  - 投稿順の案：1日目 #2・#6、2日目 #3・#5、3日目 #4・#7
+
 ## プロフィール
 - 名前：30秒解説ラボ
 - ユーザー名：@30byo_lab（https://www.instagram.com/30byo_lab/）

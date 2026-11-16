@@ -1,10 +1,10 @@
-# 30秒解説 3秒クイズ形式 企画案まとめ（146本）
+# 30秒解説 3秒クイズ形式 企画案まとめ（226本）
 
 - 英語「間違えやすい表現」E01〜E56：内容は Cambridge Dictionary で確認済み。新形式での作り直し対象
-- 英語 E57〜E126：新しい案（未確認）。台本作成時に辞書で確認し、確認できない回は差し替える
-- 和製英語 J01〜J10、ITとセキュリティ T01〜T10：新シリーズ案（未確認）
+- 英語 E57〜E156：新しい案（未確認）。台本作成時に辞書で確認し、確認できない回は差し替える
+- 和製英語 J01〜J30、ITとセキュリティ T01〜T20、お金の仕組み M01〜M20：新シリーズ案（未確認）
 
-形式：3秒クイズ（問題＋A/B）→ 正解が光る＋一言解説 → もう一方の使い方 → 例文 → 声に出して言ってみる
+形式：3秒クイズ（問題＋A/B）→ 正解が光る＋一言解説 → もう一方の使い方 → 例文（または理由）→ 行動の案内
 
 # 3秒クイズ形式の案 E01〜E10（内容は Cambridge Dictionary で確認済み）
 
@@ -201,6 +201,51 @@
 | E125 | 「電話してくれてありがとう」は？ | Thank you for calling. | Thank you to call. | A | for の後は名詞か動詞ing | Thank you for calling. | for-ing |
 | E126 | 「メアリーのような人」の「ような」は？ | like Mary | as Mary | A | as は「〜として」（as a teacher） | She sings like a bird. | as-or-like |
 
+# 3秒クイズ形式の新しい案 E127〜E136（未確認：台本作成時に出典ページで確認する）
+
+| No | クイズ（問題文） | A | B | 正解（予定） | もう一方の解説（予定） | 例文（予定） | 出典候補ページ |
+|---|---|---|---|---|---|---|---|
+| E127 | 「行ったことがない」は？ | I never went there. | I've never been there. | B（経験を言うとき、要確認） | 過去形は「その時に行かなかった」 | I've never been to Paris. | past-simple-or-present-perfect |
+| E128 | 「今、雨が降っている」は？ | It rains now. | It's raining now. | B | 現在形は習慣や一般的なこと | It's raining now. | present-simple-or-present-continuous |
+| E129 | 「もし時間があれば行く」は？ | If I will have time | If I have time | B | if の中では未来のことも現在形 | If I have time, I'll go. | conditionals-if |
+| E130 | 「〜したほうがいい（強め）」は？ | You had better | You would better | A | had better は警告に近い強い言い方 | You'd better hurry. | had-better |
+| E131 | 「〜しなければならない（規則）」は？ | must | have to | 要確認（両方可。違いを解説） | must は話し手の判断、have to は外のルール | I have to wear a uniform. | must |
+| E132 | 「〜する必要はない」は？ | You mustn't | You don't have to | B | mustn't は「〜してはいけない」 | You don't have to come. | must |
+| E133 | 「彼はなんて言った？」は？ | What did he say? | What did he said? | A | did の後は動詞の原形 | What did he say? | questions-wh-questions |
+| E134 | 「どこに住んでいるか知ってる？」は？ | Do you know where does she live? | Do you know where she lives? | B | 文の中の疑問文は普通の語順 | Do you know where she lives? | questions-two-step-questions / reported-speech-indirect-speech |
+| E135 | 「彼女は先生として働いている」は？ | works as a teacher | works like a teacher | A | like は「〜のように」 | She works as a teacher. | as-or-like |
+| E136 | 「私の友達の一人」は？ | one of my friend | one of my friends | B | one of の後は複数形 | One of my friends lives in Osaka. | countability-one-of |
+
+# 3秒クイズ形式の新しい案 E137〜E146（未確認：台本作成時に出典ページで確認する）
+
+| No | クイズ（問題文） | A | B | 正解（予定） | もう一方の解説（予定） | 例文（予定） | 出典候補ページ |
+|---|---|---|---|---|---|---|---|
+| E137 | 「家具をたくさん買った」は？ | a lot of furnitures | a lot of furniture | B | furniture は数えない（a piece of furniture） | We bought a lot of furniture. | furniture |
+| E138 | 「荷物（手荷物）」の数え方は？ | two baggages | two pieces of baggage | B | 数えない名詞（luggage も同じ、要確認） | I have two pieces of luggage. | countability（要確認） |
+| E139 | 「ニュース」は単数？複数？ | The news is … | The news are … | A | news は数えない名詞として単数扱い | The news is good. | news |
+| E140 | 「天気がいい」は？ | It's a nice weather. | It's nice weather. | B | weather は数えない | We had nice weather. | weather |
+| E141 | 「進歩した」の名詞は？ | many progresses | a lot of progress | B | progress は数えない | She has made a lot of progress. | progress / countability-progress |
+| E142 | 「〜する価値がある」は？ | worth to visit | worth visiting | B | worth の後は名詞か動詞ing | It's worth visiting. | word-patterns-be-worth-doing-something |
+| E143 | 「〜するのを避ける」は？ | avoid to eat | avoid eating | B | avoid の後は動詞ing | Try to avoid eating late. | word-patterns-avoid-doing-something |
+| E144 | 「旅行するのが楽しい」は？ | I enjoy to travel. | I enjoy travelling. | B | enjoy の後は動詞ing | I enjoy travelling. | word-patterns-enjoy-doing-something |
+| E145 | 「彼に連絡する」は？ | contact him | contact to him | A | contact の後に to は付けない | Please contact me by email. | word-patterns-contact |
+| E146 | 「その件について話し合う」は？ | discuss about it | discuss it | B | discuss の後に about は付けない | Let's discuss it tomorrow. | word-patterns-discuss |
+
+# 3秒クイズ形式の新しい案 E147〜E156 動詞の形（未確認：台本作成時に出典ページで確認する）
+
+| No | クイズ（問題文） | A | B | 正解（予定） | もう一方の解説（予定） | 例文（予定） | 出典候補ページ |
+|---|---|---|---|---|---|---|---|
+| E147 | 「東京に着いた」は？ | arrived to Tokyo | arrived in Tokyo | B | 都市や国には in、駅などには at | We arrived in Tokyo at noon. | word-patterns-arrive-somewhere |
+| E148 | 「部屋に入る」は？ | enter the room | enter into the room | A | enter の後に into は付けない（場所の場合） | She entered the room. | word-patterns-enter-a-place |
+| E149 | 「結婚している」は？ | I'm married with him. | I'm married to him. | B | married to が基本の形 | She's married to a doctor. | marry-and-divorce |
+| E150 | 「〜に電話する」は？ | phone to her | phone her | B | phone の後に to は付けない | I'll phone you later. | word-patterns-phone |
+| E151 | 「彼女に会う」の「〜に」は？ | meet her | meet with her | A（意味の違いを要確認） | meet with は話し合いのために会う（米） | Nice to meet you. | word-patterns（要確認） |
+| E152 | 「私に説明して」は？ | Explain me. | Explain it to me. | B | explain の後に人を直接置かない | Can you explain it to me? | word-patterns-explain-something |
+| E153 | 「〜するのを提案する」は？ | suggest to go | suggest going | B | suggest の後は動詞ing か that 節 | I suggest going by train. | word-patterns-suggest |
+| E154 | 「〜したい（丁寧に）」は？ | I would like to | I would like | A | would like の後に動詞を置くときは to | I would like to book a table. | would-like |
+| E155 | 「彼が来るのを待つ」は？ | wait him | wait for him | B | wait の後に人や物を置くときは for | I'm waiting for the bus. | wait-or-wait-for |
+| E156 | 「〜を探す」は？ | search my keys | search for my keys | B | search＋場所、search for＋探す物 | I searched for my keys. | word-patterns-search-or-search-for |
+
 # 新シリーズ案「和製英語 3秒クイズ」J01〜J10（未確認：台本作成時に辞書で確認する）
 
 形式：「〇〇は英語で通じる？」→ A/B の3秒クイズ → 正解 → 例文。
@@ -220,6 +265,36 @@
 | J09 | 「(車の)ハンドル」は？ | handle | steering wheel | B | handle は「取っ手」 | Hold the steering wheel with both hands. | steering wheel, handle |
 | J10 | 「ペットボトル」は？ | pet bottle | plastic bottle | B | PET は素材名 | Please recycle plastic bottles. | plastic bottle |
 
+# 新シリーズ案「和製英語 3秒クイズ」J11〜J20（未確認：台本作成時に辞書で確認する）
+
+| No | クイズ（問題文） | A | B | 正解（予定） | 補足（予定） | 例文（予定） | 出典候補 |
+|---|---|---|---|---|---|---|---|
+| J11 | 「パン（食パン）」は英語で？ | pan | bread | B | pan は「なべ・フライパン」 | I had bread for breakfast. | bread, pan |
+| J12 | 「アルバイト」は？ | arbeit | part-time job | B | アルバイトはドイツ語由来 | I have a part-time job. | part-time job |
+| J13 | 「ホッチキス」は？ | hotchkiss | stapler | B | 商標名に由来する呼び方 | Can I use your stapler? | stapler |
+| J14 | 「ガードマン」は？ | guardman | security guard | B | guard だけでも通じる場面がある（要確認） | Ask the security guard. | security guard |
+| J15 | 「ワイシャツ」は？ | Y-shirt | shirt / dress shirt | B | white shirt が語源とされる（要確認） | He wore a white shirt. | shirt |
+| J16 | 「ベビーカー」は？ | baby car | stroller / pushchair | B | 米 stroller、英 pushchair | She pushed the stroller. | stroller, pushchair |
+| J17 | 「モーニングコール」は？ | morning call | wake-up call | B | ホテルで頼むときの言い方 | Could I have a wake-up call at 7? | wake-up call |
+| J18 | 「スマホ」は？ | smartphone | smaho | A | 略さずに smartphone、phone でも通じる | I left my phone at home. | smartphone |
+| J19 | 「キーホルダー」は？ | key holder | key ring / key chain | B | key holder は別の物を指すことがある（要確認） | I bought a key ring. | key ring |
+| J20 | 「(テストの)カンニング」は？ | cunning | cheating | B | cunning は「ずる賢い」 | Cheating on a test is not allowed. | cheat, cunning |
+
+# 新シリーズ案「和製英語 3秒クイズ」J21〜J30（未確認：台本作成時に辞書で確認する）
+
+| No | クイズ（問題文） | A | B | 正解（予定） | 補足（予定） | 例文（予定） | 出典候補 |
+|---|---|---|---|---|---|---|---|
+| J21 | 「ジェットコースター」は英語で？ | jet coaster | roller coaster | B | | Let's ride the roller coaster. | roller coaster |
+| J22 | 「オーダーメイド」は？ | order made | custom-made / made-to-order | B | 英では tailor-made も（要確認） | This suit is custom-made. | custom-made |
+| J23 | 「リフォーム（家の改装）」は？ | reform | renovation / remodel | B | reform は制度などの「改革」 | We're renovating our kitchen. | renovate, reform |
+| J24 | 「ノルマ」は？ | norma | quota | B | ノルマはロシア語由来 | We have a sales quota. | quota |
+| J25 | 「スキンシップ」は？ | skinship | physical contact | B | 自然な言い方を要確認 | | physical contact |
+| J26 | 「ペーパードライバー」は？ | paper driver | someone who rarely drives | B | 一語の決まった言い方はない（要確認） | I have a licence but rarely drive. | （要確認） |
+| J27 | 「フリーダイヤル」は？ | free dial | toll-free number / freephone | B | 米 toll-free、英 freephone（要確認） | Call our toll-free number. | toll-free |
+| J28 | 「ゴールデンタイム」は？ | golden time | prime time | B | | The show airs in prime time. | prime time |
+| J29 | 「タレント（芸能人）」は？ | talent | TV personality / celebrity | B | talent は「才能」 | She's a TV personality. | talent, celebrity |
+| J30 | 「ナイーブ（繊細）」の意味で通じる？ | naive | sensitive | B | naive は「世間知らず」の意味が強い | He's very sensitive. | naive, sensitive |
+
 # 新シリーズ案「ITとセキュリティ 3秒クイズ」T01〜T10（未確認：台本作成時に公式ページで確認する）
 
 形式：問題 → A/B の3秒クイズ → 正解 → 理由 → 「設定を確認してみてください」。
@@ -238,3 +313,55 @@
 | T08 | 席を離れるとき、パソコンは？ | そのまま | ロックする | B | 他の人に操作されるのを防ぐ | 総務省「職場での対策」（画面ロック） |
 | T09 | 「クラウド」とは？ | ネット経由で使うサービス | 雲の形のパソコン | A | 定義を公式ページで確認する | 総務省（定義のページを要確認） |
 | T10 | 「フィッシング」とは？ | 本物そっくりの偽サイトで情報を盗む手口 | 魚釣りアプリ | A | 定義を公式ページで確認する | 総務省・IPA（要確認） |
+
+# 新シリーズ案「ITとセキュリティ 3秒クイズ」T11〜T20（未確認：台本作成時に公式ページで確認する）
+
+出典候補：総務省「国民のためのサイバーセキュリティサイト」、IPA。手口の流行や件数など、時期で変わる数字は入れない。
+
+| No | クイズ（問題文） | A | B | 正解（予定） | 理由（予定） | 出典候補 |
+|---|---|---|---|---|---|---|
+| T11 | 「ブラウザ」とは？ | ウェブページを見るソフト | 文字を打つソフト | A | 定義を公式ページで確認 | 総務省（用語集を要確認） |
+| T12 | 「OS」とは？ | パソコンやスマホを動かす基本ソフト | 表計算ソフト | A | 定義を公式ページで確認 | 総務省・IPA（要確認） |
+| T13 | 「アプリ」はどこから入れる？ | 公式ストアなど信頼できる所 | 知らないサイトのリンク | A | 不正なアプリを避けるため | 総務省「スマートフォン」関連ページ（要確認） |
+| T14 | 「Cookie（クッキー）」とは？ | サイトが閲覧情報を保存する仕組み | お菓子の画像 | A | 定義を公式ページで確認 | 総務省（要確認） |
+| T15 | SNSに自宅が分かる写真を載せるのは？ | 気をつけたほうがいい | 問題ない | A | 位置情報などから居場所が分かるおそれ | 総務省「SNSの正しい利用」 |
+| T16 | 「2段階認証」と「多要素認証」の関係は？ | 2要素を使うのが2要素認証 | まったく別物 | A | 多要素認証のうち2つの要素を使うのが2要素認証 | 総務省「多要素認証の活用」（確認済みの記述あり） |
+| T17 | 使わなくなったスマホやパソコンは？ | そのまま捨てる | データを消してから処分 | B | 情報が残っていると読み取られるおそれ | 総務省「安全なデータの廃棄」 |
+| T18 | メールの宛先、送る前に確認するのは？ | 必要 | 不要 | A | 誤送信で情報が漏れるおそれ | 総務省「電子メールの誤送信対策」 |
+| T19 | パスワードのメモ、画面に貼るのは？ | やめたほうがいい | 便利なのでよい | A | 他の人に見られるおそれ | 総務省「安全なパスワードの設定・管理」 |
+| T20 | 「ウイルス対策ソフト」は入れたら終わり？ | 更新が必要 | 更新は不要 | A | 新しいマルウェアに対応するため | 総務省「マルウェア（ウイルス等）対策」 |
+
+# 新シリーズ案「お金の仕組み 3秒クイズ」M01〜M10（未確認：台本作成時に国税庁などの公式ページで確認する）
+
+方針：古くなりにくい「仕組み」だけを扱う。金額や上限など、法律の改正で変わる数字は入れない（入れる回は投稿直前に確認）。
+出典候補：国税庁タックスアンサー、国税庁の年末調整・確定申告のページ、総務省、厚生労働省など。
+
+| No | クイズ（問題文） | A | B | 正解（予定） | 理由（予定） | 出典候補 |
+|---|---|---|---|---|---|---|
+| M01 | 「額面」と「手取り」、多いのは？ | 額面 | 手取り | A | 手取りは税金や社会保険料が引かれた後 | 国税庁（源泉徴収）・厚生労働省（要確認） |
+| M02 | 「控除」とは？ | 税金の計算で差し引けるもの | 税金そのもの | A | 所得控除の考え方 | 国税庁タックスアンサー（所得控除） |
+| M03 | 「源泉徴収」とは？ | 給料から先に税金を引くこと | 年に一度まとめて払うこと | A | 会社が給料から差し引いて納める | 国税庁タックスアンサー（源泉徴収） |
+| M04 | 「年末調整」をするのは？ | 会社 | 税務署 | A | 会社が1年分の税額を計算し直す | 国税庁（年末調整） |
+| M05 | 会社員でも確定申告が必要になる場合は？ | ある | ない | A | 医療費控除を受けるときなど | 国税庁タックスアンサー（確定申告が必要な人） |
+| M06 | 「還付」とは？ | 払いすぎた税金が戻ること | 税金を追加で払うこと | A | 定義を確認 | 国税庁（還付申告） |
+| M07 | 「所得」と「収入」は同じ？ | 同じ | 違う | B | 所得は収入から必要経費などを引いたもの | 国税庁タックスアンサー（所得の種類） |
+| M08 | 「源泉徴収票」はいつもらう？ | 年末〜年明けごろ | 毎月 | A | 1年分の給与と税額が書かれた書類 | 国税庁（源泉徴収票） |
+| M09 | 「住民税」を納める先は？ | 市区町村など | 国 | A | 地方税の仕組み | 総務省（地方税） |
+| M10 | 「医療費控除」は年末調整で受けられる？ | 受けられる | 確定申告が必要 | B | 年末調整の対象外 | 国税庁タックスアンサー（医療費控除） |
+
+# 新シリーズ案「お金の仕組み 3秒クイズ」M11〜M20（未確認：台本作成時に公式ページで確認する）
+
+金額・上限・期限など改正で変わる数字は入れない（入れる回は投稿直前に確認）。
+
+| No | クイズ（問題文） | A | B | 正解（予定） | 理由（予定） | 出典候補 |
+|---|---|---|---|---|---|---|
+| M11 | 「所得控除」と「税額控除」、税金から直接引くのは？ | 所得控除 | 税額控除 | B | 所得控除は税金を計算する前の金額から引く | 国税庁タックスアンサー（税額控除・所得控除） |
+| M12 | 「扶養控除」の対象になるのは？ | 一緒に暮らすなどして生計を一にする親族 | 友人 | A | 生計を一にする親族など | 国税庁タックスアンサー No.1180（確認済み） |
+| M13 | 「ふるさと納税」は寄附？それとも買い物？ | 寄附 | 買い物 | A | 自治体への寄附 | 総務省 ふるさと納税ポータルサイト |
+| M14 | 「確定申告」をするのは？ | 自分 | 会社 | A | 自分で1年分の所得と税額を申告 | 国税庁（確定申告） |
+| M15 | 「e-Tax」とは？ | ネットで申告できる仕組み | 新しい税金 | A | 国税の電子申告 | 国税庁（e-Tax）※ホストの許可が必要 |
+| M16 | 「青色申告」と「白色申告」の対象は？ | 事業や不動産などの所得がある人 | 会社員全員 | A | 対象を確認 | 国税庁タックスアンサー（青色申告） |
+| M17 | 「社会保険料」は税金？ | 税金ではない | 税金 | A | 社会保険料控除として所得から引かれる | 国税庁タックスアンサー（社会保険料控除） |
+| M18 | 「領収書」は医療費控除で必要？ | 保管が必要 | 不要 | 要確認 | 明細書の提出と領収書の保管の扱い | 国税庁タックスアンサー（医療費控除） |
+| M19 | 「基礎控除」は誰でも受けられる？ | 所得によって受けられる | 会社員だけ | A | 所得の金額で扱いが変わる | 国税庁（基礎控除、確認済みの資料あり） |
+| M20 | 「住民税」はいつの所得にかかる？ | 前の年 | その年 | A | 前年の所得をもとに計算 | 総務省（個人住民税） |

@@ -1,5 +1,5 @@
 # Instagram リール自動投稿用（30秒解説ラボ）
-- videos/：投稿する動画（英語クイズ E01〜E266）
+- videos/：投稿する動画（英語クイズ E01〜E266、和製英語 J、IT T、お金 M、丁寧な英語 B）
 - captions.json：各回の説明文
 - queue.txt：投稿する順番（上から）。並べ替えると投稿順が変わる
 - posted.txt：投稿済みの記録（GitHub Actions が自動で追記）

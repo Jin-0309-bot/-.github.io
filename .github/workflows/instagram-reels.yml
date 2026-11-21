@@ -26,10 +26,17 @@ jobs:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: "17841445779613440"
         run: python3 post.py
+      - name: 24時間たった回のインサイトを記録する
+        continue-on-error: true
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: "17841445779613440"
+        run: python3 insights.py
       - name: 投稿記録を保存する
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add posted.txt
+          git add posted.txt insights.md
           git commit -m "投稿記録を更新" || exit 0
           git push origin reels-videos

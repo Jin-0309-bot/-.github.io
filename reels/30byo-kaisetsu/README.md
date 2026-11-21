@@ -72,3 +72,8 @@ https://www.nta.go.jp/publication/pamph/gensen/2026kaisei.pdf
 
 ### 投稿済み
 - E01 say と tell：2026-11-21 19:45（日本時間） https://www.instagram.com/reel/DgAC2u1ATRo/
+
+## 自動投稿（GitHub Actions）
+- main の .github/workflows/instagram-reels.yml が毎日12:00・19:00（日本時間）に reels-videos ブランチの post.py を実行し、queue.txt の順に1本ずつ投稿
+- 投稿の記録は reels-videos ブランチの posted.txt。トークンはリポジトリの Actions シークレット IG_TOKEN
+- 手動で1本投稿：GitHub の Actions タブ →「Instagram リール自動投稿」→「Run workflow」

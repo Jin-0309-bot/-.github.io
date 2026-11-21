@@ -39,6 +39,11 @@ for line in (here / "posted.txt").read_text().splitlines():
     for key, label in METRICS:  # 項目ごとに取る（使えない項目は飛ばす）
         r = get(f"{mid}/insights", metric=key)
         if r.get("data"): vals[label] = r["data"][0]["values"][0]["value"]
+    if not vals:  # インサイトの権限がないときは、取れる数字だけ記録する
+        b = get(mid, fields="like_count,comments_count")
+        if "like_count" in b: vals["いいね"] = b["like_count"]
+        if "comments_count" in b: vals["コメント"] = b["comments_count"]
+        vals["メモ"] = "再生数・リーチ・保存などは、トークンに instagram_manage_insights の権限がないため未取得"
     title = caps.get(vid, "").split("\n")[0].replace("【30秒解説】", "")
     hours = round((now - when).total_seconds() / 3600, 1)
     text += (f"\n## {vid}\n- どの動画か：{vid} {title}\n- 投稿日時：{p[1]} {p[2]}（日本時間）\n- 投稿URL：{url}\n"

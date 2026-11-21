@@ -1,0 +1,5594 @@
+[
+ {
+  "id": "J01",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。コンセントは英語で、コンセントと、ソケット、どっち。",
+    "lines": [
+     [
+      "「コンセント」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "consent",
+     "socket"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は socket",
+    "say": "正解は、ソケット。電気の差し込み口は、ソケットです。",
+    "lines": [
+     [
+      "socket",
+      1
+     ],
+     [
+      "差し込み口は socket（英）",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "consent は",
+    "say": "コンセントは、許可や同意、という意味です。",
+    "lines": [
+     [
+      "consent",
+      1
+     ],
+     [
+      "許可・同意",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "イズ・ゼア・ア・ソケット・ニア・ザ・デスク。机の近くにコンセントはある？。",
+    "lines": [
+     [
+      "Is there a socket",
+      1
+     ],
+     [
+      "near the desk?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "机の近くにコンセントはある？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「socket」、「consent」"
+   }
+  ]
+ },
+ {
+  "id": "J02",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ノートパソコンは英語で、ノート・ピーシーと、ラップトップ、どっち。",
+    "lines": [
+     [
+      "「ノートパソコン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "note PC",
+     "laptop"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は laptop",
+    "say": "正解は、ラップトップ。ノートパソコンは、ラップトップです。",
+    "lines": [
+     [
+      "laptop",
+      1
+     ],
+     [
+      "ノートパソコンは laptop",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "laptop",
+    "say": "ラップトップ、と言えば伝わります。",
+    "lines": [
+     [
+      "laptop",
+      1
+     ],
+     [
+      "＝ノートパソコン",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ワーク・オン・マイ・ラップトップ。ノートパソコンで仕事をする。",
+    "lines": [
+     [
+      "I work on my laptop.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ノートパソコンで仕事をする",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「laptop」"
+   }
+  ]
+ },
+ {
+  "id": "J03",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。マンションは英語で、マンションと、アパートメント、どっち。",
+    "lines": [
+     [
+      "「マンション」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "mansion",
+     "apartment"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は apartment",
+    "say": "正解は、アパートメント。マンションの部屋は、アパートメントです。",
+    "lines": [
+     [
+      "apartment",
+      1
+     ],
+     [
+      "集合住宅の部屋は apartment",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "mansion は",
+    "say": "マンションは、とても大きく高価な家、という意味です。",
+    "lines": [
+     [
+      "mansion",
+      1
+     ],
+     [
+      "とても大きく高価な家",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・リブ・イン・アン・アパートメント。マンションに住んでいる。",
+    "lines": [
+     [
+      "I live in an apartment.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "マンションに住んでいる",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「mansion」、「apartment」"
+   }
+  ]
+ },
+ {
+  "id": "J04",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ガソリンスタンドは英語で、ガス・ステーションと、ガソリン・スタンド、どっち。",
+    "lines": [
+     [
+      "「ガソリンスタンド」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "gas station",
+     "gasoline stand"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は gas station",
+    "say": "正解は、ガス・ステーション。アメリカ英語では、ガス・ステーションです。",
+    "lines": [
+     [
+      "gas station",
+      1
+     ],
+     [
+      "アメリカでは gas station",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、ペトロール・ステーションと言います。",
+    "lines": [
+     [
+      "petrol station",
+      1
+     ],
+     [
+      "イギリス英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "イズ・ゼア・ア・ガス・ステーション・ニアバイ。近くにガソリンスタンドはある？。",
+    "lines": [
+     [
+      "Is there a gas",
+      1
+     ],
+     [
+      "station nearby?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "近くにガソリンスタンドはある？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「gas station」、「petrol station」"
+   }
+  ]
+ },
+ {
+  "id": "J05",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。一般的な会社員は英語で、サラリーマンと、オフィス・ワーカー、どっち。",
+    "lines": [
+     [
+      "「一般的な「会社員」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "salaryman",
+     "office worker"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は office worker",
+    "say": "正解は、オフィス・ワーカー。一般的な会社員は、オフィス・ワーカーです。",
+    "lines": [
+     [
+      "office worker",
+      1
+     ],
+     [
+      "一般的な会社員は office worker",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "salaryman は",
+    "say": "サラリーマンは、辞書では、長時間働く日本の会社員、という特別な意味です。",
+    "lines": [
+     [
+      "salaryman",
+      1
+     ],
+     [
+      "長時間働く日本の会社員",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒーズ・アン・オフィス・ワーカー。彼は会社員です。",
+    "lines": [
+     [
+      "He's an office worker.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は会社員です",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「salaryman」"
+   }
+  ]
+ },
+ {
+  "id": "J06",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。苦情の意味のクレームを言うは英語で、メイク・ア・クレームと、メイク・ア・コンプレイント、どっち。",
+    "lines": [
+     [
+      "「クレーム（苦情）を言う」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "make a claim",
+     "make a complaint"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は make a complaint",
+    "say": "正解は、メイク・ア・コンプレイント。苦情は、コンプレイントです。",
+    "lines": [
+     [
+      "make a complaint",
+      1
+     ],
+     [
+      "苦情は complaint",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "claim は",
+    "say": "クレームは、証明できないことを、事実だと主張する、という意味です。",
+    "lines": [
+     [
+      "claim",
+      1
+     ],
+     [
+      "事実だと主張する",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイド・ライク・トゥー・メイク・ア・コンプレイント。苦情を言いたいのですが。",
+    "lines": [
+     [
+      "I'd like to make a",
+      1
+     ],
+     [
+      "complaint.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "苦情を言いたいのですが",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「complaint」、「claim」"
+   }
+  ]
+ },
+ {
+  "id": "J07",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。フライドポテトは英語で、フライド・ポテトと、フライズ、どっち。",
+    "lines": [
+     [
+      "「フライドポテト」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "fried potato",
+     "fries"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は fries",
+    "say": "正解は、フライズ。フライドポテトは、フライズです。",
+    "lines": [
+     [
+      "fries",
+      1
+     ],
+     [
+      "フライドポテトは fries",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、チップスと言います。",
+    "lines": [
+     [
+      "chips",
+      1
+     ],
+     [
+      "イギリス英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "キャン・アイ・ハブ・サム・フライズ。フライドポテトをください。",
+    "lines": [
+     [
+      "Can I have some fries?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "フライドポテトをください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「fries」、「chips」"
+   }
+  ]
+ },
+ {
+  "id": "J08",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。シャープペンシルは英語で、シャープ・ペンシルと、メカニカル・ペンシル、どっち。",
+    "lines": [
+     [
+      "「シャープペンシル」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "sharp pencil",
+     "mechanical pencil"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は mechanical pencil",
+    "say": "正解は、メカニカル・ペンシル。アメリカ英語では、メカニカル・ペンシルです。",
+    "lines": [
+     [
+      "mechanical pencil",
+      1
+     ],
+     [
+      "アメリカでは mechanical pencil",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、プロペリング・ペンシルと言います。",
+    "lines": [
+     [
+      "propelling pencil",
+      1
+     ],
+     [
+      "イギリス英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "キャン・アイ・ボロウ・ア・メカニカル・ペンシル。シャーペンを借りてもいい？。",
+    "lines": [
+     [
+      "Can I borrow a",
+      1
+     ],
+     [
+      "mechanical pencil?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "シャーペンを借りてもいい？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「mechanical pencil」、「propelling pencil」"
+   }
+  ]
+ },
+ {
+  "id": "J09",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。車のハンドルは英語で、ハンドルと、ステアリング・ホイール、どっち。",
+    "lines": [
+     [
+      "「車の「ハンドル」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "handle",
+     "steering wheel"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は steering wheel",
+    "say": "正解は、ステアリング・ホイール。車のハンドルは、ステアリング・ホイールです。",
+    "lines": [
+     [
+      "steering wheel",
+      1
+     ],
+     [
+      "車のハンドルは steering wheel",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "handle は",
+    "say": "ハンドルは、取っ手、という意味です。",
+    "lines": [
+     [
+      "handle",
+      1
+     ],
+     [
+      "取っ手",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ホールド・ザ・ステアリング・ホイール・ウィズ・ボウス・ハンズ。ハンドルを両手で握って。",
+    "lines": [
+     [
+      "Hold the steering wheel",
+      1
+     ],
+     [
+      "with both hands.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ハンドルを両手で握って",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「steering wheel」、「handle」"
+   }
+  ]
+ },
+ {
+  "id": "J10",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ペットボトルは英語で、ペット・ボトルと、プラスチック・ボトル、どっち。",
+    "lines": [
+     [
+      "「ペットボトル」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "pet bottle",
+     "plastic bottle"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は plastic bottle",
+    "say": "正解は、プラスチック・ボトル。ペットボトルは、プラスチック・ボトルです。",
+    "lines": [
+     [
+      "plastic bottle",
+      1
+     ],
+     [
+      "ペットボトルは plastic bottle",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "plastic bottle",
+    "say": "プラスチック・ボトル、と言えば伝わります。",
+    "lines": [
+     [
+      "plastic bottle",
+      1
+     ],
+     [
+      "＝ペットボトル",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "プリーズ・リサイクル・プラスチック・ボトルズ。ペットボトルはリサイクルしてください。",
+    "lines": [
+     [
+      "Please recycle",
+      1
+     ],
+     [
+      "plastic bottles.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ペットボトルはリサイクルしてください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「plastic bottle」"
+   }
+  ]
+ },
+ {
+  "id": "J11",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。食パンの意味のパンは英語で、パンと、ブレッド、どっち。",
+    "lines": [
+     [
+      "「パン（食パン）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "pan",
+     "bread"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は bread",
+    "say": "正解は、ブレッド。食べるパンは、ブレッドです。",
+    "lines": [
+     [
+      "bread",
+      1
+     ],
+     [
+      "食べるパンは bread",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "pan は",
+    "say": "パンは、なべ、という意味です。",
+    "lines": [
+     [
+      "pan",
+      1
+     ],
+     [
+      "なべ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハッド・ブレッド・フォー・ブレックファスト。朝ごはんにパンを食べた。",
+    "lines": [
+     [
+      "I had bread for breakfast.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "朝ごはんにパンを食べた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「bread」、「pan」"
+   }
+  ]
+ },
+ {
+  "id": "J12",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。アルバイトは英語で、アルバイトと、パートタイム・ジョブ、どっち。",
+    "lines": [
+     [
+      "「アルバイト」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "arbeit",
+     "part-time job"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は part-time job",
+    "say": "正解は、パートタイム・ジョブ。アルバイトは、パートタイム・ジョブです。",
+    "lines": [
+     [
+      "part-time job",
+      1
+     ],
+     [
+      "アルバイトは part-time job",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "arbeit は",
+    "say": "アルバイトという語は、英語の辞書にはありません。",
+    "lines": [
+     [
+      "arbeit",
+      1
+     ],
+     [
+      "英語の辞書にない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハブ・ア・パートタイム・ジョブ。アルバイトをしている。",
+    "lines": [
+     [
+      "I have a part-time job.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "アルバイトをしている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「part-time」"
+   }
+  ]
+ },
+ {
+  "id": "J13",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ホッチキスは英語で、ホッチキスと、ステープラー、どっち。",
+    "lines": [
+     [
+      "「ホッチキス」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "hotchkiss",
+     "stapler"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は stapler",
+    "say": "正解は、ステープラー。ホッチキスは、ステープラーです。",
+    "lines": [
+     [
+      "stapler",
+      1
+     ],
+     [
+      "ホッチキスは stapler",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "stapler",
+    "say": "ステープラー、と言えば伝わります。",
+    "lines": [
+     [
+      "stapler",
+      1
+     ],
+     [
+      "＝ホッチキス",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "キャン・アイ・ユーズ・ユア・ステープラー。ホッチキスを借りてもいい？。",
+    "lines": [
+     [
+      "Can I use your stapler?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ホッチキスを借りてもいい？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「stapler」"
+   }
+  ]
+ },
+ {
+  "id": "J14",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ガードマンは英語で、ガードマンと、セキュリティー・ガード、どっち。",
+    "lines": [
+     [
+      "「ガードマン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "guardman",
+     "security guard"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は security guard",
+    "say": "正解は、セキュリティー・ガード。ガードマンは、セキュリティー・ガードです。",
+    "lines": [
+     [
+      "security guard",
+      1
+     ],
+     [
+      "ガードマンは security guard",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "security guard",
+    "say": "セキュリティー・ガード、と言えば伝わります。",
+    "lines": [
+     [
+      "security guard",
+      1
+     ],
+     [
+      "＝ガードマン",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アスク・ザ・セキュリティー・ガード。警備員さんに聞いて。",
+    "lines": [
+     [
+      "Ask the security guard.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "警備員さんに聞いて",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「security guard」"
+   }
+  ]
+ },
+ {
+  "id": "J15",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ワイシャツは英語で、ワイ・シャツと、シャツ、どっち。",
+    "lines": [
+     [
+      "「ワイシャツ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "Y-shirt",
+     "shirt"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は shirt",
+    "say": "正解は、シャツ。ワイシャツは、シャツです。",
+    "lines": [
+     [
+      "shirt",
+      1
+     ],
+     [
+      "ワイシャツは shirt",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "dress shirt",
+    "say": "ドレス・シャツ、という言い方もあります。",
+    "lines": [
+     [
+      "dress shirt",
+      1
+     ],
+     [
+      "という言い方もある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒー・ウォア・ア・ホワイト・シャツ。彼は白いシャツを着ていた。",
+    "lines": [
+     [
+      "He wore a white shirt.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は白いシャツを着ていた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「shirt」、「dress shirt」"
+   }
+  ]
+ },
+ {
+  "id": "J16",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ベビーカーは英語で、ベビー・カーと、ストローラー、どっち。",
+    "lines": [
+     [
+      "「ベビーカー」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "baby car",
+     "stroller"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は stroller",
+    "say": "正解は、ストローラー。アメリカ英語では、ストローラーです。",
+    "lines": [
+     [
+      "stroller",
+      1
+     ],
+     [
+      "アメリカでは stroller",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、プッシュチェアと言います。",
+    "lines": [
+     [
+      "pushchair",
+      1
+     ],
+     [
+      "イギリス英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シー・プッシュト・ザ・ストローラー。彼女はベビーカーを押した。",
+    "lines": [
+     [
+      "She pushed the stroller.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女はベビーカーを押した",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「stroller」、「pushchair」"
+   }
+  ]
+ },
+ {
+  "id": "J17",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。モーニングコールは英語で、モーニング・コールと、ウェイクアップ・コール、どっち。",
+    "lines": [
+     [
+      "「モーニングコール」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "morning call",
+     "wake-up call"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は wake-up call",
+    "say": "正解は、ウェイクアップ・コール。モーニングコールは、ウェイクアップ・コールです。",
+    "lines": [
+     [
+      "wake-up call",
+      1
+     ],
+     [
+      "モーニングコールは wake-up call",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "wake-up call",
+    "say": "ウェイクアップ・コールは、頼んでおく電話の意味があります。",
+    "lines": [
+     [
+      "wake-up call",
+      1
+     ],
+     [
+      "頼んでおく電話",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "クッド・アイ・ハブ・ア・ウェイクアップ・コール・アット・セブン。7時にモーニングコールをお願いできますか。",
+    "lines": [
+     [
+      "Could I have a",
+      1
+     ],
+     [
+      "wake-up call at 7?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "7時にモーニングコールをお願いできますか",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「wake-up call」"
+   }
+  ]
+ },
+ {
+  "id": "J18",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。スマホは英語で、スマートフォンと、スマホ、どっち。",
+    "lines": [
+     [
+      "「スマホ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "smartphone",
+     "smaho"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は smartphone",
+    "say": "正解は、スマートフォン。スマホは、略さずに、スマートフォンです。",
+    "lines": [
+     [
+      "smartphone",
+      1
+     ],
+     [
+      "スマホは smartphone",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "smartphone",
+    "say": "略さずに、スマートフォン、と言います。",
+    "lines": [
+     [
+      "smartphone",
+      1
+     ],
+     [
+      "略さずに言う",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・レフト・マイ・スマートフォン・アット・ホーム。スマホを家に忘れた。",
+    "lines": [
+     [
+      "I left my",
+      1
+     ],
+     [
+      "smartphone at home.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "スマホを家に忘れた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「smartphone」"
+   }
+  ]
+ },
+ {
+  "id": "J19",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。キーホルダーは英語で、キー・ホルダーと、キー・リング、どっち。",
+    "lines": [
+     [
+      "「キーホルダー」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "key holder",
+     "key ring"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は key ring",
+    "say": "正解は、キー・リング。キーホルダーは、キー・リングです。",
+    "lines": [
+     [
+      "key ring",
+      1
+     ],
+     [
+      "キーホルダーは key ring",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "keychain",
+    "say": "キーチェーン、という言い方もあります。",
+    "lines": [
+     [
+      "keychain",
+      1
+     ],
+     [
+      "という言い方もある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ボート・ア・キー・リング。キーホルダーを買った。",
+    "lines": [
+     [
+      "I bought a key ring.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "キーホルダーを買った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「key ring」、「keychain」"
+   }
+  ]
+ },
+ {
+  "id": "J20",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。テストのカンニングは英語で、カンニングと、チーティング、どっち。",
+    "lines": [
+     [
+      "「テストの「カンニング」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "cunning",
+     "cheating"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は cheating",
+    "say": "正解は、チーティング。カンニングは、チーティングです。チートは、不正をする、です。",
+    "lines": [
+     [
+      "cheating",
+      1
+     ],
+     [
+      "カンニングは cheating",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "cunning は",
+    "say": "カンニングは、ずる賢い、という意味です。",
+    "lines": [
+     [
+      "cunning",
+      1
+     ],
+     [
+      "ずる賢い",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "チーティング・オン・ア・テスト・イズ・ノット・アラウド。テストでのカンニングは禁止。",
+    "lines": [
+     [
+      "Cheating on a test is",
+      1
+     ],
+     [
+      "not allowed.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "テストでのカンニングは禁止",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「cheat」、「cunning」"
+   }
+  ]
+ },
+ {
+  "id": "J21",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ジェットコースターは英語で、ジェット・コースターと、ローラー・コースター、どっち。",
+    "lines": [
+     [
+      "「ジェットコースター」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "jet coaster",
+     "roller coaster"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は roller coaster",
+    "say": "正解は、ローラー・コースター。ジェットコースターは、ローラー・コースターです。",
+    "lines": [
+     [
+      "roller coaster",
+      1
+     ],
+     [
+      "ジェットコースターは roller coaster",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "roller coaster",
+    "say": "ローラー・コースター、と言えば伝わります。",
+    "lines": [
+     [
+      "roller coaster",
+      1
+     ],
+     [
+      "＝ジェットコースター",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "レッツ・ライド・ザ・ローラー・コースター。ジェットコースターに乗ろう。",
+    "lines": [
+     [
+      "Let's ride the",
+      1
+     ],
+     [
+      "roller coaster.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ジェットコースターに乗ろう",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「roller coaster」"
+   }
+  ]
+ },
+ {
+  "id": "J22",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。オーダーメイドは英語で、オーダー・メイドと、カスタム・メイド、どっち。",
+    "lines": [
+     [
+      "「オーダーメイド」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "order made",
+     "custom-made"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は custom-made",
+    "say": "正解は、カスタム・メイド。オーダーメイドは、カスタム・メイドです。",
+    "lines": [
+     [
+      "custom-made",
+      1
+     ],
+     [
+      "オーダーメイドは custom-made",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "custom-made",
+    "say": "カスタム・メイド、と言えば伝わります。",
+    "lines": [
+     [
+      "custom-made",
+      1
+     ],
+     [
+      "＝オーダーメイド",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ディス・スーツ・イズ・カスタム・メイド。このスーツはオーダーメイド。",
+    "lines": [
+     [
+      "This suit is custom-made.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "このスーツはオーダーメイド",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「custom-made」"
+   }
+  ]
+ },
+ {
+  "id": "J23",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。家のリフォームは英語で、リフォームと、リノベイト、どっち。",
+    "lines": [
+     [
+      "「家の「リフォーム」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "reform",
+     "renovate"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は renovate",
+    "say": "正解は、リノベイト。家の改装は、リノベイトです。建物を修理したり、良くしたりすることです。",
+    "lines": [
+     [
+      "renovate",
+      1
+     ],
+     [
+      "家の改装は renovate",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "reform は",
+    "say": "リフォームは、行動や仕組みを改善する、という意味です。",
+    "lines": [
+     [
+      "reform",
+      1
+     ],
+     [
+      "行動や仕組みの改善",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィア・リノベイティング・アワ・キッチン。台所をリフォームしている。",
+    "lines": [
+     [
+      "We're renovating",
+      1
+     ],
+     [
+      "our kitchen.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "台所をリフォームしている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「renovate」、「reform」"
+   }
+  ]
+ },
+ {
+  "id": "J24",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ノルマは英語で、ノルマと、クオータ、どっち。",
+    "lines": [
+     [
+      "「ノルマ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "norma",
+     "quota"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は quota",
+    "say": "正解は、クオータ。ノルマは、クオータです。",
+    "lines": [
+     [
+      "quota",
+      1
+     ],
+     [
+      "ノルマは quota",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "quota",
+    "say": "クオータ、と言えば伝わります。",
+    "lines": [
+     [
+      "quota",
+      1
+     ],
+     [
+      "＝ノルマ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・ハブ・ア・セールズ・クオータ。売り上げのノルマがある。",
+    "lines": [
+     [
+      "We have a sales quota.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "売り上げのノルマがある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「quota」"
+   }
+  ]
+ },
+ {
+  "id": "J25",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。スキンシップは英語で、スキンシップと、フィジカル・コンタクト、どっち。",
+    "lines": [
+     [
+      "「スキンシップ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "skinship",
+     "physical contact"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は physical contact",
+    "say": "正解は、フィジカル・コンタクト。スキンシップは、フィジカル・コンタクトです。",
+    "lines": [
+     [
+      "physical contact",
+      1
+     ],
+     [
+      "スキンシップは physical contact",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "physical contact",
+    "say": "フィジカル・コンタクト、と言えば伝わります。",
+    "lines": [
+     [
+      "physical contact",
+      1
+     ],
+     [
+      "＝スキンシップ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ベイビーズ・ニード・フィジカル・コンタクト。赤ちゃんにはスキンシップが必要。",
+    "lines": [
+     [
+      "Babies need",
+      1
+     ],
+     [
+      "physical contact.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "赤ちゃんにはスキンシップが必要",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「physical contact」"
+   }
+  ]
+ },
+ {
+  "id": "J26",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ゲームセンターは英語で、ゲーム・センターと、アミューズメント・アーケード、どっち。",
+    "lines": [
+     [
+      "「ゲームセンター」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "game center",
+     "amusement arcade"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は amusement arcade",
+    "say": "正解は、アミューズメント・アーケード。ゲームセンターは、アミューズメント・アーケードです。",
+    "lines": [
+     [
+      "amusement arcade",
+      1
+     ],
+     [
+      "ゲームセンターは amusement arcade",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "amusement arcade",
+    "say": "アミューズメント・アーケード、と言えば伝わります。",
+    "lines": [
+     [
+      "amusement arcade",
+      1
+     ],
+     [
+      "＝ゲームセンター",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "レッツ・ゴー・トゥー・ジ・アミューズメント・アーケード。ゲームセンターに行こう。",
+    "lines": [
+     [
+      "Let's go to the",
+      1
+     ],
+     [
+      "amusement arcade.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ゲームセンターに行こう",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「amusement arcade」"
+   }
+  ]
+ },
+ {
+  "id": "J27",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。フリーダイヤルは英語で、フリー・ダイヤルと、トールフリー・ナンバー、どっち。",
+    "lines": [
+     [
+      "「フリーダイヤル」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "free dial",
+     "toll-free number"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は toll-free number",
+    "say": "正解は、トールフリー・ナンバー。アメリカ英語では、トールフリー・ナンバーです。",
+    "lines": [
+     [
+      "toll-free number",
+      1
+     ],
+     [
+      "アメリカでは toll-free",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、フリーフォンと言います。",
+    "lines": [
+     [
+      "freephone",
+      1
+     ],
+     [
+      "イギリス英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "コール・アワ・トールフリー・ナンバー。フリーダイヤルにお電話ください。",
+    "lines": [
+     [
+      "Call our toll-free number.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "フリーダイヤルにお電話ください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「toll-free」、「freephone」"
+   }
+  ]
+ },
+ {
+  "id": "J28",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ゴールデンタイムは英語で、ゴールデン・タイムと、プライム・タイム、どっち。",
+    "lines": [
+     [
+      "「ゴールデンタイム」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "golden time",
+     "prime time"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は prime time",
+    "say": "正解は、プライム・タイム。ゴールデンタイムは、プライム・タイムです。",
+    "lines": [
+     [
+      "prime time",
+      1
+     ],
+     [
+      "ゴールデンタイムは prime time",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "prime time",
+    "say": "プライム・タイム、と言えば伝わります。",
+    "lines": [
+     [
+      "prime time",
+      1
+     ],
+     [
+      "＝ゴールデンタイム",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ザ・ショウ・エアズ・イン・プライム・タイム。その番組はゴールデンタイムに放送される。",
+    "lines": [
+     [
+      "The show airs in",
+      1
+     ],
+     [
+      "prime time.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "その番組はゴールデンタイムに放送される",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「prime time」"
+   }
+  ]
+ },
+ {
+  "id": "J29",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。芸能人のタレントは英語で、タレントと、セレブリティ、どっち。",
+    "lines": [
+     [
+      "「芸能人の「タレント」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "talent",
+     "celebrity"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は celebrity",
+    "say": "正解は、セレブリティ。有名人は、セレブリティです。",
+    "lines": [
+     [
+      "celebrity",
+      1
+     ],
+     [
+      "有名人は celebrity",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "talent は",
+    "say": "タレントは、才能、という意味です。",
+    "lines": [
+     [
+      "talent",
+      1
+     ],
+     [
+      "才能",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シーズ・ア・セレブリティ。彼女は有名人です。",
+    "lines": [
+     [
+      "She's a celebrity.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は有名人です",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「celebrity」、「talent」"
+   }
+  ]
+ },
+ {
+  "id": "J30",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。繊細の意味のナイーブは英語で、ナイーブと、センシティブ、どっち。",
+    "lines": [
+     [
+      "「ナイーブ（繊細）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "naive",
+     "sensitive"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は sensitive",
+    "say": "正解は、センシティブ。繊細、と言いたいときは、センシティブです。",
+    "lines": [
+     [
+      "sensitive",
+      1
+     ],
+     [
+      "繊細は sensitive",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "naive は",
+    "say": "ナイーブは、人を信じすぎる、世間知らず、という意味です。",
+    "lines": [
+     [
+      "naive",
+      1
+     ],
+     [
+      "人を信じすぎる・世間知らず",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒーズ・ベリー・センシティブ。彼はとても繊細だ。",
+    "lines": [
+     [
+      "He's very sensitive.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼はとても繊細だ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「naive」、「sensitive」"
+   }
+  ]
+ },
+ {
+  "id": "J31",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ホテルのフロントは英語で、フロントと、フロント・デスク、どっち。",
+    "lines": [
+     [
+      "「ホテルの「フロント」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "front",
+     "front desk"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は front desk",
+    "say": "正解は、フロント・デスク。ホテルのフロントは、フロント・デスクです。",
+    "lines": [
+     [
+      "front desk",
+      1
+     ],
+     [
+      "ホテルのフロントは front desk",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "front desk",
+    "say": "フロント・デスク、と言えば伝わります。",
+    "lines": [
+     [
+      "front desk",
+      1
+     ],
+     [
+      "＝ホテルのフロント",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "プリーズ・アスク・アット・ザ・フロント・デスク。フロントで聞いてください。",
+    "lines": [
+     [
+      "Please ask at the",
+      1
+     ],
+     [
+      "front desk.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "フロントで聞いてください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「front desk」"
+   }
+  ]
+ },
+ {
+  "id": "J32",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。トランプで遊ぶは英語で、プレイ・トランプと、プレイ・カーズ、どっち。",
+    "lines": [
+     [
+      "「トランプ」で遊ぶ",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "play trump",
+     "play cards"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は play cards",
+    "say": "正解は、プレイ・カーズ。トランプの遊びは、カーズです。",
+    "lines": [
+     [
+      "play cards",
+      1
+     ],
+     [
+      "トランプ遊びは cards",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "trump は",
+    "say": "トランプは、切り札、という意味です。",
+    "lines": [
+     [
+      "trump",
+      1
+     ],
+     [
+      "切り札",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "レッツ・プレイ・カーズ。トランプをしよう。",
+    "lines": [
+     [
+      "Let's play cards.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "トランプをしよう",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「cards」、「trump」"
+   }
+  ]
+ },
+ {
+  "id": "J33",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。シールを貼るは英語で、シールと、ステッカー、どっち。",
+    "lines": [
+     [
+      "「シール」を貼る",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "seal",
+     "sticker"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は sticker",
+    "say": "正解は、ステッカー。貼るシールは、ステッカーです。",
+    "lines": [
+     [
+      "sticker",
+      1
+     ],
+     [
+      "貼るシールは sticker",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "seal は",
+    "say": "シールは、別の意味の語です。",
+    "lines": [
+     [
+      "seal",
+      1
+     ],
+     [
+      "別の意味の語",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・プット・ア・ステッカー・オン・マイ・ノートブック。ノートにシールを貼った。",
+    "lines": [
+     [
+      "I put a sticker on",
+      1
+     ],
+     [
+      "my notebook.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ノートにシールを貼った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「sticker」、「seal」"
+   }
+  ]
+ },
+ {
+  "id": "J34",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ビニール袋は英語で、ビニール・バッグと、プラスチック・バッグ、どっち。",
+    "lines": [
+     [
+      "「ビニール袋」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "vinyl bag",
+     "plastic bag"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は plastic bag",
+    "say": "正解は、プラスチック・バッグ。ビニール袋は、プラスチック・バッグです。",
+    "lines": [
+     [
+      "plastic bag",
+      1
+     ],
+     [
+      "ビニール袋は plastic bag",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "plastic bag",
+    "say": "ア・プラスチック・バッグ、と言えば伝わります。",
+    "lines": [
+     [
+      "a plastic bag",
+      1
+     ],
+     [
+      "辞書の例文にある言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ドゥー・ユー・ニード・ア・プラスチック・バッグ。ビニール袋は要りますか。",
+    "lines": [
+     [
+      "Do you need a plastic bag?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ビニール袋は要りますか",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「plastic」、「bag」"
+   }
+  ]
+ },
+ {
+  "id": "J35",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。アメリカでのキッチンペーパーは英語で、キッチン・ペーパーと、ペーパー・タオル、どっち。",
+    "lines": [
+     [
+      "「アメリカでの「キッチンペーパー」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "kitchen paper",
+     "paper towel"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は paper towel",
+    "say": "正解は、ペーパー・タオル。アメリカ英語では、ペーパー・タオルです。",
+    "lines": [
+     [
+      "paper towel",
+      1
+     ],
+     [
+      "アメリカでは paper towel",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "イギリスでは",
+    "say": "イギリス英語では、キッチン・ペーパーとも言います。",
+    "lines": [
+     [
+      "kitchen paper",
+      1
+     ],
+     [
+      "とも言う",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "キャン・ユー・パス・ミー・ア・ペーパー・タオル。キッチンペーパーを取ってくれる？。",
+    "lines": [
+     [
+      "Can you pass me a",
+      1
+     ],
+     [
+      "paper towel?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "キッチンペーパーを取ってくれる？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「paper towel」"
+   }
+  ]
+ },
+ {
+  "id": "J36",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ペンの意味のマジックは英語で、マジックと、フェルトチップ・ペン、どっち。",
+    "lines": [
+     [
+      "「マジック（ペン）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "magic",
+     "felt-tip pen"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は felt-tip pen",
+    "say": "正解は、フェルトチップ・ペン。マジックは、フェルトチップ・ペンです。",
+    "lines": [
+     [
+      "felt-tip pen",
+      1
+     ],
+     [
+      "マジックは felt-tip pen",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "felt-tip pen",
+    "say": "フェルトチップ・ペン、と言えば伝わります。",
+    "lines": [
+     [
+      "felt-tip pen",
+      1
+     ],
+     [
+      "＝マジック（ペン）",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ライト・ユア・ネーム・ウィズ・ア・フェルトチップ・ペン。マジックで名前を書いて。",
+    "lines": [
+     [
+      "Write your name with a",
+      1
+     ],
+     [
+      "felt-tip pen.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "マジックで名前を書いて",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「felt-tip pen」"
+   }
+  ]
+ },
+ {
+  "id": "J37",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。クーラーは英語で、クーラーと、エア・コンディショナー、どっち。",
+    "lines": [
+     [
+      "「クーラー」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "cooler",
+     "air conditioner"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は air conditioner",
+    "say": "正解は、エア・コンディショナー。部屋のクーラーは、エア・コンディショナーです。",
+    "lines": [
+     [
+      "air conditioner",
+      1
+     ],
+     [
+      "クーラーは air conditioner",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "cooler は",
+    "say": "クーラーは、保冷箱、という意味です。",
+    "lines": [
+     [
+      "cooler",
+      1
+     ],
+     [
+      "保冷箱",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ターン・オン・ジ・エア・コンディショナー。クーラーをつけて。",
+    "lines": [
+     [
+      "Turn on the air",
+      1
+     ],
+     [
+      "conditioner.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "クーラーをつけて",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「air conditioner」、「cooler」"
+   }
+  ]
+ },
+ {
+  "id": "J38",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。リモコンは英語で、リモコンと、リモート・コントロール、どっち。",
+    "lines": [
+     [
+      "「リモコン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "remocon",
+     "remote control"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は remote control",
+    "say": "正解は、リモート・コントロール。リモコンは、リモート・コントロールです。",
+    "lines": [
+     [
+      "remote control",
+      1
+     ],
+     [
+      "リモコンは remote control",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "remote control",
+    "say": "リモート・コントロール、と言えば伝わります。",
+    "lines": [
+     [
+      "remote control",
+      1
+     ],
+     [
+      "＝リモコン",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウェアズ・ザ・リモート・コントロール。リモコンはどこ？。",
+    "lines": [
+     [
+      "Where's the remote",
+      1
+     ],
+     [
+      "control?",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "リモコンはどこ？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「remote control」"
+   }
+  ]
+ },
+ {
+  "id": "J39",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。電子レンジは英語で、レンジと、マイクロウェーブ、どっち。",
+    "lines": [
+     [
+      "「電子「レンジ」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "range",
+     "microwave"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は microwave",
+    "say": "正解は、マイクロウェーブ。電子レンジは、マイクロウェーブです。",
+    "lines": [
+     [
+      "microwave",
+      1
+     ],
+     [
+      "電子レンジは microwave",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "microwave",
+    "say": "マイクロウェーブ、と言えば伝わります。",
+    "lines": [
+     [
+      "microwave",
+      1
+     ],
+     [
+      "電子レンジ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒート・イット・イン・ザ・マイクロウェーブ。レンジで温めて。",
+    "lines": [
+     [
+      "Heat it in the microwave.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "レンジで温めて",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「microwave」"
+   }
+  ]
+ },
+ {
+  "id": "J40",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ミシンは英語で、マシーンと、ソーイング・マシーン、どっち。",
+    "lines": [
+     [
+      "「ミシン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "machine",
+     "sewing machine"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は sewing machine",
+    "say": "正解は、ソーイング・マシーン。ミシンは、ソーイング・マシーンです。",
+    "lines": [
+     [
+      "sewing machine",
+      1
+     ],
+     [
+      "ミシンは sewing machine",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "sewing machine",
+    "say": "ソーイング・マシーン、と言えば伝わります。",
+    "lines": [
+     [
+      "sewing machine",
+      1
+     ],
+     [
+      "＝ミシン",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・メイド・イット・ウィズ・ア・ソーイング・マシーン。ミシンで作った。",
+    "lines": [
+     [
+      "I made it with a",
+      1
+     ],
+     [
+      "sewing machine.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ミシンで作った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「sewing machine」"
+   }
+  ]
+ },
+ {
+  "id": "J41",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。服の意味のワンピースは英語で、ワンピースと、ドレス、どっち。",
+    "lines": [
+     [
+      "「ワンピース（服）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "one-piece",
+     "dress"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は dress",
+    "say": "正解は、ドレス。服のワンピースは、ドレスです。",
+    "lines": [
+     [
+      "dress",
+      1
+     ],
+     [
+      "ワンピースは dress",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "one-piece は",
+    "say": "ワンピースは、アメリカ英語では、水着を指します。",
+    "lines": [
+     [
+      "one-piece",
+      1
+     ],
+     [
+      "アメリカ英語で水着",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シーズ・ウェアリング・ア・ブルー・ドレス。彼女は青いワンピースを着ている。",
+    "lines": [
+     [
+      "She's wearing a",
+      1
+     ],
+     [
+      "blue dress.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は青いワンピースを着ている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「dress」、「one-piece」"
+   }
+  ]
+ },
+ {
+  "id": "J42",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。パーカーは英語で、パーカーと、フーディー、どっち。",
+    "lines": [
+     [
+      "「パーカー」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "parka",
+     "hoodie"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は hoodie",
+    "say": "正解は、フーディー。フード付きのパーカーは、フーディーです。",
+    "lines": [
+     [
+      "hoodie",
+      1
+     ],
+     [
+      "パーカーは hoodie",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "parka は",
+    "say": "パーカは、フード付きの防寒コートです。",
+    "lines": [
+     [
+      "parka",
+      1
+     ],
+     [
+      "フード付きの防寒コート",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイム・ウェアリング・ア・フーディー。パーカーを着ている。",
+    "lines": [
+     [
+      "I'm wearing a hoodie.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "パーカーを着ている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「hoodie」、「parka」"
+   }
+  ]
+ },
+ {
+  "id": "J43",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。服の意味のトレーナーは英語で、トレーナーと、スウェットシャツ、どっち。",
+    "lines": [
+     [
+      "「トレーナー（服）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "trainer",
+     "sweatshirt"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は sweatshirt",
+    "say": "正解は、スウェットシャツ。服のトレーナーは、スウェットシャツです。",
+    "lines": [
+     [
+      "sweatshirt",
+      1
+     ],
+     [
+      "トレーナーは sweatshirt",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "trainer は",
+    "say": "トレーナーは、イギリス英語で、運動靴を指します。",
+    "lines": [
+     [
+      "trainer",
+      1
+     ],
+     [
+      "イギリス英語で運動靴",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒーズ・ウェアリング・ア・グレー・スウェットシャツ。彼はグレーのトレーナーを着ている。",
+    "lines": [
+     [
+      "He's wearing a gray",
+      1
+     ],
+     [
+      "sweatshirt.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼はグレーのトレーナーを着ている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「sweatshirt」、「trainer」"
+   }
+  ]
+ },
+ {
+  "id": "J44",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。上着の意味のジャンパーは英語で、ジャンパーと、ジャケット、どっち。",
+    "lines": [
+     [
+      "「ジャンパー（上着）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "jumper",
+     "jacket"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は jacket",
+    "say": "正解は、ジャケット。上着のジャンパーは、ジャケットです。",
+    "lines": [
+     [
+      "jacket",
+      1
+     ],
+     [
+      "ジャンパーは jacket",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "jumper は",
+    "say": "ジャンパーは、イギリス英語で、セーターを指します。",
+    "lines": [
+     [
+      "jumper",
+      1
+     ],
+     [
+      "イギリス英語でセーター",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "テイク・ア・ジャケット・ウィズ・ユー。ジャンパーを持っていって。",
+    "lines": [
+     [
+      "Take a jacket with you.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ジャンパーを持っていって",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「jacket」、「jumper」"
+   }
+  ]
+ },
+ {
+  "id": "J45",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ふつうの首に巻くマフラーは英語で、マフラーと、スカーフ、どっち。",
+    "lines": [
+     [
+      "「ふつうの首に巻く「マフラー」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "muffler",
+     "scarf"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は scarf",
+    "say": "正解は、スカーフ。ふつうの首に巻くマフラーは、スカーフです。",
+    "lines": [
+     [
+      "scarf",
+      1
+     ],
+     [
+      "首に巻くマフラーは scarf",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "muffler は",
+    "say": "マフラーは、アメリカ英語で車の消音器。厚手のマフラーの意味もあります。",
+    "lines": [
+     [
+      "muffler",
+      1
+     ],
+     [
+      "車の消音器（米）",
+      0
+     ],
+     [
+      "厚手のマフラーの意味も",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ウェア・ア・スカーフ・イン・ウィンター。冬はマフラーを巻く。",
+    "lines": [
+     [
+      "I wear a scarf in winter.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "冬はマフラーを巻く",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「scarf」、「muffler」"
+   }
+  ]
+ },
+ {
+  "id": "J46",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ノースリーブは英語で、ノー・スリーブと、スリーブレス、どっち。",
+    "lines": [
+     [
+      "「ノースリーブ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "no sleeve",
+     "sleeveless"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は sleeveless",
+    "say": "正解は、スリーブレス。ノースリーブは、スリーブレスです。",
+    "lines": [
+     [
+      "sleeveless",
+      1
+     ],
+     [
+      "ノースリーブは sleeveless",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "sleeveless",
+    "say": "スリーブレス、と言えば伝わります。",
+    "lines": [
+     [
+      "sleeveless",
+      1
+     ],
+     [
+      "＝ノースリーブ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シーズ・ウェアリング・ア・スリーブレス・ドレス。彼女はノースリーブのワンピースを着ている。",
+    "lines": [
+     [
+      "She's wearing a",
+      1
+     ],
+     [
+      "sleeveless dress.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女はノースリーブのワンピースを着ている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「sleeveless」"
+   }
+  ]
+ },
+ {
+  "id": "J47",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。有名人のサインは英語で、サインと、オートグラフ、どっち。",
+    "lines": [
+     [
+      "「有名人の「サイン」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "sign",
+     "autograph"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は autograph",
+    "say": "正解は、オートグラフ。有名人のサインは、オートグラフです。",
+    "lines": [
+     [
+      "autograph",
+      1
+     ],
+     [
+      "有名人のサインは autograph",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "書類の署名は",
+    "say": "書類の署名は、シグネチャーです。",
+    "lines": [
+     [
+      "signature",
+      1
+     ],
+     [
+      "書類の署名",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "キャン・アイ・ハブ・ユア・オートグラフ。サインをもらえますか。",
+    "lines": [
+     [
+      "Can I have your autograph?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "サインをもらえますか",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「autograph」、「signature」"
+   }
+  ]
+ },
+ {
+  "id": "J48",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。アンケートは英語で、アンケートと、クエスチョネア、どっち。",
+    "lines": [
+     [
+      "「アンケート」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "enquête",
+     "questionnaire"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は questionnaire",
+    "say": "正解は、クエスチョネア。アンケートは、クエスチョネアです。",
+    "lines": [
+     [
+      "questionnaire",
+      1
+     ],
+     [
+      "アンケートは questionnaire",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "questionnaire",
+    "say": "クエスチョネア、と言えば伝わります。",
+    "lines": [
+     [
+      "questionnaire",
+      1
+     ],
+     [
+      "＝アンケート",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "プリーズ・フィル・イン・ザ・クエスチョネア。アンケートにご記入ください。",
+    "lines": [
+     [
+      "Please fill in the",
+      1
+     ],
+     [
+      "questionnaire.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "アンケートにご記入ください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「questionnaire」"
+   }
+  ]
+ },
+ {
+  "id": "J49",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。食べ放題の意味のバイキングは英語で、バイキングと、バフェイ、どっち。",
+    "lines": [
+     [
+      "「バイキング（食べ放題）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "viking",
+     "buffet"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は buffet",
+    "say": "正解は、バフェイ。食べ放題のバイキングは、バフェイです。",
+    "lines": [
+     [
+      "buffet",
+      1
+     ],
+     [
+      "バイキングは buffet",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "buffet",
+    "say": "バフェイ、と言えば伝わります。",
+    "lines": [
+     [
+      "buffet",
+      1
+     ],
+     [
+      "＝バイキング（食べ放題）",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ザ・ホテル・ハズ・ア・ブレックファスト・バフェイ。ホテルに朝食バイキングがある。",
+    "lines": [
+     [
+      "The hotel has a",
+      1
+     ],
+     [
+      "breakfast buffet.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ホテルに朝食バイキングがある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「buffet」"
+   }
+  ]
+ },
+ {
+  "id": "J50",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ピーマンは英語で、ピーマンと、グリーン・ペッパー、どっち。",
+    "lines": [
+     [
+      "「ピーマン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "piman",
+     "green pepper"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は green pepper",
+    "say": "正解は、グリーン・ペッパー。ピーマンは、グリーン・ペッパーです。",
+    "lines": [
+     [
+      "green pepper",
+      1
+     ],
+     [
+      "ピーマンは green pepper",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "アメリカでは",
+    "say": "アメリカ英語では、ベル・ペッパーとも言います。",
+    "lines": [
+     [
+      "bell pepper",
+      1
+     ],
+     [
+      "とも言う",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ドント・ライク・グリーン・ペッパーズ。ピーマンが苦手。",
+    "lines": [
+     [
+      "I don't like green",
+      1
+     ],
+     [
+      "peppers.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ピーマンが苦手",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「green pepper」、「bell pepper」"
+   }
+  ]
+ },
+ {
+  "id": "J51",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ソフトクリームは英語で、ソフト・クリームと、ソフト・サーブ、どっち。",
+    "lines": [
+     [
+      "「ソフトクリーム」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "soft cream",
+     "soft serve"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は soft serve",
+    "say": "正解は、ソフト・サーブ。ソフトクリームは、ソフト・サーブです。",
+    "lines": [
+     [
+      "soft serve",
+      1
+     ],
+     [
+      "ソフトクリームは soft serve",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "soft serve",
+    "say": "ソフト・サーブ、と言えば伝わります。",
+    "lines": [
+     [
+      "soft serve",
+      1
+     ],
+     [
+      "＝ソフトクリーム",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイド・ライク・ア・ソフト・サーブ。ソフトクリームをください。",
+    "lines": [
+     [
+      "I'd like a soft serve.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ソフトクリームをください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「soft serve」"
+   }
+  ]
+ },
+ {
+  "id": "J52",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。シュークリームは英語で、シュー・クリームと、クリーム・パフ、どっち。",
+    "lines": [
+     [
+      "「シュークリーム」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "shoe cream",
+     "cream puff"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は cream puff",
+    "say": "正解は、クリーム・パフ。シュークリームは、クリーム・パフです。",
+    "lines": [
+     [
+      "cream puff",
+      1
+     ],
+     [
+      "シュークリームは cream puff",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "cream puff",
+    "say": "クリーム・パフ、と言えば伝わります。",
+    "lines": [
+     [
+      "cream puff",
+      1
+     ],
+     [
+      "＝シュークリーム",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ボート・サム・クリーム・パフス。シュークリームを買った。",
+    "lines": [
+     [
+      "I bought some cream puffs.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "シュークリームを買った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「cream puff」"
+   }
+  ]
+ },
+ {
+  "id": "J53",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。フリーサイズは英語で、フリー・サイズと、ワン・サイズ・フィッツ・オール、どっち。",
+    "lines": [
+     [
+      "「フリーサイズ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "free size",
+     "one size fits all"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は one size fits all",
+    "say": "正解は、ワン・サイズ・フィッツ・オール。フリーサイズは、ワン・サイズ・フィッツ・オールです。",
+    "lines": [
+     [
+      "one size fits all",
+      1
+     ],
+     [
+      "フリーサイズは one-size-fits-all",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "one-size-fits-all",
+    "say": "アメリカ英語の言い方です。",
+    "lines": [
+     [
+      "one-size-fits-all",
+      1
+     ],
+     [
+      "アメリカ英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ディス・ハット・イズ・ワン・サイズ・フィッツ・オール。この帽子はフリーサイズ。",
+    "lines": [
+     [
+      "This hat is",
+      1
+     ],
+     [
+      "one-size-fits-all.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "この帽子はフリーサイズ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「one-size-fits-all」"
+   }
+  ]
+ },
+ {
+  "id": "J54",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。場の雰囲気の意味のいいムードは英語で、グッド・ムードと、グッド・アトモスフィア、どっち。",
+    "lines": [
+     [
+      "「場の「いいムード（雰囲気）」」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "good mood",
+     "good atmosphere"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は good atmosphere",
+    "say": "正解は、グッド・アトモスフィア。場の雰囲気は、アトモスフィアです。",
+    "lines": [
+     [
+      "good atmosphere",
+      1
+     ],
+     [
+      "場の雰囲気は atmosphere",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "mood は",
+    "say": "ムードは、その時の気分、という意味です。",
+    "lines": [
+     [
+      "mood",
+      1
+     ],
+     [
+      "その時の気分",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ディス・カフェ・ハズ・ア・グッド・アトモスフィア。このカフェは雰囲気がいい。",
+    "lines": [
+     [
+      "This café has a good",
+      1
+     ],
+     [
+      "atmosphere.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "このカフェは雰囲気がいい",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「atmosphere」、「mood」"
+   }
+  ]
+ },
+ {
+  "id": "J55",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。テンションが高いは英語で、ハイ・テンションと、エキサイティッド、どっち。",
+    "lines": [
+     [
+      "「テンションが高い」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "high tension",
+     "excited"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は excited",
+    "say": "正解は、エキサイティッド。テンションが高い、は、エキサイティッドです。",
+    "lines": [
+     [
+      "excited",
+      1
+     ],
+     [
+      "テンションが高いは excited",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "tension は",
+    "say": "テンションは、緊張、という意味です。",
+    "lines": [
+     [
+      "tension",
+      1
+     ],
+     [
+      "緊張",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイム・ソー・エキサイティッド。テンション上がる！。",
+    "lines": [
+     [
+      "I'm so excited!",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "テンション上がる！",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「excited」、「tension」"
+   }
+  ]
+ },
+ {
+  "id": "J56",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ドンマイは英語で、ドント・マインドと、ネバー・マインド、どっち。",
+    "lines": [
+     [
+      "「ドンマイ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "Don't mind.",
+     "Never mind."
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は Never mind.",
+    "say": "正解は、ネバー・マインド。ドンマイは、ネバー・マインド。気にしないで、の意味です。",
+    "lines": [
+     [
+      "Never mind.",
+      1
+     ],
+     [
+      "ドンマイは Never mind.",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "ほかには",
+    "say": "ドント・ウォーリー・アバウト・イットとも言えます。ドント・マインドは間違いです。",
+    "lines": [
+     [
+      "Don't worry about it.",
+      1
+     ],
+     [
+      "× Don't mind.",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ネバー・マインド。トライ・アゲイン。ドンマイ、もう一回。",
+    "lines": [
+     [
+      "Never mind. Try again.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ドンマイ、もう一回",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「never mind」"
+   }
+  ]
+ },
+ {
+  "id": "J57",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。パソコンは英語で、パソコンと、パーソナル・コンピューター、どっち。",
+    "lines": [
+     [
+      "「パソコン」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "pasocon",
+     "personal computer"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は personal computer",
+    "say": "正解は、パーソナル・コンピューター。パソコンは、パーソナル・コンピューターです。",
+    "lines": [
+     [
+      "personal computer",
+      1
+     ],
+     [
+      "パソコンは personal computer",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "personal computer",
+    "say": "略さずに、パーソナル・コンピューター、と言います。",
+    "lines": [
+     [
+      "personal computer",
+      1
+     ],
+     [
+      "略さずに言う",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ボート・ア・ニュー・パーソナル・コンピューター。新しいパソコンを買った。",
+    "lines": [
+     [
+      "I bought a new",
+      1
+     ],
+     [
+      "personal computer.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "新しいパソコンを買った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「personal computer」"
+   }
+  ]
+ },
+ {
+  "id": "J58",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。細いの意味のスマートは英語で、スマートと、スリム、どっち。",
+    "lines": [
+     [
+      "「スマート（細い）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "smart",
+     "slim"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は slim",
+    "say": "正解は、スリム。細い、と言いたいときは、スリムです。",
+    "lines": [
+     [
+      "slim",
+      1
+     ],
+     [
+      "細いは slim",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "smart は",
+    "say": "スマートは、身なりがきちんとした、という意味です。",
+    "lines": [
+     [
+      "smart",
+      1
+     ],
+     [
+      "身なりがきちんとした",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シーズ・トール・アンド・スリム。彼女は背が高くてスマート。",
+    "lines": [
+     [
+      "She's tall and slim.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は背が高くてスマート",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「slim」、「smart」"
+   }
+  ]
+ },
+ {
+  "id": "J59",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。コンビニは英語で、コンビニと、コンビニエンス・ストア、どっち。",
+    "lines": [
+     [
+      "「コンビニ」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "konbini",
+     "convenience store"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は convenience store",
+    "say": "正解は、コンビニエンス・ストア。コンビニは、コンビニエンス・ストアです。",
+    "lines": [
+     [
+      "convenience store",
+      1
+     ],
+     [
+      "コンビニは convenience store",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "convenience store",
+    "say": "アメリカ英語の言い方です。",
+    "lines": [
+     [
+      "convenience store",
+      1
+     ],
+     [
+      "アメリカ英語の言い方",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイル・ストップ・バイ・ザ・コンビニエンス・ストア。コンビニに寄るね。",
+    "lines": [
+     [
+      "I'll stop by the",
+      1
+     ],
+     [
+      "convenience store.",
+      0
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "コンビニに寄るね",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「convenience store」"
+   }
+  ]
+ },
+ {
+  "id": "J60",
+  "cat": "英語｜和製英語",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。写真家の意味のカメラマンは英語で、カメラマンと、フォトグラファー、どっち。",
+    "lines": [
+     [
+      "「カメラマン（写真家）」",
+      1
+     ],
+     [
+      "は英語で？",
+      0
+     ]
+    ],
+    "options": [
+     "cameraman",
+     "photographer"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は photographer",
+    "say": "正解は、フォトグラファー。写真家は、フォトグラファーです。",
+    "lines": [
+     [
+      "photographer",
+      1
+     ],
+     [
+      "写真家は photographer",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "cameraman は",
+    "say": "カメラマンは、映画やテレビのカメラを操作する人です。",
+    "lines": [
+     [
+      "cameraman",
+      1
+     ],
+     [
+      "映画やテレビの",
+      0
+     ],
+     [
+      "カメラを操作する人",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シーズ・ア・フォトグラファー。彼女は写真家です。",
+    "lines": [
+     [
+      "She's a photographer.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は写真家です",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\n「photographer」、「cameraman」"
+   }
+  ]
+ }
+]

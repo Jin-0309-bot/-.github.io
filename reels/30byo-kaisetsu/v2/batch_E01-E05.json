@@ -1,0 +1,67 @@
+[
+ {"id": "E01", "cat": "英語｜間違えやすい表現",
+  "scenes": [
+   {"type": "quiz", "head": "3秒クイズ", "say": "クイズです。セリフをそのまま伝えるとき、使うのは、セイとテル、どっち。",
+    "lines": [["セリフをそのまま伝えるとき", 0], ["使うのはどっち？", 1]], "options": ["say", "tell"], "answer": 0},
+   {"type": "reveal", "head": "正解は say", "say": "正解は、セイ。セリフをそのまま言うときは、セイを使います。",
+    "lines": [["'Hello,' she said.", 1], ["セリフはそのまま say（she told ×）", 0]]},
+   {"type": "text", "head": "tell は", "say": "テルは、伝えた内容に重点があり、ふつう、誰に伝えたかを続けます。",
+    "lines": [["伝えた内容に重点", 0], ["tell ＋ 人 ＋ 内容", 1]]},
+   {"type": "text", "head": "例文", "say": "ザ・ボーイ・トールド・アス、ヒー・ディドゥント・ウォント・エニー・マネー。",
+    "lines": [["The boy told us", 1], ["he didn't want any money.", 0], ["", 0], ["男の子は、お金はいらないと", 0], ["私たちに言った", 0]]},
+   {"type": "text", "head": "やってみよう", "say": "例文を、声に出して言ってみてください。",
+    "lines": [["例文を", 0], ["声に出して言ってみる", 1]], "note": "出典：Cambridge Dictionary\nGrammar「Say or tell?」"}
+  ]},
+ {"id": "E02", "cat": "英語｜間違えやすい表現",
+  "scenes": [
+   {"type": "quiz", "head": "3秒クイズ", "say": "クイズです。イタリア語を話す、と言うとき、使うのは、スピークとトーク、どっち。",
+    "lines": [["「イタリア語を話す」", 0], ["使うのはどっち？", 1]], "options": ["speak", "talk"], "answer": 0},
+   {"type": "reveal", "head": "正解は speak", "say": "正解は、スピーク。言語を話すときは、スピークを使います。",
+    "lines": [["speak Italian", 1], ["言語には speak（talk Italian ×）", 0]]},
+   {"type": "text", "head": "speak と talk", "say": "スピークは、トークより改まった言い方で、仕事などの場面でも使われます。",
+    "lines": [["speak", 1], ["talk より改まった言い方", 0]]},
+   {"type": "text", "head": "例文", "say": "ハウ・メニー・ラングウィッジズ・ドゥー・ユー・スピーク。何か国語を話せますか。",
+    "lines": [["How many languages", 1], ["do you speak?", 1], ["", 0], ["何か国語を話せますか", 0]]},
+   {"type": "text", "head": "やってみよう", "say": "例文を、声に出して言ってみてください。",
+    "lines": [["例文を", 0], ["声に出して言ってみる", 1]], "note": "出典：Cambridge Dictionary\nGrammar「Speak or talk?」"}
+  ]},
+ {"id": "E03", "cat": "英語｜間違えやすい表現",
+  "scenes": [
+   {"type": "quiz", "head": "3秒クイズ", "say": "クイズです。テレビを見る、と言うとき、使うのは、シーとウォッチ、どっち。",
+    "lines": [["「テレビを見る」", 0], ["使うのはどっち？", 1]], "options": ["see", "watch"], "answer": 1},
+   {"type": "reveal", "head": "正解は watch", "say": "正解は、ウォッチ。ウォッチは、しばらくの間、動くものなどを見ることです。",
+    "lines": [["watch the television", 1], ["しばらくの間、動くものを見る", 0]]},
+   {"type": "text", "head": "see は", "say": "シーは、目で何かに気づくこと。映画館で見る映画には、シーを使います。",
+    "lines": [["see", 1], ["目で気づく", 0], ["", 0], ["see a film", 1], ["（映画館などで）", 0]]},
+   {"type": "text", "head": "例文", "say": "アット・ナイト、アイ・ライク・トゥー・ウォッチ・ザ・テレビジョン。夜はテレビを見るのが好きです。",
+    "lines": [["At night, I like to", 0], ["watch the television.", 1], ["", 0], ["夜はテレビを見るのが好き", 0]]},
+   {"type": "text", "head": "やってみよう", "say": "例文を、声に出して言ってみてください。",
+    "lines": [["例文を", 0], ["声に出して言ってみる", 1]], "note": "出典：Cambridge Dictionary\nGrammar「Look at, see or watch?」"}
+  ]},
+ {"id": "E04", "cat": "英語｜間違えやすい表現",
+  "scenes": [
+   {"type": "quiz", "head": "3秒クイズ", "say": "クイズです。急に物音が聞こえた、と言うとき、使うのは、ヒアとリッスン・トゥー、どっち。",
+    "lines": [["「急に物音が聞こえた」", 0], ["使うのはどっち？", 1]], "options": ["heard", "listened to"], "answer": 0},
+   {"type": "reveal", "head": "正解は heard", "say": "正解は、ヒア。ヒアは、自然に聞こえてくることです。",
+    "lines": [["Suddenly I heard a noise.", 1], ["hear＝自然に聞こえる", 0]]},
+   {"type": "text", "head": "listen to は", "say": "リッスン・トゥーは、意識して聞くことです。",
+    "lines": [["listen to", 1], ["意識して聞く", 0]]},
+   {"type": "text", "head": "例文", "say": "ドゥー・ユー・リッスン・トゥー・ザ・レイディオ・イン・ベッド。寝るときにラジオを聴きますか。",
+    "lines": [["Do you listen to", 1], ["the radio in bed?", 0], ["", 0], ["寝るときにラジオを聴く？", 0]]},
+   {"type": "text", "head": "やってみよう", "say": "例文を、声に出して言ってみてください。",
+    "lines": [["例文を", 0], ["声に出して言ってみる", 1]], "note": "出典：Cambridge Dictionary\nGrammar「Hear or listen to?」"}
+  ]},
+ {"id": "E05", "cat": "英語｜間違えやすい表現",
+  "scenes": [
+   {"type": "quiz", "head": "3秒クイズ", "say": "クイズです。ペンを借りてもいいですか、と言うとき、使うのは、ボローとレンド、どっち。",
+    "lines": [["「ペンを借りてもいい？」", 0], ["使うのはどっち？", 1]], "options": ["borrow", "lend"], "answer": 0},
+   {"type": "reveal", "head": "正解は borrow", "say": "正解は、ボロー。ボローは、返すつもりで借りることです。",
+    "lines": [["borrow", 1], ["返すつもりで借りる", 0]]},
+   {"type": "text", "head": "lend は", "say": "レンドは、返してもらうつもりで貸すこと。過去形はレントです。",
+    "lines": [["lend", 1], ["貸す（過去形 lent）", 0]]},
+   {"type": "text", "head": "例文", "say": "クッド・アイ・ボロー・ユア・ペン・フォー・ア・ミニット、プリーズ。ペンを少し借りてもいいですか。",
+    "lines": [["Could I borrow your pen", 1], ["for a minute, please?", 0], ["", 0], ["ペンを少し借りてもいいですか", 0]]},
+   {"type": "text", "head": "やってみよう", "say": "例文を、声に出して言ってみてください。",
+    "lines": [["例文を", 0], ["声に出して言ってみる", 1]], "note": "出典：Cambridge Dictionary\nGrammar「Lend or borrow?」"}
+  ]}
+]

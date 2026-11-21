@@ -6,7 +6,7 @@
 ```
 【30秒解説】暮らしの言葉クイズ：期限を過ぎたら、食べない方がよいのは？
 
-A：消費期限　B：賞味期限
+A：賞味期限　B：消費期限
 
 ▼ポイント
 ・正解は 消費期限：消費期限は、期限を過ぎたら、食べない方がよい期限です。
@@ -167,7 +167,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/allergy/asse
 ```
 【30秒解説】暮らしの言葉クイズ：アレルギー表示の原則の書き方は？
 
-A：個別表示　B：一括表示
+A：一括表示　B：個別表示
 
 ▼ポイント
 ・正解は 個別表示：アレルギー表示は、原則、個別表示です。
@@ -236,7 +236,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：食品添加物は原則、どの名前で書く？
 
-A：物質名　B：簡略名
+A：簡略名　B：物質名
 
 ▼ポイント
 ・正解は 物質名：原則として、使用した全ての食品添加物が、物質名で書かれます。
@@ -259,7 +259,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：添加物の「重曹」はどっちの名前？
 
-A：簡略名　B：一括名
+A：一括名　B：簡略名
 
 ▼ポイント
 ・正解は 簡略名：重曹は、炭酸水素ナトリウムの簡略名です。
@@ -305,7 +305,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：「保存料（ソルビン酸）」「保存料」の部分は？
 
-A：用途名　B：一括名
+A：一括名　B：用途名
 
 ▼ポイント
 ・正解は 用途名：保存料は、物質名と一緒に書く用途名です。
@@ -351,7 +351,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：ハムやソーセージの色調を良くするのは？
 
-A：発色剤　B：漂白剤
+A：漂白剤　B：発色剤
 
 ▼ポイント
 ・正解は 発色剤：発色剤は、ハムやソーセージなどの色調を改善します。
@@ -374,7 +374,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：水と油を均一に混ぜるのは？
 
-A：乳化剤　B：増粘剤
+A：増粘剤　B：乳化剤
 
 ▼ポイント
 ・正解は 乳化剤：乳化剤は、水と油を均一に混ぜ合わせます。
@@ -397,7 +397,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：カビや細菌の発育を抑えるのは？
 
-A：保存料　B：酸化防止剤
+A：酸化防止剤　B：保存料
 
 ▼ポイント
 ・正解は 保存料：保存料は、カビや細菌などの発育を抑え、保存性を高めます。
@@ -420,7 +420,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：輸入柑橘類などのかびを防ぐのは？
 
-A：防かび剤　B：漂白剤
+A：漂白剤　B：防かび剤
 
 ▼ポイント
 ・正解は 防かび剤：防かび剤は、輸入柑橘類などの、かびの発生を防ぎます。
@@ -512,7 +512,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/food_additiv
 ```
 【30秒解説】暮らしの言葉クイズ：保存料無添加で、酸化防止剤を使うとき？
 
-A：必要　B：不要
+A：不要　B：必要
 
 ▼ポイント
 ・正解は 必要：保存効果を持たせるため酸化防止剤を使っているときは、その旨を書く必要があります。
@@ -581,7 +581,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/nutrient_declearation/
 ```
 【30秒解説】暮らしの言葉クイズ：栄養成分表示で、最初に書かれるのは？
 
-A：熱量　B：食塩相当量
+A：食塩相当量　B：熱量
 
 ▼ポイント
 ・正解は 熱量：栄養成分表示は、熱量、たんぱく質、脂質、炭水化物、ナトリウムの順です。
@@ -604,7 +604,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/nutrient_declearation/
 ```
 【30秒解説】暮らしの言葉クイズ：「○○ゼロ」と書ける基準は？
 
-A：基準値未満　B：基準値以下
+A：基準値以下　B：基準値未満
 
 ▼ポイント
 ・正解は 基準値未満：ゼロや無、ノンは、含まない旨の表示で、基準値未満であることが条件です。
@@ -673,7 +673,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/nutrient_declearation/
 ```
 【30秒解説】暮らしの言葉クイズ：「○○カット」「○○オフ」どっちの表示？
 
-A：低減された旨　B：低い旨
+A：低い旨　B：低減された旨
 
 ▼ポイント
 ・正解は 低減された旨：カット、オフ、ハーフは、低減された旨の表示です。
@@ -719,7 +719,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/nutrient_declearation/
 ```
 【30秒解説】暮らしの言葉クイズ：国の審査を受けて、許可が必要なのは？
 
-A：特定保健用食品　B：機能性表示食品
+A：機能性表示食品　B：特定保健用食品
 
 ▼ポイント
 ・正解は 特定保健用食品：特定保健用食品は、食品ごとに国の審査を受け、許可を得なければなりません。
@@ -766,7 +766,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/foods_with_function_claims/
 ```
 【30秒解説】暮らしの言葉クイズ：個別の許可申請がいらないのは？
 
-A：栄養機能食品　B：特定保健用食品
+A：特定保健用食品　B：栄養機能食品
 
 ▼ポイント
 ・正解は 栄養機能食品：栄養機能食品は、個別の許可申請がいらない、自己認証制度です。
@@ -835,7 +835,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/foods_with_health_claims/
 ```
 【30秒解説】暮らしの言葉クイズ：乳児や妊産婦、病者などに適する用途を表示するのは？
 
-A：特別用途食品　B：栄養機能食品
+A：栄養機能食品　B：特別用途食品
 
 ▼ポイント
 ・正解は 特別用途食品：特別用途食品は、乳児の発育や、妊産婦、えん下困難者、病者などに適する、という用途を表示します。
@@ -881,7 +881,7 @@ https://www.caa.go.jp/policies/policy/food_labeling/quality/country_of_origin/as
 ```
 【30秒解説】暮らしの言葉クイズ：国内で作られた、加工食品の原材料？
 
-A：国内製造　B：国産
+A：国産　B：国内製造
 
 ▼ポイント
 ・正解は 国内製造：原材料が国内で製造された加工食品の場合は、国内製造と書きます。
@@ -927,7 +927,7 @@ https://www.caa.go.jp/policies/policy/representation/household_goods/guide/wash_
 ```
 【30秒解説】暮らしの言葉クイズ：洗濯表示で、円の記号は？
 
-A：クリーニング　B：乾燥
+A：乾燥　B：クリーニング
 
 ▼ポイント
 ・正解は クリーニング：円の記号は、ドライクリーニングや、ウエットクリーニングなどの、商業クリーニングを表します。
@@ -973,7 +973,7 @@ https://www.caa.go.jp/policies/policy/representation/household_goods/guide/wash_
 ```
 【30秒解説】暮らしの言葉クイズ：アイロン記号のドットが増えると？
 
-A：高い温度　B：低い温度
+A：低い温度　B：高い温度
 
 ▼ポイント
 ・正解は 高い温度：ドットの数が増えると、処理温度がより高いことを表します。
@@ -1019,7 +1019,7 @@ https://www.caa.go.jp/policies/policy/representation/household_goods/guide/wash_
 ```
 【30秒解説】暮らしの言葉クイズ：漂白剤の成分、過炭酸ナトリウムは？
 
-A：酸素系　B：塩素系
+A：塩素系　B：酸素系
 
 ▼ポイント
 ・正解は 酸素系：過炭酸ナトリウムは、酸素系の成分です。

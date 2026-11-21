@@ -64,3 +64,11 @@ https://www.nta.go.jp/publication/pamph/gensen/2026kaisei.pdf
 - 英語 E01〜E266：台本は v2/batch_*.json にすべてコミット済み。動画は全266本書き出し済み（すべて30秒以内）
 - 作り方：VOICEVOX エンジン（0.26.2、話者ID 53 麒ヶ島宗麟）を起動し、v2 で `python3 anim.py <台本JSON> [回…]`。動画は v2/out/ に出る（コミットしない）
 - 次：和製英語 J01〜J60 → ITとセキュリティ T01〜T60 → お金の仕組み M01〜M50 → 丁寧な英語の言い方 B01〜B58（残り228本）。内容は plans/VERIFY_LOG.md に従う
+
+## API での投稿（Instagram Graph API、graph.facebook.com）
+- Instagram アカウントID：17841445779613440（@30byo_lab）。トークンは環境のネットワークシークレット（graph.facebook.com と rupload.facebook.com）に保存
+- 投稿の流れ：/{IG}/media（media_type=REELS, upload_type=resumable, caption）→ rupload.facebook.com に動画を送る → status_code が FINISHED → /{IG}/media_publish
+- 説明文：v2/captions_E001-E266.md
+
+### 投稿済み
+- E01 say と tell：2026-11-21 19:45（日本時間） https://www.instagram.com/reel/DgAC2u1ATRo/

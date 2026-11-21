@@ -1,0 +1,4752 @@
+[
+ {
+  "id": "V01",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。午後、彼女に電話した、と言うとき、正しいのは、インと、アット、どっち。",
+    "lines": [
+     [
+      "「午後、彼女に電話した」",
+      0
+     ],
+     [
+      "（  ）the afternoon I phoned …",
+      1
+     ]
+    ],
+    "options": [
+     "In",
+     "At"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は In",
+    "say": "正解は、イン。午後のあいだのことは、インを使います。",
+    "lines": [
+     [
+      "in the afternoon",
+      1
+     ],
+     [
+      "午後のあいだは in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "At は",
+    "say": "アット・ジ・アフタヌーンとは言いません。",
+    "lines": [
+     [
+      "at the afternoon ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "イン・ジ・アフタヌーン、アイ・フォウンド・マイ・ガールフレンド。午後、彼女に電話した。",
+    "lines": [
+     [
+      "In the afternoon",
+      1
+     ],
+     [
+      "I phoned my girlfriend.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "午後、彼女に電話した",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: afternoon」"
+   }
+  ]
+ },
+ {
+  "id": "V02",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。彼女の言うことに注意を払う、と言うとき、正しいのは、オンと、トゥー、どっち。",
+    "lines": [
+     [
+      "「彼女の言うことに注意を払う」",
+      0
+     ],
+     [
+      "pay attention（  ）what she tells you",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "to"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は to",
+    "say": "正解は、トゥー。アテンションのあとは、ふつうトゥーを使います。",
+    "lines": [
+     [
+      "pay attention to",
+      1
+     ],
+     [
+      "attention のあとはふつう to",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "on は",
+    "say": "ペイ・アテンション・オンとは言いません。",
+    "lines": [
+     [
+      "pay attention on ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ユー・シュッド・ペイ・アテンション・トゥー・ワット・シー・テルズ・ユー。彼女の言うことに注意を払うべきだ。",
+    "lines": [
+     [
+      "You should pay attention",
+      1
+     ],
+     [
+      "to what she tells you.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女の言うことに注意を払うべきだ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: attention」"
+   }
+  ]
+ },
+ {
+  "id": "V03",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。真夜中にホテルに戻った、と言うとき、正しいのは、トゥーと、アット、どっち。",
+    "lines": [
+     [
+      "「真夜中にホテルに戻った」",
+      0
+     ],
+     [
+      "He came back（  ）the hotel.",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "at"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は to",
+    "say": "正解は、トゥー。場所に戻ると言うときは、バック・トゥーを使います。",
+    "lines": [
+     [
+      "came back to the hotel",
+      1
+     ],
+     [
+      "場所に戻るときは back to",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "at は",
+    "say": "カム・バック・アット・ザ・ホテルとは言いません。",
+    "lines": [
+     [
+      "came back at the hotel ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒー・ケイム・バック・トゥー・ザ・ホテル・アット・ミッドナイト。彼は真夜中にホテルに戻った。",
+    "lines": [
+     [
+      "He came back to the hotel",
+      1
+     ],
+     [
+      "at midnight.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は真夜中にホテルに戻った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: back to」"
+   }
+  ]
+ },
+ {
+  "id": "V04",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。一日中ビーチで遊んだ、と言うとき、正しいのは、インと、オン、どっち。",
+    "lines": [
+     [
+      "「一日中ビーチで遊んだ」",
+      0
+     ],
+     [
+      "playing（  ）the beach",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。ビーチは、オン・ザ・ビーチと言います。",
+    "lines": [
+     [
+      "on the beach",
+      1
+     ],
+     [
+      "ビーチは on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・ザ・ビーチとは言いません。",
+    "lines": [
+     [
+      "in the beach ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・スペント・ザ・ホール・デイ・プレイイング・オン・ザ・ビーチ。一日中ビーチで遊んで過ごした。",
+    "lines": [
+     [
+      "We spent the whole day",
+      1
+     ],
+     [
+      "playing on the beach.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "一日中ビーチで遊んで過ごした",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: beach」"
+   }
+  ]
+ },
+ {
+  "id": "V05",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。この講座で時間の使い方を学ぶ、と言うとき、正しいのは、オンと、イン、どっち。",
+    "lines": [
+     [
+      "「この講座で時間の使い方を学ぶ」",
+      0
+     ],
+     [
+      "（  ）this course you will learn …",
+      1
+     ]
+    ],
+    "options": [
+     "On",
+     "In"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は On",
+    "say": "正解は、オン。授業のまとまりとしての講座は、オンを使います。",
+    "lines": [
+     [
+      "on this course",
+      1
+     ],
+     [
+      "講座（授業のまとまり）は on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "In は",
+    "say": "この意味では、インは使いません。",
+    "lines": [
+     [
+      "in this course ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "オン・ディス・コース、ユー・ウィル・ラーン・ハウ・トゥー・マネージ・ユア・タイム。この講座では時間の管理のしかたを学びます。",
+    "lines": [
+     [
+      "On this course you will learn",
+      1
+     ],
+     [
+      "how to manage your time.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "この講座では時間の管理のしかたを学びます",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: course」"
+   }
+  ]
+ },
+ {
+  "id": "V06",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。その日どこにいたか覚えている、と言うとき、正しいのは、インと、オン、どっち。",
+    "lines": [
+     [
+      "「その日どこにいたか覚えている」",
+      0
+     ],
+     [
+      "where I was（  ）that day",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。ディス・デイやザット・デイには、オンを使います。",
+    "lines": [
+     [
+      "on that day",
+      1
+     ],
+     [
+      "this/that day は on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・ザット・デイとは言いません。",
+    "lines": [
+     [
+      "in that day ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ウィル・オールウェイズ・リメンバー・ウェア・アイ・ワズ・オン・ザット・デイ。その日どこにいたか、ずっと覚えているだろう。",
+    "lines": [
+     [
+      "I will always remember",
+      1
+     ],
+     [
+      "where I was on that day.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "その日どこにいたか、ずっと覚えているだろう",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: day」"
+   }
+  ]
+ },
+ {
+  "id": "V07",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。善と悪の違い、と言うとき、正しいのは、ビトウィーンと、アマング、どっち。",
+    "lines": [
+     [
+      "「善と悪の違い」",
+      0
+     ],
+     [
+      "the difference（  ）right and wrong",
+      1
+     ]
+    ],
+    "options": [
+     "between",
+     "among"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は between",
+    "say": "正解は、ビトウィーン。二つ以上を比べる違いは、ビトウィーンを使います。",
+    "lines": [
+     [
+      "difference between",
+      1
+     ],
+     [
+      "比べるときは between",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "among は",
+    "say": "ディファレンス・アマングとは言いません。",
+    "lines": [
+     [
+      "difference among ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "チルドレン・マスト・ラーン・ザ・ディファレンス・ビトウィーン・ライト・アンド・ロング。子どもは善悪の違いを学ばなければならない。",
+    "lines": [
+     [
+      "Children must learn the difference",
+      1
+     ],
+     [
+      "between right and wrong.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "子どもは善悪の違いを学ばなければならない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: difference」"
+   }
+  ]
+ },
+ {
+  "id": "V08",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。銀行で働いた経験、と言うとき、正しいのは、オンと、オブ、どっち。",
+    "lines": [
+     [
+      "「銀行で働いた経験」",
+      0
+     ],
+     [
+      "experience（  ）working in a bank",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "of"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は of",
+    "say": "正解は、オブ。エクスペリエンスのあとは、オブを使います。",
+    "lines": [
+     [
+      "experience of working",
+      1
+     ],
+     [
+      "experience のあとは of",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "on は",
+    "say": "エクスペリエンス・オンとは言いません。",
+    "lines": [
+     [
+      "experience on working ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハブ・トゥー・イヤーズ・エクスペリエンス・オブ・ワーキング・イン・ア・バンク。銀行で2年働いた経験がある。",
+    "lines": [
+     [
+      "I have two years' experience",
+      1
+     ],
+     [
+      "of working in a bank.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "銀行で2年働いた経験がある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: experience」"
+   }
+  ]
+ },
+ {
+  "id": "V09",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。事務所は12階にある、と言うとき、正しいのは、オンと、イン、どっち。",
+    "lines": [
+     [
+      "「事務所は12階にある」",
+      0
+     ],
+     [
+      "Their office is（  ）the 12th floor.",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "in"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。建物の階を言うときは、オンを使います。",
+    "lines": [
+     [
+      "on the 12th floor",
+      1
+     ],
+     [
+      "建物の階は on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・ザ・トゥエルフス・フロアとは言いません。",
+    "lines": [
+     [
+      "in the 12th floor ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ゼア・オフィス・イズ・オン・ザ・トゥエルフス・フロア。彼らの事務所は12階にある。",
+    "lines": [
+     [
+      "Their office is",
+      1
+     ],
+     [
+      "on the 12th floor.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼らの事務所は12階にある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: floor」"
+   }
+  ]
+ },
+ {
+  "id": "V10",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。利益の増加、と言うとき、正しいのは、オブと、イン、どっち。",
+    "lines": [
+     [
+      "「利益の増加」",
+      0
+     ],
+     [
+      "an increase（  ）profits",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "in"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。増えているものの前は、インを使います。",
+    "lines": [
+     [
+      "an increase in profits",
+      1
+     ],
+     [
+      "増えているものの前は in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "オブは、30パーセントのように、増えた量の前で使います。",
+    "lines": [
+     [
+      "増えた量の前なら of",
+      1
+     ],
+     [
+      "使い分け",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ザ・カンパニー・ハズ・エクスペリエンスト・アン・インクリース・イン・プロフィッツ・ディス・イヤー。その会社は今年、利益が増えた。",
+    "lines": [
+     [
+      "The company has experienced",
+      1
+     ],
+     [
+      "an increase in profits this year.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "その会社は今年、利益が増えた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: increase in or increase of?」"
+   }
+  ]
+ },
+ {
+  "id": "V11",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。英語を学ぶことへの興味、と言うとき、正しいのは、インと、フォー、どっち。",
+    "lines": [
+     [
+      "「英語を学ぶことへの興味」",
+      0
+     ],
+     [
+      "an interest（  ）learning English",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "for"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。名詞のインタレストのあとは、インがふつうです。",
+    "lines": [
+     [
+      "an interest in",
+      1
+     ],
+     [
+      "名詞 interest のあとは in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "インタレスト・フォーとは言いません。",
+    "lines": [
+     [
+      "interest for ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒー・ハズ・ネバー・ショウン・アン・インタレスト・イン・ラーニング・イングリッシュ。彼は英語を学ぶことに興味を見せたことがない。",
+    "lines": [
+     [
+      "He has never shown",
+      1
+     ],
+     [
+      "an interest in learning English.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は英語を学ぶことに興味を見せたことがない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: interest」"
+   }
+  ]
+ },
+ {
+  "id": "V12",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。美しい島で3日過ごした、と言うとき、正しいのは、インと、オン、どっち。",
+    "lines": [
+     [
+      "「美しい島で3日過ごした」",
+      0
+     ],
+     [
+      "three days（  ）a beautiful island",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。島は、オン・アン・アイランドと言います。",
+    "lines": [
+     [
+      "on an island",
+      1
+     ],
+     [
+      "島は on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・アン・アイランドとは言いません。",
+    "lines": [
+     [
+      "in an island ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・スペント・スリー・デイズ・オン・ア・ビューティフル・アイランド。美しい島で3日間過ごした。",
+    "lines": [
+     [
+      "We spent three days",
+      1
+     ],
+     [
+      "on a beautiful island.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "美しい島で3日間過ごした",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: island」"
+   }
+  ]
+ },
+ {
+  "id": "V13",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。外国語2つ以上の知識、と言うとき、正しいのは、オブと、アバウト、どっち。",
+    "lines": [
+     [
+      "「外国語2つ以上の知識」",
+      0
+     ],
+     [
+      "knowledge（  ）two foreign languages",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "about"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は of",
+    "say": "正解は、オブ。ナレッジのあとは、オブを使います。",
+    "lines": [
+     [
+      "knowledge of",
+      1
+     ],
+     [
+      "knowledge のあとは of",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "about は",
+    "say": "ナレッジ・アバウトとは言いません。",
+    "lines": [
+     [
+      "knowledge about ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ディス・ジョブ・リクワイアーズ・ナレッジ・オブ・アット・リースト・トゥー・フォーリン・ランゲージズ。この仕事には少なくとも2つの外国語の知識が必要だ。",
+    "lines": [
+     [
+      "This job requires knowledge",
+      1
+     ],
+     [
+      "of at least two foreign languages.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "この仕事には少なくとも2つの外国語の知識が必要だ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: knowledge」"
+   }
+  ]
+ },
+ {
+  "id": "V14",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ロンドン行きの列車が出る、と言うとき、正しいのは、トゥーと、フォー、どっち。",
+    "lines": [
+     [
+      "「ロンドン行きの列車が出る」",
+      0
+     ],
+     [
+      "Trains leave（  ）London …",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "for"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は for",
+    "say": "正解は、フォー。ある場所へ向けて出発するは、リーブ・フォーです。",
+    "lines": [
+     [
+      "leave for London",
+      1
+     ],
+     [
+      "〜へ向けて出発は leave for",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "リーブ・トゥーとは言いません。",
+    "lines": [
+     [
+      "leave to ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "トレインズ・リーブ・フォー・ロンドン・エブリー・サーティー・ミニッツ。ロンドン行きの列車は30分ごとに出る。",
+    "lines": [
+     [
+      "Trains leave for London",
+      1
+     ],
+     [
+      "every 30 minutes.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ロンドン行きの列車は30分ごとに出る",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: leave」"
+   }
+  ]
+ },
+ {
+  "id": "V15",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。新しいスーパーの必要性、と言うとき、正しいのは、フォーと、オブ、どっち。",
+    "lines": [
+     [
+      "「新しいスーパーの必要性」",
+      0
+     ],
+     [
+      "the need（  ）a new supermarket",
+      1
+     ]
+    ],
+    "options": [
+     "for",
+     "of"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は for",
+    "say": "正解は、フォー。ザ・ニードのあとは、フォーを使います。",
+    "lines": [
+     [
+      "the need for",
+      1
+     ],
+     [
+      "a/the need のあとは for",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "ザ・ニード・オブとは言いません。",
+    "lines": [
+     [
+      "the need of ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・キャンノット・シー・ザ・ニード・フォー・ア・ニュー・スーパーマーケット。新しいスーパーが必要だとは思えない。",
+    "lines": [
+     [
+      "I cannot see the need",
+      1
+     ],
+     [
+      "for a new supermarket.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "新しいスーパーが必要だとは思えない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: need」"
+   }
+  ]
+ },
+ {
+  "id": "V16",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。新聞でおもしろい記事を読んだ、と言うとき、正しいのは、オンと、イン、どっち。",
+    "lines": [
+     [
+      "「新聞でおもしろい記事を読んだ」",
+      0
+     ],
+     [
+      "an article（  ）the newspaper",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "in"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。新聞の記事は、イン・ザ・ニュースペーパーです。",
+    "lines": [
+     [
+      "in the newspaper",
+      1
+     ],
+     [
+      "新聞の中は in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "on は",
+    "say": "オン・ザ・ニュースペーパーとは言いません。",
+    "lines": [
+     [
+      "on the newspaper ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・レッド・アン・インタレスティング・アーティクル・イン・ザ・ニュースペーパー。新聞でおもしろい記事を読んだ。",
+    "lines": [
+     [
+      "I read an interesting article",
+      1
+     ],
+     [
+      "in the newspaper.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "新聞でおもしろい記事を読んだ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: newspaper」"
+   }
+  ]
+ },
+ {
+  "id": "V17",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。何度か彼に会ったことがある、と言うとき、正しいのは、オンと、イン、どっち。",
+    "lines": [
+     [
+      "「何度か彼に会ったことがある」",
+      0
+     ],
+     [
+      "I have met him（  ）several occasions.",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "in"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。オケージョンには、ふつうオンを使います。",
+    "lines": [
+     [
+      "on several occasions",
+      1
+     ],
+     [
+      "occasion はふつう on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・セベラル・オケージョンズとは言いません。",
+    "lines": [
+     [
+      "in several occasions ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハブ・メット・ヒム・オン・セベラル・オケージョンズ。彼には何度か会ったことがある。",
+    "lines": [
+     [
+      "I have met him",
+      1
+     ],
+     [
+      "on several occasions.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼には何度か会ったことがある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: occasion」"
+   }
+  ]
+ },
+ {
+  "id": "V18",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。秋、葉が木から落ちた、と言うとき、正しいのは、フェル・ダウンと、フェル、どっち。",
+    "lines": [
+     [
+      "「秋、葉が木から落ちた」",
+      0
+     ],
+     [
+      "the leaves（  ）from the trees",
+      1
+     ]
+    ],
+    "options": [
+     "fell down",
+     "fell"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は fell",
+    "say": "正解は、フェル。木の葉が落ちるときは、フォールだけを使います。",
+    "lines": [
+     [
+      "the leaves fell",
+      1
+     ],
+     [
+      "落ち葉は fall",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "fell down は",
+    "say": "フェル・ダウンとは言いません。",
+    "lines": [
+     [
+      "the leaves fell down ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アズ・オータム・ケイム、ザ・リーブズ・フェル・フロム・ザ・ツリーズ。秋が来て、葉が木から落ちた。",
+    "lines": [
+     [
+      "As autumn came,",
+      1
+     ],
+     [
+      "the leaves fell from the trees.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "秋が来て、葉が木から落ちた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Fall or fall down?」"
+   }
+  ]
+ },
+ {
+  "id": "V19",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。新しいパソコンに満足している、と言うとき、正しいのは、ウィズと、フォー、どっち。",
+    "lines": [
+     [
+      "「新しいパソコンに満足している」",
+      0
+     ],
+     [
+      "I'm pleased（  ）my new computer.",
+      1
+     ]
+    ],
+    "options": [
+     "with",
+     "for"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は with",
+    "say": "正解は、ウィズ。気に入った物には、プリーズド・ウィズを使います。",
+    "lines": [
+     [
+      "pleased with",
+      1
+     ],
+     [
+      "気に入った物には with",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "この文では、フォーは使いません。",
+    "lines": [
+     [
+      "pleased for my new computer ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイム・プリーズド・ウィズ・マイ・ニュー・コンピューター。新しいパソコンに満足している。",
+    "lines": [
+     [
+      "I'm pleased with",
+      1
+     ],
+     [
+      "my new computer.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "新しいパソコンに満足している",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: pleased」"
+   }
+  ]
+ },
+ {
+  "id": "V20",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。私の見方からすると、と言うとき、正しいのは、インと、フロム、どっち。",
+    "lines": [
+     [
+      "「私の見方からすると」",
+      0
+     ],
+     [
+      "（  ）my point of view, …",
+      1
+     ]
+    ],
+    "options": [
+     "In",
+     "From"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は From",
+    "say": "正解は、フロム。ポイント・オブ・ビューには、フロムを使います。",
+    "lines": [
+     [
+      "from my point of view",
+      1
+     ],
+     [
+      "point of view は from",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "In は",
+    "say": "イン・マイ・ポイント・オブ・ビューとは言いません。",
+    "lines": [
+     [
+      "in my point of view ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "フロム・マイ・ポイント・オブ・ビュー、イット・ウッド・ビー・ベター・トゥー・スタート・ストレートアウェイ。私の見方では、すぐに始めたほうがいい。",
+    "lines": [
+     [
+      "From my point of view, it would be",
+      1
+     ],
+     [
+      "better to start straightaway.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私の見方では、すぐに始めたほうがいい",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: point of view」"
+   }
+  ]
+ },
+ {
+  "id": "V21",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。旅行のおもな理由、と言うとき、正しいのは、フォーと、オブ、どっち。",
+    "lines": [
+     [
+      "「旅行のおもな理由」",
+      0
+     ],
+     [
+      "the main reason（  ）the trip",
+      1
+     ]
+    ],
+    "options": [
+     "for",
+     "of"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は for",
+    "say": "正解は、フォー。リーズンのあとは、フォーを使います。",
+    "lines": [
+     [
+      "reason for",
+      1
+     ],
+     [
+      "reason のあとは for",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "リーズン・オブとは言いません。",
+    "lines": [
+     [
+      "reason of ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ザット・ワズ・ザ・メイン・リーズン・フォー・ザ・トリップ。それが旅行のおもな理由だった。",
+    "lines": [
+     [
+      "That was the main reason",
+      1
+     ],
+     [
+      "for the trip.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "それが旅行のおもな理由だった",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: reason」"
+   }
+  ]
+ },
+ {
+  "id": "V22",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。自分の決定に責任がある、と言うとき、正しいのは、オブと、フォー、どっち。",
+    "lines": [
+     [
+      "「自分の決定に責任がある」",
+      0
+     ],
+     [
+      "responsible（  ）our own decisions",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "for"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は for",
+    "say": "正解は、フォー。レスポンシブルのあとは、フォーを使います。",
+    "lines": [
+     [
+      "responsible for",
+      1
+     ],
+     [
+      "responsible のあとは for",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "レスポンシブル・オブとは言いません。",
+    "lines": [
+     [
+      "responsible of ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・アー・オール・レスポンシブル・フォー・アワ・オウン・ディシジョンズ。私たちはみな自分の決定に責任がある。",
+    "lines": [
+     [
+      "We are all responsible",
+      1
+     ],
+     [
+      "for our own decisions.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私たちはみな自分の決定に責任がある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: responsible」"
+   }
+  ]
+ },
+ {
+  "id": "V23",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。後ろの列の席しか取れなかった、と言うとき、正しいのは、インと、オン、どっち。",
+    "lines": [
+     [
+      "「後ろの列の席しか取れなかった」",
+      0
+     ],
+     [
+      "seats（  ）the back row",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "on"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。席の列は、イン・ザ・バック・ロウのように言います。",
+    "lines": [
+     [
+      "in the back row",
+      1
+     ],
+     [
+      "列（row）は in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "on は",
+    "say": "オン・ザ・バック・ロウとは言いません。",
+    "lines": [
+     [
+      "on the back row ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・クッド・オンリー・ゲット・シーツ・イン・ザ・バック・ロウ。後ろの列の席しか取れなかった。",
+    "lines": [
+     [
+      "We could only get seats",
+      1
+     ],
+     [
+      "in the back row.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "後ろの列の席しか取れなかった",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: row」"
+   }
+  ]
+ },
+ {
+  "id": "V24",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。この問題の解決策、と言うとき、正しいのは、フォーと、トゥー、どっち。",
+    "lines": [
+     [
+      "「この問題の解決策」",
+      0
+     ],
+     [
+      "a solution（  ）this problem",
+      1
+     ]
+    ],
+    "options": [
+     "for",
+     "to"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は to",
+    "say": "正解は、トゥー。ソリューションのあとは、トゥーを使います。",
+    "lines": [
+     [
+      "a solution to",
+      1
+     ],
+     [
+      "solution のあとは to",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "ア・ソリューション・フォーとは言いません。",
+    "lines": [
+     [
+      "a solution for ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・マスト・ファインド・ア・ソリューション・トゥー・ディス・プロブレム。この問題の解決策を見つけなければならない。",
+    "lines": [
+     [
+      "We must find a solution",
+      1
+     ],
+     [
+      "to this problem.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "この問題の解決策を見つけなければならない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: solution」"
+   }
+  ]
+ },
+ {
+  "id": "V25",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。私の提案をすべて考慮して、と言うとき、正しいのは、イントゥーと、イン、どっち。",
+    "lines": [
+     [
+      "「私の提案をすべて考慮して」",
+      0
+     ],
+     [
+      "take my suggestions（  ）consideration",
+      1
+     ]
+    ],
+    "options": [
+     "into",
+     "in"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は into",
+    "say": "正解は、イントゥー。考慮に入れるは、テイク・イントゥー・コンシダレーションです。",
+    "lines": [
+     [
+      "take into consideration",
+      1
+     ],
+     [
+      "考慮に入れるは into",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "テイク・イン・コンシダレーションとは言いません。",
+    "lines": [
+     [
+      "take in consideration ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "プリーズ・テイク・オール・マイ・サジェスチョンズ・イントゥー・コンシダレーション。私の提案をすべて考慮してください。",
+    "lines": [
+     [
+      "Please take all my suggestions",
+      1
+     ],
+     [
+      "into consideration.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私の提案をすべて考慮してください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: take into consideration」"
+   }
+  ]
+ },
+ {
+  "id": "V26",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。今夜テレビで何がある？、と言うとき、正しいのは、インと、オン、どっち。",
+    "lines": [
+     [
+      "「今夜テレビで何がある？」",
+      0
+     ],
+     [
+      "What's（  ）television tonight?",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。テレビには、ふつうオンを使います。",
+    "lines": [
+     [
+      "on television",
+      1
+     ],
+     [
+      "テレビはふつう on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "in は",
+    "say": "イン・テレビジョンとは言いません。",
+    "lines": [
+     [
+      "in television ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ワッツ・オン・テレビジョン・トゥナイト。今夜テレビで何をやってる？。",
+    "lines": [
+     [
+      "What's on television",
+      1
+     ],
+     [
+      "tonight?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "今夜テレビで何をやってる？",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: television」"
+   }
+  ]
+ },
+ {
+  "id": "V27",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。最後の駅で電車を降りる、と言うとき、正しいのは、オフと、アウト・オブ、どっち。",
+    "lines": [
+     [
+      "「最後の駅で電車を降りる」",
+      0
+     ],
+     [
+      "get（  ）the train",
+      1
+     ]
+    ],
+    "options": [
+     "off",
+     "out of"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は off",
+    "say": "正解は、オフ。電車を降りるは、ゲット・オフです。",
+    "lines": [
+     [
+      "get off the train",
+      1
+     ],
+     [
+      "電車を降りるは get off",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "out of は",
+    "say": "電車では、ゲット・アウト・オブとは言いません。",
+    "lines": [
+     [
+      "get out of the train ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ユー・ニード・トゥー・ゲット・オフ・ザ・トレイン・アット・ザ・ラスト・ストップ。最後の駅で電車を降りてください。",
+    "lines": [
+     [
+      "You need to get off the train",
+      1
+     ],
+     [
+      "at the last stop.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "最後の駅で電車を降りてください",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: train」"
+   }
+  ]
+ },
+ {
+  "id": "V28",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。世界でいちばん大きい都市、と言うとき、正しいのは、オブと、イン、どっち。",
+    "lines": [
+     [
+      "「世界でいちばん大きい都市」",
+      0
+     ],
+     [
+      "the biggest city（  ）the world",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "in"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。最上級とザ・ワールドは、インでつなぎます。",
+    "lines": [
+     [
+      "in the world",
+      1
+     ],
+     [
+      "最上級＋the world は in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "オブ・ザ・ワールドとは言いません。",
+    "lines": [
+     [
+      "of the world ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・リブ・イン・ザ・ビゲスト・シティ・イン・ザ・ワールド。私は世界でいちばん大きい都市に住んでいる。",
+    "lines": [
+     [
+      "I live in the biggest city",
+      1
+     ],
+     [
+      "in the world.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私は世界でいちばん大きい都市に住んでいる",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: world」"
+   }
+  ]
+ },
+ {
+  "id": "V29",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。何も心配いらない、と言うとき、正しいのは、アバウトと、フォー、どっち。",
+    "lines": [
+     [
+      "「何も心配いらない」",
+      0
+     ],
+     [
+      "no need to worry（  ）anything",
+      1
+     ]
+    ],
+    "options": [
+     "about",
+     "for"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は about",
+    "say": "正解は、アバウト。心配しているものの前は、アバウトを使います。",
+    "lines": [
+     [
+      "worry about",
+      1
+     ],
+     [
+      "心配の対象は about",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "ウォーリー・フォーとは言いません。",
+    "lines": [
+     [
+      "worry for ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ゼアズ・ノー・ニード・トゥー・ウォーリー・アバウト・エニシング。何も心配する必要はない。",
+    "lines": [
+     [
+      "There's no need",
+      1
+     ],
+     [
+      "to worry about anything.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "何も心配する必要はない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Prepositions: worry」"
+   }
+  ]
+ },
+ {
+  "id": "V30",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。すぐに彼らに謝った、と言うとき、正しいのは、何も入れないと、トゥー、どっち。",
+    "lines": [
+     [
+      "「すぐに彼らに謝った」",
+      0
+     ],
+     [
+      "I apologized（  ）them.",
+      1
+     ]
+    ],
+    "options": [
+     "（なし）",
+     "to"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は to",
+    "say": "正解は、トゥー。謝る相手を言うときは、トゥーを使います。",
+    "lines": [
+     [
+      "apologized to them",
+      1
+     ],
+     [
+      "謝る相手の前は to",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "前置詞なしは",
+    "say": "アポロジャイズド・ゼムとは言いません。",
+    "lines": [
+     [
+      "apologized them ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・アポロジャイズド・トゥー・ゼム・イミーディエットリー。私はすぐに彼らに謝った。",
+    "lines": [
+     [
+      "I apologized to them",
+      1
+     ],
+     [
+      "immediately.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私はすぐに彼らに謝った",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: apologize to someone」"
+   }
+  ]
+ },
+ {
+  "id": "V31",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。黒いスーツを着ていた、と言うとき、正しいのは、インと、ウィズ、どっち。",
+    "lines": [
+     [
+      "「黒いスーツを着ていた」",
+      0
+     ],
+     [
+      "He was dressed（  ）a black suit.",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "with"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。着ている服の前は、インを使います。",
+    "lines": [
+     [
+      "dressed in",
+      1
+     ],
+     [
+      "服の前は in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "with は",
+    "say": "ドレスト・ウィズとは言いません。",
+    "lines": [
+     [
+      "dressed with ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒー・ワズ・ドレスト・イン・ア・ブラック・スーツ。彼は黒いスーツを着ていた。",
+    "lines": [
+     [
+      "He was dressed",
+      1
+     ],
+     [
+      "in a black suit.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は黒いスーツを着ていた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: be/get dressed」"
+   }
+  ]
+ },
+ {
+  "id": "V32",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。庭で花をつむ、と言うとき、正しいのは、ピック・アップと、ピック、どっち。",
+    "lines": [
+     [
+      "「庭で花をつむ」",
+      0
+     ],
+     [
+      "（  ）some flowers in the garden",
+      1
+     ]
+    ],
+    "options": [
+     "pick up",
+     "pick"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は pick",
+    "say": "正解は、ピック。花や果物をつむは、ピックです。",
+    "lines": [
+     [
+      "pick some flowers",
+      1
+     ],
+     [
+      "花をつむは pick",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "pick up は",
+    "say": "ピック・アップは、手で持ち上げる、です。",
+    "lines": [
+     [
+      "pick up some flowers ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "レッツ・ゴー・イントゥー・ザ・ガーデン・アンド・ピック・サム・フラワーズ。庭に出て花をつもう。",
+    "lines": [
+     [
+      "Let's go into the garden",
+      1
+     ],
+     [
+      "and pick some flowers.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "庭に出て花をつもう",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Pick or pick up?」"
+   }
+  ]
+ },
+ {
+  "id": "V33",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。食堂の料理の質に苦情を言う、と言うとき、正しいのは、アバウトと、フォー、どっち。",
+    "lines": [
+     [
+      "「食堂の料理の質に苦情を言う」",
+      0
+     ],
+     [
+      "complain（  ）the quality of the food",
+      1
+     ]
+    ],
+    "options": [
+     "about",
+     "for"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は about",
+    "say": "正解は、アバウト。コンプレインのあとは、アバウトを使います。",
+    "lines": [
+     [
+      "complain about",
+      1
+     ],
+     [
+      "complain のあとは about",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "コンプレイン・フォーとは言いません。",
+    "lines": [
+     [
+      "complain for ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ウォント・トゥー・コンプレイン・アバウト・ザ・クオリティ・オブ・ザ・フード。料理の質について苦情を言いたい。",
+    "lines": [
+     [
+      "I want to complain about",
+      1
+     ],
+     [
+      "the quality of the food.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "料理の質について苦情を言いたい",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: complain」"
+   }
+  ]
+ },
+ {
+  "id": "V34",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。天気しだいだ、と言うとき、正しいのは、オブと、オン、どっち。",
+    "lines": [
+     [
+      "「天気しだいだ」",
+      0
+     ],
+     [
+      "It depends（  ）the weather.",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。ディペンドのあとは、オンを使います。",
+    "lines": [
+     [
+      "depends on",
+      1
+     ],
+     [
+      "depend のあとは on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "ディペンズ・オブとは言いません。",
+    "lines": [
+     [
+      "depends of ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・マイト・ゴー・オン・フライデー、イット・ディペンズ・オン・ザ・ウェザー。金曜に行くかも。天気しだい。",
+    "lines": [
+     [
+      "I might go on Friday –",
+      1
+     ],
+     [
+      "it depends on the weather.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "金曜に行くかも。天気しだい",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: depend on something」"
+   }
+  ]
+ },
+ {
+  "id": "V35",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。海のそばに住むのが夢だった、と言うとき、正しいのは、オブ・リビングと、トゥー・リブ、どっち。",
+    "lines": [
+     [
+      "「海のそばに住むのが夢だった」",
+      0
+     ],
+     [
+      "I have always dreamed（  ）by the sea.",
+      1
+     ]
+    ],
+    "options": [
+     "of living",
+     "to live"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は of living",
+    "say": "正解は、オブ・リビング。こうなったらいいなと夢見るは、ドリーム・オブとイング形です。",
+    "lines": [
+     [
+      "dreamed of living",
+      1
+     ],
+     [
+      "夢見るは dream of -ing",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to live は",
+    "say": "ドリームド・トゥー・リブとは言いません。",
+    "lines": [
+     [
+      "dreamed to live ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハブ・オールウェイズ・ドリームド・オブ・リビング・バイ・ザ・シー。ずっと海のそばに住むのが夢だった。",
+    "lines": [
+     [
+      "I have always dreamed",
+      1
+     ],
+     [
+      "of living by the sea.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ずっと海のそばに住むのが夢だった",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: dream」"
+   }
+  ]
+ },
+ {
+  "id": "V36",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。両親といい関係だ、と言うとき、正しいのは、トゥーと、ウィズ、どっち。",
+    "lines": [
+     [
+      "「両親といい関係だ」",
+      0
+     ],
+     [
+      "a good relationship（  ）my parents",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "with"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は with",
+    "say": "正解は、ウィズ。人との関係は、リレーションシップ・ウィズです。",
+    "lines": [
+     [
+      "relationship with",
+      1
+     ],
+     [
+      "関係の相手は with",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "この表現では、トゥーは使いません。",
+    "lines": [
+     [
+      "relationship to ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ハブ・ア・グッド・リレーションシップ・ウィズ・マイ・ペアレンツ。私は両親といい関係だ。",
+    "lines": [
+     [
+      "I have a good relationship",
+      1
+     ],
+     [
+      "with my parents.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私は両親といい関係だ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: have a relationship with someone」"
+   }
+  ]
+ },
+ {
+  "id": "V37",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。ご連絡をお待ちしています、と言うとき、正しいのは、フロムと、何も入れない、どっち。",
+    "lines": [
+     [
+      "「ご連絡をお待ちしています」",
+      0
+     ],
+     [
+      "I look forward to hearing（  ）you.",
+      1
+     ]
+    ],
+    "options": [
+     "from",
+     "（なし）"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は from",
+    "say": "正解は、フロム。メールや電話で連絡をもらうは、ヒア・フロムです。",
+    "lines": [
+     [
+      "hearing from you",
+      1
+     ],
+     [
+      "連絡をもらうは hear from",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "前置詞なしは",
+    "say": "ヒアリング・ユーとは言いません。",
+    "lines": [
+     [
+      "hearing you ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・ルック・フォワード・トゥー・ヒアリング・フロム・ユー。ご連絡をお待ちしています。",
+    "lines": [
+     [
+      "I look forward to",
+      1
+     ],
+     [
+      "hearing from you.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "ご連絡をお待ちしています",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: hear from sb」"
+   }
+  ]
+ },
+ {
+  "id": "V38",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。募集の仕事にとても興味がある、と言うとき、正しいのは、オンと、イン、どっち。",
+    "lines": [
+     [
+      "「募集の仕事にとても興味がある」",
+      0
+     ],
+     [
+      "I am very interested（  ）the job.",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "in"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。インタレステッドのあとは、インを使います。",
+    "lines": [
+     [
+      "interested in",
+      1
+     ],
+     [
+      "interested のあとは in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "on は",
+    "say": "インタレステッド・オンとは言いません。",
+    "lines": [
+     [
+      "interested on ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・アム・ベリー・インタレステッド・イン・ザ・ジョブ・ユー・アドバタイズド。募集されている仕事にとても興味があります。",
+    "lines": [
+     [
+      "I am very interested",
+      1
+     ],
+     [
+      "in the job you advertised.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "募集されている仕事にとても興味があります",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: interested」"
+   }
+  ]
+ },
+ {
+  "id": "V39",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。彼女にパーティーに招かれた、と言うとき、正しいのは、トゥーと、フォー、どっち。",
+    "lines": [
+     [
+      "「彼女にパーティーに招かれた」",
+      0
+     ],
+     [
+      "She invited me（  ）the party.",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "for"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は to",
+    "say": "正解は、トゥー。パーティーなどの催しに招くは、トゥーを使います。",
+    "lines": [
+     [
+      "invited me to the party",
+      1
+     ],
+     [
+      "催しへの招待は to",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "この文では、フォーは使いません。",
+    "lines": [
+     [
+      "invited me for the party ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シー・インバイテッド・ミー・トゥー・ザ・パーティー。彼女は私をパーティーに招いた。",
+    "lines": [
+     [
+      "She invited me",
+      1
+     ],
+     [
+      "to the party.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は私をパーティーに招いた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: invite someone to something」"
+   }
+  ]
+ },
+ {
+  "id": "V40",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。2018年にチームに加わった、と言うとき、正しいのは、トゥーと、何も入れない、どっち。",
+    "lines": [
+     [
+      "「2018年にチームに加わった」",
+      0
+     ],
+     [
+      "He joined（  ）the team in 2018.",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "（なし）"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は （なし）",
+    "say": "正解は、何も入れない。ジョイン・ザ・チームのように、ジョインのあとに前置詞はいりません。",
+    "lines": [
+     [
+      "joined the team",
+      1
+     ],
+     [
+      "join のあとに前置詞はいらない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "ジョインド・トゥーとは言いません。",
+    "lines": [
+     [
+      "joined to the team ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ヒー・ジョインド・ザ・チーム・イン・トゥエンティ・エイティーン。彼は2018年にチームに加わった。",
+    "lines": [
+     [
+      "He joined the team",
+      1
+     ],
+     [
+      "in 2018.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼は2018年にチームに加わった",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: join」"
+   }
+  ]
+ },
+ {
+  "id": "V41",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。誰かがドアをノックしている、と言うとき、正しいのは、オンと、トゥー、どっち。",
+    "lines": [
+     [
+      "「誰かがドアをノックしている」",
+      0
+     ],
+     [
+      "someone knocking（  ）the door",
+      1
+     ]
+    ],
+    "options": [
+     "on",
+     "to"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。ドアをノックするは、ノック・オン。アットも使えます。",
+    "lines": [
+     [
+      "knocking on the door",
+      1
+     ],
+     [
+      "ドアをノックは on（at も可）",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "ノッキング・トゥーとは言いません。",
+    "lines": [
+     [
+      "knocking to ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ザ・ポリースマン・ノックト・オン・ザ・ドア。警官がドアをノックした。",
+    "lines": [
+     [
+      "The policeman knocked",
+      1
+     ],
+     [
+      "on the door.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "警官がドアをノックした",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: knock」"
+   }
+  ]
+ },
+ {
+  "id": "V42",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。机の上の写真を見た、と言うとき、正しいのは、トゥーと、アット、どっち。",
+    "lines": [
+     [
+      "「机の上の写真を見た」",
+      0
+     ],
+     [
+      "She looked（  ）the photo.",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "at"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は at",
+    "say": "正解は、アット。ルックのあとに見るものを続けるときは、アットを使います。",
+    "lines": [
+     [
+      "looked at the photo",
+      1
+     ],
+     [
+      "look に目的語なら at",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "ルックト・トゥーとは言いません。",
+    "lines": [
+     [
+      "looked to the photo ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シー・ルックト・アット・ザ・フォト・オン・ハー・デスク・アンド・スマイルド。彼女は机の写真を見てほほえんだ。",
+    "lines": [
+     [
+      "She looked at the photo",
+      1
+     ],
+     [
+      "on her desk and smiled.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は机の写真を見てほほえんだ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: look」"
+   }
+  ]
+ },
+ {
+  "id": "V43",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。たくさんのスポーツ活動に参加する、と言うとき、正しいのは、インと、トゥー、どっち。",
+    "lines": [
+     [
+      "「たくさんのスポーツ活動に参加する」",
+      0
+     ],
+     [
+      "She participates（  ）a lot of sports.",
+      1
+     ]
+    ],
+    "options": [
+     "in",
+     "to"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。パーティシペイトのあとは、インを使います。",
+    "lines": [
+     [
+      "participates in",
+      1
+     ],
+     [
+      "participate のあとは in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "パーティシペイツ・トゥーとは言いません。",
+    "lines": [
+     [
+      "participates to ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シー・パーティシペイツ・イン・ア・ロット・オブ・スポーツ・アクティビティーズ。彼女はたくさんのスポーツ活動に参加している。",
+    "lines": [
+     [
+      "She participates in",
+      1
+     ],
+     [
+      "a lot of sports activities.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女はたくさんのスポーツ活動に参加している",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: participate」"
+   }
+  ]
+ },
+ {
+  "id": "V44",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。チケット代を前もって払う、と言うとき、正しいのは、何も入れないと、フォー、どっち。",
+    "lines": [
+     [
+      "「チケット代を前もって払う」",
+      0
+     ],
+     [
+      "You have to pay（  ）the tickets.",
+      1
+     ]
+    ],
+    "options": [
+     "（なし）",
+     "for"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は for",
+    "say": "正解は、フォー。買う物の代金を払うときは、ペイ・フォーです。",
+    "lines": [
+     [
+      "pay for the tickets",
+      1
+     ],
+     [
+      "買う物の前は for",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "前置詞なしは",
+    "say": "ペイ・ザ・チケッツとは言いません。",
+    "lines": [
+     [
+      "pay the tickets ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ユー・ハフ・トゥー・ペイ・フォー・ザ・チケッツ・イン・アドバンス。チケット代は前もって払う必要がある。",
+    "lines": [
+     [
+      "You have to pay for",
+      1
+     ],
+     [
+      "the tickets in advance.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "チケット代は前もって払う必要がある",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: pay」"
+   }
+  ]
+ },
+ {
+  "id": "V45",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。この地域のホテルの一覧をいただけますか、と言うとき、正しいのは、ウィズと、何も入れない、どっち。",
+    "lines": [
+     [
+      "「この地域のホテルの一覧をいただけますか」",
+      0
+     ],
+     [
+      "Could you provide us（  ）a list …?",
+      1
+     ]
+    ],
+    "options": [
+     "with",
+     "（なし）"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は with",
+    "say": "正解は、ウィズ。プロバイド、人、ウィズ、物の順です。",
+    "lines": [
+     [
+      "provide us with",
+      1
+     ],
+     [
+      "provide＋人＋with＋物",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "前置詞なしは",
+    "say": "プロバイド・アス・ア・リストとは言いません。",
+    "lines": [
+     [
+      "provide us a list ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "クッド・ユー・プロバイド・アス・ウィズ・ア・リスト・オブ・ホテルズ・イン・ジ・エリア。この地域のホテルの一覧をいただけますか。",
+    "lines": [
+     [
+      "Could you provide us with",
+      1
+     ],
+     [
+      "a list of hotels in the area?",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "この地域のホテルの一覧をいただけますか",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: provide」"
+   }
+  ]
+ },
+ {
+  "id": "V46",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。真夜中すぎにホテルに着いた、と言うとき、正しいのは、トゥーと、何も入れない、どっち。",
+    "lines": [
+     [
+      "「真夜中すぎにホテルに着いた」",
+      0
+     ],
+     [
+      "We finally reached（  ）the hotel.",
+      1
+     ]
+    ],
+    "options": [
+     "to",
+     "（なし）"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は （なし）",
+    "say": "正解は、何も入れない。着くという意味のリーチには、ふつう前置詞を付けません。",
+    "lines": [
+     [
+      "reached the hotel",
+      1
+     ],
+     [
+      "着くの reach に前置詞はいらない",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "リーチト・トゥーとは言いません。",
+    "lines": [
+     [
+      "reached to the hotel ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "ウィー・ファイナリー・リーチト・ザ・ホテル・ジャスト・アフター・ミッドナイト。真夜中すぎにやっとホテルに着いた。",
+    "lines": [
+     [
+      "We finally reached the hotel",
+      1
+     ],
+     [
+      "just after midnight.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "真夜中すぎにやっとホテルに着いた",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: reach」"
+   }
+  ]
+ },
+ {
+  "id": "V47",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。小さな女の子にほほえんだ、と言うとき、正しいのは、アットと、トゥー、どっち。",
+    "lines": [
+     [
+      "「小さな女の子にほほえんだ」",
+      0
+     ],
+     [
+      "She smiled（  ）the little girl.",
+      1
+     ]
+    ],
+    "options": [
+     "at",
+     "to"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は at",
+    "say": "正解は、アット。スマイルのあとは、アットを使います。",
+    "lines": [
+     [
+      "smiled at",
+      1
+     ],
+     [
+      "ほほえむ相手は at",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "to は",
+    "say": "この文では、トゥーは使いません。",
+    "lines": [
+     [
+      "smiled to ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "シー・スマイルド・アット・ザ・リトル・ガール。彼女は小さな女の子にほほえんだ。",
+    "lines": [
+     [
+      "She smiled at",
+      1
+     ],
+     [
+      "the little girl.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "彼女は小さな女の子にほほえんだ",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: smile at someone/something」"
+   }
+  ]
+ },
+ {
+  "id": "V48",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。家賃に週150ポンド使う、と言うとき、正しいのは、フォーと、オン、どっち。",
+    "lines": [
+     [
+      "「家賃に週150ポンド使う」",
+      0
+     ],
+     [
+      "I spend £150 per week（  ）rent.",
+      1
+     ]
+    ],
+    "options": [
+     "for",
+     "on"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は on",
+    "say": "正解は、オン。お金を何に使うかは、スペンド・オンで言います。",
+    "lines": [
+     [
+      "spend … on rent",
+      1
+     ],
+     [
+      "お金を使う対象は on",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "for は",
+    "say": "スペンド・フォーとは言いません。",
+    "lines": [
+     [
+      "spend money for ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "アイ・スペンド・ワン・ハンドレッド・アンド・フィフティ・パウンズ・パー・ウィーク・オン・レント。家賃に週150ポンド使っている。",
+    "lines": [
+     [
+      "I spend £150 per week",
+      1
+     ],
+     [
+      "on rent.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "家賃に週150ポンド使っている",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: spend」"
+   }
+  ]
+ },
+ {
+  "id": "V49",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。留守のあいだ植物の世話をして、と言うとき、正しいのは、オブと、アバウト、どっち。",
+    "lines": [
+     [
+      "「留守のあいだ植物の世話をして」",
+      0
+     ],
+     [
+      "Please take care（  ）my plants.",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "about"
+    ],
+    "answer": 0
+   },
+   {
+    "type": "reveal",
+    "head": "正解は of",
+    "say": "正解は、オブ。世話をするは、テイク・ケア・オブです。",
+    "lines": [
+     [
+      "take care of",
+      1
+     ],
+     [
+      "世話をするは take care of",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "about は",
+    "say": "テイク・ケア・アバウトとは言いません。",
+    "lines": [
+     [
+      "take care about ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "プリーズ・テイク・ケア・オブ・マイ・プランツ・ワイル・アイ・アム・オン・ホリデイ。休暇のあいだ、植物の世話をお願いします。",
+    "lines": [
+     [
+      "Please take care of my plants",
+      1
+     ],
+     [
+      "while I am on holiday.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "休暇のあいだ、植物の世話をお願いします",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: take care」"
+   }
+  ]
+ },
+ {
+  "id": "V50",
+  "cat": "英語｜前置詞",
+  "scenes": [
+   {
+    "type": "quiz",
+    "head": "3秒クイズ",
+    "say": "クイズです。チームで大会に参加したい、と言うとき、正しいのは、オブと、イン、どっち。",
+    "lines": [
+     [
+      "「チームで大会に参加したい」",
+      0
+     ],
+     [
+      "take part（  ）the competition",
+      1
+     ]
+    ],
+    "options": [
+     "of",
+     "in"
+    ],
+    "answer": 1
+   },
+   {
+    "type": "reveal",
+    "head": "正解は in",
+    "say": "正解は、イン。参加するは、テイク・パート・インです。",
+    "lines": [
+     [
+      "take part in",
+      1
+     ],
+     [
+      "参加するは take part in",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "of は",
+    "say": "テイク・パート・オブとは言いません。",
+    "lines": [
+     [
+      "take part of ×",
+      1
+     ],
+     [
+      "出典で誤りとされる形",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "例文",
+    "say": "マイ・チーム・ウッド・ライク・トゥー・テイク・パート・イン・ザ・コンペティション。私たちのチームは大会に参加したい。",
+    "lines": [
+     [
+      "My team would like to",
+      1
+     ],
+     [
+      "take part in the competition.",
+      1
+     ],
+     [
+      "",
+      0
+     ],
+     [
+      "私たちのチームは大会に参加したい",
+      0
+     ]
+    ]
+   },
+   {
+    "type": "text",
+    "head": "やってみよう",
+    "say": "例文を、声に出して言ってみてください。",
+    "lines": [
+     [
+      "例文を",
+      0
+     ],
+     [
+      "声に出して言ってみる",
+      1
+     ]
+    ],
+    "note": "出典：Cambridge Dictionary\nGrammar「Word patterns: take part」"
+   }
+  ]
+ }
+]

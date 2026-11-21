@@ -6,8 +6,8 @@
 ```
 【30秒解説】敬語クイズ：目上の人をねぎらう　「本当に（　）」
 
-A：ご苦労様　B：お疲れ様
-正解：B　お疲れ様
+A：お疲れ様　B：ご苦労様
+正解：A　お疲れ様
 
 ▼ポイント
 ・お疲れ様でございました
@@ -92,8 +92,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：駅のアナウンス　「この電車には（　）」
 
-A：御乗車できません　B：御乗車になれません
-正解：B　御乗車になれません
+A：御乗車になれません　B：御乗車できません
+正解：A　御乗車になれません
 
 ▼ポイント
 ・御乗車になれません
@@ -150,8 +150,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：受付からお客さんへ　「担当者に（　）」
 
-A：伺ってください　B：お聞きください
-正解：B　お聞きください
+A：お聞きください　B：伺ってください
+正解：A　お聞きください
 
 ▼ポイント
 ・担当者にお聞きください
@@ -235,8 +235,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：加藤先生に、田中先生を　立てて伝えるとき
 
-A：参ります　B：伺います
-正解：B　伺います
+A：伺います　B：参ります
+正解：A　伺います
 
 ▼ポイント
 ・田中先生のところに伺います
@@ -322,8 +322,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：先生のことを話す　「先生は来週海外へ（　）」
 
-A：参ります　B：いらっしゃいます
-正解：B　いらっしゃいます
+A：いらっしゃいます　B：参ります
+正解：A　いらっしゃいます
 
 ▼ポイント
 ・先生は来週海外へ
@@ -467,8 +467,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：自分の考えを伝える　「これが（　）です」
 
-A：私のお考え　B：私の考え
-正解：B　私の考え
+A：私の考え　B：私のお考え
+正解：A　私の考え
 
 ▼ポイント
 ・私の考え
@@ -553,8 +553,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：研究発表の始め、より簡潔なのは　「それでは、発表（　）」
 
-A：させていただきます　B：いたします
-正解：B　いたします
+A：いたします　B：させていただきます
+正解：A　いたします
 
 ▼ポイント
 ・発表いたします
@@ -640,8 +640,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：会議で先輩に聞く　ふさわしいのは
 
-A：あなたは　B：佐藤さんは
-正解：B　佐藤さんは
+A：佐藤さんは　B：あなたは
+正解：A　佐藤さんは
 
 ▼ポイント
 ・佐藤さんはどう考えますか
@@ -697,8 +697,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：取引先に自社の部長のこと　「（　）が伺います」
 
-A：田中部長　B：部長の田中
-正解：B　部長の田中
+A：部長の田中　B：田中部長
+正解：A　部長の田中
 
 ▼ポイント
 ・部長の田中
@@ -842,8 +842,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：仕事を教えてくれた上司に　より適切なのは
 
-A：教え方が上手　B：教わったお礼
-正解：B　教わったお礼
+A：教わったお礼　B：教え方が上手
+正解：A　教わったお礼
 
 ▼ポイント
 ・教えていただき
@@ -900,8 +900,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：部長にフランス語のことを　尋ねるなら
 
-A：お話しになれますか　B：お話しになりますか
-正解：B　お話しになりますか
+A：お話しになりますか　B：お話しになれますか
+正解：A　お話しになりますか
 
 ▼ポイント
 ・フランス語も
@@ -987,8 +987,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：責任者でない人が　同僚に仕事を頼むとき
 
-A：していただきます　B：していただけますか
-正解：B　していただけますか
+A：していただけますか　B：していただきます
+正解：A　していただけますか
 
 ▼ポイント
 ・していただけますか
@@ -1045,8 +1045,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：レストランで料理を出し終えて　正しい敬語は
 
-A：おそろいになりました　B：そろいました
-正解：B　そろいました
+A：そろいました　B：おそろいになりました
+正解：A　そろいました
 
 ▼ポイント
 ・御注文の品は
@@ -1132,8 +1132,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：「読む」の尊敬語　適切なのは
 
-A：お読みになられる　B：お読みになる
-正解：B　お読みになる
+A：お読みになる　B：お読みになられる
+正解：A　お読みになる
 
 ▼ポイント
 ・お読みになる
@@ -1248,8 +1248,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：クイズ番組の司会　「全問正しく（　）、賞品」
 
-A：お答えできたら　B：お答えになれたら
-正解：B　お答えになれたら
+A：お答えになれたら　B：お答えできたら
+正解：A　お答えになれたら
 
 ▼ポイント
 ・お答えになれたら
@@ -1392,8 +1392,8 @@ https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/keigo_tosin.pdf
 ```
 【30秒解説】敬語クイズ：簡潔に頼める場面で　回りくどくないのは
 
-A：取ってもらっても　B：取ってください
-正解：B　取ってください
+A：取ってください　B：取ってもらっても
+正解：A　取ってください
 
 ▼ポイント
 ・それ、取ってください

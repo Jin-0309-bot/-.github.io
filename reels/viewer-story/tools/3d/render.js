@@ -1,4 +1,4 @@
-const PORT = 8765 + (process.argv[2]==='enemy'?1:0);
+const PORT = 8765 + (process.argv[2]==='kuro'?1:0);
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const http = require('http'), fs = require('fs'), path = require('path');

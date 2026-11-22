@@ -15,7 +15,7 @@ for i, s in enumerate(v["scenes"]):
     with wave.open(io.BytesIO(b)) as w: d = w.getnframes() / w.getframerate()
     lines.append(dict(s, start=round(t, 3), dur=round(d, 3))); t += d + GAP + s.get("pause", 0)
 T = round(t + 0.8, 2)
-json.dump(dict(world=v["world"], voice=v["voice"], title=v.get("title", "キミが書く物語　第0話"), T=T, lines=lines), open(out / "timeline.json", "w"), ensure_ascii=False)
+json.dump(dict(start=v.get("start", {}), world=v["world"], voice=v["voice"], title=v.get("title", "キミが書く物語　第0話"), T=T, lines=lines), open(out / "timeline.json", "w"), ensure_ascii=False)
 amb = (f"sine=frequency=220:duration={T},volume=0.035" if v["world"] == "white" else f"sine=frequency=55:duration={T},tremolo=f=0.5:d=0.6,volume=0.14")
 ins, flt = ["-f", "lavfi", "-i", amb], []
 for i, l in enumerate(lines):

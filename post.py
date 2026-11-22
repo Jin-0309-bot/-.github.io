@@ -23,6 +23,14 @@ posted = {l.split()[0] for l in posted_file.read_text().splitlines() if l.strip(
 todo = [v for v in queue if v not in posted]
 if not todo:
     print("すべて投稿済みです"); sys.exit(0)
+# 時刻指定の実行（予備を含む）は、直近3時間以内に投稿済みなら何もしない（二重投稿を防ぐ）
+if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and posted_file.exists():
+    lines = [l.split() for l in posted_file.read_text().splitlines() if l.strip()]
+    if lines:
+        JST = timezone(timedelta(hours=9))
+        last = datetime.strptime(lines[-1][1] + " " + lines[-1][2], "%Y-%m-%d %H:%M").replace(tzinfo=JST)
+        if datetime.now(JST) - last < timedelta(hours=3):
+            print(f"この時間帯はもう投稿済みです（{lines[-1][0]} {lines[-1][1]} {lines[-1][2]}）"); sys.exit(0)
 vid = todo[0]
 caption = json.loads((here / "captions.json").read_text())[vid]
 video = here / "videos" / f"{vid}.mp4"

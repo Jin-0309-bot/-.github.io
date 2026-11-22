@@ -1,4 +1,4 @@
-{"world": "white", "speaker": 12, "voice": "白上虎太郎", "speed": 1.0,
+{"world": "white", "speaker": 14, "voice": "冥鳴ひまり", "speed": 1.0,
  "scenes": [
   {"say": "……ここ、どこだ？", "cue": "rise", "pause": 0.4},
   {"say": "何もない。音もない。……自分の名前も、思い出せない。", "cue": "plain"},

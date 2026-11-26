@@ -9,12 +9,11 @@
  "lead": 0.6,
  "tail": 6.5,
  "look": {
-  "nest": "#f3e6c3",
-  "nest0": "#f3e6c3",
-  "bits0": "#2f6b3a",
-  "topping": "#7fb069",
+  "bits0": "#f4f1ea",
+  "topping": "#e8e0d0",
   "liq0": "#c98a3b",
-  "liq": "#b8752b"
+  "liq": "#b8752b",
+  "shape": "miso"
  },
  "ingredients": [
   [

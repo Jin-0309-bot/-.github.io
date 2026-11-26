@@ -9,12 +9,13 @@
  "lead": 0.6,
  "tail": 6.5,
  "look": {
-  "nest": "#8fbf5a",
-  "nest0": "#8fbf5a",
-  "bits0": "#4f8a34",
+  "bits0": "#5f9f3a",
   "topping": "#3f7a2c",
+  "liq": "#e0b865",
   "liq0": "#e8c98a",
-  "liq": "#e0b865"
+  "nest": "#4e8f32",
+  "nest0": "#4e8f32",
+  "shape": "spinach"
  },
  "ingredients": [
   [

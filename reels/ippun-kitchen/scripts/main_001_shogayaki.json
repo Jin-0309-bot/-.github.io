@@ -9,12 +9,11 @@
  "lead": 0.6,
  "tail": 6.5,
  "look": {
-  "nest": "#a7d26b",
-  "nest0": "#a7d26b",
-  "bits0": "#d98a6b",
-  "topping": "#8b4a2b",
+  "bits0": "#e8a58a",
+  "topping": "#c97a5a",
   "liq0": "#f2b632",
-  "liq": "#a0522d"
+  "liq": "#a0522d",
+  "shape": "pork"
  },
  "ingredients": [
   [

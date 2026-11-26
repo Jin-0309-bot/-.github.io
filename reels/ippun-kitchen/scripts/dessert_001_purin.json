@@ -9,12 +9,11 @@
  "lead": 0.6,
  "tail": 6.5,
  "look": {
-  "nest": "#f7e3a1",
-  "nest0": "#f7e3a1",
   "bits0": "#b5651d",
-  "topping": "#8b4513",
+  "topping": "#7a4018",
   "liq0": "#fff4cc",
-  "liq": "#f7e3a1"
+  "liq": "#f7e3a1",
+  "shape": "pudding"
  },
  "ingredients": [
   [

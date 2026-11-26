@@ -8,7 +8,7 @@ const srv = http.createServer((q, s) => { const f = path.join(dir, decodeURIComp
   const ct = f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/json';
   s.writeHead(200, {'Content-Type': ct}); fs.createReadStream(f).pipe(s); }).listen(PORT);
 (async () => {
-  const T = JSON.parse(fs.readFileSync(path.join(dir,NAME,'timeline.json'))).T, FPS = 30;
+  const T = JSON.parse(fs.readFileSync(path.join(dir,NAME,'timeline.json'))).T, FPS = +(process.env.FPS||30);
   const b = await chromium.launch({ args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'] });
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   p.on('console', m => console.log('page:', m.text())); p.on('pageerror', e => console.log('err:', e.message));

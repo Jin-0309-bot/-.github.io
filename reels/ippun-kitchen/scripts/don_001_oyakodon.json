@@ -9,12 +9,11 @@
  "lead": 0.6,
  "tail": 6.5,
  "look": {
-  "nest": "#fbf7ee",
-  "nest0": "#fbf7ee",
-  "bits0": "#e8c27a",
-  "topping": "#f2b632",
+  "bits0": "#e0b070",
+  "topping": "#c08040",
   "liq0": "#e0a040",
-  "liq": "#f2b632"
+  "liq": "#f2b632",
+  "shape": "donburi"
  },
  "ingredients": [
   [

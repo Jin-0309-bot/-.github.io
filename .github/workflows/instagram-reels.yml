@@ -1,17 +1,18 @@
 name: Instagram リール自動投稿
 
 on:
+  # 本来の合図：外部サービス（cron-job.org）が毎日 12:00 と 19:00（日本時間）に workflow_dispatch を送る
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "枠に関係なく、今すぐ1本投稿する（手動で追加投稿したいときだけ true）"
+        type: boolean
+        default: false
+  # 予備：外部からの合図が来なかったとき用。GitHub の時刻指定は大きく遅れることがあるが、
+  # post.py が「昼の枠（11〜19時）／夜の枠（19〜翌11時）に1本ずつ」で判断するので、遅れて来ても二重投稿しない
   schedule:
-    # 12時台：12:00 と予備の 12:20・12:40（日本時間）
-    - cron: "0 3 * * *"
-    - cron: "20 3 * * *"
-    - cron: "40 3 * * *"
-    # 19時台：19:00 と予備の 19:20・19:40（日本時間）
-    - cron: "0 10 * * *"
-    - cron: "20 10 * * *"
-    - cron: "40 10 * * *"
-    # 予備の実行は、その時間帯にもう投稿済みなら何もしない（post.py が直近3時間の投稿を見て判断）
-  workflow_dispatch: {}    # 手動で1本投稿したいときに使う
+    - cron: "47 3 * * *"    # 12:47（日本時間）
+    - cron: "47 10 * * *"   # 19:47（日本時間）
 
 permissions:
   contents: write
@@ -30,6 +31,7 @@ jobs:
           ref: reels-videos
       - name: 1本投稿する
         env:
+          FORCE: ${{ github.event.inputs.force == 'true' && 'true' || 'false' }}
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: "17841445779613440"
         run: python3 post.py

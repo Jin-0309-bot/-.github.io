@@ -1,0 +1,152 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;font-family:"Noto Sans CJK JP",sans-serif}
+canvas{position:absolute;left:0;top:0}
+.o{position:absolute;width:100%;text-align:center}
+#top{top:110px;font-size:30px}#title{top:160px;font-size:36px;font-weight:700}#cr{bottom:90px;font-size:28px}
+#sub{position:absolute;left:60px;right:60px;top:1430px;padding:28px 30px;border-radius:30px;border:4px solid;font-size:56px;font-weight:700;text-align:center;line-height:1.45;opacity:0;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+#card{position:absolute;left:70px;right:70px;top:330px;padding:34px 20px;border-radius:28px;font-size:54px;font-weight:800;text-align:center;line-height:1.6;opacity:0}
+body.white{background:#f4f4f2}body.white #top{color:#8c8c92}body.white #title{color:#1e1e22}body.white #cr{color:#96969c}
+body.white #sub{background:rgba(255,255,255,.9);border-color:#1e1e22;color:#1e1e22}body.white #card{background:rgba(255,210,60,.96);color:#141414}
+body.black{background:#050508}body.black #top{color:#77777f}body.black #title{color:#ececf0}body.black #cr{color:#6e6e78}
+body.black #sub{background:rgba(22,16,24,.9);border-color:#b4323c;color:#ececf0}body.black #card{background:rgba(160,18,36,.95);color:#fff;box-shadow:0 0 60px rgba(255,30,40,.45)}
+</style></head><body>
+<div id="top" class="o">※この物語はフィクションです</div><div id="title" class="o"></div>
+<div id="card"></div><div id="sub"></div><div id="cr" class="o"></div>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const NAME=new URLSearchParams(location.search).get('n');
+const TL=await (await fetch(NAME+'/timeline.json')).json();
+const WHITE=TL.world==='white';
+document.body.className=TL.world; document.getElementById('title').textContent=TL.title; document.getElementById('cr').textContent='VOICEVOX:'+TL.voice;
+const W=1080,H=1920;
+const r=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+r.setSize(W,H); r.setPixelRatio(1); r.shadowMap.enabled=true; r.shadowMap.type=THREE.PCFSoftShadowMap;
+r.toneMapping=THREE.ACESFilmicToneMapping; r.outputColorSpace=THREE.SRGBColorSpace; document.body.prepend(r.domElement);
+const ease=x=>{x=Math.min(1,Math.max(0,x));return 1-Math.pow(1-x,3)};
+const sm=x=>{x=Math.min(1,Math.max(0,x));return x*x*(3-2*x)};
+const lerp=(a,b,k)=>a+(b-a)*k;
+const cue=c=>{const l=TL.lines.find(l=>l.cue===c);return l?l.start:1e9};
+const sceneStart=i=>TL.lines[i]?TL.lines[i].start:TL.T;
+function dotTex(){const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,64,64);return new THREE.CanvasTexture(c);}
+const DOT=dotTex();
+function person(mat,s=1){const g=new THREE.Group();
+  const b=new THREE.Mesh(new THREE.CapsuleGeometry(0.34*s,0.75*s,12,32),mat); b.position.y=0.72*s; b.castShadow=true; g.add(b);
+  const h=new THREE.Mesh(new THREE.SphereGeometry(0.27*s,48,32),mat); h.position.y=1.6*s; h.castShadow=true; g.add(h); g.userData.head=h;
+  for(const k of [-1,1]){const a=new THREE.Mesh(new THREE.CapsuleGeometry(0.09*s,0.6*s,8,16),mat); a.position.set(k*0.45*s,0.85*s,0); a.rotation.z=k*0.12; a.castShadow=true; g.add(a);}
+  return g;}
+function particles(n,color,size,op,area,add){const pos=new Float32Array(n*3),seed=[];
+  for(let i=0;i<n;i++){const x=(Math.random()-.5)*area,y=Math.random()*5,z=(Math.random()-.5)*area;pos.set([x,y,z],i*3);seed.push([x,y,z,0.05+Math.random()*0.15]);}
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const p=new THREE.Points(g,new THREE.PointsMaterial({color,size,transparent:true,opacity:op,map:DOT,depthWrite:false,blending:add?THREE.AdditiveBlending:THREE.NormalBlending}));
+  p.userData.upd=t=>{for(let i=0;i<n;i++){const s=seed[i];pos[i*3+1]=(s[1]+t*s[3])%5;pos[i*3]=s[0]+Math.sin(t*0.5+i)*0.15;pos[i*3+2]=s[2]+Math.cos(t*0.4+i)*0.15;}g.attributes.position.needsUpdate=true;};
+  return p;}
+function makeClock(face,rim,hand){const g=new THREE.Group();
+  const f=new THREE.Mesh(new THREE.CylinderGeometry(0.8,0.8,0.08,64),new THREE.MeshStandardMaterial({color:face,roughness:0.5})); f.rotation.x=Math.PI/2; g.add(f);
+  const r=new THREE.Mesh(new THREE.TorusGeometry(0.82,0.07,16,64),new THREE.MeshStandardMaterial({color:rim,roughness:0.3,metalness:0.6})); g.add(r);
+  const hm=new THREE.MeshStandardMaterial({color:hand,roughness:0.4});
+  for(let i=0;i<12;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.04,i%3?0.08:0.16,0.03),hm); const a=i/12*Math.PI*2; m.position.set(Math.sin(a)*0.66,Math.cos(a)*0.66,0.06); m.rotation.z=-a; g.add(m);}
+  const mk=(len,w,ang)=>{const h=new THREE.Mesh(new THREE.BoxGeometry(w,len,0.03),hm); h.geometry.translate(0,len/2,0); h.position.z=0.08; h.rotation.z=-ang; g.add(h);};
+  mk(0.42,0.07,2/12*Math.PI*2); mk(0.6,0.045,0); // 2時ちょうどで止まっている
+  const c=new THREE.Mesh(new THREE.SphereGeometry(0.06,16,12),hm); c.position.z=0.09; g.add(c);
+  g.scale.setScalar(0.001); return g;}
+function clockAnim(g,t,t0,base){const k=ease((t-t0)/1.0); g.scale.setScalar(Math.max(0.001,k)); g.position.y=base+Math.sin(t*0.9)*0.08; g.rotation.y=Math.sin(t*0.4)*0.25; g.rotation.z=Math.sin(t*0.6)*0.05;}
+const has=c=>TL.lines.some(l=>l.cue===c);
+// カメラのキー：[時刻, [x,y,z], [注視x,y,z]]
+function camAt(keys,t,cam){let i=0;while(i<keys.length-2&&t>keys[i+1][0])i++;
+  const a=keys[i],b=keys[i+1],k=sm((t-a[0])/(b[0]-a[0]));
+  cam.position.set(...a[1].map((v,j)=>lerp(v,b[1][j],k))); cam.lookAt(...a[2].map((v,j)=>lerp(v,b[2][j],k)));}
+const sc=new THREE.Scene(); const cam=new THREE.PerspectiveCamera(38,W/H,0.1,100);
+let update, keys;
+if(WHITE){
+  sc.background=new THREE.Color(0xf4f4f2); sc.fog=new THREE.Fog(0xf4f4f2,6,22);
+  sc.add(new THREE.HemisphereLight(0xffffff,0xdedede,1.6));
+  const sun=new THREE.DirectionalLight(0xffffff,1.5); sun.position.set(3,8,4); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.radius=8; Object.assign(sun.shadow.camera,{left:-4,right:4,top:4,bottom:-4}); sc.add(sun);
+  const fg=new THREE.PlaneGeometry(40,40,120,120); const fpos=fg.attributes.position, fbase=fpos.array.slice();
+  const floor=new THREE.Mesh(fg,new THREE.MeshStandardMaterial({color:0xf6f6f4,roughness:1})); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; sc.add(floor);
+  const clk=makeClock(0xfafaf8,0xc8a060,0x303036); clk.position.set(-1.4,3.6,-2.5); sc.add(clk);
+  const hero=person(new THREE.MeshStandardMaterial({color:0x44444e,roughness:0.45})); sc.add(hero);
+  const pts=particles(260,0x8a8a96,0.05,0.55,14,false); sc.add(pts);
+  // 背後の黒いしみ（敵の気配）
+  const stain=new THREE.Group(); stain.position.set(2.2,1.5,-6);
+  const dark=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(8,8,12,1)');gr.addColorStop(0.55,'rgba(8,8,12,0.85)');gr.addColorStop(1,'rgba(8,8,12,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);})();
+  const blob=new THREE.Sprite(new THREE.SpriteMaterial({map:dark,transparent:true,opacity:0,fog:false,depthWrite:false})); blob.scale.set(1.5,2.0,1); stain.add(blob);
+  const eyeM=new THREE.SpriteMaterial({map:DOT,color:0xff2020,transparent:true,opacity:0,fog:false,depthWrite:false,blending:THREE.NormalBlending});
+  for(const k of [-1,1]){const e=new THREE.Sprite(eyeM); e.position.set(k*0.17,0.3,0.05); e.scale.set(0.16,0.1,1); stain.add(e);}
+  sc.add(stain);
+  const tR=cue('rise'),tL=cue('look'),tS=cue('stain'),tC=sceneStart(4),tC2=sceneStart(5),tD=cue('dream'),tK=cue('clock');
+  if(has('name')){const s=i=>sceneStart(i);
+   keys=[[0,[0,1.6,6.5],[0,1.3,0]],[s(1),[0.3,1.5,5.8],[0,1.2,0]],[s(1)+1.2,[2.5,0.6,4.5],[0,0.6,0]],[s(2),[2.3,0.7,4.3],[0,0.7,0]],
+     [s(2)+1.5,[1.2,1.3,4.0],[-1.4,3.4,-2.5]],[s(3),[1.0,1.4,3.8],[-1.4,3.4,-2.5]],[s(3)+1.2,[-0.4,1.7,4.2],[0,1.4,0]],[s(4),[-0.3,1.7,4.0],[0,1.4,0]],
+     [s(4)+1.4,[-1.6,2.4,7.2],[0.6,1.2,-2]],[s(5),[-1.4,2.3,7.4],[0.4,1.1,-2]],[s(5)+1.0,[0,1.1,5.6],[0,1.4,0]],[TL.T,[0,1.2,5.0],[0,1.4,0]]];
+  } else
+  keys=[[0,[-2.4,11,1.2],[0,0.2,-0.8]],[tR+4.2,[1.0,1.7,7.1],[0,1.2,0]],[tL-0.2,[-0.8,1.6,6.6],[0,1.2,0]],
+        [tL+1.6,[0.3,1.7,4.2],[0,1.35,0]],[tS,[0.2,1.7,3.9],[0,1.35,0]],[tS+1.4,[-1.6,2.6,7.2],[0.6,1.2,-2]],
+        [tC,[-1.4,2.4,7.4],[0.4,1.1,-2]],[tC+1.0,[0,0.9,6.0],[0,1.5,0]],[TL.T,[0,1.1,5.2],[0,1.4,0]]];
+  update=t=>{const k=has('rise')?ease((t-0.4)/2.8):1;
+    if(t>tD){const a=ease((t-tD)/1.5);for(let i=0;i<fpos.count;i++){const x=fbase[i*3],y=fbase[i*3+1];fpos.array[i*3+2]=a*0.12*Math.sin(x*0.9+t*1.6)*Math.cos(y*0.8+t*1.2);}fpos.needsUpdate=true;fg.computeVertexNormals();
+      hero.position.y=a*(0.12+Math.sin(t*1.4)*0.06);}
+    clockAnim(clk,t,tK,3.6);
+    hero.rotation.x=lerp(-Math.PI/2,0,k)+Math.sin(t*1.5)*0.015*k;
+    const h=hero.userData.head;
+    h.rotation.y=t<tL?Math.sin(t*0.7)*0.35*k:lerp(Math.sin(tL*0.7)*0.35,0,ease((t-tL)/0.8));
+    h.rotation.x=t>tL&&t<tS?-0.1*ease((t-tL)/0.8):0;
+    if(t>tK&&t<sceneStart(3)+0.5){const a=ease((t-tK)/0.8);h.rotation.y=lerp(h.rotation.y,0.6,a);h.rotation.x=lerp(0,-0.45,a);}
+    else if(t>=sceneStart(3)+0.5&&t<sceneStart(3)+1.5&&has('clock')){const a=ease((t-sceneStart(3)-0.5)/1.0);h.rotation.y=lerp(0.6,0,a);h.rotation.x=lerp(-0.45,0,a);}
+    const s=(t-tS-0.5), a=s>0&&s<2.4?Math.sin(Math.PI*s/2.4):0;
+    blob.material.opacity=a*0.8; eyeM.opacity=a; pts.userData.upd(t);};
+}else{
+  sc.background=new THREE.Color(0x050508); sc.fog=new THREE.Fog(0x050508,5,16);
+  sc.add(new THREE.HemisphereLight(0x221822,0x000000,0.6));
+  const rim=new THREE.PointLight(0xff2030,30,12,1.6); rim.position.set(0,1.6,-2.2); sc.add(rim);
+  const key=new THREE.SpotLight(0x8080a0,12,20,0.5,0.8); key.position.set(2,6,5); key.castShadow=true; sc.add(key);
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(80,80),new THREE.MeshStandardMaterial({color:0x0b0b10,roughness:0.25,metalness:0.6})); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; sc.add(floor);
+  const foe=new THREE.Group(); sc.add(foe);
+  const clk=makeClock(0x1a1620,0x8a2030,0xd8d0d8); clk.position.set(-2.0,3.8,-1.0); sc.add(clk);
+  const fm=new THREE.MeshStandardMaterial({color:0x0c0a10,roughness:0.6});
+  const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.5,1.3,12,32),fm); body.position.y=1.15; body.castShadow=true; foe.add(body);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.4,48,32),fm); head.position.y=2.45; foe.add(head);
+  const eyes=[];
+  for(const k of [-1,1]){const g=new THREE.Group(); g.position.set(k*0.16,2.5,0.36);
+    const w=new THREE.Mesh(new THREE.SphereGeometry(0.075,24,16),new THREE.MeshBasicMaterial({color:0xffe0d0})); w.scale.set(1.5,1,0.6); g.add(w);
+    const p=new THREE.Mesh(new THREE.SphereGeometry(0.035,16,12),new THREE.MeshBasicMaterial({color:0x200000})); p.position.z=0.045; p.scale.set(1,1.4,0.5); g.add(p);
+    const gl=new THREE.Sprite(new THREE.SpriteMaterial({map:DOT,color:0xff2020,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false})); gl.scale.set(0.42,0.26,1); g.add(gl);
+    foe.add(g); eyes.push(g);}
+  const mist=particles(500,0xff2030,0.09,0.5,10,true); sc.add(mist);
+  // 宙に浮かぶ白い小窓（主人公が見える）
+  const rt=new THREE.WebGLRenderTarget(600,800); const ms=new THREE.Scene(); ms.background=new THREE.Color(0xf4f4f2);
+  ms.add(new THREE.HemisphereLight(0xffffff,0xdedede,1.8)); const mh=person(new THREE.MeshStandardMaterial({color:0x44444e,roughness:0.45})); ms.add(mh);
+  const mc=new THREE.PerspectiveCamera(35,600/800,0.1,50); mc.position.set(0.4,1.5,5.2); mc.lookAt(0,1.0,0);
+  const win=new THREE.Mesh(new THREE.PlaneGeometry(1.2,1.6),new THREE.MeshBasicMaterial({map:rt.texture,transparent:true,opacity:0,fog:false,toneMapped:false}));
+  win.position.set(2.2,2.2,0.8); win.rotation.y=-2.17; win.material.side=THREE.DoubleSide; sc.add(win);
+  const frame=new THREE.Mesh(new THREE.PlaneGeometry(1.28,1.68),new THREE.MeshBasicMaterial({color:0x8a8a96,transparent:true,opacity:0,fog:false})); frame.position.copy(win.position); frame.rotation.y=-2.17; frame.material.side=THREE.DoubleSide; frame.translateZ(-0.01); sc.add(frame);
+  const tE=cue('eyes_open'),tW=cue('window'),tN=cue('narrow'),tS=cue('stare'),tC=sceneStart(4),tC2=sceneStart(5),tD=cue('dream'),tK=cue('clock');
+  if(has('name')){const s=i=>sceneStart(i);
+   keys=[[0,[0,2.5,5.2],[0,2.45,0]],[s(1),[0.2,2.5,4.6],[0,2.45,0]],[s(1)+1.5,[3.5,1.2,5.5],[0,2.0,0]],[s(2),[3.3,1.3,5.2],[0,2.0,0]],
+     [s(2)+1.4,[0.8,2.0,3.0],[-2.0,3.8,-1.0]],[s(3),[0.8,2.0,2.8],[-2.0,3.8,-1.0]],[s(3)+1.0,[-1.6,3.1,-1.8],[2.2,2.2,0.8]],[s(4)-0.2,[-1.3,3.0,-1.6],[2.2,2.2,0.8]],
+     [s(4)+1.2,[0,2.5,3.0],[0,2.45,0]],[s(5),[0,2.5,2.8],[0,2.45,0]],[s(5)+1.0,[0.6,0.5,5.8],[0,2.75,0]],[TL.T,[0.2,0.6,5.4],[0,2.8,0]]];
+  } else
+  keys=[[0,[0,2.4,9],[0,2.4,0]],[tE+1.5,[0,2.5,5.2],[0,2.45,0]],[tW+0.3,[-1.6,3.1,-1.8],[2.2,2.2,0.8]],[tN-0.4,[-1.3,3.0,-1.6],[2.2,2.2,0.8]],
+        [tN+1.0,[0.3,2.5,3.6],[0,2.45,0]],[tS,[0.2,2.5,3.3],[0,2.45,0]],[tS+1.2,[0,2.5,2.4],[0,2.45,0]],[tC-0.2,[0,2.5,2.2],[0,2.45,0]],
+        [tC+1.0,[0.6,0.5,5.8],[0,2.75,0]],[tC2,[0.2,0.6,5.4],[0,2.8,0]],[tC2+1.0,[0,2.4,4.2],[0,2.4,0]],[TL.T,[0,2.45,3.6],[0,2.45,0]]];
+  update=t=>{clockAnim(clk,t,tK,3.8);
+    if(t>tD){const a=ease((t-tD)/1.5);sc.fog.color.setRGB(0.02+0.022*a*(0.5+0.5*Math.sin(t*1.3)),0.018,0.03+0.032*a*(0.5+0.5*Math.sin(t*1.3)));sc.background.copy(sc.fog.color);}
+    const op=has('eyes_open')?ease((t-tE)/1.2):1;const _x=0, nar=t>tN?lerp(1,0.4,ease((t-tN)/0.5)):1, bl=(t%4.3)<0.13?0.1:1;
+    for(const e of eyes){e.scale.y=Math.max(0.02,op*nar*bl); e.children[2].material.opacity=0.75*op;}
+    foe.rotation.y=Math.sin(t*0.3)*0.05; foe.position.y=Math.sin(t*0.9)*0.03; head.rotation.y=t>tW&&t<Math.min(tN,tS)?0.5*ease((t-tW)/0.8):(t>tK&&t<tW?-0.5*ease((t-tK)/0.8):0); head.rotation.x=t>tK&&t<tW?-0.3*ease((t-tK)/0.8):0;
+    rim.intensity=18+Math.sin(t*2.1)*5; mist.userData.upd(t);
+    const wo=t>tW?ease((t-tW)/0.6)*(1-ease((t-Math.min(tN+0.6,tS))/0.6)):0; win.material.opacity=wo; frame.material.opacity=wo*0.8;
+    win.position.y=2.2+Math.sin(t*1.2)*0.04; frame.position.y=win.position.y;
+    mh.userData.head.rotation.y=Math.sin(t*0.7)*0.35; mh.rotation.y=Math.sin(t*0.4)*0.2;
+    r.setRenderTarget(rt); r.render(ms,mc); r.setRenderTarget(null);};
+}
+const sub=document.getElementById('sub'), card=document.getElementById('card');
+const seg=s=>(s.match(/[^、。？！]*[、。？！]?/g)||[]).filter(x=>x).map(x=>'<span style="display:inline-block">'+x+'</span>').join('');
+window.renderAt=t=>{update(t); camAt(keys,t,cam); r.render(sc,cam);
+  let cur=null,cd=null; for(const l of TL.lines){if(t>=l.start){cur=l; if(l.card)cd=l;}}
+  if(cur){sub.innerHTML=seg(cur.say); sub.style.opacity=Math.min(1,(t-cur.start)/0.25);} else sub.style.opacity=0;
+  if(cd){card.innerHTML=cd.card.join('<br>'); const k=ease((t-cd.start)/0.4); card.style.opacity=k; card.style.transform=`translateY(${-40*(1-k)}px)`;} else card.style.opacity=0;
+  document.body.style.opacity=Math.min(1,t/0.6,(TL.T-t)/0.6);};
+window.READY=true;
+</script></body></html>

@@ -7,19 +7,19 @@ canvas{position:absolute;left:0;top:0}
 #brand .g{background:rgba(255,255,255,.92);color:#e8553d;font-weight:800;font-size:30px;padding:12px 22px;border-radius:40px;letter-spacing:2px}
 #title{position:absolute;top:190px;left:60px;right:60px;color:#2b211c;font-size:84px;font-weight:900;text-shadow:0 4px 18px rgba(255,255,255,.9)}
 #serv{position:absolute;top:300px;left:64px;color:#6b5a50;font-size:36px;font-weight:700;text-shadow:0 2px 10px rgba(255,255,255,.9)}
-#ing{position:absolute;top:370px;left:60px;width:560px;padding:20px 30px!important;background:rgba(255,255,255,.93);border-radius:30px;padding:26px 34px;box-shadow:0 10px 40px rgba(0,0,0,.15);opacity:0}
-#ing .r{display:flex;justify-content:space-between;font-size:32px;line-height:1.6;color:#2b211c;font-weight:700;opacity:0;transform:translateX(-30px)}
+#ing{position:absolute;top:330px;left:60px;width:960px;padding:30px 44px!important;background:rgba(255,255,255,.93);border-radius:30px;padding:26px 34px;box-shadow:0 10px 40px rgba(0,0,0,.15);opacity:0}
+#ing .r{display:flex;justify-content:space-between;font-size:46px;line-height:1.55;color:#2b211c;font-weight:700;opacity:0;transform:translateX(-30px)}
 #ing .r span:last-child{color:#e8553d}
-#ing h3{margin:0 0 6px;font-size:32px;color:#e8553d}
+#ing h3{margin:0 0 10px;font-size:50px;color:#e8553d}
 #step{position:absolute;left:50px;right:50px;top:1350px;background:rgba(255,255,255,.95);border-radius:34px;padding:34px 36px 34px 36px;box-shadow:0 12px 40px rgba(0,0,0,.18);opacity:0}
 #step .top{display:flex;gap:18px;align-items:center;margin-bottom:14px;min-height:10px}
 #step .n{background:#e8553d;color:#fff;font-size:40px;font-weight:900;width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 #step .bd{background:#ffe3a3;color:#7a4a00;font-size:36px;font-weight:900;padding:10px 24px;border-radius:30px}
 #step .t{font-size:50px;font-weight:800;color:#2b211c;line-height:1.5}
 #step .t span{display:inline-block}
-#list{position:absolute;left:60px;right:60px;top:1010px;background:rgba(255,255,255,.95);border-radius:34px;padding:24px 40px;box-shadow:0 12px 40px rgba(0,0,0,.18);opacity:0}
-#list h3{margin:0 0 6px;font-size:34px;color:#e8553d}
-#list .r{display:flex;justify-content:space-between;font-size:34px;line-height:1.45;font-weight:700;color:#2b211c;border-bottom:2px dashed #eadfd3}
+#list{position:absolute;left:50px;right:50px;top:900px;background:rgba(255,255,255,.95);border-radius:34px;padding:24px 40px;box-shadow:0 12px 40px rgba(0,0,0,.18);opacity:0}
+#list h3{margin:0 0 8px;font-size:44px;color:#e8553d}
+#list .r{display:flex;justify-content:space-between;font-size:40px;line-height:1.5;font-weight:700;color:#2b211c;border-bottom:2px dashed #eadfd3}
 #list .r span:last-child{color:#e8553d}
 #list .s{margin-top:18px;font-size:36px;line-height:1.6;color:#4a3d35;font-weight:700}
 #cr{position:absolute;bottom:80px;width:100%;text-align:center;color:#8a7a70;font-size:28px}
@@ -133,8 +133,19 @@ function foodPlate(){const g=new THREE.Group();
  if(SH==='spinach'){for(let i=0;i<6;i++){const c=new THREE.Mesh(new THREE.CapsuleGeometry(0.075,0.8,6,12),M(0x4e8f32,{roughness:0.5}));c.rotation.set(0,i*0.9,Math.PI/2-0.25);c.position.set(Math.cos(i)*0.2,0.25+i*0.015,Math.sin(i)*0.2);g.add(c);} }
  if(SH==='pork'){for(let i=0;i<7;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(0.75,0.035,0.45),M(0xc97a5a,{roughness:0.55}));b.position.set(0,0.13+i*0.04,0);b.rotation.y=i*0.2-0.6;b.rotation.x=0.04;g.add(b);} g.add(specks(140,0xbfe39a,0.85,0.16,0.025,31)); }
  if(SH==='miso'){const bw=new THREE.Mesh(new THREE.SphereGeometry(1.0,48,24,0,Math.PI*2,Math.PI/2,Math.PI/2),M(0xf4f1ea,{side:THREE.DoubleSide,roughness:0.2}));bw.position.y=0.1;g.add(bw);const so=new THREE.Mesh(new THREE.CircleGeometry(0.9,48),M(L.liq||0xb8752b,{roughness:0.2}));so.rotation.x=-Math.PI/2;so.position.y=0.55;g.add(so);for(let i=0;i<6;i++){const t=new THREE.Mesh(new THREE.BoxGeometry(0.24,0.2,0.24),M(0xffffff,{roughness:0.4}));const a=i/6*Math.PI*2;t.position.set(Math.cos(a)*0.4,0.66,Math.sin(a)*0.4);t.rotation.y=a;g.add(t);} g.add(specks(60,0x2f6b3a,0.7,0.62,0.035,37)); }
- if(SH==='donburi'){const rice=new THREE.Mesh(new THREE.SphereGeometry(1.0,48,24,0,Math.PI*2,0,Math.PI/2),M(0xfbf7ee,{roughness:0.5}));rice.scale.y=0.8;rice.position.y=0.1;g.add(rice);const egg=new THREE.Mesh(new THREE.SphereGeometry(0.98,48,16,0,Math.PI*2,0,Math.PI/2),M(0xf2c14e,{roughness:0.3,transparent:true,opacity:0.8}));egg.scale.y=0.45;egg.position.y=0.62;g.add(egg);for(let i=0;i<9;i++){const c=new THREE.Mesh(new THREE.BoxGeometry(0.26,0.16,0.24),M(0xd9a277,{roughness:0.5}));const a=i/9*Math.PI*2;c.position.set(Math.cos(a)*0.42,0.85,Math.sin(a)*0.42);c.rotation.y=a;g.add(c);}}
- if(SH==='pudding'){const pu=new THREE.Mesh(new THREE.SphereGeometry(0.75,48,24,0,Math.PI*2,0,Math.PI/2),M(0xf3d98a,{roughness:0.25}));pu.scale.y=0.8;pu.position.y=0.1;g.add(pu);const cr=new THREE.Mesh(new THREE.CircleGeometry(0.62,48),M(0x7a4018,{roughness:0.2}));cr.rotation.x=-Math.PI/2;cr.position.y=0.72;g.add(cr);}
+ if(SH==='donburi'){
+ const rice=new THREE.Mesh(new THREE.SphereGeometry(1.0,48,24,0,Math.PI*2,0,Math.PI/2),M(0xfbf7ee,{roughness:0.5}));rice.scale.y=0.78;rice.position.y=0.1;g.add(rice);
+ g.add(specks(160,0xffffff,0.9,0.72,0.03,41));
+ // 卵：黄色の薄い層を、ふんわり重ねる
+ for(let i=0;i<14;i++){const e=new THREE.Mesh(new THREE.BoxGeometry(0.34+Math.random()*0.2,0.05,0.26+Math.random()*0.16),M(i%3?0xf7d25c:0xfbe38a,{roughness:0.45}));const a=i/14*Math.PI*2+0.2,rr=0.2+Math.random()*0.55;e.position.set(Math.cos(a)*rr,0.72+Math.random()*0.04,Math.sin(a)*rr);e.rotation.set(Math.random()*0.4,a,Math.random()*0.4);g.add(e);}
+ // 鶏肉：小さめの角切りを多めに
+ for(let i=0;i<18;i++){const c=new THREE.Mesh(new THREE.BoxGeometry(0.17,0.13,0.16),M(i%2?0xd7955f:0xc9804f,{roughness:0.5}));const a=i/18*Math.PI*2,rr=0.25+(i%3)*0.16;c.position.set(Math.cos(a)*rr,0.82,Math.sin(a)*rr);c.rotation.set(Math.random(),a,Math.random());g.add(c);}
+ // 玉ねぎ：薄い細長い板
+ for(let i=0;i<8;i++){const o=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.03,0.07),M(0xf3e3a6,{roughness:0.5}));const a=i/8*Math.PI*2;o.position.set(Math.cos(a)*0.5,0.8,Math.sin(a)*0.5);o.rotation.set(0,a+0.6,0.1);g.add(o);}
+ // 三つ葉：小さな緑
+ g.add(specks(30,0x3f8f3a,0.8,0.86,0.045,43));
+}
+if(SH==='pudding'){const pu=new THREE.Mesh(new THREE.SphereGeometry(0.75,48,24,0,Math.PI*2,0,Math.PI/2),M(0xf3d98a,{roughness:0.25}));pu.scale.y=0.8;pu.position.y=0.1;g.add(pu);const cr=new THREE.Mesh(new THREE.CircleGeometry(0.62,48),M(0x7a4018,{roughness:0.2}));cr.rotation.x=-Math.PI/2;cr.position.y=0.72;g.add(cr);}
  return g;}
 S.plate.add(foodPlate()); if(!isP){fin.visible=false;finB.visible=false;}
 {const it0=S.ing.userData.items[0];while(it0.children.length)it0.remove(it0.children[0]);

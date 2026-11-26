@@ -1,4 +1,4 @@
-const PORT = 8790;
+const PORT = +(process.env.PORT||8790);
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const http = require('http'), fs = require('fs'), path = require('path');

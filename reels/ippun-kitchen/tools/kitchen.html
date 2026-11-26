@@ -35,7 +35,8 @@ canvas{position:absolute;left:0;top:0}
 import * as THREE from 'three';
 const NAME=new URLSearchParams(location.search).get('n');
 const TL=await (await fetch(NAME+'/timeline.json')).json();
-const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'DESSERT'};
+const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'デザート'};
+const L=TL.look||{};
 document.getElementById('genre').textContent=GEN[TL.genre]||'';
 document.getElementById('title').textContent=TL.title; document.getElementById('serv').textContent='材料（'+TL.serving+'）';
 document.getElementById('cr').textContent='VOICEVOX:'+TL.voice;
@@ -107,13 +108,13 @@ function ingredients(){const g=new THREE.Group();const items=[];
   const salt=new THREE.Group();const sb=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.24,0.14,32),M(0xffffff,{roughness:0.25}));sb.position.y=0.07;salt.add(sb);salt.add(specks(80,0xffffff,0.22,0.12,0.018,11));items.push(salt);
   const xs=[-1.15,-0.38,0.38,1.15];items.forEach((it,i)=>{it.position.set(xs[i%4],0,i<4?-0.55:0.55);it.scale.setScalar(0.001);g.add(it);});g.userData.items=items;return g;}
 const S={}; // 場面ごとのオブジェクト
-S.plate=add(plate()); const fin=nest(46,0.9,0.55,0xf2cf74,7); fin.position.y=0.1; S.plate.add(fin);
-const finB=baconBits(14,0.09,0xa8552f,0.65,0.45,13); S.plate.add(finB); S.plate.add(specks(70,0x2a2320,0.7,0.5,0.016,17)); S.plate.add(specks(50,0xfff4d0,0.6,0.52,0.014,19));
+S.plate=add(plate()); const fin=nest(46,0.9,0.55,L.nest||0xf2cf74,7); fin.position.y=0.1; S.plate.add(fin);
+const finB=baconBits(14,0.09,L.topping||0xa8552f,0.65,0.45,13); S.plate.add(finB); S.plate.add(specks(70,0x2a2320,0.7,0.5,0.016,17)); S.plate.add(specks(50,0xfff4d0,0.6,0.52,0.014,19));
 S.ing=add(ingredients());
 S.burner=add(burner()); S.pot=add(pot()); S.bowl=add(bowl()); S.pan=add(pan());
 const potWrap=new THREE.Group();sc.add(potWrap);
-const panBacon=baconBits(12,0.1,0xe7978a,0.6,0.2,21); S.pan.add(panBacon);
-const panNest=nest(36,0.8,0.42,0xeedcaa,23); panNest.position.y=0.14; S.pan.add(panNest);
+const panBacon=baconBits(12,0.1,L.bits0||0xe7978a,0.6,0.2,21); S.pan.add(panBacon);
+const panNest=nest(36,0.8,0.42,L.nest0||0xeedcaa,23); panNest.position.y=0.14; S.pan.add(panNest);
 // 湯気
 const steamMat=new THREE.SpriteMaterial({map:tex((g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2);gr.addColorStop(0,'rgba(255,255,255,0.7)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);},128,128),transparent:true,depthWrite:false});
 const steam=new THREE.Group();for(let i=0;i<14;i++){const s=new THREE.Sprite(steamMat.clone());s.userData.p=[(Math.random()-.5)*1.2,(Math.random()-.5)*0.8,Math.random()];steam.add(s);}sc.add(steam);
@@ -145,11 +146,11 @@ window.renderAt=t=>{
   const tb=cue('boil');S.pot.userData.sticks.children.forEach(c=>{});S.pot.userData.sticks.position.y=-0.35*ease((t-tb-1.5)/2.5);S.pot.userData.sticks.scale.y=1-0.3*ease((t-tb-1.5)/2.5);
   S.pot.userData.bub.children.forEach(b=>{const [x,z,p]=b.userData.p;const u=(t*0.9+p)%1;b.position.set(x*0.6,0.9+u*0.08,z*0.6);b.scale.setScalar(Math.sin(u*Math.PI));});
   // ボウル：泡立て器が回り、色がクリーム色に
-  const tm=cue('mix');S.bowl.userData.wh.rotation.y=t*7;S.bowl.userData.wh.position.x=Math.sin(t*7)*0.18;S.bowl.userData.wh.position.z=Math.cos(t*7)*0.18;S.bowl.userData.liq.material.color.copy(C(0xf2b632,0xf3d98a,ease((t-tm-0.5)/3)));
+  const tm=cue('mix');S.bowl.userData.wh.rotation.y=t*7;S.bowl.userData.wh.position.x=Math.sin(t*7)*0.18;S.bowl.userData.wh.position.z=Math.cos(t*7)*0.18;S.bowl.userData.liq.material.color.copy(C(L.liq0||0xf2b632,L.liq||0xf3d98a,ease((t-tm-0.5)/3)));
   // フライパン：ベーコンが跳ねて焼き色、パスタが入って卵で黄色に
-  const tbc=cue('bacon');panBacon.userData.mat.color.copy(C(0xe7978a,0xa8552f,ease((t-tbc-0.5)/3.5)));
+  const tbc=cue('bacon');panBacon.userData.mat.color.copy(C(L.bits0||0xe7978a,L.topping||0xa8552f,ease((t-tbc-0.5)/3.5)));
   panBacon.children.forEach(b=>{b.position.y=b.userData.base.y+Math.max(0,Math.sin(t*9+b.userData.ph))*0.06*(t<cue('combine')?1:0.2);});
-  const tc=cue('combine');panNest.visible=t>=tc;panNest.position.y=0.14+lerp(1.6,0,ease((t-tc)/0.7));panNest.userData.mat.color.copy(C(0xeedcaa,0xf2cf74,ease((t-cue('egg')-0.8)/2.5)));panNest.rotation.y=t>cue('egg')?(t-cue('egg'))*1.6:0;
+  const tc=cue('combine');panNest.visible=t>=tc;panNest.position.y=0.14+lerp(1.6,0,ease((t-tc)/0.7));panNest.userData.mat.color.copy(C(L.nest0||0xeedcaa,L.nest||0xf2cf74,ease((t-cue('egg')-0.8)/2.5)));panNest.rotation.y=t>cue('egg')?(t-cue('egg'))*1.6:0;
   // 湯気
   const sOn=['boil','bacon','combine'].includes(curCue(t));steam.visible=sOn;steam.children.forEach(s=>{const [x,z,p]=s.userData.p;const u=(t*0.35+p)%1;s.position.set(x,1.1+u*1.6,z);s.scale.setScalar(0.5+u*0.9);s.material.opacity=0.55*Math.sin(u*Math.PI);});
   camAt(t); r.render(sc,cam);

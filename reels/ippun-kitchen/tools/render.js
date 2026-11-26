@@ -12,7 +12,7 @@ const srv = http.createServer((q, s) => { const f = path.join(dir, decodeURIComp
   const b = await chromium.launch({ args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'] });
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   p.on('console', m => console.log('page:', m.text())); p.on('pageerror', e => console.log('err:', e.message));
-  await p.goto('http://127.0.0.1:'+PORT+'/kitchen.html?n='+NAME); await p.waitForFunction('window.READY===true', null, {timeout: 60000});
+  await p.goto('http://127.0.0.1:'+PORT+'/kitchen.html?n='+NAME+(process.env.THUMB?'&thumb=1':'')); await p.waitForFunction('window.READY===true', null, {timeout: 60000});
   if (process.env.SAMPLE) { for (const t of process.env.SAMPLE.split(',')) { await p.evaluate(x => window.renderAt(x), +t); await p.screenshot({path: path.join(dir, NAME, 's_'+t+'.png')}); } await b.close(); srv.close(); return; }
   const ff = spawn('ffmpeg', ['-y','-loglevel','error','-f','image2pipe','-framerate',String(FPS),'-i','-','-c:v','libx264','-pix_fmt','yuv420p','-crf','20',path.join(dir,NAME,'video.mp4')]);
   const n = Math.round(T * FPS), t0 = Date.now();

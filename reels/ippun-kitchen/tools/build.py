@@ -1,6 +1,6 @@
 """1分キッチン：レシピのデータから、キャプション・表紙（3D）・カルーセル画像4枚をまとめて作る。
 使い方（tools フォルダで実行）：python3 build.py <ジャンル> <レシピJSON> <出力フォルダ>
-  ジャンル：pasta / side / main / soup / don / dessert
+  ジャンル：pasta / side / main / soup / don / dessert / setsuyaku（節約・リメイク。任意で "badge":"カサ増し" など、表紙に印を出す）
   レシピJSON：[{"id":"pasta_002_peperoncino","title":"ペペロンチーノ","serving":"1人分",
                 "ingredients":[["スパゲッティ","100g"],...],"steps":["…","…"],"tip":"（任意）",
                 "tags":["#ペペロンチーノ",...5個まで],"form":{表紙の型。FORMS.md を参照}}, ...]
@@ -10,7 +10,7 @@ from pathlib import Path
 from PIL import Image
 import carousel
 
-GENRE = {"pasta": "パスタ", "side": "前菜・副菜", "main": "主菜", "soup": "汁物", "don": "一品もの・丼", "dessert": "デザート"}
+GENRE = {"pasta": "パスタ", "side": "前菜・副菜", "main": "主菜", "soup": "汁物", "don": "一品もの・丼", "dessert": "デザート", "setsuyaku": "節約・リメイク"}
 here = Path(__file__).parent
 
 def caption(genre, r):
@@ -40,7 +40,7 @@ def main(genre, recipes, out):
     covers = []
     for r in recs:
         w = work / r["id"]
-        carousel.main(r["id"], w / "thumb.png", w / "caption.txt", out / "images" / r["id"])
+        carousel.main(r["id"], w / "thumb.png", w / "caption.txt", out / "images" / r["id"], badge=r.get("badge"))
         caps[r["id"]] = (w / "caption.txt").read_text()
         covers.append(out / "images" / r["id"] / "1.jpg")
     caps_f.write_text(json.dumps(caps, ensure_ascii=False, indent=1))

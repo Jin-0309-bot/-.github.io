@@ -41,7 +41,7 @@ body.thumb #thumb{display:block}
 import * as THREE from 'three';
 const NAME=new URLSearchParams(location.search).get('n');
 const TL=await (await fetch(NAME+'/timeline.json')).json();
-const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'デザート'};
+const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'デザート',setsuyaku:'節約・リメイク',zakki:'キッチン雑学'};
 const L=TL.look||{};
 document.getElementById('genre').textContent=GEN[TL.genre]||'';
 document.getElementById('title').textContent=TL.title; document.getElementById('serv').textContent='材料（'+TL.serving+'）';
@@ -67,8 +67,11 @@ function fitTitle(el,t){ // 料理名を言葉の切れ目で折り返し、は�
   const set=(a)=>{el.innerHTML='';a.forEach((x,i)=>{const sp=document.createElement('span');sp.textContent=x;el.appendChild(sp);if(i<a.length-1)el.appendChild(document.createElement('br'));});};
   set([t]);if(w()>maxW){el.style.fontSize=(fs=84)+'px';}
   if(w()>maxW){el.style.fontSize=(fs=96)+'px';let best=null;
-    for(let i=2;i<t.length-1;i++){const a=t[i-1],b=t[i];if(!'のと・風&'.includes(a))continue;
-      const d=Math.abs(t.length/2-i);if(!best||d<best.d)best={i,d};}
+    const kind=c=>/[ぁ-ゖ]/.test(c)?'h':/[ァ-ヺー]/.test(c)?'k':/[一-龯々]/.test(c)?'c':'o';
+    for(let i=2;i<t.length-1;i++){const a=t[i-1],b=t[i];
+      // 区切りやすい所：助詞のあと（強）、ひらがな→カタカナ・漢字などの文字の切り替わり（弱）
+      let w='のと・風&でをにはがへやも'.includes(a)&&kind(b)!=='h'?0:(kind(a)!==kind(b)&&kind(a)!=='k'||kind(a)==='k'&&kind(b)!=='k')?3:-1;
+      if(w<0)continue;const d=Math.abs(t.length/2-i)+w;if(!best||d<best.d)best={i,d};}
     const cut=best?best.i:Math.ceil(t.length/2);set([t.slice(0,cut),t.slice(cut)]);
     while(w()>maxW&&fs>60){fs-=4;el.style.fontSize=fs+'px';}}
 }

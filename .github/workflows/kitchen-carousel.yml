@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "post＝投稿する／list＝トークンで使える Instagram アカウントの ID を表示する（初回の設定用）"
+        description: "post＝投稿する／list＝各トークンがどの Instagram アカウントのものか表示する（確認用）"
         type: choice
         options: [post, list]
         default: post
@@ -34,7 +34,14 @@ jobs:
           ref: kitchen-posts
       - name: 今日の担当アカウントに投稿する
         env:
-          KITCHEN_IG_TOKEN: ${{ secrets.KITCHEN_IG_TOKEN }}
+          KITCHEN_TOKEN_PASTA: ${{ secrets.KITCHEN_TOKEN_PASTA }}
+          KITCHEN_TOKEN_SIDE: ${{ secrets.KITCHEN_TOKEN_SIDE }}
+          KITCHEN_TOKEN_MAIN: ${{ secrets.KITCHEN_TOKEN_MAIN }}
+          KITCHEN_TOKEN_SOUP: ${{ secrets.KITCHEN_TOKEN_SOUP }}
+          KITCHEN_TOKEN_DON: ${{ secrets.KITCHEN_TOKEN_DON }}
+          KITCHEN_TOKEN_DESSERT: ${{ secrets.KITCHEN_TOKEN_DESSERT }}
+          KITCHEN_TOKEN_SETSUYAKU: ${{ secrets.KITCHEN_TOKEN_SETSUYAKU }}
+          KITCHEN_TOKEN_ZAKKI: ${{ secrets.KITCHEN_TOKEN_ZAKKI }}
           MODE: ${{ github.event.inputs.mode || 'post' }}
           FORCE: ${{ github.event.inputs.force == 'true' && 'true' || 'false' }}
         run: python3 post_carousel.py

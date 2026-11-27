@@ -1,7 +1,9 @@
 """1分キッチン：カルーセル（複数枚の画像）を Instagram に自動投稿する（GitHub Actions から実行）。
 
-- 「Instagramでログイン」方式（graph.instagram.com）。Facebookページは使わない。
-  トークンはアカウントごと：環境変数 KITCHEN_TOKEN_<アカウント名の大文字>（例：KITCHEN_TOKEN_PASTA）。
+- トークンは環境変数 KITCHEN_TOKEN_<アカウント名の大文字>（例：KITCHEN_TOKEN_PASTA）。登録されたトークンをすべて調べ、
+  各アカウント（config の username）に投稿できるトークンを自動で選ぶ。
+  EAA…（システムユーザー）なら、割り当てられた Facebook ページにつながった Instagram に投稿できる（graph.facebook.com）。
+  IGAA…（Instagramでログイン）なら、そのアカウント自身に投稿できる（graph.instagram.com）。
 - アカウントを3日で一巡する。order の i 番目のアカウントは、(開始からの日数) を3で割った余りが i を3で割った余りと同じ日に投稿する。
 - 各アカウントは config.json の queue の順に、posted.txt にまだない料理を1つ投稿する。
 - 画像は images/<料理ID>/1.jpg〜 を、公開URL（raw.githubusercontent.com）で Instagram に渡す。
@@ -65,36 +67,35 @@ def post_one(token, ig_id, dish, caption, n_images):
     info = call(token, "GET", f"{api_for(token)}/{pub['id']}", params=dict(fields="permalink"))
     return info.get("permalink", "")
 
-def probe(cfg):
-    """（調査用）トークンで見えるものを表示する。トークン自体は表示しない"""
-    for acc in ["main"]:
-        t = token_of(acc)
-        if not t: continue
-        for base in (FB_API, IG_API):
-            for path, params in [("me", dict(fields="id")), ("me", {}), ("me/media", dict(limit=1)), ("me/instagram_accounts", {}),
-                                 ("me/assigned_pages", {}), ("me/permissions", {}), ("me", dict(fields="id,username")),
-                                 ("17841466650019956", dict(fields="id,username"))]:
-                try: r = call(t, "GET", f"{base}/{path}", params=params)
-                except Exception as e: r = str(e)[:220]
-                print(f"  [{acc}] {base.split('//')[1].split('/')[0]} {path} {params}: {json.dumps(r, ensure_ascii=False)[:300]}")
-
-def list_accounts(cfg):
-    if os.environ.get("PROBE") == "1" or any(token_of(a).startswith("EA") for a in cfg["order"]): probe(cfg)
-    print("各アカウントのトークンの確認：")
-    bad = False
+def discover(cfg):
+    """登録されたトークンで投稿できる Instagram アカウントを集める → {username: (ig_id, token)}
+    EAA…（システムユーザー）：割り当てられた Facebook ページにつながった Instagram が対象。
+    IGAA…（Instagramでログイン）：そのトークン自身のアカウントが対象。"""
+    found, seen = {}, set()
     for acc in cfg["order"]:
         t = token_of(acc)
-        if not t: print(f"  [{acc}] トークン未登録（KITCHEN_TOKEN_{acc.upper()}）"); continue
+        if not t or t in seen: continue
+        seen.add(t)
         try:
-            me = whoami(t)
-            want = cfg["accounts"][acc].get("username", "")
-            mark = "" if not want or me.get("username") == want else f"  ← config の username（{want}）と違います"
-            print(f"  [{acc}] @{me.get('username')}  ID={me.get('user_id')}{mark}")
+            if t.startswith("EA"):
+                r = call(t, "GET", f"{FB_API}/me/assigned_pages", params=dict(fields="name,instagram_business_account{id,username}", limit=100))
+                for p in r.get("data", []):
+                    ig = p.get("instagram_business_account")
+                    if ig: found.setdefault(ig["username"], (ig["id"], t))
+            else:
+                me = whoami(t); found.setdefault(me["username"], (me["user_id"], t))
         except Exception as e:
-            # 原因を調べるため、トークンの長さと先頭4文字だけ表示する（これだけでは使えない）
-            kind = "Instagramログインの形" if t.startswith("IG") else ("Facebookログインの形" if t.startswith("EA") else "トークンの形ではない")
-            print(f"  [{acc}] トークンが使えません（{len(t)}文字、先頭 {t[:4]}…、{kind}）：{e}"); bad = True
-    if bad: sys.exit(1)
+            print(f"  （{acc} のトークンで確認できませんでした：{str(e)[:150]}）")
+    return found
+
+def list_accounts(cfg):
+    found = discover(cfg)
+    print("投稿できる Instagram アカウント：")
+    for u, (i, _) in found.items(): print(f"  @{u}  ID={i}")
+    print("アカウントごとの状態：")
+    for acc in cfg["order"]:
+        u = cfg["accounts"][acc].get("username", "")
+        print(f"  [{acc}] @{u}：" + ("投稿できます" if u in found else "まだ投稿できません（Facebookページにつなぎ、システムユーザーに割り当てが必要）"))
 
 def main():
     cfg = json.loads((here / "config.json").read_text())
@@ -110,9 +111,11 @@ def main():
     force = os.environ.get("FORCE") == "true"
     print(f"{today}：開始から{day + 1}日目。今日の担当：{', '.join(due)}")
     failed = False
+    found = discover(cfg) if due else {}
     for acc in due:
-        a = cfg["accounts"][acc]; token = token_of(acc)
-        if not token: print(f"[{acc}] トークンが未登録なので飛ばします"); continue
+        a = cfg["accounts"][acc]
+        if a.get("username") not in found: print(f"[{acc}] @{a.get('username')} はまだ投稿できる状態ではないので飛ばします"); continue
+        ig_id, token = found[a["username"]]
         if not force and any(p[0] == acc and p[2] == str(today) for p in posted):
             print(f"[{acc}] 今日はもう投稿済みです"); continue
         done = {p[1] for p in posted if p[0] == acc}
@@ -121,7 +124,6 @@ def main():
         dish = todo[0]
         n = len(sorted((here / "images" / dish).glob("*.jpg")))
         try:
-            ig_id = a.get("ig_user_id") or whoami(token)["user_id"]  # EAA… のトークンは config の ig_user_id が必要
             url = post_one(token, ig_id, dish, caps[dish], n)
         except Exception as e:
             print(f"[{acc}] {dish} の投稿に失敗：{e}"); failed = True; continue

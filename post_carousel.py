@@ -1,64 +1,79 @@
 """1分キッチン：カルーセル（複数枚の画像）を Instagram に自動投稿する（GitHub Actions から実行）。
 
-- アカウントを3日で一巡する。今日が何日目かで、投稿するアカウントが決まる（order の i 番目は、i を3で割った余り＝開始からの日数を3で割った余り の日）。
+- 「Instagramでログイン」方式（graph.instagram.com）。Facebookページは使わない。
+  トークンはアカウントごと：環境変数 KITCHEN_TOKEN_<アカウント名の大文字>（例：KITCHEN_TOKEN_PASTA）。
+- アカウントを3日で一巡する。order の i 番目のアカウントは、(開始からの日数) を3で割った余りが i を3で割った余りと同じ日に投稿する。
 - 各アカウントは config.json の queue の順に、posted.txt にまだない料理を1つ投稿する。
 - 画像は images/<料理ID>/1.jpg〜 を、公開URL（raw.githubusercontent.com）で Instagram に渡す。
 - 同じアカウントは同じ日に2回投稿しない（FORCE=true のときだけ例外）。
-- MODE=list のときは投稿せず、トークンで使える Instagram アカウントの ID を表示する（初回の設定用）。
+- トークンがまだ無いアカウントは飛ばす（準備できた順に始まる）。
+- MODE=list のときは投稿せず、各トークンがどの Instagram アカウントのものかを表示する（確認用）。
 
-環境変数：KITCHEN_IG_TOKEN（トークン）、MODE（post / list）、FORCE（true / false）"""
+環境変数：KITCHEN_TOKEN_<NAME>、MODE（post / list）、FORCE（true / false）"""
 import json, os, sys, time, urllib.parse, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta, date
 from pathlib import Path
 
-API = "https://graph.facebook.com/v21.0"
+API = "https://graph.instagram.com/v21.0"
 here = Path(__file__).parent
-TOKEN = os.environ.get("KITCHEN_IG_TOKEN", "")
 JST = timezone(timedelta(hours=9))
 RAW = "https://raw.githubusercontent.com/Jin-0309-bot/-.github.io/kitchen-posts/images"
 
-def call(method, url, params=None, data=None):
-    params = dict(params or {}, access_token=TOKEN)
-    if method == "GET": url += "?" + urllib.parse.urlencode(params); body = None
-    else: body = urllib.parse.urlencode(dict(data or {}, access_token=TOKEN)).encode()
+def token_of(acc):
+    return os.environ.get(f"KITCHEN_TOKEN_{acc.upper()}", "").strip()
+
+def call(token, method, url, params=None, data=None):
+    if method == "GET":
+        url += "?" + urllib.parse.urlencode(dict(params or {}, access_token=token)); body = None
+    else:
+        body = urllib.parse.urlencode(dict(data or {}, access_token=token)).encode()
     req = urllib.request.Request(url, data=body, method=method)
     try:
         with urllib.request.urlopen(req, timeout=120) as r: return json.loads(r.read())
     except urllib.error.HTTPError as e:
         raise RuntimeError(f"API error {e.code}: {e.read().decode(errors='replace')}")
 
-def wait_ready(cid):
+def whoami(token):
+    return call(token, "GET", f"{API}/me", params=dict(fields="user_id,username"))
+
+def wait_ready(token, cid):
     for _ in range(60):
-        st = call("GET", f"{API}/{cid}", params=dict(fields="status_code"))
+        st = call(token, "GET", f"{API}/{cid}", params=dict(fields="status_code"))
         if st.get("status_code") == "FINISHED": return
         if st.get("status_code") in ("ERROR", "EXPIRED"): raise RuntimeError(f"処理エラー：{st}")
         time.sleep(5)
     raise RuntimeError("処理が5分で終わりませんでした")
 
-def list_accounts():
-    r = call("GET", f"{API}/me/accounts", params=dict(fields="name,instagram_business_account{id,username}", limit=50))
-    print("このトークンで使える Instagram アカウント：")
-    for p in r.get("data", []):
-        ig = p.get("instagram_business_account")
-        if ig: print(f"  @{ig.get('username')}  ID={ig['id']}  （Facebookページ：{p['name']}）")
-        else: print(f"  （Instagram 未連携のページ：{p['name']}）")
-
-def post_one(ig_id, dish, caption, n_images):
+def post_one(token, ig_id, dish, caption, n_images):
     children = []
     for i in range(1, n_images + 1):
-        c = call("POST", f"{API}/{ig_id}/media", data=dict(image_url=f"{RAW}/{dish}/{i}.jpg", is_carousel_item="true"))
+        c = call(token, "POST", f"{API}/{ig_id}/media", data=dict(image_url=f"{RAW}/{dish}/{i}.jpg", is_carousel_item="true"))
         children.append(c["id"])
-    for c in children: wait_ready(c)
-    car = call("POST", f"{API}/{ig_id}/media", data=dict(media_type="CAROUSEL", children=",".join(children), caption=caption))
-    wait_ready(car["id"])
-    pub = call("POST", f"{API}/{ig_id}/media_publish", data=dict(creation_id=car["id"]))
-    info = call("GET", f"{API}/{pub['id']}", params=dict(fields="permalink"))
+    for c in children: wait_ready(token, c)
+    car = call(token, "POST", f"{API}/{ig_id}/media", data=dict(media_type="CAROUSEL", children=",".join(children), caption=caption))
+    wait_ready(token, car["id"])
+    pub = call(token, "POST", f"{API}/{ig_id}/media_publish", data=dict(creation_id=car["id"]))
+    info = call(token, "GET", f"{API}/{pub['id']}", params=dict(fields="permalink"))
     return info.get("permalink", "")
 
+def list_accounts(cfg):
+    print("各アカウントのトークンの確認：")
+    bad = False
+    for acc in cfg["order"]:
+        t = token_of(acc)
+        if not t: print(f"  [{acc}] トークン未登録（KITCHEN_TOKEN_{acc.upper()}）"); continue
+        try:
+            me = whoami(t)
+            want = cfg["accounts"][acc].get("username", "")
+            mark = "" if not want or me.get("username") == want else f"  ← config の username（{want}）と違います"
+            print(f"  [{acc}] @{me.get('username')}  ID={me.get('user_id')}{mark}")
+        except Exception as e:
+            print(f"  [{acc}] トークンが使えません：{e}"); bad = True
+    if bad: sys.exit(1)
+
 def main():
-    if not TOKEN: sys.exit("KITCHEN_IG_TOKEN が設定されていません")
-    if os.environ.get("MODE") == "list": list_accounts(); return
     cfg = json.loads((here / "config.json").read_text())
+    if os.environ.get("MODE") == "list": list_accounts(cfg); return
     caps = json.loads((here / "captions.json").read_text())
     posted_file = here / "posted.txt"
     posted = [l.split() for l in posted_file.read_text().splitlines() if l.strip()] if posted_file.exists() else []
@@ -71,8 +86,8 @@ def main():
     print(f"{today}：開始から{day + 1}日目。今日の担当：{', '.join(due)}")
     failed = False
     for acc in due:
-        a = cfg["accounts"][acc]
-        if not a.get("ig_user_id"): print(f"[{acc}] Instagram の ID が未設定なので飛ばします"); continue
+        a = cfg["accounts"][acc]; token = token_of(acc)
+        if not token: print(f"[{acc}] トークンが未登録なので飛ばします"); continue
         if not force and any(p[0] == acc and p[2] == str(today) for p in posted):
             print(f"[{acc}] 今日はもう投稿済みです"); continue
         done = {p[1] for p in posted if p[0] == acc}
@@ -81,7 +96,8 @@ def main():
         dish = todo[0]
         n = len(sorted((here / "images" / dish).glob("*.jpg")))
         try:
-            url = post_one(a["ig_user_id"], dish, caps[dish], n)
+            ig_id = a.get("ig_user_id") or whoami(token)["user_id"]
+            url = post_one(token, ig_id, dish, caps[dish], n)
         except Exception as e:
             print(f"[{acc}] {dish} の投稿に失敗：{e}"); failed = True; continue
         line = f"{acc} {dish} {today} {datetime.now(JST).strftime('%H:%M')} {url}"

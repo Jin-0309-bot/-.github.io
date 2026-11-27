@@ -1,7 +1,8 @@
 name: 1分キッチン トークンの自動延長
 
 # 「Instagramでログイン」方式のトークンは60日で切れるため、毎週延長して GitHub の Secrets を上書きする。
-# 必要な Secrets：KITCHEN_TOKEN_<NAME>（8つ）、KITCHEN_SECRETS_PAT（このリポジトリの Secrets を読み書きできる鍵）
+# 必要な Secrets：KITCHEN_TOKEN_<NAME>（8つ）、KITCHEN_SECRETS_PAT（このリポジトリの Secrets を読み書きできる鍵。IGAA… のトークンがあるときだけ必要）
+# EAA…（システムユーザー）のトークンは期限がないので飛ばす。
 on:
   workflow_dispatch:
   schedule:
@@ -28,11 +29,13 @@ jobs:
           KITCHEN_TOKEN_SETSUYAKU: ${{ secrets.KITCHEN_TOKEN_SETSUYAKU }}
           KITCHEN_TOKEN_ZAKKI: ${{ secrets.KITCHEN_TOKEN_ZAKKI }}
         run: |
-          if [ -z "$GH_TOKEN" ]; then echo "KITCHEN_SECRETS_PAT が未登録です"; exit 1; fi
           fail=0
           for n in PASTA SIDE MAIN SOUP DON DESSERT SETSUYAKU ZAKKI; do
             var="KITCHEN_TOKEN_$n"; old="${!var}"
             if [ -z "$old" ]; then echo "[$n] 未登録なので飛ばします"; continue; fi
+            # EAA… はシステムユーザーのトークン（期限なし）なので延長しない
+            case "$old" in EA*) echo "[$n] 期限のないトークンなので延長不要"; continue;; esac
+            if [ -z "$GH_TOKEN" ]; then echo "[$n] 延長には KITCHEN_SECRETS_PAT が必要です"; fail=1; continue; fi
             res=$(curl -s -G "https://graph.instagram.com/refresh_access_token" \
                   --data-urlencode "grant_type=ig_refresh_token" --data-urlencode "access_token=$old")
             new=$(echo "$res" | python3 -c "import json,sys; print(json.load(sys.stdin).get('access_token',''))" 2>/dev/null)

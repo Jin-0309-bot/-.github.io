@@ -68,7 +68,9 @@ def list_accounts(cfg):
             mark = "" if not want or me.get("username") == want else f"  ← config の username（{want}）と違います"
             print(f"  [{acc}] @{me.get('username')}  ID={me.get('user_id')}{mark}")
         except Exception as e:
-            print(f"  [{acc}] トークンが使えません：{e}"); bad = True
+            # 原因を調べるため、トークンの長さと先頭4文字だけ表示する（これだけでは使えない）
+            kind = "Instagramログインの形" if t.startswith("IG") else ("Facebookログインの形" if t.startswith("EA") else "トークンの形ではない")
+            print(f"  [{acc}] トークンが使えません（{len(t)}文字、先頭 {t[:4]}…、{kind}）：{e}"); bad = True
     if bad: sys.exit(1)
 
 def main():

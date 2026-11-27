@@ -86,27 +86,19 @@ def discover(cfg):
                 me = whoami(t); found.setdefault(me["username"], (me["user_id"], t))
         except Exception as e:
             print(f"  （{acc} のトークンで確認できませんでした：{str(e)[:150]}）")
-    return found
-
-def probe_direct(cfg, found):
-    """（調査用）ページのないアカウントでも、そのアカウントのトークンで番号を直接指定して使えるか試す"""
-    if not found: return
-    _, base_t = next(iter(found.values())); base_id = next(iter(found.values()))[0]
+    # ページを通さないアカウント（統合ログイン）：config の ig_user_id を、そのアカウントのトークンで直接使う
     for acc in cfg["order"]:
-        u = cfg["accounts"][acc]["username"]; t = token_of(acc)
-        if u in found or not t: continue
+        a = cfg["accounts"][acc]; t = token_of(acc)
+        if a.get("username") in found or not a.get("ig_user_id") or not t: continue
         try:
-            r = call(base_t, "GET", f"{FB_API}/{base_id}", params=dict(fields=f"business_discovery.username({u}){{id,username}}"))
-            ig = r["business_discovery"]["id"]
-        except Exception as e: print(f"  [{acc}] 番号を調べられません：{str(e)[:200]}"); continue
-        for path, params in [(ig, dict(fields="id,username")), (f"{ig}/content_publishing_limit", {})]:
-            try: res = call(t, "GET", f"{FB_API}/{path}", params=params)
-            except Exception as e: res = str(e)[:200]
-            print(f"  [{acc}] ID={ig} {path.split('/')[-1]}: {json.dumps(res, ensure_ascii=False)[:250]}")
+            r = call(t, "GET", f"{api_for(t)}/{a['ig_user_id']}", params=dict(fields="id,username"))
+            found[r.get("username") or a["username"]] = (a["ig_user_id"], t)
+        except Exception as e:
+            print(f"  （{acc}：ID {a['ig_user_id']} をトークンで開けませんでした：{str(e)[:200]}）")
+    return found
 
 def list_accounts(cfg):
     found = discover(cfg)
-    probe_direct(cfg, found)
     print("投稿できる Instagram アカウント：")
     for u, (i, _) in found.items(): print(f"  @{u}  ID={i}")
     print("アカウントごとの状態：")

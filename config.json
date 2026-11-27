@@ -6,7 +6,9 @@
   "main",
   "soup",
   "don",
-  "dessert"
+  "dessert",
+  "setsuyaku",
+  "zakki"
  ],
  "accounts": {
   "pasta": {
@@ -254,6 +256,18 @@
     "dessert_033_botamochi",
     "dessert_034_iceboxcookie"
    ]
+  },
+  "setsuyaku": {
+   "name": "1分キッチン｜節約・リメイク",
+   "username": "ippun_kitchen.setsuyaku",
+   "ig_user_id": "",
+   "queue": []
+  },
+  "zakki": {
+   "name": "1分キッチン｜キッチン雑学",
+   "username": "ippun_kitchen.zakki",
+   "ig_user_id": "",
+   "queue": []
   }
  }
 }

@@ -66,18 +66,17 @@ def post_one(token, ig_id, dish, caption, n_images):
     return info.get("permalink", "")
 
 def probe(cfg):
-    """（調査用）各トークンで見える Instagram アカウントを表示する。トークン自体は表示しない"""
-    for acc in cfg["order"]:
+    """（調査用）トークンで見えるものを表示する。トークン自体は表示しない"""
+    for acc in ["main"]:
         t = token_of(acc)
         if not t: continue
-        def g(path, **params):
-            try: return call(t, "GET", f"{FB_API}/{path}", params=params)
-            except Exception as e: return {"error": str(e)[:200]}
-        print(f"== [{acc}] me(id):", g("me", fields="id"), " me(name):", g("me", fields="name"))
-        for edge in ("me/assigned_pages", "me/accounts"):
-            r = g(edge, fields="name,instagram_business_account{id,username}")
-            r.pop("paging", None); print(f"   {edge}:", json.dumps(r, ensure_ascii=False)[:400])
-        print("   me(ig fields):", g("me", fields="id,username,account_type,media_count"))
+        for base in (FB_API, IG_API):
+            for path, params in [("me", dict(fields="id")), ("me", {}), ("me/media", dict(limit=1)), ("me/instagram_accounts", {}),
+                                 ("me/assigned_pages", {}), ("me/permissions", {}), ("me", dict(fields="id,username")),
+                                 ("17841466650019956", dict(fields="id,username"))]:
+                try: r = call(t, "GET", f"{base}/{path}", params=params)
+                except Exception as e: r = str(e)[:220]
+                print(f"  [{acc}] {base.split('//')[1].split('/')[0]} {path} {params}: {json.dumps(r, ensure_ascii=False)[:300]}")
 
 def list_accounts(cfg):
     if os.environ.get("PROBE") == "1" or any(token_of(a).startswith("EA") for a in cfg["order"]): probe(cfg)
@@ -122,7 +121,7 @@ def main():
         dish = todo[0]
         n = len(sorted((here / "images" / dish).glob("*.jpg")))
         try:
-            ig_id = a.get("ig_user_id") or whoami(token)["user_id"]
+            ig_id = a.get("ig_user_id") or whoami(token)["user_id"]  # EAA… のトークンは config の ig_user_id が必要
             url = post_one(token, ig_id, dish, caps[dish], n)
         except Exception as e:
             print(f"[{acc}] {dish} の投稿に失敗：{e}"); failed = True; continue

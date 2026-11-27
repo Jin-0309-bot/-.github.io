@@ -14,7 +14,9 @@ import json, os, sys, time, urllib.parse, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta, date
 from pathlib import Path
 
-API = "https://graph.instagram.com/v21.0"
+IG_API = "https://graph.instagram.com/v21.0"   # IGAA… の形のトークン
+FB_API = "https://graph.facebook.com/v21.0"    # EAA… の形のトークン（統合ログインで発行されるもの）
+def api_for(token): return FB_API if token.startswith("EA") else IG_API
 here = Path(__file__).parent
 JST = timezone(timedelta(hours=9))
 RAW = "https://raw.githubusercontent.com/Jin-0309-bot/-.github.io/kitchen-posts/images"
@@ -34,11 +36,18 @@ def call(token, method, url, params=None, data=None):
         raise RuntimeError(f"API error {e.code}: {e.read().decode(errors='replace')}")
 
 def whoami(token):
-    return call(token, "GET", f"{API}/me", params=dict(fields="user_id,username"))
+    """トークンの Instagram アカウント（user_id, username）を調べる。形によって聞き方が違うので順に試す"""
+    errs = []
+    for fields in ("user_id,username", "id,username"):
+        try:
+            r = call(token, "GET", f"{api_for(token)}/me", params=dict(fields=fields))
+            return dict(user_id=r.get("user_id") or r.get("id"), username=r.get("username"))
+        except Exception as e: errs.append(str(e))
+    raise RuntimeError(" / ".join(errs))
 
 def wait_ready(token, cid):
     for _ in range(60):
-        st = call(token, "GET", f"{API}/{cid}", params=dict(fields="status_code"))
+        st = call(token, "GET", f"{api_for(token)}/{cid}", params=dict(fields="status_code"))
         if st.get("status_code") == "FINISHED": return
         if st.get("status_code") in ("ERROR", "EXPIRED"): raise RuntimeError(f"処理エラー：{st}")
         time.sleep(5)
@@ -47,13 +56,13 @@ def wait_ready(token, cid):
 def post_one(token, ig_id, dish, caption, n_images):
     children = []
     for i in range(1, n_images + 1):
-        c = call(token, "POST", f"{API}/{ig_id}/media", data=dict(image_url=f"{RAW}/{dish}/{i}.jpg", is_carousel_item="true"))
+        c = call(token, "POST", f"{api_for(token)}/{ig_id}/media", data=dict(image_url=f"{RAW}/{dish}/{i}.jpg", is_carousel_item="true"))
         children.append(c["id"])
     for c in children: wait_ready(token, c)
-    car = call(token, "POST", f"{API}/{ig_id}/media", data=dict(media_type="CAROUSEL", children=",".join(children), caption=caption))
+    car = call(token, "POST", f"{api_for(token)}/{ig_id}/media", data=dict(media_type="CAROUSEL", children=",".join(children), caption=caption))
     wait_ready(token, car["id"])
-    pub = call(token, "POST", f"{API}/{ig_id}/media_publish", data=dict(creation_id=car["id"]))
-    info = call(token, "GET", f"{API}/{pub['id']}", params=dict(fields="permalink"))
+    pub = call(token, "POST", f"{api_for(token)}/{ig_id}/media_publish", data=dict(creation_id=car["id"]))
+    info = call(token, "GET", f"{api_for(token)}/{pub['id']}", params=dict(fields="permalink"))
     return info.get("permalink", "")
 
 def list_accounts(cfg):

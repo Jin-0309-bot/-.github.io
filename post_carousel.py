@@ -97,7 +97,19 @@ def discover(cfg):
             print(f"  （{acc}：ID {a['ig_user_id']} をトークンで開けませんでした：{str(e)[:200]}）")
     return found
 
+def probe_soup(cfg):
+    """（調査用）汁物のトークンとIDの組み合わせを確かめる"""
+    ids = {a: cfg["accounts"][a].get("ig_user_id") for a in ("main", "soup")}
+    for tk in ("soup", "main"):
+        t = token_of(tk)
+        for a, i in ids.items():
+            if not t or not i: continue
+            try: r = call(t, "GET", f"{FB_API}/{i}", params=dict(fields="id,username")); r = r.get("username")
+            except Exception as e: r = "×" + str(e)[30:110]
+            print(f"  {tk}のトークン → {a}のID：{r}")
+
 def list_accounts(cfg):
+    probe_soup(cfg)
     found = discover(cfg)
     print("投稿できる Instagram アカウント：")
     for u, (i, _) in found.items(): print(f"  @{u}  ID={i}")

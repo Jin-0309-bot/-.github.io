@@ -1,0 +1,48 @@
+name: 1分キッチン トークンの自動延長
+
+# 「Instagramでログイン」方式のトークンは60日で切れるため、毎週延長して GitHub の Secrets を上書きする。
+# 必要な Secrets：KITCHEN_TOKEN_<NAME>（8つ）、KITCHEN_SECRETS_PAT（このリポジトリの Secrets を読み書きできる鍵）
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 1 * * 1"   # 毎週月曜 10:23（日本時間）
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: トークンを延長して Secrets を上書きする
+        env:
+          GH_TOKEN: ${{ secrets.KITCHEN_SECRETS_PAT }}
+          REPO: ${{ github.repository }}
+          KITCHEN_TOKEN_PASTA: ${{ secrets.KITCHEN_TOKEN_PASTA }}
+          KITCHEN_TOKEN_SIDE: ${{ secrets.KITCHEN_TOKEN_SIDE }}
+          KITCHEN_TOKEN_MAIN: ${{ secrets.KITCHEN_TOKEN_MAIN }}
+          KITCHEN_TOKEN_SOUP: ${{ secrets.KITCHEN_TOKEN_SOUP }}
+          KITCHEN_TOKEN_DON: ${{ secrets.KITCHEN_TOKEN_DON }}
+          KITCHEN_TOKEN_DESSERT: ${{ secrets.KITCHEN_TOKEN_DESSERT }}
+          KITCHEN_TOKEN_SETSUYAKU: ${{ secrets.KITCHEN_TOKEN_SETSUYAKU }}
+          KITCHEN_TOKEN_ZAKKI: ${{ secrets.KITCHEN_TOKEN_ZAKKI }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then echo "KITCHEN_SECRETS_PAT が未登録です"; exit 1; fi
+          fail=0
+          for n in PASTA SIDE MAIN SOUP DON DESSERT SETSUYAKU ZAKKI; do
+            var="KITCHEN_TOKEN_$n"; old="${!var}"
+            if [ -z "$old" ]; then echo "[$n] 未登録なので飛ばします"; continue; fi
+            res=$(curl -s -G "https://graph.instagram.com/refresh_access_token" \
+                  --data-urlencode "grant_type=ig_refresh_token" --data-urlencode "access_token=$old")
+            new=$(echo "$res" | python3 -c "import json,sys; print(json.load(sys.stdin).get('access_token',''))" 2>/dev/null)
+            if [ -z "$new" ]; then
+              echo "[$n] 延長できませんでした：$(echo "$res" | python3 -c "import json,sys; print(json.load(sys.stdin).get('error',{}).get('message','不明'))" 2>/dev/null)"
+              fail=1; continue
+            fi
+            echo "::add-mask::$new"
+            days=$(echo "$res" | python3 -c "import json,sys; print(int(json.load(sys.stdin).get('expires_in',0))//86400)")
+            printf '%s' "$new" | gh secret set "$var" --repo "$REPO"
+            echo "[$n] 延長しました（あと約${days}日）"
+          done
+          exit $fail

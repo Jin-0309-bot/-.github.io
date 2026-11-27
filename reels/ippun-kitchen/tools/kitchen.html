@@ -41,7 +41,7 @@ body.thumb #thumb{display:block}
 import * as THREE from 'three';
 const NAME=new URLSearchParams(location.search).get('n');
 const TL=await (await fetch(NAME+'/timeline.json')).json();
-const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'デザート'};
+const GEN={pasta:'PASTA',side:'前菜・副菜',main:'主菜',soup:'汁物',don:'一品もの・丼',dessert:'デザート',setsuyaku:'節約・リメイク',zakki:'キッチン雑学'};
 const L=TL.look||{};
 document.getElementById('genre').textContent=GEN[TL.genre]||'';
 document.getElementById('title').textContent=TL.title; document.getElementById('serv').textContent='材料（'+TL.serving+'）';
@@ -60,7 +60,21 @@ const back=x=>{x=Math.min(1,Math.max(0,x));const c=1.7;return 1+(c+1)*Math.pow(x
 const sm=x=>{x=Math.min(1,Math.max(0,x));return x*x*(3-2*x)};
 const lerp=(a,b,k)=>a+(b-a)*k;
 const THUMB=new URLSearchParams(location.search).get('thumb')==='1';
-if(THUMB){document.body.classList.add('thumb');document.getElementById('tg').textContent=GEN[TL.genre]||'';document.getElementById('tt').textContent=TL.title;}
+if(THUMB){document.body.classList.add('thumb');document.getElementById('tg').textContent=GEN[TL.genre]||'';fitTitle(document.getElementById('tt'),TL.title);}
+function fitTitle(el,t){ // 料理名を言葉の切れ目で折り返し、はみ出すときは文字を小さくする
+  el.style.whiteSpace='nowrap';el.textContent=t;const maxW=el.clientWidth-80;let fs=96;
+  const w=()=>Math.max(...[...el.querySelectorAll('span')].map(x=>x.getBoundingClientRect().width));
+  const set=(a)=>{el.innerHTML='';a.forEach((x,i)=>{const sp=document.createElement('span');sp.textContent=x;el.appendChild(sp);if(i<a.length-1)el.appendChild(document.createElement('br'));});};
+  set([t]);if(w()>maxW){el.style.fontSize=(fs=84)+'px';}
+  if(w()>maxW){el.style.fontSize=(fs=96)+'px';let best=null;
+    const kind=c=>/[ぁ-ゖ]/.test(c)?'h':/[ァ-ヺー]/.test(c)?'k':/[一-龯々]/.test(c)?'c':'o';
+    for(let i=2;i<t.length-1;i++){const a=t[i-1],b=t[i];
+      // 区切りやすい所：助詞のあと（強）、ひらがな→カタカナ・漢字などの文字の切り替わり（弱）
+      let w='のと・風&でをにはがへやも'.includes(a)&&kind(b)!=='h'?0:(kind(a)!==kind(b)&&kind(a)!=='k'||kind(a)==='k'&&kind(b)!=='k')?3:-1;
+      if(w<0)continue;const d=Math.abs(t.length/2-i)+w;if(!best||d<best.d)best={i,d};}
+    const cut=best?best.i:Math.ceil(t.length/2);set([t.slice(0,cut),t.slice(cut)]);
+    while(w()>maxW&&fs>60){fs-=4;el.style.fontSize=fs+'px';}}
+}
 const cue=c=>{const l=TL.lines.find(l=>l.cue===c);return l?l.start:1e9};
 const cueEnd=c=>{const i=TL.lines.findIndex(l=>l.cue===c);return i<0?1e9:(TL.lines[i+1]?TL.lines[i+1].start:TL.T)};
 const curCue=t=>{let c=TL.lines[0].cue;for(const l of TL.lines)if(t>=l.start)c=l.cue;return c};
@@ -127,7 +141,47 @@ const panNest=nest(36,0.8,0.42,L.nest0||0xeedcaa,23); panNest.position.y=0.14; S
 const steamMat=new THREE.SpriteMaterial({map:tex((g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2);gr.addColorStop(0,'rgba(255,255,255,0.7)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);},128,128),transparent:true,depthWrite:false});
 const steam=new THREE.Group();for(let i=0;i<14;i++){const s=new THREE.Sprite(steamMat.clone());s.userData.p=[(Math.random()-.5)*1.2,(Math.random()-.5)*0.8,Math.random()];steam.add(s);}sc.add(steam);
 // どの場面で何を見せるか
-const SH=L.shape||'pasta'; const isP=SH==='pasta';
+// ===== 型（form）から完成品を組み立てる：器＋具の組み合わせ =====
+// form = {vessel:"plate|bowl|donburi|glass|gratin|cup", rim:"#色"(任意), parts:[{t:種類, c:"#色", n:数, s:大きさ, r:散らす半径, y:高さの足し, h:高さ}]}
+function buildForm(F){const g=new THREE.Group();let sd=97;const rnd=()=>{sd=(sd*9301+49297)%233280;return sd/233280};
+ const V=F.vessel||'plate';let top=0.1,R=0.8;
+ const white=(c)=>M(c||0xf6f3ee,{roughness:0.22,side:THREE.DoubleSide});
+ if(V==='bowl'){const b=new THREE.Mesh(new THREE.SphereGeometry(0.95,48,24,0,Math.PI*2,Math.PI/2,Math.PI/2),white(F.rim));b.position.y=1.05;g.add(b);top=0.88;R=0.72;}
+ if(V==='donburi'){const b=new THREE.Mesh(new THREE.CylinderGeometry(1.0,0.55,0.85,48,1,true),white(F.rim));b.position.y=0.52;g.add(b);const bt=new THREE.Mesh(new THREE.CircleGeometry(0.55,32),white(F.rim));bt.rotation.x=-Math.PI/2;bt.position.y=0.1;g.add(bt);top=0.9;R=0.8;}
+ if(V==='glass'){const gl=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.45,1.25,48,1,true),new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.05,transmission:0.6,transparent:true,opacity:0.35,side:THREE.DoubleSide}));gl.position.y=0.72;g.add(gl);top=0.12;R=0.4;}
+ if(V==='cup'){const c=new THREE.Mesh(new THREE.CylinderGeometry(0.62,0.5,0.75,48,1,true),white(F.rim));c.position.y=0.47;g.add(c);top=0.7;R=0.5;}
+ if(V==='gratin'){const d=new THREE.Mesh(new THREE.CylinderGeometry(1.0,0.9,0.35,48,1,true),M(F.rim||0xe9e2d6,{roughness:0.3,side:THREE.DoubleSide}));d.scale.z=0.72;d.position.y=0.27;g.add(d);top=0.4;R=0.75;}
+ let lay=top; // glass の層を積む高さ
+ const at=(rr)=>{const a=rnd()*Math.PI*2,r=Math.sqrt(rnd())*rr;return[Math.cos(a)*r,Math.sin(a)*r];};
+ for(const p of F.parts||[]){const c=p.c||'#ffffff',n=p.n||1,s=p.s||1,rr=(p.r!=null?p.r:R),y=top+(p.y||0);
+  if(p.t==='nest'){const ns=nest(p.n||40,0.85*s,0.5*s,c,11);ns.position.y=y-0.02;g.add(ns);}
+  else if(p.t==='mound'){const m=new THREE.Mesh(new THREE.SphereGeometry(0.85*s,40,20,0,Math.PI*2,0,Math.PI/2),M(c,{roughness:0.55}));m.scale.y=p.h||0.6;m.position.set(p.x||0,y-0.02,p.z||0);g.add(m);}
+  else if(p.t==='liquid'){const l=new THREE.Mesh(new THREE.CircleGeometry((V==='bowl'?0.86:V==='donburi'?0.95:V==='cup'?0.6:0.9)*s,48),M(c,{roughness:0.15}));l.rotation.x=-Math.PI/2;l.position.y=y;if(V==='gratin')l.scale.y=0.72;g.add(l);}
+  else if(p.t==='layer'){const h=p.h||0.3;const l=new THREE.Mesh(new THREE.CylinderGeometry(0.5*(1-0.15*(lay-0.12)),0.47,h,40),M(c,{roughness:0.3}));l.position.y=lay+h/2;g.add(l);lay+=h;}
+  else if(p.t==='sheet'){const sh=new THREE.Mesh(new THREE.SphereGeometry(0.8*s,40,16,0,Math.PI*2,0,Math.PI/2),M(c,{roughness:0.35}));sh.scale.y=p.h||0.18;sh.position.set(p.x||0,y,p.z||0);g.add(sh);}
+  else if(p.t==='omelet'){const o=new THREE.Mesh(new THREE.SphereGeometry(0.8*s,40,20),M(c,{roughness:0.3}));o.scale.set(1.15,0.42,0.72);o.position.y=y+0.15;g.add(o);}
+  else if(p.t==='cubes'||p.t==='balls'||p.t==='chunks'){for(let i=0;i<n;i++){const z=0.16*s*(0.85+rnd()*0.3);const geo=p.t==='balls'?new THREE.SphereGeometry(z*0.75,16,12):p.t==='chunks'?new THREE.DodecahedronGeometry(z*0.75,0):new THREE.BoxGeometry(z,z*0.8,z);const m=new THREE.Mesh(geo,M(i%3===2&&p.c2?p.c2:c,{roughness:0.5}));const[x,zz]=at(rr);m.position.set(x,y+z*0.4+rnd()*0.05,zz);m.rotation.set(rnd()*3,rnd()*3,rnd()*3);g.add(m);}}
+  else if(p.t==='slices'){for(let i=0;i<n;i++){const geo=p.shape==='disc'?new THREE.CylinderGeometry(0.22*s,0.22*s,0.04,28):new THREE.BoxGeometry(0.7*s,0.035,0.42*s);const m=new THREE.Mesh(geo,M(i%2&&p.c2?p.c2:c,{roughness:0.5}));if(p.ring){const a=i/n*Math.PI*2;m.position.set(Math.cos(a)*rr*0.7,y+0.03+i*0.004,Math.sin(a)*rr*0.7);m.rotation.y=-a;}else{m.position.set((i-(n-1)/2)*0.05*s,y+0.03+i*0.035,(i-(n-1)/2)*0.03);m.rotation.y=i*0.2-0.6;}m.rotation.x=0.05;g.add(m);}}
+  else if(p.t==='sticks'){for(let i=0;i<n;i++){const m=new THREE.Mesh(new THREE.CylinderGeometry(0.025*s,0.025*s,0.55*s,6),M(i%2&&p.c2?p.c2:c,{roughness:0.5}));const[x,zz]=at(rr);m.position.set(x,y+0.04+rnd()*0.06,zz);m.rotation.order='YXZ';m.rotation.set(Math.PI/2+(rnd()-0.5)*0.3,rnd()*Math.PI*2,0);g.add(m);}}
+  else if(p.t==='leaves'){for(let i=0;i<n;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.13*s,12,8),M(i%2&&p.c2?p.c2:c,{roughness:0.6}));m.scale.set(1.3,0.25,0.8);const[x,zz]=at(rr);m.position.set(x,y+0.04+rnd()*0.1,zz);m.rotation.set(rnd()*0.6,rnd()*3,rnd()*0.6);g.add(m);}}
+  else if(p.t==='specks'){const sp=specks(n||60,c,rr,y+(p.h||0.05),0.02*s,13+n);g.add(sp);}
+  else if(p.t==='patty'){for(let i=0;i<n;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.42*s,32,16),M(c,{roughness:0.55}));m.scale.set(1.25,0.45,0.95);m.position.set((i-(n-1)/2)*0.75*s,y+0.15*s,0);g.add(m);}}
+  else if(p.t==='fillet'){for(let i=0;i<n;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.95*s,0.22*s,0.55*s),M(c,{roughness:0.5}));m.position.set((i-(n-1)/2)*0.6,y+0.11*s,(i-(n-1)/2)*0.2);m.rotation.y=0.3+i*0.2;g.add(m);}}
+  else if(p.t==='cutlet'){for(let i=0;i<(n||5);i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.22*s,0.2*s,0.6*s),M(c,{roughness:0.75}));m.position.set((i-((n||5)-1)/2)*0.24*s,y+0.1*s,0);m.rotation.z=0.12;g.add(m);}}
+  else if(p.t==='drumstick'){for(let i=0;i<n;i++){const d=new THREE.Group();const meat=new THREE.Mesh(new THREE.SphereGeometry(0.38*s,24,16),M(c,{roughness:0.4}));meat.scale.set(1.5,0.8,0.9);d.add(meat);const bone=new THREE.Mesh(new THREE.CylinderGeometry(0.05*s,0.05*s,0.5*s,10),M(0xf3ead8));bone.rotation.z=Math.PI/2;bone.position.x=0.7*s;d.add(bone);const kn=new THREE.Mesh(new THREE.SphereGeometry(0.08*s,12,8),M(0xf3ead8));kn.position.x=0.95*s;d.add(kn);d.position.set((i-(n-1)/2)*0.5,y+0.22*s,(i-(n-1)/2)*0.45);d.rotation.y=0.5+i*0.7;g.add(d);}}
+  else if(p.t==='log'){const lg=new THREE.Mesh(new THREE.CylinderGeometry(0.42*s,0.42*s,1.5*s,32),M(c,{roughness:0.7}));lg.rotation.z=Math.PI/2;lg.position.y=y+0.42*s;g.add(lg);const end=new THREE.Mesh(new THREE.CircleGeometry(0.4*s,32),M(p.c2||0xfff6e8));end.position.set(0.76*s,y+0.42*s,0);end.rotation.y=Math.PI/2;g.add(end);}
+  else if(p.t==='cake'){const ck=new THREE.Mesh(new THREE.CylinderGeometry(0.6*s,0.6*s,(p.h||0.7)*s,40),M(c,{roughness:0.6}));ck.position.y=y+(p.h||0.7)*s/2;g.add(ck);}
+  else if(p.t==='triangle'){for(let i=0;i<n;i++){const sh=new THREE.Shape();sh.moveTo(0,0);sh.lineTo(0.9*s,0);sh.lineTo(0,0.9*s);sh.lineTo(0,0);const geo=new THREE.ExtrudeGeometry(sh,{depth:(p.h||0.18)*s,bevelEnabled:true,bevelSize:0.03,bevelThickness:0.03,bevelSegments:2});const m=new THREE.Mesh(geo,M(i%2&&p.c2?p.c2:c,{roughness:0.55}));m.rotation.x=-Math.PI/2;m.position.set(-0.45*s+(i*0.12),y+0.02+i*0.2*s,0.45*s-(i*0.1));m.rotation.z=i*0.5;g.add(m);}}
+  else if(p.t==='ring'){for(let i=0;i<(n||26);i++){const a=i/(n||26)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.14*s,12,8),M(i%3===0&&p.c2?p.c2:c,{roughness:0.6}));m.scale.set(1.2,0.5,0.9);m.position.set(Math.cos(a)*0.62*s,y+0.06+rnd()*0.06,Math.sin(a)*0.62*s);m.rotation.y=-a;g.add(m);}}
+  else if(p.t==='cone'){const cn=new THREE.Mesh(new THREE.ConeGeometry(0.55*s,1.3*s,40),M(c,{roughness:0.7}));cn.position.y=y+0.65*s;g.add(cn);}
+  else if(p.t==='half'){const h=new THREE.Mesh(new THREE.SphereGeometry(0.6*s,32,16,0,Math.PI*2,0,Math.PI/2),M(c,{roughness:0.55}));h.scale.y=0.55;h.position.set(-0.38,y,0);g.add(h);const l=new THREE.Mesh(new THREE.CircleGeometry(0.6,40,Math.PI/2,Math.PI),M(p.c2||0x8a5a24,{roughness:0.25}));l.rotation.x=-Math.PI/2;l.position.set(0.05,y+0.02,0);g.add(l);}
+  else if(p.t==='swirl'){const sw=new THREE.Mesh(new THREE.TorusKnotGeometry(0.22*s,0.08*s,80,10,2,3),M(c,{roughness:0.5}));sw.rotation.x=Math.PI/2;sw.position.y=y+0.15*s;g.add(sw);}
+ }
+ if(V!=='plate'){g.scale.setScalar(0.78);}
+ return g;}
+
+const SH=L.shape||(L.form?'form':'pasta'); const isP=SH==='pasta';
+if(L.form){S.plate.add(buildForm(L.form));}
 if(!isP){S.plate.children.forEach(o=>{if(o.isGroup&&(o.children.length===70||o.children.length===50)&&o.children.every(c=>c.isMesh&&c.geometry.type==='SphereGeometry'))o.visible=false;});}
 function foodPlate(){const g=new THREE.Group();
  if(SH==='spinach'){for(let i=0;i<6;i++){const c=new THREE.Mesh(new THREE.CapsuleGeometry(0.075,0.8,6,12),M(0x4e8f32,{roughness:0.5}));c.rotation.set(0,i*0.9,Math.PI/2-0.25);c.position.set(Math.cos(i)*0.2,0.25+i*0.015,Math.sin(i)*0.2);g.add(c);} }
@@ -187,7 +241,7 @@ window.renderAt=t=>{
   const tc=cue('combine');panNest.visible=isP&&t>=tc;panNest.position.y=0.14+lerp(1.6,0,ease((t-tc)/0.7));panNest.userData.mat.color.copy(C(L.nest0||0xeedcaa,L.nest||0xf2cf74,ease((t-cue('egg')-0.8)/2.5)));panNest.rotation.y=t>cue('egg')?(t-cue('egg'))*1.6:0;
   // 湯気
   const sOn=['boil','bacon','combine'].includes(curCue(t));steam.visible=sOn;steam.children.forEach(s=>{const [x,z,p]=s.userData.p;const u=(t*0.35+p)%1;s.position.set(x,1.1+u*1.6,z);s.scale.setScalar(0.5+u*0.9);s.material.opacity=0.55*Math.sin(u*Math.PI);});
-  if(THUMB){cam.position.set(0,3.4,3.9);cam.lookAt(0,0.3,0);}else camAt(t);
+  if(THUMB){const tall=L.form&&L.form.vessel&&L.form.vessel!=='plate';cam.position.set(0,tall?3.7:3.4,3.9);cam.lookAt(0,tall?0.75:0.3,0);}else camAt(t);
   r.render(sc,cam);
   // 手順カード
   let cur=null;for(const l of TL.lines)if(t>=l.start)cur=l;

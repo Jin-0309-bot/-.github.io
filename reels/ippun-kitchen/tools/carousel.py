@@ -65,7 +65,11 @@ def wrap(d, text, f, maxw):
                         out.append(cur); cur = ch
                 else: cur += ch
     if cur: out.append(cur)
-    return out
+    # 行頭に句読点・閉じかっこが来ないよう、前の行に寄せる
+    for i in range(1, len(out)):
+        while out[i] and out[i][0] in "。、）」！？":
+            out[i - 1] += out[i][0]; out[i] = out[i][1:]
+    return [l for l in out if l]
 
 def pill(d, x, y, text, size, bg, fg, padx=26, pady=10):
     f = font(size); w = d.textlength(text, font=f)
@@ -83,10 +87,12 @@ def header(d, genre, page, total):
 def card(d, y0, y1):
     d.rounded_rectangle([50, y0, W - 50, y1], radius=36, fill=CARD)
 
-def cover(thumb, out):
+def cover(thumb, out, badge=None, swipe="スワイプして作り方 →"):
     im = Image.open(thumb).convert("RGB").crop((0, 110, 1080, 1460))
     d = ImageDraw.Draw(im)
-    t = "スワイプして作り方 →"; f = font(34); w = d.textlength(t, font=f)
+    if badge:  # 表紙の左下に印（カサ増し／リメイク／これしかない時 など）
+        pill(d, 60, H - 210, badge, 40, (255, 214, 92), INK, padx=30, pady=12)
+    t = swipe; f = font(34); w = d.textlength(t, font=f)
     d.rounded_rectangle([W - 60 - w - 52, H - 120, W - 60, H - 52], radius=34, fill=RED)
     d.text((W - 60 - w - 26, H - 112), t, font=f, fill=(255, 255, 255))
     pill(d, 60, H - 120, "1分キッチン", 32, CARD, RED, padx=24, pady=14)
@@ -145,11 +151,11 @@ def steps_page(genre, steps, start, page, out, tips=None, last=False):
     if y > H - 40: print(f"  注意：{out} の文字が下にはみ出しています（y={y}）")
     im.save(out, quality=90)
 
-def main(did, thumb, cap, outdir):
+def main(did, thumb, cap, outdir, badge=None):
     out = Path(outdir); out.mkdir(parents=True, exist_ok=True)
     genre, title, serving, ings, steps, tips = parse(Path(cap).read_text())
     half = (len(steps) + 1) // 2
-    cover(thumb, out / "1.jpg")
+    cover(thumb, out / "1.jpg", badge)
     ingredients(genre, title, serving, ings, out / "2.jpg")
     steps_page(genre, steps[:half], 1, 3, out / "3.jpg")
     steps_page(genre, steps[half:], half + 1, 4, out / "4.jpg", tips=tips, last=True)

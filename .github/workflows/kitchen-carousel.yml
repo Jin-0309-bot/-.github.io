@@ -1,0 +1,48 @@
+name: 1分キッチン カルーセル自動投稿
+
+on:
+  # 本来の合図：外部サービス（cron-job.org）が毎日 17:30（日本時間）に workflow_dispatch を送る
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "post＝投稿する／list＝トークンで使える Instagram アカウントの ID を表示する（初回の設定用）"
+        type: choice
+        options: [post, list]
+        default: post
+      force:
+        description: "今日すでに投稿済みのアカウントでも、もう1本投稿する（手動で追加したいときだけ）"
+        type: boolean
+        default: false
+  # 予備：外部からの合図が来なかったとき用。同じ日に2回は投稿しない（post_carousel.py が判断）
+  schedule:
+    - cron: "47 8 * * *"   # 17:47（日本時間）
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kitchen-carousel
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kitchen-posts
+      - name: 今日の担当アカウントに投稿する
+        env:
+          KITCHEN_IG_TOKEN: ${{ secrets.KITCHEN_IG_TOKEN }}
+          MODE: ${{ github.event.inputs.mode || 'post' }}
+          FORCE: ${{ github.event.inputs.force == 'true' && 'true' || 'false' }}
+        run: python3 post_carousel.py
+      - name: 投稿記録を保存する
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posted.txt
+          git commit -m "1分キッチン：投稿記録を更新" || exit 0
+          git push origin kitchen-posts

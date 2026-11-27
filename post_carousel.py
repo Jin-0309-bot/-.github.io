@@ -66,25 +66,18 @@ def post_one(token, ig_id, dish, caption, n_images):
     return info.get("permalink", "")
 
 def probe(cfg):
-    """（調査用）システムユーザーのトークンで見える Instagram アカウントを探す。トークン自体は表示しない"""
-    t = next((token_of(a) for a in cfg["order"] if token_of(a)), "")
-    if not t: return
-    def g(path, **params):
-        try: return call(t, "GET", f"{FB_API}/{path}", params=params)
-        except Exception as e: return {"error": str(e)[:250]}
-    print("== 調査")
-    print("  me:", g("me", fields="id,name"))
-    biz = g("me/businesses", fields="id,name"); print("  me/businesses:", biz)
-    print("  me/assigned_pages:", g("me/assigned_pages", fields="name,instagram_business_account{id,username}"))
-    for b in biz.get("data", []):
-        for edge in ("owned_instagram_accounts", "instagram_accounts", "instagram_business_accounts", "client_instagram_accounts", "owned_pages"):
-            print(f"  {b['id']}/{edge}:", json.dumps(g(f"{b['id']}/{edge}", fields="id,username,name"), ensure_ascii=False)[:500])
-    # 各トークンが同じシステムユーザーか
+    """（調査用）各トークンで見える Instagram アカウントを表示する。トークン自体は表示しない"""
     for acc in cfg["order"]:
-        tt = token_of(acc)
-        if tt:
-            try: r = call(tt, "GET", f"{FB_API}/me", params=dict(fields="id,name")); print(f"  [{acc}] me:", r)
-            except Exception as e: print(f"  [{acc}] me: {str(e)[:150]}")
+        t = token_of(acc)
+        if not t: continue
+        def g(path, **params):
+            try: return call(t, "GET", f"{FB_API}/{path}", params=params)
+            except Exception as e: return {"error": str(e)[:200]}
+        print(f"== [{acc}] me(id):", g("me", fields="id"), " me(name):", g("me", fields="name"))
+        for edge in ("me/assigned_pages", "me/accounts"):
+            r = g(edge, fields="name,instagram_business_account{id,username}")
+            r.pop("paging", None); print(f"   {edge}:", json.dumps(r, ensure_ascii=False)[:400])
+        print("   me(ig fields):", g("me", fields="id,username,account_type,media_count"))
 
 def list_accounts(cfg):
     if os.environ.get("PROBE") == "1" or any(token_of(a).startswith("EA") for a in cfg["order"]): probe(cfg)

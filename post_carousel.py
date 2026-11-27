@@ -66,22 +66,25 @@ def post_one(token, ig_id, dish, caption, n_images):
     return info.get("permalink", "")
 
 def probe(cfg):
-    """（調査用）EAA… のトークンで、何に使えるかを表示する。トークン自体は表示しない"""
+    """（調査用）システムユーザーのトークンで見える Instagram アカウントを探す。トークン自体は表示しない"""
+    t = next((token_of(a) for a in cfg["order"] if token_of(a)), "")
+    if not t: return
+    def g(path, **params):
+        try: return call(t, "GET", f"{FB_API}/{path}", params=params)
+        except Exception as e: return {"error": str(e)[:250]}
+    print("== 調査")
+    print("  me:", g("me", fields="id,name"))
+    biz = g("me/businesses", fields="id,name"); print("  me/businesses:", biz)
+    print("  me/assigned_pages:", g("me/assigned_pages", fields="name,instagram_business_account{id,username}"))
+    for b in biz.get("data", []):
+        for edge in ("owned_instagram_accounts", "instagram_accounts", "instagram_business_accounts", "client_instagram_accounts", "owned_pages"):
+            print(f"  {b['id']}/{edge}:", json.dumps(g(f"{b['id']}/{edge}", fields="id,username,name"), ensure_ascii=False)[:500])
+    # 各トークンが同じシステムユーザーか
     for acc in cfg["order"]:
-        t = token_of(acc)
-        if not t: continue
-        print(f"== [{acc}]")
-        for path, params in [("me", dict(fields="id,name")),
-                             ("debug_token", dict(input_token=t)),
-                             ("me/permissions", {}),
-                             ("me/accounts", dict(fields="name,instagram_business_account{id,username}"))]:
-            try:
-                r = call(t, "GET", f"{FB_API}/{path}", params=params)
-                if path == "debug_token":
-                    d = r.get("data", {}); r = dict(type=d.get("type"), app_id=d.get("app_id"), expires_at=d.get("expires_at"),
-                        data_access_expires_at=d.get("data_access_expires_at"), scopes=d.get("scopes"), granular_scopes=d.get("granular_scopes"))
-                print(f"  {path}: {json.dumps(r, ensure_ascii=False)[:600]}")
-            except Exception as e: print(f"  {path}: {str(e)[:300]}")
+        tt = token_of(acc)
+        if tt:
+            try: r = call(tt, "GET", f"{FB_API}/me", params=dict(fields="id,name")); print(f"  [{acc}] me:", r)
+            except Exception as e: print(f"  [{acc}] me: {str(e)[:150]}")
 
 def list_accounts(cfg):
     if os.environ.get("PROBE") == "1" or any(token_of(a).startswith("EA") for a in cfg["order"]): probe(cfg)

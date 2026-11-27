@@ -1,0 +1,61 @@
+{
+ "start": "2026-12-01",
+ "order": [
+  "pasta",
+  "side",
+  "main",
+  "soup",
+  "don",
+  "dessert"
+ ],
+ "accounts": {
+  "pasta": {
+   "name": "1分キッチン｜パスタ",
+   "username": "ippun_kitchen.pasta",
+   "ig_user_id": "",
+   "queue": [
+    "pasta_001_carbonara"
+   ]
+  },
+  "side": {
+   "name": "1分キッチン｜前菜・副菜",
+   "username": "ippun_kitchen.side",
+   "ig_user_id": "",
+   "queue": [
+    "side_001_ohitashi"
+   ]
+  },
+  "main": {
+   "name": "1分キッチン｜主菜",
+   "username": "ippun_kitchen.main",
+   "ig_user_id": "",
+   "queue": [
+    "main_001_shogayaki"
+   ]
+  },
+  "soup": {
+   "name": "1分キッチン｜汁物",
+   "username": "ippun_kitchen.soup",
+   "ig_user_id": "",
+   "queue": [
+    "soup_001_misoshiru"
+   ]
+  },
+  "don": {
+   "name": "1分キッチン｜一品もの・丼",
+   "username": "ippun_kitchen.don",
+   "ig_user_id": "",
+   "queue": [
+    "don_001_oyakodon"
+   ]
+  },
+  "dessert": {
+   "name": "1分キッチン｜デザート",
+   "username": "ippun_kitchen.dessert",
+   "ig_user_id": "",
+   "queue": [
+    "dessert_001_purin"
+   ]
+  }
+ }
+}

@@ -170,3 +170,85 @@
   - https://macaro-ni.jp/20870?page=3
   - https://kinarino.jp/cat6/37576
 
+## 021（1/31）【選び方】おいしいにんじんの選び方は？
+- 題材：おいしいにんじんの選び方は？ → 色が濃く、茎の切り口が小さいもの
+- 確かめたこと：茎の切り口が小さいもの（芯が小さい）、濃いオレンジで色鮮やか、表面なめらかでひび割れなし、切り口が茶・黒は日にちが経過（明治・福知山市・ALIC）。
+- 出典：
+  - https://www.meiji.co.jp/foods/soup/marugotoyasai/dictionary/ninjin.html
+  - https://www.city.fukuchiyama.lg.jp/uploaded/attachment/19638.pdf
+  - https://www.alic.go.jp/content/000084679.pdf
+
+## 022（2/3）【代用】パン粉がないときは？
+- 題材：パン粉がないときは？ → 食パンをすりおろして使えます
+- 確かめたこと：食パンを冷凍しておろし金ですりおろす、麩を袋に入れてめん棒でたたく、高野豆腐をすりおろす。揚げ物では食感が変わる。
+- 出典：
+  - https://macaro-ni.jp/40339
+  - https://tokubai.co.jp/news/articles/4438
+  - https://delishkitchen.tv/articles/2379
+
+## 023（2/6）【保存】きのこは冷凍できる？
+- 題材：きのこは冷凍できる？ → 洗わずに、ほぐして冷凍できます
+- 確かめたこと：洗わずキッチンペーパーで拭く（水分で傷みやすい）、石づきを切ってほぐす、解凍せず凍ったまま調理（うまみが流れ出る）、冷凍前からの異臭・酸味は傷みの可能性。※保存期間は3週間〜1か月と幅があるため書かない。
+- 出典：
+  - https://panasonic.jp/life/food/110094.html
+  - https://macaro-ni.jp/35163
+  - https://tokubai.co.jp/news/articles/3168
+
+## 024（2/9）【選び方】おいしいいちごの選び方は？
+- 題材：おいしいいちごの選び方は？ → ヘタが緑で、根元まで赤いもの
+- 確かめたこと：ヘタが鮮やかな濃い緑で反り返るほどピンとしている、ヘタの付け根まで赤い（白い部分が残ると甘みが弱い）、ツヤとハリ。
+- 出典：
+  - https://weathernews.jp/news/202402/100065/
+  - https://www.roomie.jp/2025/01/1409143/
+  - https://www.edu.city.yokohama.jp/sch/kenkyu/es-eiyo/shasin/mitohana/shasin_spring_ichigo5.pdf
+
+## 025（2/12）【下ごしらえ】ほうれん草の下ゆでのコツは？
+- 題材：ほうれん草の下ゆでのコツは？ → 根元から入れ、ゆでたら冷水へ
+- 確かめたこと：根元は火が通りにくいので先に入れる、さっとゆでる（ゆですぎは食感が悪い）、冷水にとると色よくえぐみが抜けやすい、ゆでて水にさらすとシュウ酸（えぐみ）が抜ける、さらしすぎない。※健康に関する記述は入れない。時間は出典で幅があるため書かない。
+- 出典：
+  - https://weathernews.jp/news/202501/090105/
+  - https://macaro-ni.jp/157552
+  - https://tokubai.co.jp/news/articles/5526
+
+## 026（2/15）【代用】めんつゆがないときは？
+- 題材：めんつゆがないときは？ → しょうゆ・みりん・だしで作れます
+- 確かめたこと：しょうゆ・みりん・和風だし・水を鍋で煮立たせて冷ます。※配合は出典ごとに異なるため数字は書かず「味を見て調整」とした。
+- 出典：
+  - https://tokubai.co.jp/news/articles/3632
+  - https://macaro-ni.jp/111366
+  - https://www.roomie.jp/2025/07/1558181/
+
+## 027（2/18）【手入れ】シンクの白い水垢、どう落とす？
+- 題材：シンクの白い水垢、どう落とす？ → クエン酸水でパックする
+- 確かめたこと：水垢はアルカリ性→酸性のクエン酸。水200mlにクエン酸小さじ1（複数出典）、作り置きしない、キッチンペーパー・ラップでパック。鉄はさび・大理石は傷むので不可。塩素系と酸性（クエン酸・食酢）は混ぜるな危険（国民生活センター・東京都）。
+- 出典：
+  - https://news.mynavi.jp/article/20210331-1856571/
+  - https://enechange.jp/articles/sink-dirt-of-water
+  - https://macaro-ni.jp/97410
+  - https://www.kokusen.go.jp/news/data/n-20260318_1.html
+  - https://www.shouhiseikatu.metro.tokyo.lg.jp/trouble/documents/trouble65-mazerunakiken.pdf
+
+## 028（2/21）【選び方】おいしい長ねぎの選び方は？
+- 題材：おいしい長ねぎの選び方は？ → 巻きがしっかりして、重いもの
+- 確かめたこと：葉の付け根（境目）の巻きがしっかり、ずっしり重い、白い部分にツヤ・ハリ・弾力（福岡市資料）、ふかふかしたものは避ける、葉先がピンとして乾いていない。
+- 出典：
+  - https://weathernews.jp/news/202412/250225/
+  - https://www.city.fukuoka.lg.jp/nosui/seisakukikaku/life/documents/231214resipi.pdf
+  - https://macaro-ni.jp/161851
+
+## 029（2/24）【保存】大根を長持ちさせる保存法は？
+- 題材：大根を長持ちさせる保存法は？ → 葉を切り落として、包んで立てる
+- 確かめたこと：葉が根の水分・養分を吸うので付け根で切り落とし分けて保存、新聞紙やラップで包む、立てて保存（寝かせるとしおれやすい）。※保存期間・場所は出典で幅があるため書かない。
+- 出典：
+  - https://allabout.co.jp/gm/gc/433986/
+  - https://macaro-ni.jp/39213
+  - https://furunavi.jp/discovery/?p=7578
+
+## 030（2/27）【代用】ケチャップがないときは？
+- 題材：ケチャップがないときは？ → トマト缶で手作りできます
+- 確かめたこと：トマト缶を煮詰め、砂糖・塩で味付け、酢は仕上げに加える。跳ねやすいので深めの鍋、酸があるのでアルミ鍋は避けステンレスかホーロー（macaroni）。※分量・時間は出典で異なるため書かない。
+- 出典：
+  - https://macaro-ni.jp/161774
+  - https://macaro-ni.jp/76904?page=2
+  - https://www.bepal.net/archives/68214
+

@@ -65,7 +65,26 @@ def post_one(token, ig_id, dish, caption, n_images):
     info = call(token, "GET", f"{api_for(token)}/{pub['id']}", params=dict(fields="permalink"))
     return info.get("permalink", "")
 
+def probe(cfg):
+    """（調査用）EAA… のトークンで、何に使えるかを表示する。トークン自体は表示しない"""
+    for acc in cfg["order"]:
+        t = token_of(acc)
+        if not t: continue
+        print(f"== [{acc}]")
+        for path, params in [("me", dict(fields="id,name")),
+                             ("debug_token", dict(input_token=t)),
+                             ("me/permissions", {}),
+                             ("me/accounts", dict(fields="name,instagram_business_account{id,username}"))]:
+            try:
+                r = call(t, "GET", f"{FB_API}/{path}", params=params)
+                if path == "debug_token":
+                    d = r.get("data", {}); r = dict(type=d.get("type"), app_id=d.get("app_id"), expires_at=d.get("expires_at"),
+                        data_access_expires_at=d.get("data_access_expires_at"), scopes=d.get("scopes"), granular_scopes=d.get("granular_scopes"))
+                print(f"  {path}: {json.dumps(r, ensure_ascii=False)[:600]}")
+            except Exception as e: print(f"  {path}: {str(e)[:300]}")
+
 def list_accounts(cfg):
+    if os.environ.get("PROBE") == "1" or any(token_of(a).startswith("EA") for a in cfg["order"]): probe(cfg)
     print("各アカウントのトークンの確認：")
     bad = False
     for acc in cfg["order"]:

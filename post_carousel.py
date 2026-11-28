@@ -24,7 +24,8 @@ JST = timezone(timedelta(hours=9))
 RAW = "https://raw.githubusercontent.com/Jin-0309-bot/-.github.io/kitchen-posts/images"
 
 def token_of(acc):
-    return os.environ.get(f"KITCHEN_TOKEN_{acc.upper()}", "").strip()
+    # 貼り付けのときに混ざった空白・改行は取り除く
+    return "".join(os.environ.get(f"KITCHEN_TOKEN_{acc.upper()}", "").split())
 
 def call(token, method, url, params=None, data=None):
     if method == "GET":
@@ -99,6 +100,8 @@ def discover(cfg):
 
 def probe_soup(cfg):
     """（調査用）汁物のトークンとIDの組み合わせを確かめる"""
+    raw = os.environ.get("KITCHEN_TOKEN_SOUP", ""); t = token_of("soup")
+    print(f"  汁物のトークン：{len(raw)}文字（空白を除くと{len(t)}文字）、先頭 {t[:4]}…、英数字以外：{sorted(set(c for c in t if not c.isalnum()))}")
     ids = {a: cfg["accounts"][a].get("ig_user_id") for a in ("main", "soup")}
     for tk in ("soup", "main"):
         t = token_of(tk)

@@ -98,28 +98,14 @@ def discover(cfg):
             print(f"  （{acc}：ID {a['ig_user_id']} をトークンで開けませんでした：{str(e)[:200]}）")
     return found
 
-def probe_soup(cfg):
-    """（調査用）汁物のトークンとIDの組み合わせを確かめる"""
-    raw = os.environ.get("KITCHEN_TOKEN_SOUP", ""); t = token_of("soup")
-    print(f"  汁物のトークン：{len(raw)}文字（空白を除くと{len(t)}文字）、先頭 {t[:4]}…、英数字以外：{sorted(set(c for c in t if not c.isalnum()))}")
-    ids = {a: cfg["accounts"][a].get("ig_user_id") for a in ("main", "soup")}
-    for tk in ("soup", "main"):
-        t = token_of(tk)
-        for a, i in ids.items():
-            if not t or not i: continue
-            try: r = call(t, "GET", f"{FB_API}/{i}", params=dict(fields="id,username")); r = r.get("username")
-            except Exception as e: r = "×" + str(e)[30:110]
-            print(f"  {tk}のトークン → {a}のID：{r}")
-
 def list_accounts(cfg):
-    probe_soup(cfg)
     found = discover(cfg)
     print("投稿できる Instagram アカウント：")
     for u, (i, _) in found.items(): print(f"  @{u}  ID={i}")
     print("アカウントごとの状態：")
     for acc in cfg["order"]:
         u = cfg["accounts"][acc].get("username", "")
-        print(f"  [{acc}] @{u}：" + ("投稿できます" if u in found else "まだ投稿できません（Facebookページにつなぎ、システムユーザーに割り当てが必要）"))
+        print(f"  [{acc}] @{u}：" + ("投稿できます" if u in found else "まだ投稿できません（ビジネスに追加して config に ig_user_id を入れ、そのアカウントのトークンを登録する）"))
 
 def main():
     cfg = json.loads((here / "config.json").read_text())

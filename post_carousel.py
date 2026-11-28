@@ -87,15 +87,22 @@ def discover(cfg):
                 me = whoami(t); found.setdefault(me["username"], (me["user_id"], t))
         except Exception as e:
             print(f"  （{acc} のトークンで確認できませんでした：{str(e)[:150]}）")
-    # ページを通さないアカウント（統合ログイン）：config の ig_user_id を、そのアカウントのトークンで直接使う
+    # ページを通さないアカウント（統合ログイン）：config の ig_user_id を、登録されたトークンで順に試す
+    # （自分のトークンを先に試し、だめなら他のトークン。1つのトークンで複数のアカウントを扱える場合がある）
+    tokens = []
     for acc in cfg["order"]:
-        a = cfg["accounts"][acc]; t = token_of(acc)
-        if a.get("username") in found or not a.get("ig_user_id") or not t: continue
-        try:
-            r = call(t, "GET", f"{api_for(t)}/{a['ig_user_id']}", params=dict(fields="id,username"))
-            found[r.get("username") or a["username"]] = (a["ig_user_id"], t)
-        except Exception as e:
-            print(f"  （{acc}：ID {a['ig_user_id']} をトークンで開けませんでした：{str(e)[:200]}）")
+        t = token_of(acc)
+        if t and t not in tokens: tokens.append(t)
+    for acc in cfg["order"]:
+        a = cfg["accounts"][acc]; own = token_of(acc)
+        if a.get("username") in found or not a.get("ig_user_id"): continue
+        for t in ([own] if own else []) + [x for x in tokens if x != own]:
+            try:
+                r = call(t, "GET", f"{api_for(t)}/{a['ig_user_id']}", params=dict(fields="id,username"))
+                found[r.get("username") or a["username"]] = (a["ig_user_id"], t); break
+            except Exception: continue
+        else:
+            print(f"  （{acc}：ID {a['ig_user_id']} を開けるトークンがありません）")
     return found
 
 def list_accounts(cfg):

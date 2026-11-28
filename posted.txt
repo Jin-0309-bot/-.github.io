@@ -13,3 +13,4 @@ E06 2026-11-26 21:00 https://www.instagram.com/reel/DgNDjSbzZ9T/
 E07 2026-11-27 12:02 https://www.instagram.com/reel/DgOqxE2BPDL/
 E08 2026-11-27 19:01 https://www.instagram.com/reel/DgPasnVMAY-/
 E09 2026-11-28 12:01 https://www.instagram.com/reel/DgRPaMROnmv/
+E10 2026-11-28 19:01 https://www.instagram.com/reel/DgR_e2KqMGO/
